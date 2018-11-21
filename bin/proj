@@ -144,7 +144,21 @@ blog_push() {
 
 ws_push() {
     local oldir=`pwd`
+    cd $HOME/workspace
+    git_push
+    cd $oldir
+}
+
+ome_push() {
+    local oldir=`pwd`
     cd $HOME/.oh-my-env
+    git_push
+    cd $oldir
+}
+
+emacs_push() {
+    local oldir=`pwd`
+    cd $HOME/.oh-my-emacs
     git_push
     cd $oldir
 }

@@ -345,10 +345,15 @@ ome_parse() {
             me_upgrade
             ;;
         "p"|"push"|"commit")
-            ws_push
-            readp "push emacs-config?"
+            ome_push
+            readp "push ome-config?"
             if [ $? -eq 1 ]; then
-                oh_my_emacs_push
+                emacs_push
+            fi
+
+            readp "push workspace?"
+            if [ $? -eq 1 ]; then
+                ws_push
             fi
             ;;
         "x")

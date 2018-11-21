@@ -3,10 +3,10 @@
 ome_write_env_to_dotfile() {
     local dotfile=$1
     if [ -f $dotfile ]; then
-        find_str ".oh-my-env/env" $dotfile
+        find_str "oh-my-env" $dotfile
         if [ $? -eq 0 ]; then	
             echo "" >> $dotfile
-            echo "# oh-my-emacs" >> $dotfile
+            echo "# oh-my-env" >> $dotfile
             echo ". \$HOME/.oh-my-env/env" >> $dotfile
         fi
     fi
@@ -23,3 +23,5 @@ ome_write_env_to_dotfile $HOME/.profile
 ome_write_env_to_dotfile $HOME/.shrc
 ome_write_env_to_dotfile $HOME/.bashrc
 ome_write_env_to_dotfile $HOME/.zshrc
+
+. $HOME/.oh-my-env/env
