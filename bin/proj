@@ -174,26 +174,3 @@ oh_my_emacs_push() {
     fi
     cd $oldir
 }
-
-daily_upgrade() {
-    local oldir=`pwd`
-    # tip "upgrade oh-my-emacs"
-    cd $HOME/.oh-my-emacs/
-    git pull
-    
-    tip "pip upgrade"
-    pip2 install --user -U pip
-    pip3 install --user -U pip
-    
-    # erlang_install
-    # elixir_install
-    llvm_install
-    # rtags_install
-    # cquery_install
-    # ccls_install
-    mu4e_install
-    
-    # project-upgrade
-    # book-upgrade
-    cd $oldir
-}
