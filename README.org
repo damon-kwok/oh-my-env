@@ -11,3 +11,8 @@
 - wget
 ** Install
 - curl -L https://raw.githubusercontent.com/damon-kwok/oh-my-env/master/install.sh | bash
+
+** Uninstall
+rm -rf ~/.oh-my-env/
+
+rm -rf ~/.ome_local/

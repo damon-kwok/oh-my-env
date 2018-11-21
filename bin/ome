@@ -287,8 +287,8 @@ ome_os_list() {
 
 ome_eval() {
     # . $OME_ROOT/bin/env
-    CURRENT_DIR=$(dirname $(readlink -f $0))
-    . $CURRENT_DIR/env
+    # CURRENT_DIR=$(dirname $(readlink -f $0))
+    # . $CURRENT_DIR/../env
     
     #echo "ome_eval:$@"
     local FUNC="$1"
@@ -301,12 +301,12 @@ ome_eval() {
     local EVAL="${PLUGIN}_${FUNC}"
     title "$EVAL"
 
-    if [ -f "`dirname $0`/plugins/$OME_OS/$PLUGIN" ]; then
-        . "`dirname $0`/plugins/$OME_OS/$PLUGIN"
+    if [ -f "`dirname $0`/../plugins/$OME_OS/$PLUGIN" ]; then
+        . "`dirname $0`/../plugins/$OME_OS/$PLUGIN"
 	    #echo "eval $EVAL"
         eval "$EVAL"
-    elif [ -f "`dirname $0`/plugins/common/$PLUGIN" ]; then
-        . "`dirname $0`/plugins/common/$PLUGIN"
+    elif [ -f "`dirname $0`/../plugins/$PLUGIN" ]; then
+        . "`dirname $0`/../plugins/$PLUGIN"
 	    #echo "eval $EVAL"
         eval "$EVAL"
     else
@@ -325,10 +325,10 @@ ome_parse() {
         "c")
             ome_config
             ;;
-        "i"|"add"|"install")
+        "i"|"install")
             ome_eval "install" $ARG1
             ;;
-        "d"|"delete"|"rm"|"remove"|"uninstall")            
+        "d"|"delete"|"rm"|"remove"|"uninstall")
             ome_eval "uninstall" $ARG1
             ;;
         "m"|"menu")
@@ -338,25 +338,17 @@ ome_parse() {
             ome_os_list
             ;;
         "o"|"open"|"n"|"new"|"a"|"add")
-            # ec "`dirname $0`/plugins/common/$ARG1"
-            ed "`dirname $0`/plugins/common/$ARG1"
+            $EDITOR "`dirname $0`/plugins/common/$ARG1"
             ;;
         "u"|"U"|"update"|"upgrade")
             me_upgrade
             ;;
         "p"|"push"|"commit")
-            ome_push
-            readp "push ome-config?"
-            if [ $? -eq 1 ]; then
-                emacs_push
-            fi
-
-            readp "push workspace?"
-            if [ $? -eq 1 ]; then
-                ws_push
-            fi
+            oh_my_env_push
+            oh_my_emacs_push
+            ws_push
             ;;
-        "x")
+        "v")
             ome_package_info
             ;;
         "t")
@@ -385,7 +377,7 @@ ome_parse() {
             echo
             ;;
         *)
-            echo "ome | version:2018.1008"
+            echo "ome | version:2018.1121"
             ;;
     esac
     cd $oldir
@@ -394,76 +386,3 @@ ome_parse() {
 #echo $@
 
 ome_parse $@
-
-function delay()
-{
-    sleep 0.2;
-}
-
-#
-# Description : print out executing progress
-# 
-CURRENT_PROGRESS=0
-function progress()
-{
-    PARAM_PROGRESS=$1;
-    PARAM_PHASE=$2;
-
-    if [ $CURRENT_PROGRESS -le 0 -a $PARAM_PROGRESS -ge 0 ]  ; then echo -ne "[..........................] (0%)  $PARAM_PHASE \r"  ; delay; fi;
-    if [ $CURRENT_PROGRESS -le 5 -a $PARAM_PROGRESS -ge 5 ]  ; then echo -ne "[#.........................] (5%)  $PARAM_PHASE \r"  ; delay; fi;
-    if [ $CURRENT_PROGRESS -le 10 -a $PARAM_PROGRESS -ge 10 ]; then echo -ne "[##........................] (10%) $PARAM_PHASE \r"  ; delay; fi;
-    if [ $CURRENT_PROGRESS -le 15 -a $PARAM_PROGRESS -ge 15 ]; then echo -ne "[###.......................] (15%) $PARAM_PHASE \r"  ; delay; fi;
-    if [ $CURRENT_PROGRESS -le 20 -a $PARAM_PROGRESS -ge 20 ]; then echo -ne "[####......................] (20%) $PARAM_PHASE \r"  ; delay; fi;
-    if [ $CURRENT_PROGRESS -le 25 -a $PARAM_PROGRESS -ge 25 ]; then echo -ne "[#####.....................] (25%) $PARAM_PHASE \r"  ; delay; fi;
-    if [ $CURRENT_PROGRESS -le 30 -a $PARAM_PROGRESS -ge 30 ]; then echo -ne "[######....................] (30%) $PARAM_PHASE \r"  ; delay; fi;
-    if [ $CURRENT_PROGRESS -le 35 -a $PARAM_PROGRESS -ge 35 ]; then echo -ne "[#######...................] (35%) $PARAM_PHASE \r"  ; delay; fi;
-    if [ $CURRENT_PROGRESS -le 40 -a $PARAM_PROGRESS -ge 40 ]; then echo -ne "[########..................] (40%) $PARAM_PHASE \r"  ; delay; fi;
-    if [ $CURRENT_PROGRESS -le 45 -a $PARAM_PROGRESS -ge 45 ]; then echo -ne "[#########.................] (45%) $PARAM_PHASE \r"  ; delay; fi;
-    if [ $CURRENT_PROGRESS -le 50 -a $PARAM_PROGRESS -ge 50 ]; then echo -ne "[##########................] (50%) $PARAM_PHASE \r"  ; delay; fi;
-    if [ $CURRENT_PROGRESS -le 55 -a $PARAM_PROGRESS -ge 55 ]; then echo -ne "[###########...............] (55%) $PARAM_PHASE \r"  ; delay; fi;
-    if [ $CURRENT_PROGRESS -le 60 -a $PARAM_PROGRESS -ge 60 ]; then echo -ne "[############..............] (60%) $PARAM_PHASE \r"  ; delay; fi;
-    if [ $CURRENT_PROGRESS -le 65 -a $PARAM_PROGRESS -ge 65 ]; then echo -ne "[#############.............] (65%) $PARAM_PHASE \r"  ; delay; fi;
-    if [ $CURRENT_PROGRESS -le 70 -a $PARAM_PROGRESS -ge 70 ]; then echo -ne "[###############...........] (70%) $PARAM_PHASE \r"  ; delay; fi;
-    if [ $CURRENT_PROGRESS -le 75 -a $PARAM_PROGRESS -ge 75 ]; then echo -ne "[#################.........] (75%) $PARAM_PHASE \r"  ; delay; fi;
-    if [ $CURRENT_PROGRESS -le 80 -a $PARAM_PROGRESS -ge 80 ]; then echo -ne "[####################......] (80%) $PARAM_PHASE \r"  ; delay; fi;
-    if [ $CURRENT_PROGRESS -le 85 -a $PARAM_PROGRESS -ge 85 ]; then echo -ne "[#######################...] (85%) $PARAM_PHASE \r"  ; delay; fi;
-    if [ $CURRENT_PROGRESS -le 90 -a $PARAM_PROGRESS -ge 90 ]; then echo -ne "[##########################] (100%) $PARAM_PHASE \r" ; delay; fi;
-    if [ $CURRENT_PROGRESS -le 100 -a $PARAM_PROGRESS -ge 100 ];then echo -ne 'Done!                                            \n' ; delay; fi;
-
-    CURRENT_PROGRESS=$PARAM_PROGRESS;
-
-}
-
-#################################### DEMO ######################################
-
-# This is a simple demostration
-
-# Important notice: below code is not necessary in your code, remember to remove before using
-
-################################################################################
-
-# echo "The task is in progress, please wait a few seconds"
-
-#Do some tasks
-# progress 10 Initialize
-#Do some tasks
-# progress 20 "Phase 1      "
-#Do some tasks
-# progress 40 "Phase 2      "
-#Do some tasks
-# progress 60 "Processing..."
-#Do some tasks
-# progress 80 "Processing..."
-#Do some tasks
-# progress 90 "Processing..."
-#Do some tasks
-# progress 100 "Done        "
-
-# echo
-# echo -ne "11111111111111111111\r"
-# sleep 1
-# echo -ne "22222222222222222222\r"
-# sleep 1
-# echo -ne "33333333333333333333\r"
-# sleep 1
-# echo -ne "                    \n"

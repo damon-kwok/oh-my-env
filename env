@@ -85,26 +85,6 @@ esac
 OME_MAKE="Ninja"
 MAKE_PROG="make"
 ################################################################################
-# Oh-My-Emacs
-# export OME_BIN=$(dirname $(readlink -f $0))
-# export OME_ROOT=$OME_BIN/..
-export OME_ROOT=$HOME/.oh-my-env
-export OME_BIN=$OME_ROOT/bin
-export PATH=$OME_BIN:$PATH
-
-export DEV_ROOT=$HOME/.dev
-export WS_BIN=$HOME/workspace/bin
-export BOOK_ROOT=$HOME/book
-export PROJ_ROOT=$HOME/projects
-export PATH=$WS_BIN:$PATH
-
-# Emacs
-# alias emacsd='emacs --daemon'
-export EDITOR='emacsclient -c -n'
-export ALTERNATE_EDITOR=""
-alias emacsc='emacsclient -c -n'
-alias emacst='TERM=xterm-256color emacsclient -t'
-
 # Ocaml: OPAM configuration
 if [ -d $HOME/.opam/opam-init/ ]; then
     case "$OME_SHELL" in
@@ -146,8 +126,6 @@ export PATH=$HOME/catkin_ws/bin:$PATH
 # fi
 # export PYTHON_BUILD_MIRROR_URL="http://mirrors.sohu.com/python/2.7.12/"
 
-export XLIB_SKIP_ARGB_VISUALS=1
-
 # User Settings
 # if [ -d /mingw64/bin2 ]; then
 # export PATH=/mingw64/bin:$PATH
@@ -160,7 +138,30 @@ export XLIB_SKIP_ARGB_VISUALS=1
 # export PKG_CONFIG_PATH=/mingw64/lib/pkgconfig:/mingw64/share/pkgconfig:$PKG_CONFIG_PATH
 # fi
 
-OME_PREFIX=$HOME/.local
+# Oh-My-Emacs
+# export OME_BIN=$(dirname $(readlink -f $0))
+# export OME_ROOT=$OME_BIN/..
+export OME_ROOT=$HOME/.oh-my-env
+export OME_BIN=$OME_ROOT/bin
+export PATH=$OME_BIN:$PATH
+
+export DEV_ROOT=$HOME/.ome_local/caches
+
+export OME_WS=$HOME/workspace
+export WS_BIN=$OME_WS/bin
+export PATH=$WS_BIN:$PATH
+
+export BOOK_ROOT=$HOME/book
+export PROJ_ROOT=$HOME/projects
+
+# Emacs
+# alias emacsd='emacs --daemon'
+export EDITOR='emacsclient -c -n'
+export ALTERNATE_EDITOR=""
+alias emacsc='emacsclient -c -n'
+alias emacst='TERM=xterm-256color emacsclient -t'
+
+OME_PREFIX=$HOME/.ome_local
 # if [ -d $OME_PREFIX ]; then
 export PATH=$OME_PREFIX/bin:$PATH
 export MANPATH=$OME_PREFIX/share/man:$MANPATH
@@ -213,3 +214,4 @@ alias wget='wget -c'
 if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
     export LANG=en_US.UTF-8
 fi
+export XLIB_SKIP_ARGB_VISUALS=1

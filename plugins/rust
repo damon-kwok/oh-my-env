@@ -25,21 +25,25 @@ rust_install() {
     
     tip "install rust"
     if [ "`command -v rustup`" = "" ]; then
-        tip "install rustup"
+        # tip "install rustup"
         # curl https://sh.rustup.rs -sSf | sh -s
         # curl https://cdn.jsdelivr.net/gh/rust-lang-nursery/rustup.rs/rustup-init.sh -sSf | sh -s
-        
-        cd $HOME/.cargo/
-        rm -rf ./rustup-init.sh
-        
-        tip" wget https://sh.rustup.rs"
-        # wget https://sh.rustup.rs
-        wget https://cdn.jsdelivr.net/gh/rust-lang-nursery/rustup.rs/rustup-init.sh
-        perl -pi -e 's|"https://static.rust-lang.org/rustup/dist"|"https://mirrors.ustc.edu.cn/rust-static/rustup"|g' ./rustup-init.sh
-        
-        tip "rustup-init"
-        chmod +x ./rustup-init.sh
-        ./rustup-init.sh
+
+        readp "install rustup with china mirror?"
+        if [ $? -eq 1 ]; then
+            cd $HOME/.cargo/
+            rm -rf ./rustup-init.sh
+            
+            tip" wget https://sh.rustup.rs"
+            wget https://cdn.jsdelivr.net/gh/rust-lang-nursery/rustup.rs/rustup-init.sh
+            perl -pi -e 's|"https://static.rust-lang.org/rustup/dist"|"https://mirrors.ustc.edu.cn/rust-static/rustup"|g' ./rustup-init.sh
+            
+            tip "rustup-init"
+            chmod +x ./rustup-init.sh
+            ./rustup-init.sh
+        else
+            curl https://sh.rustup.rs -sSf | sh -s
+        fi
 
         tip "rust set env"
         rust_set_env

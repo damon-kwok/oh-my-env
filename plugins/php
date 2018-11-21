@@ -126,7 +126,7 @@ phpenv_set_env
 
 phpbrew_set_env() {
     if [ -f "$HOME/.phpbrew/bashrc" ]; then
-        export PHPBREW_SET_PROMPT=1
+        # export PHPBREW_SET_PROMPT=1
         export PHPBREW_RC_ENABLE=1
         . $HOME/.phpbrew/bashrc
     fi

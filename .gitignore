@@ -7,6 +7,7 @@ node_modules/
 rtags_indexes/
 .ccls
 .cquery
-build/
-.vscode/
 .ruby-version
+/.vscode/
+/build/
+/prefix/
