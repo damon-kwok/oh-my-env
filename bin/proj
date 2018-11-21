@@ -144,7 +144,8 @@ blog_push() {
 
 ws_push() {
     local oldir=`pwd`
-    cd $HOME/workspace
+    cd $OME_WS
+    git status
     readp "push workspace?"
     if [ $? -eq 1 ]; then
         git_push
@@ -155,6 +156,7 @@ ws_push() {
 oh_my_env_push() {
     local oldir=`pwd`
     cd $HOME/.oh-my-env
+    git status
     readp "push oh-my-env?"
     if [ $? -eq 1 ]; then
         git_push
@@ -165,6 +167,7 @@ oh_my_env_push() {
 oh_my_emacs_push() {
     local oldir=`pwd`
     cd $HOME/.oh-my-emacs
+    git status
     readp "push oh-my-emacs?"
     if [ $? -eq 1 ]; then
         git_push

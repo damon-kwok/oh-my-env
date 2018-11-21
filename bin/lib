@@ -496,7 +496,6 @@ link_upgrade() {
 }
 
 git_pull() {
-    tip "git_pull"    
     git reset
     git pull
 
@@ -504,7 +503,6 @@ git_pull() {
 }
 
 git_push() {
-    tip "git_push"    
     git reset
     git pull
     git add .
@@ -521,8 +519,6 @@ git_push() {
 }
 
 git_push_a() {
-    tip "git_push_a"
-    
     git reset
     git pull
     git add .
