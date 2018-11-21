@@ -6,27 +6,31 @@ oh_my_emacs_push() {
     git_push
     cd $oldir
 }
-link-init-el() {
+link_init_el() {
     tip "link"
-    bkdir=~/emacs-config-backup/`date +%Y-%m-%d@%H-%M-%S`
+    bkdir=$HOME/emacs-config-backup/`date +%Y-%m-%d@%H-%M-%S`
     mkdir -p $bkdir
 
-    if [ -e ~/.emacs ]; then
-	mv ~/.emacs $bkdir
+    if [ -e $HOME/.emacs ]; then
+	    mv $HOME/.emacs $bkdir
+        echo "your .emacs backup to '$bkdir'"
     fi
 
-    if [ -e ~/emacs-config ]; then
-	mv ~/emacs-config $bkdir
-    fi
+    # if [ -r $HOME/emacs-config ]; then
+        # echo "mv 2"
+	    # mv $HOME/emacs-config $bkdir
+    # fi
+
+    rm -rf $HOME/emacs-config
 
     tip "link .emacs"
-    cp -a $OME_ROOT/emacs-config/init.el ~/.emacs 
-    ln -s $OME_ROOT/emacs-config ~/emacs-config 
+    cp -a $HOME/.oh-my-emacs/emacs-config/init.el $HOME/.emacs 
+    ln -s $HOME/.oh-my-emacs/emacs-config $HOME/emacs-config 
 }
 
 oh_my_emacs_install() {
     github_ssh_upgrade damon-kwok/oh-my-emacs $HOME/.oh-my-emacs
-    link-init-el
+    link_init_el
 }
 
 oh_my_emacs_uninstall() {

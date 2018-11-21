@@ -707,7 +707,7 @@ ome_replace() {
     local oldir=`pwd`
     tip "ome_replace ($1) to ($2)"
     local bakdir=$HOME/ome_backup_`date +%Y-%m-%d@%H-%M-%S`
-    midir -p $bakdir
+    mkdir -p $bakdir
     perl -pi -e 's|"$1"|"$2"|g' $HOME/.oh-my-env/bin/*
     mv $HOME/.oh-my-env/*.bak $bakdir
     perl -pi -e 's|"$1"|"$2"|g' $HOME/.oh-my-env/plugins/*
