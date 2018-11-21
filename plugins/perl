@@ -1,0 +1,21 @@
+#!/usr/bin/env sh
+
+perl_install() {
+    local oldir=`pwd`
+    cd $OME_PREFIX/bin/
+    curl -L https://cpanmin.us/ -o cpanm
+    chmod +x cpanm
+    cd $oldir
+}
+
+perl_uninstall() {
+    echo_error "'perl_uninstall' not implemented"
+}
+
+perl_exist_p() {
+    echo_error "'perl_exist_p' not implemented"
+}
+
+perl_info() {
+    ome_info "Perl" "`perl -V | head -n 1 | cut -c 15-57`"
+}

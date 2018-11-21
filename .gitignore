@@ -1,0 +1,12 @@
+*.elc
+.#*
+rebar.lock
+rebar3.crashdump
+erl_crash.dump
+node_modules/
+rtags_indexes/
+.ccls
+.cquery
+build/
+.vscode/
+.ruby-version

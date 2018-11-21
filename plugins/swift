@@ -1,0 +1,19 @@
+#!/usr/bin/env sh
+
+swift_install() {
+    local oldir=`pwd`
+    tip "swift"
+    cd $oldir
+}
+
+swift_uninstall() {
+    echo_error "'swift_uninstall' not implemented"
+}
+
+swift_exist_p() {
+    echo_error "'swift_exist_p' not implemented"
+}
+
+swift_info() {
+    echo_error ""
+}

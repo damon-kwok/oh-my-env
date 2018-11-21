@@ -1,0 +1,17 @@
+#!/usr/bin/env sh
+
+ros_install() {
+    echo_error "'ros_install' not implemented"
+}
+
+ros_uninstall() {
+    echo_error "'ros_uninstall' not implemented"
+}
+
+ros_exist_p() {
+    echo_error "'ros_exist_p' not implemented"
+}
+
+ros_info() {
+    echo_error ""
+}

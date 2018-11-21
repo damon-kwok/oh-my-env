@@ -1,0 +1,25 @@
+#!/usr/bin/env sh
+
+carp_install() {
+    ome_check_install "stack" "haskell"
+    
+    mkdir -p ~/Carp
+    export CARP_DIR=~/Carp/
+
+    github_upgrade carp-lang/Carp $DEV_ROOT/carp
+    cd $DEV_ROOT/carp/
+    stack build
+    stack install
+}
+
+carp_uninstall() {
+    echo_error "'carp_uninstall' not implemented"
+}
+
+carp_exist_p() {
+    echo_error "'carp_exist_p' not implemented"
+}
+
+carp_info() {
+    echo_error ""
+}

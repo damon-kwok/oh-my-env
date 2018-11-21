@@ -1,0 +1,180 @@
+#!/usr/bin/env sh
+
+python_pyenv_install() {
+    github_upgrade pyenv/pyenv $HOME/.pyenv
+
+    pyenv_set_env
+    
+    tip "install python"
+    pyenv install $PYTHON2_VERSION
+    pyenv install $PYTHON3_VERSION
+    pyenv global $PYTHON3_VERSION
+    
+    tip "pyenv whence rackup"
+    pyenv whence rackup
+}
+
+python_bin_install() {
+    #deps
+    get_os_type
+    case $OME_OS in
+        # Linux
+        # $OS_DEBIAN) ;;
+        # $OS_UBUNTU) ;;
+        $OS_DEBIAN|$OS_UBUNTU)
+            sudo apt install python2 python3
+            ;;
+        # $OS_REDHAT) ;;
+        # $OS_FEDORA) ;;
+        $OS_REDHAT|$OS_FEDORA)
+            sudo yum install python2 python3;;
+        $OS_ARCH)
+            sudo pacman -S python2 python3
+            ;;
+        $OS_GENTOO)
+            emerge python2 python3
+            ;;
+        $OS_SUSE) ;;
+        $OS_SLACKWARE) ;;
+        $OS_NIXOS) ;;
+        $OS_VOID) ;;
+        $OS_ALPINE) ;;
+        $OS_MAGEIA) ;;
+        $OS_SLITAZ) ;;
+        $OS_GUIXSD) ;;
+        # Unix
+        $OS_MACOS)
+            brew install python2 python3
+            ;;
+        $OS_AIX) ;;
+        $OS_SOLARIS) ;;
+        $OS_FREEBSD)
+            sudo pkg install python2 python3
+            ;;
+        $OS_OPENBSD)
+            sudo pkg install python2 python3 #py27-sqlite3 sqlite3
+            ;;
+        $OS_NETBSD) ;;
+        $OS_DFBSD) ;;
+        # Windows
+        $OS_CYGWIN)
+            pacman -S python2 python3
+            ;;
+        $OS_MSYS2)
+            apt install python2 python3
+            ;;
+        # Other
+        $OS_UNKNOW) ;;
+    esac
+}
+
+python_install() {
+    local oldir=`pwd`
+
+    # python_bin_install
+    python_pyenv_install
+    
+    # if ! command -v pip2 >/dev/null 2>&1; then
+	if [ "`command -v pip2`" = "" ]; then
+        tip "install pip2"
+        cd $HOME/Downloads/
+        if [ ! -f get-pip.py ]; then
+            curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py            
+        fi
+        python2 get-pip.py --user
+    fi
+
+    # if ! command -v pip3 >/dev/null 2>&1; then
+	if [ "`command -v pip3`" = "" ]; then
+        tip "install pip3"
+        cd $HOME/Downloads/
+        if [ ! -f get-pip.py ]; then
+            curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py            
+        fi
+        python3 get-pip.py --user
+    fi
+    
+    tip "pip upgrade"
+    pip2 install --user -U pip
+    pip3 install --user -U pip
+
+    tip "install pipenv"
+    pip3 install --user -U pipenv
+
+    tip "install poetry"
+    pip3 install --user poetry
+
+    tip "install hatch"
+    pip3 install --user hatch
+
+    tip "install python-language-server"
+    pip3 install --user -U python-language-server
+
+    tip "install build tools"
+    github_upgrade chromium/gyp $DEV_ROOT/gyp
+    cd $DEV_ROOT/gyp/
+    pip2 install --user -U .
+
+    git_upgrade "https://gitlab.com" ita1024/waf $DEV_ROOT/waf
+    cd $DEV_ROOT/waf/
+    python3 ./waf-light configure build
+    cp -rf ./waf $HOME/bin/
+    
+    git_upgrade "https://github.com" SCons/scons $DEV_ROOT/scons
+    cd $DEV_ROOT/scons/
+    python2 bootstrap.py build/scons
+    cd $DEV_ROOT/scons/build/scons/
+    pip2 install --user -U .
+    
+    # pip2.7 install ipython jupyter rope jedi flake8 importmagic autopep8 yapf
+    tip "install ebook build tool"
+    pip3 install --user -U jinja2
+    pip3 install --user -U markupsafe
+    pip3 install --user -U pygments
+    pip3 install --user -U sphinx
+    pip3 install --user -U docutils
+    pip2 install --user -U wsgiref
+
+    tip "install McCabe complexity checker"
+    pip2 install --user -U mccabe
+    pip3 install --user -U mccabe
+    cd $oldir
+}
+
+python_uninstall() {
+    sudo python2 -m pip uninstall -y pip setuptools
+    sudo python3 -m pip uninstall -y pip setuptools
+}
+
+python_exist_p() {
+    echo_error "'python_exist_p' not implemented"
+}
+
+python_info() {
+    if [ "`command -v python2`" != "" ]; then
+        PYTHON2_VERSION="`python2 --version 2>&1 | cut -c 8-`"
+    else
+        PYTHON2_VERSION="!miss!"
+    fi
+
+    if [ "`command -v python3`" != "" ]; then
+        PYTHON3_VERSION="`python3 --version | cut -c 8-`"
+    else
+        PYTHON3_VERSION="!miss!"
+    fi
+    if [ "`command -v python2`" != "" ] || [ "`command -v python3`" != "" ]; then
+        ome_info "Python" "py2:$PYTHON2_VERSION | py3:$PYTHON3_VERSION"
+    fi
+}
+
+PYTHON2_VERSION=2.7.15
+PYTHON3_VERSION=3.7.1
+pyenv_set_env() {
+    export PYENV_ROOT="$HOME/.pyenv"
+    export PATH="$PYENV_ROOT/bin:$PATH"
+
+    if command -v pyenv 1>/dev/null 2>&1; then
+        eval "$(pyenv init -)"
+    fi
+
+}

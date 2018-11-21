@@ -1,0 +1,17 @@
+#!/usr/bin/env sh
+
+unity3d_install() {
+    echo_error "'unity3d_install' not implemented"
+}
+
+unity3d_uninstall() {
+    echo_error "'unity3d_uninstall' not implemented"
+}
+
+unity3d_exist_p() {
+    echo_error "'unity3d_exist_p' not implemented"
+}
+
+unity3d_info() {
+    echo_error ""
+}

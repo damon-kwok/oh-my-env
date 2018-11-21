@@ -1,0 +1,7 @@
+#+TITLE:     Common
+#+AUTHOR:    damon-kwok
+#+EMAIL:     damon-kwok@outlook.com
+#+DATE:      2018-10-08
+#+OPTIONS: toc:nil creator:nil author:nil email:nil timestamp:nil html-postamble:nil
+#+TODO: TODO DOING DONE
+

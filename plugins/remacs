@@ -1,0 +1,25 @@
+#!/usr/bin/env sh
+
+remacs_install() {
+    sudo apt install texinfo libjpeg-dev libtiff-dev \
+         libgif-dev libxpm-dev libgtk-3-dev gnutls-dev \
+         libncurses5-dev libxml2-dev
+    
+    github_upgrade Wilfred/remacs $DEV_ROOT/remacs    
+    cd $DEV_ROOT/remacs/
+    ./autogen.sh --prefix=$OME_PREFIX --enable-rust-debug
+    #./configure --prefix=$OME_PREFIX --enable-rust-debug
+    make install
+}
+
+remacs_uninstall() {
+    echo_error "'remacs_uninstall' not implemented"
+}
+
+remacs_exist_p() {
+    echo_error "'remacs_exist_p' not implemented"
+}
+
+remacs_info() {
+    echo_error ""
+}

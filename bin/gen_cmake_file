@@ -1,0 +1,17 @@
+#!/usr/bin/env sh
+
+# . /opt/ros/kinetic/setup.bash
+. $HOME/.oh-my-env/env
+
+if [ ! -d $1 ]; then
+    mkdir -p $1/src
+    echo "#include <stdio.h>" >> $1/src/main.c
+    echo "" >> $1/src/main.c
+    echo "int main(int argc, char* argv[])" >> $1/src/main.c
+    echo "{" >> $1/src/main.c
+    echo "    printf(\"hello,world!\");" >> $1/src/main.c
+    echo "    return 0;" >> $1/src/main.c
+    echo "}" >> $1/src/main.c
+fi
+
+auto_gen_cmake_file $1

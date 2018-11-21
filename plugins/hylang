@@ -1,0 +1,23 @@
+#!/usr/bin/env sh
+
+hylang_install() {
+    ome_check_install "pip3" "python"
+    
+    # pip3 install --user -U git+https://github.com/hylang/hy.git
+    
+    github_upgrade hylang/hy $DEV_ROOT/hy
+    cd $DEV_ROOT/hy/
+    pip3 install --user -U .
+}
+
+hylang_uninstall() {
+    echo_error "'hylang_uninstall' not implemented"
+}
+
+hylang_exist_p() {
+    echo_error "'hylang_exist_p' not implemented"
+}
+
+hylang_info() {
+    echo_error ""
+}

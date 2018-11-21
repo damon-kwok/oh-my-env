@@ -1,0 +1,17 @@
+#!/usr/bin/env sh
+
+idris_install() {
+    echo_error "'idris_install' not implemented"
+}
+
+idris_uninstall() {
+    echo_error "'idris_uninstall' not implemented"
+}
+
+idris_exist_p() {
+    echo_error "'idris_exist_p' not implemented"
+}
+
+idris_info() {
+    echo_error ""
+}

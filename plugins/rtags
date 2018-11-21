@@ -1,0 +1,94 @@
+#!/usr/bin/env sh
+
+rtags_install() {
+    tip "install deps"
+    get_os_type
+    case $OME_OS in
+        # Linux
+        # $OS_DEBIAN) ;;
+        # $OS_UBUNTU) ;;
+        $OS_DEBIAN|$OS_UBUNTU)
+            sudo apt install libssl-dev zlibc libcppunit-dev
+            ;;
+        # $OS_REDHAT) ;;
+        # $OS_FEDORA) ;;
+        $OS_REDHAT|$OS_FEDORA)
+            sudo yum install openssl-devel zlib-devel cppunit
+            ;;
+        $OS_ARCH)
+            sudo pacman -S openssl zlib cppunit
+            ;;
+        $OS_GENTOO) ;;
+        $OS_SUSE) ;;
+        $OS_SLACKWARE) ;;
+        $OS_NIXOS) ;;
+        $OS_VOID) ;;
+        $OS_ALPINE) ;;
+        $OS_MAGEIA) ;;
+        $OS_SLITAZ) ;;
+        $OS_GUIXSD) ;;
+        # Unix
+        $OS_MACOS) ;;
+        $OS_AIX) ;;
+        $OS_SOLARIS) ;;
+        $OS_FREEBSD)
+            pkg install openssl zlib libclang cppunit
+            ;;
+        $OS_OPENBSD) ;;
+        $OS_NETBSD) ;;
+        $OS_DFBSD) ;;
+        # Windows
+        $OS_CYGWIN)
+            apt-cyg install openssl-devel zlib-devel libclang-devel cppunit
+            ;;
+        $OS_MSYS2) ;;
+        # Other
+        $OS_UNKNOW) ;;
+    esac
+
+
+    tip "install rtags"
+    github_upgrade Andersbakken/rtags $DEV_ROOT/rtags
+    mkdir -p $DEV_ROOT/rtags/build
+    cd $DEV_ROOT/rtags/build/
+
+    # -DLIBCLANG_LIBDIR=$HOME/lib
+    # -DCMAKE_CXX_COMPILER=g++
+    cmake .. -G "$OME_MAKE" \
+          -DCMAKE_PREFIX_PATH=$HOME \
+          -DCMAKE_EXPORT_COMPILE_COMMANDS=1 \
+          -DCMAKE_CXX_STANDARD=11 \
+          -DLIBCLANG_LLVM_CONFIG_EXECUTABLE=llvm-config
+    cmake --build . --use-stderr --config Release
+    
+    cp -rf $DEV_ROOT/rtags/bin/* $DEV_ROOT/rtags/build/bin/
+    cp -rf $DEV_ROOT/rtags/build/bin/* $HOME/bin/ 
+    
+    tip "install irony-server"
+    github_upgrade Sarcasm/irony-mode $DEV_ROOT/irony-mode
+    mkdir -p $DEV_ROOT/irony-mode/build
+    cd $DEV_ROOT/irony-mode/build/
+    # -DCMAKE_INSTALL_PREFIX=$OME_PREFIX/.emacs.d/irony
+    # -DCMAKE_CXX_COMPILER=g++
+    # -DCMAKE_PREFIX_PATH=$LLVM_ROOT
+    cmake ../server/ -G "$OME_MAKE" \
+          -DCMAKE_INSTALL_PREFIX=$OME_PREFIX \
+          -DCMAKE_EXPORT_COMPILE_COMMANDS=1 \
+          -DCMAKE_CXX_STANDARD=11
+    cmake --build . --use-stderr --config Release --target install
+
+    # config: clang-format
+    clang_format_install
+}
+
+rtags_uninstall() {
+    echo_error "'rtags_uninstall' not implemented"
+}
+
+rtags_exist_p() {
+    echo_error "'rtags_exist_p' not implemented"
+}
+
+rtags_info() {
+    echo_error ""
+}

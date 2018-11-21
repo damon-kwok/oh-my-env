@@ -1,0 +1,360 @@
+#!/usr/bin/env sh
+
+mkdir -p $HOME/Downloads/
+
+
+toolchain_install() {
+    local oldir=`pwd`
+    shell_install
+    
+    cmake_install
+    # gyp_install
+    # waf_install
+
+    # core toolchain
+    perl_install
+    nvm_install
+    python_install
+    jvm_install
+    rust_install
+    
+    # c++
+    llvm_install
+    clang_format_install
+    cquery_install
+    # ccls_install
+    # rtags_install
+    
+    # email
+    mu4e_install    
+
+    # extra toolchain
+    ue4_install
+    golang_install
+    erlang_install
+    elixir_install
+    nim_install
+
+    #haskell
+    # if [ ! -d "$HOME/.stack/" ]; then
+    # mkdir $HOME/.stack/
+    # cp $OME_ROOT/cache/bin/config.yaml $HOME/.stack/
+    # fi
+    # stack update
+    # stack upgrade
+
+    # tip "install lein + clojure"
+    # cd $OME_BIN
+    # # if command -v bash-it >/dev/null 2>&1; then
+    # # curl -O https://raw.githubusercontent.com/technomancy/leiningen/stable/bin/lein.bat
+    # # curl -O https://raw.githubusercontent.com/technomancy/leiningen/stable/bin/lein
+    # chmod +x ./lein
+    # lein upgrade
+    cd $oldir
+}
+
+upgrade() {
+    local oldir=`pwd`
+    sudo apt update && sudo apt dist-upgrade && sudo apt autoremove && \
+	    rosdep update && bash-it update && \
+	    rebar3 local upgrade && lein upgrade && \
+	    cargo update && rustup component add rust-src && cargo install --force racer
+
+    toolchain_install
+    cd $oldir
+}
+
+dptrp1_install() {
+    local oldir=`pwd`
+    github_upgrade janten/dpt-rp1-py $DEV_ROOT/dpt-rp1-py
+    cd $DEV_ROOT/dpt-rp1-py
+    # sudo python3 setup.py install
+    pip3 install --user .
+    cd $oldir
+}
+
+dptrp1_run() {
+    local oldir=`pwd`
+    local ip=$1
+    local opt=$2
+    dptrp1 --client-id $HOME/workspace/conf/dptrp1/deviceid.dat \
+           --key $HOME/workspace/conf/dptrp1/privatekey.dat \
+           --addr $ip \
+           $opt $3 $4 $5 $6
+    cd $oldir
+}
+
+dptrp1_register() {
+    local oldir=`pwd`
+    local ip=$1
+    dptrp1 --client-id $HOME/workspace/conf/dptrp1/deviceid.dat \
+           --key $HOME/workspace/conf/dptrp1/privatekey.dat \
+           --addr $ip \
+           register
+    cd $oldir
+}
+
+dptrp1_list() {
+    local ip=$1
+    dptrp1 --client-id $HOME/workspace/conf/dptrp1/deviceid.dat \
+           --key $HOME/workspace/conf/dptrp1/privatekey.dat \
+           --addr $ip \
+           list-documents
+}
+
+dptrp1_upload() {
+    local ip=$1
+    local file="$2"
+    if [ ! -n "$3" ]; then
+        local folder=""
+    else
+        local folder="$3/"
+    fi
+    
+    dptrp1 --client-id $HOME/workspace/conf/dptrp1/deviceid.dat \
+           --key $HOME/workspace/conf/dptrp1/privatekey.dat \
+           --addr $ip \
+           upload "$file" "Document/Received/$folder`basename \"$file\"`"
+}
+
+dptrp1_download() {
+    local ip=$1
+    local file=$2
+    mkdir -p $HOME/Downloads/dptrp1/
+    echo "download" "Document/Received/$file" "$HOME/Downloads/dptrp1/`basename \"$file\"`"
+    dptrp1 --client-id $HOME/workspace/conf/dptrp1/deviceid.dat \
+           --key $HOME/workspace/conf/dptrp1/privatekey.dat \
+           --addr $ip \
+           download "Document/Received/$file" "$HOME/Downloads/dptrp1/`basename \"$file\"`" 
+}
+
+dptrp1_delete() {
+    local ip=$1
+    local file=$2
+    
+    dptrp1 --client-id $HOME/workspace/conf/dptrp1/deviceid.dat \
+           --key $HOME/workspace/conf/dptrp1/privatekey.dat \
+           --addr $ip \
+           delete "Document/Received/$file"
+}
+
+blog_localserver() {
+    local oldir=`pwd`
+    cd $HOME/workspace/projects/nodejs/http_server
+    npm update
+    node $HOME/workspace/projects/nodejs/http_server/index.js $HOME/projects/me/blog
+    cd $oldir
+}
+
+steam_on_freebsd() {
+    local oldir=`pwd`
+    # home: https://github.com/SteamOnFreeBSD/SteamOnFreeBSD
+    cd $HOME
+    if [ "$OME_OS" == "$OS_FREEBSD" ]; then
+        sudo pkg install deb2targz rpm2cpio doas
+        if [ ! -e /usr/local/etc/doas.conf ]; then
+	        touch /usr/local/etc/doas.conf
+	        sudo sh -c 'echo "permit nopass keepenv `whoami`" >> /usr/local/etc/doas.conf'
+        fi
+
+        if [ ! -e steam.deb ]; then		
+	        fetch http://media.steampowered.com/client/installer/steam.deb
+        fi
+
+        deb2targz steam.deb
+        tar -zxvf steam.tar.gz -C /
+        # git clone https://github.com/SteamOnFreeBSD/SteamOnFreeBSD.git
+        github_upgrade SteamOnFreeBSD/SteamOnFreeBSD $HOME/SteamOnFreeBSD
+        cd $HOME/SteamOnFreeBSD
+        
+        ./install_x86_64.sh
+        ./steamrun
+    fi
+    cd $oldir
+}
+
+wine_install() {
+    local oldir=`pwd`
+    sudo dpkg --add-architecture i386
+    wget -nc https://dl.winehq.org/wine-builds/Release.key
+    sudo apt-key add Release.key
+    sudo apt-add-repository https://dl.winehq.org/wine-builds/ubuntu/
+    cd $oldir
+}
+
+show_os() {
+    if which apt-get > /dev/null; then
+        echo "Debian/Ubuntu/Mint"
+    elif which dnf > /dev/null; then
+        echo "Fedora/Redhat/CentOS"
+        sudo dnf install automake libcurl-devel
+    elif which yum > /dev/null; then
+        echo "CentOS"
+        sudo yum install zlib-devel
+    elif which pkg > /dev/null; then
+        echo "FreeBSD"
+    elif which yaourt > /dev/null; then
+        echo "ArchLinux/Manjaro"
+    elif which pacman > /dev/null; then
+        echo "MSYS2"
+    elif which nin-shell > /dev/null; then
+        echo "NixOS"
+    fi
+
+    # Other Linux List: Alpine Slitaz Mageia Gentoo openSUSE Solaris(Solaris-OpenCSW:like windows-cygwin)
+    # https://git-scm.com/download/linux
+}
+
+cinnamon_install() {
+    tip "cinnamon_install"
+    # https://launchpad.net/~embrosyn/+archive/ubuntu/cinnamon
+    sudo add-apt-repository -y ppa:embrosyn/cinnamon
+    sudo apt-get update
+    sudo apt install -y cinnamon
+
+    # bsd
+    sudo pkg install cinnamon cinnamon-desktop \
+         cinnamon-menus cinnamon-screensaver \
+         cinnamon-session \
+         cinnamon-settings-daemon \
+         cinnamon-translations
+}
+
+
+sogou_arch_install() {
+    sudo pacman -S qtwebkit-bin
+    sudo pacman -S fcitx-im fcitx-configtool
+    trizen -S fcitx-sogoupinyin
+
+    if [ ! -e $HOME/.xprofile ]; then
+        echo "export GTK_IM_MODULE=fcitx" >> $HOME/.xprofile
+        echo "export QT_IM_MODULE=fcitx" >> $HOME/.xprofile
+        echo "export XMODIFIERS=\"@im=fcitx\"" >> $HOME/.xprofile
+    fi
+}
+
+sogou_install () {
+    if [ ! -f $HOME/Downloads/sogoupinyin_2.2.0.0108_amd64.deb ]; then
+        #curl -O http://cdn2.ime.sogou.com/dl/index/1524572264/sogoupinyin_2.2.0.0108_amd64.deb?st=82X4cdqzv85LoI-o_GHzrQ&e=1536661455&fn=sogoupinyin_2.2.0.0108_amd64.deb
+curl -O http://cdn2.ime.sogou.com/dl/index/1524572264/sogoupinyin_2.2.0.0108_amd64.deb?st=6EKJ-QquFZM0_P-0-vjv4g&e=1542685529&fn=sogoupinyin_2.2.0.0108_amd64.deb
+        #wget http://cdn2.ime.sogou.com/dl/index/1524572264/sogoupinyin_2.2.0.0108_amd64.deb?st=82X4cdqzv85LoI-o_GHzrQ&e=1536661455&fn=sogoupinyin_2.2.0.0108_amd64.deb
+    fi
+    cd $HOME/Downloads/
+    sudo dpkg -i ./sogoupinyin_2.2.0.0108_amd64.deb
+    sudo apt install -f -y
+    sudo dpkg -i ./sogoupinyin_2.2.0.0108_amd64.deb
+}
+
+swapkey_init() {
+    if [ ! -e $HOME/.Xmodmap ]; then
+        echo "!" >> $HOME/.Xmodmap
+        echo "! Swap Caps_Lock and Control_R" >> $HOME/.Xmodmap
+        echo "!" >> $HOME/.Xmodmap
+        echo "remove Lock = Caps_Lock" >> $HOME/.Xmodmap
+        echo "remove Control = Control_R" >> $HOME/.Xmodmap
+        echo "keysym Control_R = Caps_Lock" >> $HOME/.Xmodmap
+        echo "keysym Caps_Lock = Control_R" >> $HOME/.Xmodmap
+        echo "add Lock = Caps_Lock" >> $HOME/.Xmodmap
+        echo "add Control = Control_R" >> $HOME/.Xmodmap
+    fi
+
+    find_str "xmodmap" $HOME/.xinitrc
+    if [ $? -eq 0 ]; then
+        echo "xmodmap $HOME/.Xmodmap" >> $HOME/.xinitrc
+    fi
+    xmodmap $HOME/.Xmodmap
+}
+
+xbindkey_install() {
+    sudo apt install xbindkeys dmenu
+
+    # gen $HOME/.xbindkeysrc
+    # if [ ! -f $HOME/.xbindkeysrc ]; then
+    #   xbindkeys --defaults > $HOME/.xbindkeysrc
+    # fi
+    
+    # gen $HOME/.xbindkeysrc.scm
+    if [ ! -f $HOME/.xbindkeysrc.scm ]; then
+        xbindkeys --defaults-guile > $HOME/.xbindkeysrc.scm
+        echo "(xbindkey '(control alt e) \"dmenu_run\")" >> $HOME/.xbindkeysrc.scm 
+    fi
+}
+
+grub_nomodeset() {
+    local bakname="grub-`date +%Y-%m-%d@%H-%M-%S`.cfg"
+    cp /boot/grub/grub.cfg $HOME/$bakname
+    sudo perl -pi -e 's|quiet splash|nomodeset|g' /boot/grub/grub.cfg
+}
+
+office_upgrade() {
+    local oldir=`pwd`
+    
+    tip "dns"
+    dns_upgrade "10.2.10.206"
+
+    tip "hosts"
+	host_upgrade "10.2.35.202" "docker.51vr.local"
+	host_upgrade "10.2.35.202" "rancher.51vr.local"
+	host_upgrade "10.2.35.204" "git.51vr.local"
+	host_upgrade "10.2.35.206" "shp4proxy.51vr.local"
+	host_upgrade "10.2.35.206" "artfactory.51vr.local"
+
+    tip "git config"
+    git config --global user.email "563066990@qq.com"
+    git config --global user.name "damon-kwok"
+    
+    cd $oldir
+}
+
+i3_install() {
+    local olddir=`pwd`
+    echo "i3_install"
+    # {i3-wm } roxterm
+    sudo apt install -y i3 i3status i3lock dmenu feh xcompmgr scrot alsa-utils xrandr arandr    
+    cd $olddir
+}
+
+i3_mod_config() {
+    local olddir=`pwd`
+    echo "i3_config"
+    cd $HOME/.config/i3/
+    perl -pi -e 's|mod+semicolon|mod+apostrophe|g' $HOME/.config/i3/config
+    perl -pi -e 's|mod+j|mod+semicolon|g' $HOME/.config/i3/config
+    perl -pi -e 's|mod+k|mod+slash|g' $HOME/.config/i3/config
+    perl -pi -e 's|mod+l|mod+bracketleft|g' $HOME/.config/i3/config
+
+    perl -pi -e 's|mod+Shift+semicolon|mod+Shift+apostrophe|g' $HOME/.config/i3/config
+    perl -pi -e 's|mod+Shift+j|mod+Shift+semicolon|g' $HOME/.config/i3/config
+    perl -pi -e 's|mod+Shift+k|mod+Shift+slash|g' $HOME/.config/i3/config
+    perl -pi -e 's|mod+Shift+l|mod+Shift+bracketleft|g' $HOME/.config/i3/config
+
+    cd $olddir
+}
+
+arandr_run() {
+    xrandr --output DVI-D-0 --off \
+           --output HDMI-0 --off \
+           --output DP-5 --off \
+           --output DP-4 --mode 1920x1080 --pos 1920x0 --rotate left \
+           --output DP-3 --off \
+           --output DP-2 --mode 1920x1080 --pos 0x735 --rotate normal \
+           --output DP-1 --off \
+           --output DP-0 --off
+}
+
+arandr_load() {
+    . $HOME/.screenlayout/default.sh
+}
+
+wine_install() {
+    local olddir=`pwd`
+    tip "wine_install"
+    sudo dpkg --add-architecture i386
+    wget -nc https://dl.winehq.org/wine-builds/Release.key
+    sudo apt-key add Release.key
+    sudo apt-add-repository -y https://dl.winehq.org/wine-builds/ubuntu/
+
+    sudo apt update
+    sudo apt install -y -_install-recommends wine-stable
+    cd $olddir
+}

@@ -1,0 +1,172 @@
+#!/usr/bin/env sh
+
+# rustup china
+# https://mirrors.ustc.edu.cn/help/rust-static.html
+# http://www.cnblogs.com/hadex/p/8568796.html
+
+# Rust Creates china mirror
+# https://mirrors.ustc.edu.cn/help/crates.io-index.html
+
+rust_install() {
+    local oldir=`pwd`
+    export RUSTUP_DIST_SERVER=https://mirrors.ustc.edu.cn/rust-static
+    export RUSTUP_UPDATE_ROOT=https://mirrors.ustc.edu.cn/rust-static/rustup
+
+    tip "set cargo mirror"
+    if [ ! -f $HOME/.cargo/config ]; then
+	    mkdir -p $HOME/.cargo
+        echo "[source.crates-io]" >> $HOME/.cargo/config
+        echo "replace-with = 'ustc'" >> $HOME/.cargo/config
+        echo "" >> $HOME/.cargo/config
+        echo "[source.ustc]" >> $HOME/.cargo/config
+        echo 'registry = "git://mirrors.ustc.edu.cn/crates.io-index"' >> $HOME/.cargo/config
+        echo 'registry = "https://mirrors.ustc.edu.cn/crates.io-index"' >> $HOME/.cargo/config
+    fi
+    
+    tip "install rust"
+    if [ "`command -v rustup`" = "" ]; then
+        tip "install rustup"
+        # curl https://sh.rustup.rs -sSf | sh -s
+        # curl https://cdn.jsdelivr.net/gh/rust-lang-nursery/rustup.rs/rustup-init.sh -sSf | sh -s
+        
+        cd $HOME/.cargo/
+        rm -rf ./rustup-init.sh
+        
+        tip" wget https://sh.rustup.rs"
+        # wget https://sh.rustup.rs
+        wget https://cdn.jsdelivr.net/gh/rust-lang-nursery/rustup.rs/rustup-init.sh
+        perl -pi -e 's|"https://static.rust-lang.org/rustup/dist"|"https://mirrors.ustc.edu.cn/rust-static/rustup"|g' ./rustup-init.sh
+        
+        tip "rustup-init"
+        chmod +x ./rustup-init.sh
+        ./rustup-init.sh
+
+        tip "rust set env"
+        rust_set_env
+    else
+        tip "rustup self update"
+        rustup self update
+        tip "rustup update"
+        rustup update
+    fi
+
+    tip "install tool:racer"
+    cargo install --force racer
+
+    tip "install tool:ripgrep"
+    cargo install --force ripgrep
+    cd $oldir
+}
+
+
+rust_uninstall() {
+    echo_error "'rust_uninstall' not implemented"
+}
+
+rust_exist_p() {
+    echo_error "'rust_exist_p' not implemented"
+}
+
+rust_info() {
+    if [ "`command -v rustup`" != "" ]; then
+        ome_info "Rust" "`ome_fetch_version rustc` |  `rustup -V | cut -c 1-13`"
+    fi
+    # if [ "`command -v rustup`" != "" ]; then
+    # echo_kv "Rustup" "`rustup -V | head -n 1`"
+    # fi
+}
+
+# Rust
+rust_set_env() {
+    # [ -s "$HOME/.cargo/env" ] && \. "$HOME/.cargo/env"
+    if [ -f $HOME/.cargo/env ]; then
+        . $HOME/.cargo/env
+    fi
+    if [ -d $HOME/.cargo/bin/ ]; then
+        export PATH=$HOME/.cargo/bin:$PATH
+        export RUSTUP_DIST_SERVER=https://mirrors.ustc.edu.cn/rust-static
+        export RUSTUP_UPDATE_ROOT=https://mirrors.ustc.edu.cn/rust-static/rustup
+        export RUST_SRC_PATH="$(rustc --print sysroot)/lib/rustlib/src/rust/src"
+    fi
+}
+rust_set_env
+
+
+
+
+
+rust_install_cn() {
+    tip "install rust + cargo"
+
+    # export RUSTUP_DIST_SERVER=https://mirrors.ustc.edu.cn/rust-static
+    # export RUSTUP_UPDATE_ROOT=https://mirrors.ustc.edu.cn/rust-static/rustup
+
+    tip "install rustup"
+    cd $OME_PREFIX/bin/
+    wget https://mirrors.ustc.edu.cn/rust-static/rustup.sh
+    chmod +x ./rustup.sh
+
+    tip "rustup selfupdate"
+    rustup self update
+
+    if [ "`command -v rustc`" != "" ]; then
+        tip "rustup update"
+        rustup update
+    else
+        tip "install rust"
+        rustup install nightly
+        rustup default nightly
+    fi
+    
+    # if [ "`command -v cargo`" = "" ]; then
+        # curl https://mirrors.ustc.edu.cn/rust-static/rustup.sh -sSf | sh -s -- --channel=nightly
+        # curl https://sh.rustup.rs -sSf | sh -s -- --channel=nightly
+    # fi
+    
+    # if [ ! -f $HOME/.cargo/config ]; then
+	    # mkdir -p $HOME/.cargo
+        # echo "[source.crates-io]" >> $HOME/.cargo/config
+        # echo "replace-with = 'ustc'" >> $HOME/.cargo/config
+        # echo "" >> $HOME/.cargo/config
+        # echo "[source.ustc]" >> $HOME/.cargo/config
+        # echo "registry = \"git://mirrors.ustc.edu.cn/crates.io-index\"" >> $HOME/.cargo/config
+        # echo "registry = \"https://mirrors.ustc.edu.cn/crates.io-index\"" >> $HOME/.cargo/config
+    # fi
+    
+    tip "install tool:racer"
+    cargo install --force racer
+
+    tip "install tool:ripgrep"
+    cargo install --force ripgrep
+
+    # tip "install golang package manager:rubigo"
+    # cargo install --git https://github.com/yaa110/rubigo.git
+}
+
+rust_old() {
+    #if command -v rustup >/dev/null 2>&1; then
+    if [ "`command -v rustup`" != "" ]; then
+        tip "rustup self update"
+	    rustup self update
+	    rustup update
+    else
+        
+        tip "install rustup"
+        cd $OME_PREFIX/bin/
+        wget https://mirrors.ustc.edu.cn/rust-static/rustup.sh
+        chmod +x ./rustup.sh
+        
+        # curl -sSf https://mirrors.ustc.edu.cn/rust-static/rustup.sh | sh -s
+	    # curl https://mirrors.ustc.edu.cn/rust-static/rustup.sh -sSf | sh
+
+
+	    # curl https://sh.rustup.rs -sSf | sh
+        #  export RUST_SRC_PATH="$(rustc --print sysroot)/lib/rustlib/src/rust/src"
+        
+        tip "rustup install toolchain"
+        # rustup toolchain add stable
+	    # rustup toolchain add beta
+        # rustup toolchain add nightly
+	    # rustup component add rust-src
+    fi
+}

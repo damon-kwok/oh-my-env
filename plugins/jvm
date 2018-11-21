@@ -1,0 +1,147 @@
+#!/usr/bin/env sh
+
+install_jdt_language_server() {
+    local oldir=`pwd`
+    tip "install eclipse language server"	
+    local del_force=$1
+    if [ "$del_force" = "1" ]; then
+	    rm -rf ~/.emacs.d/eclipse.jdt.ls/server/
+    fi
+    
+    if [ ! -d ~/.emacs.d/eclipse.jdt.ls/server/ ]; then
+	    mkdir -p ~/.emacs.d/eclipse.jdt.ls/server/
+        if [ ! -f ~/Downloads/jdt-language-server-latest.tar.gz ]; then
+	        # wget http://mirror.switch.ch/eclipse/jdtls/snapshots/jdt-language-server-latest.tar.gz  \
+                # -O ~/Downloads/jdt-language-server-latest.tar.gz
+	        wget http://download.eclipse.org/jdtls/snapshots/jdt-language-server-latest.tar.gz -O \
+                 ~/Downloads/jdt-language-server-latest.tar.gz
+        fi
+	    tar xf ~/Downloads/jdt-language-server-latest.tar.gz -C ~/.emacs.d/eclipse.jdt.ls/server/
+    fi
+    cd $oldir
+}
+
+install_kotlin_language_server() {
+    local oldir=`pwd`
+    tip "install_kotlin_language_server"
+    github_upgrade fwcd/KotlinLanguageServer $DEV_ROOT/KotlinLanguageServer
+
+    cd $DEV_ROOT/KotlinLanguageServer/
+    gradle build
+    
+    cd $oldir
+}
+
+install_graalvm() {
+    github_upgrade oracle/graal $DEV_ROOT/graal
+    cd $DEV_ROOT/graal/
+}
+
+jvm_install() {
+    local oldir=`pwd`
+    tip "install sdkman"
+    #if ! command -v sdk >/dev/null 2>&1; then
+	if [ "`command -v sdk`" = "" ]; then
+	    curl -s "https://get.sdkman.io" | sh
+	    . $HOME/.sdkman/bin/sdkman-init.sh
+    fi
+    find_str "SDKMAN_DIR" ~/.bashrc
+    if [ $? -eq 0 ]; then
+        echo "" >> ~/.bashrc
+	    echo "#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!" >> ~/.bashrc
+	    echo "export SDKMAN_DIR=\"\$HOME/.sdkman\"" >> ~/.bashrc
+	    echo "[[ -s \"\$HOME/.sdkman/bin/sdkman-init.sh\" ]] && . \"\$HOME/.sdkman/bin/sdkman-init.sh\"" \
+             >> ~/.bashrc
+    fi
+
+    find_str "SDKMAN_DIR" ~/.shrc
+    if [ $? -eq 0 ]; then
+        echo "" >> ~/.shrc
+	    echo "#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!" >> ~/.shrc
+	    echo "export SDKMAN_DIR=\"\$HOME/.sdkman\"" >> ~/.shrc
+	    echo "[[ -s \"\$HOME/.sdkman/bin/sdkman-init.sh\" ]] && . \"\$HOME/.sdkman/bin/sdkman-init.sh\"" \
+             >> ~/.shrc
+    fi
+
+    tip "sdkman self update"
+    sdk selfupdate
+    tip "sdkman update"
+    sdk update
+    tip "sdkman upgrade"
+    sdk upgrade
+
+    #if ! command -v javac >/dev/null 2>&1; then
+	if [ "`command -v javac`" = "" ]; then
+        sdk install java
+    fi
+    #if ! command -v kotlinc >/dev/null 2>&1; then
+	if [ "`command -v kotlinc`" = "" ]; then
+        sdk install kotlin
+    fi
+    #if ! command -v scalac >/dev/null 2>&1; then
+	if [ "`command -v scalac`" = "" ]; then
+        sdk install scala
+    fi
+    #if ! command -v groovy >/dev/null 2>&1; then
+	if [ "`command -v groovy`" = "" ]; then
+        sdk install groovy
+    fi
+    #if ! command -v lein >/dev/null 2>&1; then
+	if [ "`command -v lein`" = "" ]; then
+        sdk install leiningen
+    fi
+
+    #if ! command -v mvn >/dev/null 2>&1; then
+	if [ "`command -v mvn`" = "" ]; then
+        sdk install maven
+    fi
+
+    #if ! command -v gradle >/dev/null 2>&1; then
+	if [ "`command -v gradle`" = "" ]; then
+        sdk install gradle
+    fi
+
+    #if ! command -v sbt >/dev/null 2>&1; then
+	if [ "`command -v sbt`" = "" ]; then
+        sdk install sbt
+    fi
+
+    # java lang server
+    install_jdt_language_server
+    cd $oldir
+}
+
+jvm_uninstall() {
+    echo_error "'jvm_uninstall' not implemented"
+}
+
+jvm_exist_p() {
+    echo_error "'jvm_exist_p' not implemented"
+}
+
+# ome login info
+sdkman_info() {
+    local item=$1
+    local key=$1
+    if [ -n "$2" ]; then
+        local key=$2
+    fi
+
+    if [ -d $HOME/.sdkman/candidates/$item ]; then
+        echo "$key:`ls -D $HOME/.sdkman/candidates/$item|head -n 1`"
+    else
+        echo "$key: !miss!"
+    fi
+}
+
+jvm_info() {
+    ome_info "JVM" "`sdkman_info java Java` | \
+`sdkman_info kotlin Kotlin` | \
+`sdkman_info scala Scala` | \
+`sdkman_info groovy Groovy`"
+
+    ome_info "JTool" "`sdkman_info maven Maven` | \
+`sdkman_info sbt SBT` | \
+`sdkman_info gradle Gradle` | \
+`sdkman_info leiningen Lein`"
+}

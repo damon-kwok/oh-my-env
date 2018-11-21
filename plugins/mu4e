@@ -1,0 +1,191 @@
+#!/usr/bin/env sh
+
+config_offlineimap() {    
+    local del_force=$1
+    if [ "$del_force" = "1" ]; then
+	    rm -rf ~/.offlineimaprc
+    fi
+    
+    if [ ! -e ~/.offlineimaprc ] || [ ! -e ~/.authinfo ]; then
+
+	    read -p "please input your email address:" email
+	    read -sp "please input your email password:" passwd
+	    
+	    # offlineimap: offlineimaprc
+	    if [ ! -e ~/.offlineimaprc ]; then
+	        echo "[general]" >> ~/.offlineimaprc 
+	        echo "accounts = Gmail" >> ~/.offlineimaprc
+	        echo "maxsyncaccounts = 3" >> ~/.offlineimaprc
+	        echo "" >> ~/.offlineimaprc
+	        echo "[Account Gmail]" >> ~/.offlineimaprc
+	        echo "localrepository = Local" >> ~/.offlineimaprc
+	        echo "remoterepository = Remote" >> ~/.offlineimaprc
+	        echo "" >> ~/.offlineimaprc
+	        echo "[Repository Local]" >> ~/.offlineimaprc
+	        echo "type = Maildir" >> ~/.offlineimaprc
+	        echo "localfolders = ~/Maildir" >> ~/.offlineimaprc
+	        echo "" >> ~/.offlineimaprc
+	        echo "[Repository Remote]" >> ~/.offlineimaprc
+	        echo "type = IMAP" >> ~/.offlineimaprc
+	        echo "remotehost = imap.263.net" >> ~/.offlineimaprc
+	        echo "remoteport = 143" >> ~/.offlineimaprc
+	        echo "remoteuser = $email" >> ~/.offlineimaprc
+	        echo "remotepass = $passwd" >> ~/.offlineimaprc
+	        echo "ssl = no" >> ~/.offlineimaprc
+	        echo "maxconnections = 1" >> ~/.offlineimaprc
+	        echo "realdelete = no" >> ~/.offlineimaprc
+	    fi
+
+	    # gnus: .authinfo
+	    if [ ! -e ~/.authinfo ]; then
+	        echo "machine smtp.263.net port 465 login $email password $passwd" >> ~/.authinfo
+	    fi
+    fi
+
+    if [ ! -e ~/.email.el ]; then
+        echo "(setq user-mail-address \"yourname@xxx.com\";" >> ~/.email.el
+        echo "user-full-name  \"yourname\";" >> ~/.email.el
+        echo "mu4e-compose-signature \"hello,world!\")" >> ~/.email.el	
+    fi
+
+    # install python
+    ome_check_install "pip2" "python"
+    
+    tip "install offlineiamp"
+	pip2 install --user -U six
+    pip2 install --user -U offlineimap	
+
+    # sync email
+    offlineimap
+    mu index
+}
+
+libgmime3_install() {
+    tip "install libgmime3"
+    
+    readp "install libgmime3 from source?"
+    if [ $? -eq 1 ]; then
+        github_upgrade jstedfast/gmime $DEV_ROOT/gmime3
+        cd $DEV_ROOT/gmime3/
+        #./autogen.sh
+        #./configure --prefix=$OME_PREFIX \
+            #            --disable-static
+		./autogen.sh --prefix=$OME_PREFIX \
+                     --disable-static
+        make install
+    fi
+}
+
+mu4e_install() {
+    if [ "$OME_OS" = "$OS_MSYS2" ]; then
+        echo_error "mu does not support msys2"
+        return
+    fi
+    # tip "install mu4e-release"
+    # github_upgrade damon-kwok/resources $OME_ROOT/resources
+    # if [ ! -d $HOME/.emacs.d/libs/mu ]; then
+    # echo "no"
+    # cd $HOME/.emacs.d/libs/
+    
+	# tip "install mu4e-release-local"
+    # cp -f $HOME/workspace/res/mu.tar.xz $HOME/.emacs.d/libs/
+    # mkdir -p mu
+    # tar xpvf mu.tar.xz -C .
+    # fi
+    # cd $HOME/.emacs.d/libs/mu/
+    # ./configure --prefix=$HOME/.mu
+    # make install
+	
+	# cygwin
+	# apt install libxapian-devel
+	# apt install libgmime3.0-devel
+	# apt install libiconv-devel
+
+    get_os_type
+    case $OME_OS in
+        # Linux
+        # $OS_DEBIAN) ;;
+        # $OS_UBUNTU) ;;
+        $OS_DEBIAN|$OS_UBUNTU)
+            readp "mu4e::ubuntu-18(Y) | ubuntu-14/16(n)?"
+	        if [ $? -eq 1 ]; then
+                # libgmime3 :ubuntu18.04
+                sudo apt install libgmime-3.0-dev \
+                     libxapian-dev
+            else
+                # libgmime3 :ubuntu16.04
+                sudo apt install -y gtk-doc-tools libglib2.0-dev libidn2-0-dev libgpgme11-dev \
+                     libxapian-dev
+            fi
+            ;;
+        # $OS_REDHAT) ;;
+        # $OS_FEDORA) ;;
+        $OS_REDHAT|$OS_FEDORA) 
+            sudo yum install xapian-core-devel gmime30-devel libticonv-devel
+            ;;
+        $OS_ARCH) ;;
+        $OS_GENTOO) ;;
+        $OS_SUSE) ;;
+        $OS_SLACKWARE) ;;
+        $OS_NIXOS) ;;
+        $OS_VOID) ;;
+        $OS_ALPINE) ;;
+        $OS_MAGEIA) ;;
+        $OS_SLITAZ) ;;
+        $OS_GUIXSD) ;;
+        # Unix
+        $OS_MACOS) ;;
+        $OS_AIX) ;;
+        $OS_SOLARIS) ;;
+        $OS_FREEBSD)
+            # sudo pkg install sqlite3 py27-sqlite3 pmccabe gmime30 xapian-core
+            sudo pkg install mu
+            ;;
+        $OS_OPENBSD) ;;
+        $OS_NETBSD) ;;
+        $OS_DFBSD) ;;
+        # Windows
+        $OS_CYGWIN)
+            apt install libxapian-devel libgmime3.0-devel libiconv-devel
+            ;;
+        $OS_MSYS2) ;;
+        # Other
+        $OS_UNKNOW) ;;
+    esac
+
+    if [ "$OME_OS" != "$OS_FREEBSD2" ]; then
+        tip "install mu4e-git"
+        github_upgrade djcb/mu $HOME/.emacs.d/libs/mu-git
+        cd $HOME/.emacs.d/libs/mu-git/
+        #./autogen.sh
+        #./configure --prefix=$OME_PREFIX
+        #make install
+	    ./autogen.sh --prefix=$OME_PREFIX
+	    make install
+	fi
+    # offlineimap
+    readp "config offlineimap?"
+	if [ $? -eq 1 ]; then
+        config_offlineimap
+
+        # Maildir
+        mkdir -p ~/Maildir/Archive/
+        mkdir -p ~/Maildir/Draft/
+        mkdir -p ~/Maildir/INBOX/
+        mkdir -p ~/Maildir/Junk/
+        mkdir -p ~/Maildir/Sent/
+        mkdir -p ~/Maildir/Trash/
+    fi
+}
+
+mu4e_uninstall() {
+    echo_error "'mu4e_uninstall' not implemented"
+}
+
+mu4e_exist_p() {
+    echo_error "'mu4e_exist_p' not implemented"
+}
+
+mu4e_info() {
+    echo_error ""
+}

@@ -1,0 +1,464 @@
+#!/usr/bin/env bash
+
+################################################################################
+CURRENT_DIR=$(dirname $(readlink -f $0))
+. $CURRENT_DIR/../env
+################################################################################
+
+################################################################################
+run_emacs() {
+    if [ ! -f $HOME/.emacs ]; then
+	    link_init_el
+    fi
+
+    emacs --debug-init
+    exit
+}
+
+run_emacs_nw() {
+    if [ ! -f $HOME/.emacs ]; then
+	    link_init_el
+    fi
+
+    emacs -nw --debug-init
+}
+
+delete_etc() {
+    cd $OME_ROOT/emacs-config/modules
+    rm -rf *.elc
+    cd $OME_ROOT
+}
+
+link_init_el() {
+    tip "link"
+    bkdir=$HOME/emacs-config-backup/`date +%Y-%m-%d@%H-%M-%S`
+    mkdir -p $bkdir
+
+    if [ -e $HOME/.emacs ]; then
+	    mv $HOME/.emacs $bkdir
+    fi
+
+    if [ -e $HOME/emacs-config ]; then
+	    mv $HOME/emacs-config $bkdir
+    fi
+
+    tip "link .emacs"
+    cp -a $OME_ROOT/emacs-config/init.el $HOME/.emacs 
+    ln -s $OME_ROOT/emacs-config $HOME/emacs-config 
+}
+
+ask_repl() {
+    echo ""
+    tip "what do you need?"
+    echo "    1) clojure"
+    echo "    2) haskell"
+    echo "    3) elixir"
+    echo "    4) erlang"
+    echo "    -------------------------"
+    echo "    r) return"
+
+    read -p "please enter your choice:" item
+    case $item in
+	    1) echo abort with "^C | ^D | (exit) | (quit)" && lein repl;;
+	    2) echo abort with "^D :quit" && stack repl;;
+	    3) echo abort with "^C" && iex;;
+	    4) echo abort with "^C | ^G | q()." && erl;;
+	    r | R) ask_menu;;
+	    *) ask_repl;;
+    esac
+}
+
+toolchain_menu() {
+    cd $OME_ROOT
+
+    # echo "=============================="
+    tip "what do you need?"
+    echo "    0) base-devel"
+    echo "    --------------------------"
+    echo "    1) Python"
+    echo "    2) Nodejs"
+    echo "    3) Rust"
+    echo "    c) C&C++"
+    echo "    4) JVM"
+    echo "    5) .net"
+    echo "    6) Golang"
+    echo "    7) Erlang/Elixir"
+    echo "    8) Nim"
+    echo "    9) CommonLisp"
+    echo "    a) Crystal"
+    echo "    --------------------------"
+    echo "    e) Emacs"
+    echo "    m) mu4e"
+    echo "    --------------------------"
+    echo "    r) return"
+    echo "    q) quit"
+
+    cd $OME_ROOT
+    read -p "please enter your choice:" item
+    case $item in
+        0)
+            basedevel_install
+            toolchain_install
+            ;;
+        1) python_install;;
+        2) n_install;;
+        3) rust_install;;
+        c|C)
+            cmake_install
+            llvm_install
+            cquery_install;;
+        4) jvm_install;;
+        5) mono_install;;
+        6) golang_install;;
+        7)
+            erlang_install
+            elixir_install;;
+        8) nim_install;;
+        9) cl_install;;
+        a) crystal_install;;
+        e) emacs_install;;
+        m) mu4e_install;;
+        r) ask_menu;;
+        q) exit;;
+    esac
+    toolchain_menu
+}
+
+new_project() {
+    local lang=$1
+    if [ "$lang" = ""]; then
+        echo "123"
+    fi
+}
+
+ask_menu() {
+    cd $OME_ROOT
+    tip "hello $USER, what's up?"
+    #echo "ask_menu"
+    # echo "    0) ask_blog"
+    # echo "=============================="
+    echo "    1) pull"
+    echo "    2) push"
+    # echo "    2) getapp"
+    # echo "    3) pushapp"
+    # echo "    4) zipapp"
+    # echo "    5) unzipapp"
+    # echo "    b) install basedevel"
+    echo "    i) install toolchain"
+    echo "    g) git config"
+    echo "    e) emacs"
+    echo "    n) emacs_nw"
+    # echo "    c) complie_elc"
+    echo "    l) link init.el"
+    echo "    d) delete_elc"
+    echo "    --------------------------"
+    echo "    r) return"
+    echo "    s) shell"
+    echo "    z) REPL"
+    echo "    q) quit"
+
+    cd $OME_ROOT
+    read -p "please enter your choice:" item
+    case $item in
+	    1)
+	        git_pull
+	        . $HOME/.bashrc
+	        ;;
+	    2) git_push;;
+	    3) git_push_a;;
+	    # 2) getapp;;
+	    # 3) pushapp;;
+	    # 4) zipapp;;
+	    # 5) unzipapp;;
+	    # b|B) basedevel_install;;
+	    i|I) toolchain_menu;;
+	    g|G)
+	        git config --global color.ui true
+	        git config --global core.editor "ec"
+	        
+	        git config --global merge.tool ediff_merge
+	        git config --global mergetool.diffmerge.cmd "ediff_merge \$LOCAL \$REMOTE \$BASE \$MERGED"
+	        git config --global mergetool.keepBackup false
+
+	        # git config --global diff.tool ediff
+	        # git config --global difftool.ediff.cmd "ediff \"\$LOCAL\" \"\$REMOTE\""
+	        # git config --global difftool.prompt false
+	        ;;
+	    e|E) run_emacs;;
+	    n|N) run_emacs_nw;;
+	    c|C) compile_elc;;
+	    l|L) link_init_el;;
+	    d|D) delete_elc;;
+	    s|S) sh;;
+	    z|Z) ask_repl;;
+	    q|Q) exit;;
+	    *) ask_menu;;	    
+    esac
+    ask_menu
+}
+
+ome_doctor() {
+    title "ome doctor"
+    tip "check PATH"
+}
+
+ome_config() {
+    title "ome_config"
+    
+    # tip "ldconfig"
+    # if [ ! -f "/etc/ld.so.conf.d/`whoami`.conf" ]; then
+    # sudo sh -c "echo \"$HOME/lib\" >> /etc/ld.so.conf.d/`whoami`.conf"
+    # sudo ldconfig
+    # fi
+
+    tip "git config"
+    git config --global user.email "563066990@qq.com"
+    git config --global user.name "damon-kwok"
+    
+    git config --global color.ui true
+	git config --global core.editor "ec"
+	
+	git config --global merge.tool ediff_merge
+	git config --global mergetool.diffmerge.cmd "ediff_merge \$LOCAL \$REMOTE \$BASE \$MERGED"
+	git config --global mergetool.keepBackup false
+
+	# git config --global diff.tool ediff
+	# git config --global difftool.ediff.cmd "ediff \"\$LOCAL\" \"\$REMOTE\""
+	# git config --global difftool.prompt false
+}
+
+ome_package_list() {
+    local olddir=`pwd`
+    tip "package list"
+    for plugin in $HOME/.oh-my-env/plugins/* ; do
+        echo_success `basename $plugin`
+    done
+
+    cd $olddir
+}
+echo_error() {
+    echo -e $(tput setaf 1)"$1"$(tput sgr0)
+}
+
+strload=("-" "\\" "|" "/")
+# strload[0]="-"
+# strload[1]="\\"
+# strload[2]="|"
+# strload[3]="/"
+
+
+ome_package_info() {
+    local olddir=`pwd`
+    tip "package list"
+    local index=0
+
+    echo -n -e "\033[?25l"  #隐藏光标
+    for plugin_file in $HOME/.oh-my-env/plugins/* ; do
+        if [ "$plugin_file" != "$HOME/.oh-my-env/plugins/README.org" ]; then
+            # index=$((index+1))
+            
+            local idx=$((index%4))
+            echo -n -e "${strload[$idx]}"
+            let index++
+            local PLUGIN=`basename $plugin_file`
+            local EVAL="${PLUGIN}_info"
+            # echo "$EVAL--------------:$plugin_file"
+            . $plugin_file > $HOME/2.log
+            eval "$EVAL>$HOME/1.log"
+            # sleep 0.2
+            echo -n -e "\b\b"
+        fi
+    done
+    echo -n -e "\033[?25h"  #显示光标
+    echo -n -e "\b\c"
+    echo -e $OME_INFO
+    cd $olddir
+}
+
+ome_os_list() {
+    local olddir=`pwd`
+    tip "package list:"
+    for plugin in $HOME/.oh-my-env/plugins/* ; do
+        echo_success `basename $plugin`
+    done
+
+    cd $olddir
+}
+
+ome_eval() {
+    # . $OME_ROOT/bin/env
+    CURRENT_DIR=$(dirname $(readlink -f $0))
+    . $CURRENT_DIR/env
+    
+    #echo "ome_eval:$@"
+    local FUNC="$1"
+    local PLUGIN="$2"
+    
+    # local OPT_TYPE=$2
+    # local ARG1=$3
+    # local ARG2=$4
+
+    local EVAL="${PLUGIN}_${FUNC}"
+    title "$EVAL"
+
+    if [ -f "`dirname $0`/plugins/$OME_OS/$PLUGIN" ]; then
+        . "`dirname $0`/plugins/$OME_OS/$PLUGIN"
+	    #echo "eval $EVAL"
+        eval "$EVAL"
+    elif [ -f "`dirname $0`/plugins/common/$PLUGIN" ]; then
+        . "`dirname $0`/plugins/common/$PLUGIN"
+	    #echo "eval $EVAL"
+        eval "$EVAL"
+    else
+        echo_error "$PLUGIN is not exist!"
+    fi
+}
+
+ome_parse() {
+    local oldir=`pwd`
+    
+    local OPT_TYPE=$1
+    local ARG1=$2
+    local ARG2=$3
+    
+    case "$OPT_TYPE" in
+        "c")
+            ome_config
+            ;;
+        "i"|"add"|"install")
+            ome_eval "install" $ARG1
+            ;;
+        "d"|"delete"|"rm"|"remove"|"uninstall")            
+            ome_eval "uninstall" $ARG1
+            ;;
+        "m"|"menu")
+            ask_menu;;
+        "l"|"list")
+            ome_package_list
+            ome_os_list
+            ;;
+        "o"|"open"|"n"|"new"|"a"|"add")
+            # ec "`dirname $0`/plugins/common/$ARG1"
+            ed "`dirname $0`/plugins/common/$ARG1"
+            ;;
+        "u"|"U"|"update"|"upgrade")
+            me_upgrade
+            ;;
+        "p"|"push"|"commit")
+            ws_push
+            readp "push emacs-config?"
+            if [ $? -eq 1 ]; then
+                oh_my_emacs_push
+            fi
+            ;;
+        "x")
+            ome_package_info
+            ;;
+        "t")
+            echo -n -e "\033[?25l"  #隐藏光标
+            for i in `seq 100`
+            do
+                local idx=$(($i%4))
+                # echo -e "$i"
+                local vv=${strload[$idx]}
+                echo -n -e "$vv"
+                # sleep 0.05
+                echo -n -e "\b\b\b"
+            done
+            echo -n -e "\b\b\b"
+            echo -n -e "\033[?25h" #显示光标
+
+            i=0
+            while [ $i -lt 50 ]
+            do
+                ((i++))
+                local radio=$((100/1000))
+                echo -ne "=>\033[s"
+                echo -ne "\033[40;50H"$((i*100*2/100))%"\033[u\033[1D"
+                sleep 0.05
+            done
+            echo
+            ;;
+        *)
+            echo "ome | version:2018.1008"
+            ;;
+    esac
+    cd $oldir
+}
+
+#echo $@
+
+ome_parse $@
+
+function delay()
+{
+    sleep 0.2;
+}
+
+#
+# Description : print out executing progress
+# 
+CURRENT_PROGRESS=0
+function progress()
+{
+    PARAM_PROGRESS=$1;
+    PARAM_PHASE=$2;
+
+    if [ $CURRENT_PROGRESS -le 0 -a $PARAM_PROGRESS -ge 0 ]  ; then echo -ne "[..........................] (0%)  $PARAM_PHASE \r"  ; delay; fi;
+    if [ $CURRENT_PROGRESS -le 5 -a $PARAM_PROGRESS -ge 5 ]  ; then echo -ne "[#.........................] (5%)  $PARAM_PHASE \r"  ; delay; fi;
+    if [ $CURRENT_PROGRESS -le 10 -a $PARAM_PROGRESS -ge 10 ]; then echo -ne "[##........................] (10%) $PARAM_PHASE \r"  ; delay; fi;
+    if [ $CURRENT_PROGRESS -le 15 -a $PARAM_PROGRESS -ge 15 ]; then echo -ne "[###.......................] (15%) $PARAM_PHASE \r"  ; delay; fi;
+    if [ $CURRENT_PROGRESS -le 20 -a $PARAM_PROGRESS -ge 20 ]; then echo -ne "[####......................] (20%) $PARAM_PHASE \r"  ; delay; fi;
+    if [ $CURRENT_PROGRESS -le 25 -a $PARAM_PROGRESS -ge 25 ]; then echo -ne "[#####.....................] (25%) $PARAM_PHASE \r"  ; delay; fi;
+    if [ $CURRENT_PROGRESS -le 30 -a $PARAM_PROGRESS -ge 30 ]; then echo -ne "[######....................] (30%) $PARAM_PHASE \r"  ; delay; fi;
+    if [ $CURRENT_PROGRESS -le 35 -a $PARAM_PROGRESS -ge 35 ]; then echo -ne "[#######...................] (35%) $PARAM_PHASE \r"  ; delay; fi;
+    if [ $CURRENT_PROGRESS -le 40 -a $PARAM_PROGRESS -ge 40 ]; then echo -ne "[########..................] (40%) $PARAM_PHASE \r"  ; delay; fi;
+    if [ $CURRENT_PROGRESS -le 45 -a $PARAM_PROGRESS -ge 45 ]; then echo -ne "[#########.................] (45%) $PARAM_PHASE \r"  ; delay; fi;
+    if [ $CURRENT_PROGRESS -le 50 -a $PARAM_PROGRESS -ge 50 ]; then echo -ne "[##########................] (50%) $PARAM_PHASE \r"  ; delay; fi;
+    if [ $CURRENT_PROGRESS -le 55 -a $PARAM_PROGRESS -ge 55 ]; then echo -ne "[###########...............] (55%) $PARAM_PHASE \r"  ; delay; fi;
+    if [ $CURRENT_PROGRESS -le 60 -a $PARAM_PROGRESS -ge 60 ]; then echo -ne "[############..............] (60%) $PARAM_PHASE \r"  ; delay; fi;
+    if [ $CURRENT_PROGRESS -le 65 -a $PARAM_PROGRESS -ge 65 ]; then echo -ne "[#############.............] (65%) $PARAM_PHASE \r"  ; delay; fi;
+    if [ $CURRENT_PROGRESS -le 70 -a $PARAM_PROGRESS -ge 70 ]; then echo -ne "[###############...........] (70%) $PARAM_PHASE \r"  ; delay; fi;
+    if [ $CURRENT_PROGRESS -le 75 -a $PARAM_PROGRESS -ge 75 ]; then echo -ne "[#################.........] (75%) $PARAM_PHASE \r"  ; delay; fi;
+    if [ $CURRENT_PROGRESS -le 80 -a $PARAM_PROGRESS -ge 80 ]; then echo -ne "[####################......] (80%) $PARAM_PHASE \r"  ; delay; fi;
+    if [ $CURRENT_PROGRESS -le 85 -a $PARAM_PROGRESS -ge 85 ]; then echo -ne "[#######################...] (85%) $PARAM_PHASE \r"  ; delay; fi;
+    if [ $CURRENT_PROGRESS -le 90 -a $PARAM_PROGRESS -ge 90 ]; then echo -ne "[##########################] (100%) $PARAM_PHASE \r" ; delay; fi;
+    if [ $CURRENT_PROGRESS -le 100 -a $PARAM_PROGRESS -ge 100 ];then echo -ne 'Done!                                            \n' ; delay; fi;
+
+    CURRENT_PROGRESS=$PARAM_PROGRESS;
+
+}
+
+#################################### DEMO ######################################
+
+# This is a simple demostration
+
+# Important notice: below code is not necessary in your code, remember to remove before using
+
+################################################################################
+
+# echo "The task is in progress, please wait a few seconds"
+
+#Do some tasks
+# progress 10 Initialize
+#Do some tasks
+# progress 20 "Phase 1      "
+#Do some tasks
+# progress 40 "Phase 2      "
+#Do some tasks
+# progress 60 "Processing..."
+#Do some tasks
+# progress 80 "Processing..."
+#Do some tasks
+# progress 90 "Processing..."
+#Do some tasks
+# progress 100 "Done        "
+
+# echo
+# echo -ne "11111111111111111111\r"
+# sleep 1
+# echo -ne "22222222222222222222\r"
+# sleep 1
+# echo -ne "33333333333333333333\r"
+# sleep 1
+# echo -ne "                    \n"

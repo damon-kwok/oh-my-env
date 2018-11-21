@@ -1,0 +1,116 @@
+#!/usr/bin/env sh
+
+ruby_rvm_install() {
+    get_os_type
+    case $OME_OS in
+        # Linux
+        # $OS_DEBIAN) ;;
+        # $OS_UBUNTU) ;;
+        $OS_DEBIAN|$OS_UBUNTU) ;;
+        # $OS_REDHAT) ;;
+        # $OS_FEDORA) ;;
+        $OS_REDHAT|$OS_FEDORA) ;;
+        $OS_ARCH) ;;
+        $OS_GENTOO) ;;
+        $OS_SUSE) ;;
+        $OS_SLACKWARE) ;;
+        $OS_NIXOS) ;;
+        $OS_VOID) ;;
+        $OS_ALPINE) ;;
+        $OS_MAGEIA) ;;
+        $OS_SLITAZ) ;;
+        $OS_GUIXSD) ;;
+        # Unix
+        $OS_MACOS) ;;
+        $OS_AIX) ;;
+        $OS_SOLARIS) ;;
+        $OS_FREEBSD) ;;
+        $OS_OPENBSD) ;;
+        $OS_NETBSD) ;;
+        $OS_DFBSD) ;;
+        # Windows
+        $OS_CYGWIN)
+            apt install mingw64-i686-gcc-core mingw64-x86_64-gcc-core \
+                patch bison sqlite3 \
+                libcrypt-devel libyaml-devel libffi-devel libreadline-devel
+            ;;
+        $OS_MSYS2) ;;
+        # Other
+        $OS_UNKNOW) ;;
+    esac
+
+    if [ "`command -v rvm`" = "" ]; then
+        curl -sSL https://get.rvm.io | bash -s stable
+        curl -sSL https://rvm.io/mpapis.asc | gpg2 --import -
+    fi
+    
+    tip "rvm self upgrade"
+    rvm get stable
+
+    tip "install ruby"
+    rvm install $RUBY_VERSION
+}
+
+ruby_rbenv_install() {
+    github_upgrade rbenv/rbenv $HOME/.rbenv
+    cd $HOME/.rbenv && src/configure && make -C src && chmod +x bin/rbenv
+
+    tip "install ruby-build"
+    github_upgrade rbenv/ruby-build $HOME/.ruby-build
+    cd $HOME/.ruby-build/
+    PREFIX=$OME_PREFIX $HOME/.ruby-build/install.sh
+
+    # 用来管理 gemset, 可选, 因为有 bundler 也没什么必要
+    github_upgrade jamis/rbenv-gemset  ~/.rbenv/plugins/rbenv-gemset
+    
+    # 通过 rbenv update 命令来更新 rbenv 以及所有插件, 推荐
+    github_upgrade rkh/rbenv-update ~/.rbenv/plugins/rbenv-update
+    
+    # rbenv-china-mirror
+    # github_upgrade AndorChen/rbenv-china-mirror "$(rbenv root)"/plugins/rbenv-china-mirror
+
+    # doctor check
+    rbenv_doctor
+
+    tip "install ruby"
+    # RUBY_CONFIGURE_OPTS=--disable-install-doc rbenv install $RUBY_VERSION
+    # CONFIGURE_OPTS="--disable-install-doc"  rbenv install $RUBY_VERSION
+    rbenv install $RUBY_VERSION
+    rbenv global $RUBY_VERSION
+    
+    tip "rbenv whence rackup"
+    rbenv whence rackup
+}
+
+ruby_install() {
+    # ruby_rvm_install
+    # or
+    ruby_rbenv_install
+    
+    tip "install bundler"
+    gem env home
+    gem install bundler
+    gem update
+}
+
+ruby_uninstall() {
+    echo_error "'ruby_uninstall' not implemented"
+}
+
+ruby_exist_p() {
+    echo_error "'ruby_exist_p' not implemented"
+}
+RUBY_VERSION=2.5.3
+export PATH=$HOME/.rbenv/bin:$HOME/.rbenv/shims:$PATH
+if [ -f $HOME/.rbenv/bin/rbenv ]; then
+    eval "$(rbenv init -)"
+fi
+
+ruby_info() {
+    ome_info "Ruby" "`ome_fetch_version ruby`"
+}
+
+rbenv_doctor() {
+    tip "revenv-doctor"
+    curl -fsSL https://github.com/rbenv/rbenv-installer/raw/master/bin/rbenv-doctor | bash
+}

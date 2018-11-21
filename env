@@ -1,0 +1,215 @@
+#!/usr/bin/env bash
+
+# OSlist: https://git-scm.com/download/linux
+# Linux
+export OS_DEBIAN="Debian"
+export OS_UBUNTU="Ubuntu"
+export OS_REDHAT="RedHat" # Red Hat Enterprise Linux, Oracle Linux, CentOS, Scientific Linux, et al.
+export OS_FEDORA="Fedora"
+export OS_ARCH="ArchLinux"
+export OS_GENTOO="Gentoo"
+export OS_SUSE="openSUSE"
+export OS_SLACKWARE="Slackware"
+export OS_NIXOS="NixOS"
+export OS_ALPINE="Alpine" # musl libc| busybox https://www.linuxprobe.com/alpine-linux-released.html
+export OS_VOID="VoidLinux"
+export OS_MAGEIA="Mageia" # Mandriva Linux
+export OS_SLITAZ="Slitaz" # busybox
+export OS_GUIXSD="GuixSD"
+# Unix
+export OS_MACOS="macOS"
+export OS_AIX="AIX"
+export OS_SOLARIS="Solaris" #OpenCSW illumos(kernel):OpenIndiana SmartOS DogeOS
+export OS_FREEBSD="FreeBSD"
+export OS_OPENBSD="OpenBSD"
+export OS_NETBSD="NetBSD"
+export OS_DFBSD="DragonflyBSD"
+export OS_TRUEOS="TrueOS"
+# Windows
+export OS_CYGWIN="Cygwin"
+export OS_MSYS2="Msys2"
+# Other
+export OS_UNKNOW="Unknow"
+
+# PKG-list: Yum APT SUSE AUR
+
+# Arch-list:
+#https://github.com/llvm-mirror/llvm/blob/a1cdcbb384fcf1a0332b3d8b7a9240e5c3ca5a14/docs/GettingStarted.rst#local-llvm-configuration
+# AArch64, AMDGPU, ARM, BPF, CppBackend, Hexagon, Mips, MSP430, NVPTX, PowerPC, Sparc, SystemZ X86, XCore
+
+export OME_ARCH="`uname -m`"
+# export OME_SHELL="`ps | grep $$ | awk '{print $4}'`"
+export OME_SHELL="`basename $SHELL`"
+
+case "`uname -o`" in
+    "GNU/Linux")
+        if [ "`command -v dnf`" != "" ]; then
+            export OME_OS=$OS_FEDORA
+        elif [ "`command -v yum`" != "" ]; then
+            export OME_OS=$OS_REDHAT
+        elif [ "`command -v zypper`" != "" ]; then
+            export OME_OS=$OS_SUSE
+        elif [ "`command -v nix`" != "" ]; then
+            export OME_OS=$OS_NIXOS
+        elif [ "`command -v guix`" != "" ]; then
+            export OME_OS=$OS_GUIXSD
+        elif [ "lsb_release" != "" ]; then
+            case "`lsb_release -is`" in
+                "Debian")
+                    export OME_OS=$OS_DEBIAN;;
+                "Ubuntu"|"elementary"|"LinuxMint")
+                    export OME_OS="$OS_UBUNTU";;
+                "ManjaroLinux"|"Arch")
+                    export OME_OS=$OS_ARCH;;
+                *)
+                    export OME_OS="`lsb_release -is`";;
+            esac
+        else
+            export OME_OS=$OS_UNKNOW
+        fi
+        ;;
+    "Cygwin") export OME_OS=$OS_CYGWIN;;
+    "Msys") export OME_OS=$OS_MSYS2;;
+    "FreeBSD") export OME_OS=$OS_FREEBSD;;
+    "Darwin") export OME_OS=$OS_MACOS;;
+    *) export OME_OS=$OS_UNKNOW;;
+esac
+
+# if [ "$OME_OS" == "$OS_MSYS2" ]; then
+#     # MAKE_TYPE="MSYS Makefiles"
+#     OME_MAKE="Ninja"
+# else
+#     OME_MAKE="Ninja"
+#     MAKE_PROG="make"
+# fi
+OME_MAKE="Ninja"
+MAKE_PROG="make"
+################################################################################
+# Oh-My-Emacs
+# export OME_BIN=$(dirname $(readlink -f $0))
+# export OME_ROOT=$OME_BIN/..
+export OME_ROOT=$HOME/.oh-my-env
+export OME_BIN=$OME_ROOT/bin
+export PATH=$OME_BIN:$PATH
+
+export DEV_ROOT=$HOME/.dev
+export WS_BIN=$HOME/workspace/bin
+export BOOK_ROOT=$HOME/book
+export PROJ_ROOT=$HOME/projects
+export PATH=$WS_BIN:$PATH
+
+# Emacs
+# alias emacsd='emacs --daemon'
+export EDITOR='emacsclient -c -n'
+export ALTERNATE_EDITOR=""
+alias emacsc='emacsclient -c -n'
+alias emacst='TERM=xterm-256color emacsclient -t'
+
+# Ocaml: OPAM configuration
+if [ -d $HOME/.opam/opam-init/ ]; then
+    case "$OME_SHELL" in
+        "zsh")
+	        . $HOME/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
+	        ;;
+        "bash")
+	        . $HOME/.opam/opam-init/init.sh > /dev/null 2> /dev/null || true
+	        ;;
+        "csh")
+	        . $HOME/.opam/opam-init/init.csh > /dev/null 2> /dev/null || true
+	        ;;
+    esac
+fi
+
+# ROS
+if [ -d /opt/ros/kinetic/ ] && [ -d $HOME/catkin_ws/ ]; then
+    case "$OME_SHELL" in
+        "zsh")
+	        . /opt/ros/kinetic/env.zsh
+	        . $HOME/catkin_ws/devel/env.zsh
+	        ;;
+        "bash")
+	        . /opt/ros/kinetic/env.bash
+	        . $HOME/catkin_ws/devel/env.bash
+	        ;;
+    esac
+fi
+export PATH=$HOME/catkin_ws/bin:$PATH
+
+# Cyberman
+# export PATH=$HOME/Cyberman:$PATH
+
+# Pyenv
+# export PYENV_ROOT=$DEV_ROOT/pyenv
+# export PATH=$PYENV_ROOT/bin:$PATH
+# if command -v pyenv 1>/dev/null 2>&1; then
+    # eval "$(pyenv init -)"
+# fi
+# export PYTHON_BUILD_MIRROR_URL="http://mirrors.sohu.com/python/2.7.12/"
+
+export XLIB_SKIP_ARGB_VISUALS=1
+
+# User Settings
+# if [ -d /mingw64/bin2 ]; then
+# export PATH=/mingw64/bin:$PATH
+# export MANPATH=/mingw64/share/man:$MANPATH
+# export INFOPATH=/mingw64/share/info:$INFOPATH
+# export C_INCLUDE_PATH=/mingw64/include:$C_INCLUDE_PATH
+# export CPLUS_INCLUDE_PATH=/mingw64/include:$CPLUS_INCLUDE_PATH
+# export LIBRARY_PATH=/mingw64/lib:$LIBRARY_PATH
+# export LD_LIBRARY_PATH=/mingw64/lib:$LD_LIBRARY_PATH
+# export PKG_CONFIG_PATH=/mingw64/lib/pkgconfig:/mingw64/share/pkgconfig:$PKG_CONFIG_PATH
+# fi
+
+OME_PREFIX=$HOME/.local
+# if [ -d $OME_PREFIX ]; then
+export PATH=$OME_PREFIX/bin:$PATH
+export MANPATH=$OME_PREFIX/share/man:$MANPATH
+export INFOPATH=$OME_PREFIX/share/info:$INFOPATH
+export LIBRARY_PATH=$OME_PREFIX/lib:$LIBRARY_PATH
+export LD_LIBRARY_PATH=$OME_PREFIX/lib:$LD_LIBRARY_PATH
+export LD_RUN_PATH=$OME_PREFIX/lib:$LD_RUN_PATH
+export PKG_CONFIG_PATH=$OME_PREFIX/lib/pkgconfig:$OME_PREFIX/share/pkgconfig:$PKG_CONFIG_PATH
+
+export DCMAKE_INCLUDE_PATH=$OME_PREFIX/include:$DCMAKE_INCLUDE_PATH
+export CMAKE_LIBRARY_PATH=$OME_PREFIX/lib:$CMAKE_LIBRARY_PATH
+
+export C_INCLUDE_PATH=$OME_PREFIX/include:$C_INCLUDE_PATH
+export CPLUS_INCLUDE_PATH=$OME_PREFIX/include:$CPLUS_INCLUDE_PATH
+# fi
+
+. $HOME/.oh-my-env/bin/lib
+. $HOME/.oh-my-env/bin/tool
+. $HOME/.oh-my-env/bin/proj
+
+# ome login info
+# echo_kv "OME" "OS:$OME_OS | Arch:$OME_ARCH | Shell:$OME_SHELL | PREFIX:$OME_PREFIX"
+# echo_kv "VCS" "`git --version | head -n 1` | `svn --version | head -n 1`"
+# echo_kv "Perl" "`perl -V | head -n 1 | cut -c 15-57`"
+export OME_INFO=""
+ome_info() {
+    for i in $@; do
+        export OME_INFO="$OME_INFO$i "
+    done
+    export OME_INFO="$OME_INFO\n"
+}
+
+ome_info "OME" "OS:$OME_OS | Arch:$OME_ARCH | Shell:$OME_SHELL | EDITOR:$EDITOR"
+ome_info "PREFIX:$OME_PREFIX"
+ome_info "VCS" "`git --version | head -n 1` | `svn --version | head -n 1`"
+# ome_info "VCS" "`ome_fetch_version git` | `ome_fetch_version svn`"
+
+for plugin in $HOME/.oh-my-env/plugins/* ; do
+    if [ "$plugin" != "$HOME/.oh-my-env/plugins/README.org" ]; then
+        # echo "name: $plugin"
+        . "$plugin"
+    fi
+done
+
+# alias
+alias ls='ls --color'
+alias wget='wget -c'
+# alias opam='opam --debug'
+
+if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
+    export LANG=en_US.UTF-8
+fi

@@ -1,0 +1,21 @@
+#!/usr/bin/env sh
+
+spark_install() {
+    github_upgrade apache/spark $DEV_ROOT/spark
+    cd $DEV_ROOT/spark/
+    mvn compile
+    mvn package
+    cd $olddir
+}
+
+spark_uninstall() {
+    echo_error "'spark_uninstall' not implemented"
+}
+
+spark_exist_p() {
+    echo_error "'spark_exist_p' not implemented"
+}
+
+spark_info() {
+    echo_error ""
+}

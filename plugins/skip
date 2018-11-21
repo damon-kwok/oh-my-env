@@ -1,0 +1,26 @@
+#!/usr/bin/env sh
+
+skip_install() {
+    github_upgrade skiplang/skip $DEV_ROOT/skip
+    
+    mkdir -p cd $DEV_ROOT/skip/build
+    cd $DEV_ROOT/skip/build/
+    cmake ../server/ -G "$OME_MAKE" \
+          -DCMAKE_INSTALL_PREFIX=$OME_PREFIX \
+          -DCMAKE_EXPORT_COMPILE_COMMANDS=1 \
+          -DCMAKE_CXX_STANDARD=11
+
+    cmake --build . --use-stderr --config Release --target install
+}
+
+skip_uninstall() {
+    echo_error "'skip_uninstall' not implemented"
+}
+
+skip_exist_p() {
+    echo_error "'skip_exist_p' not implemented"
+}
+
+skip_info() {
+    echo_error ""
+}

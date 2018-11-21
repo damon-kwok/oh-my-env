@@ -1,0 +1,17 @@
+#!/usr/bin/env sh
+
+haxe_install() {
+    echo_error "'haxe_install' not implemented"
+}
+
+haxe_uninstall() {
+    echo_error "'haxe_uninstall' not implemented"
+}
+
+haxe_exist_p() {
+    echo_error "'haxe_exist_p' not implemented"
+}
+
+haxe_info() {
+    echo_error ""
+}

@@ -1,0 +1,34 @@
+#!/usr/bin/env sh
+
+cquery_install() {
+    tip "install cquery"
+    github_upgrade cquery-project/cquery $DEV_ROOT/cquery
+    mkdir -p $DEV_ROOT/cquery/build
+    cd $DEV_ROOT/cquery/build/
+    # -DLIBCLANG_LLVM_CONFIG_EXECUTABLE=$LLVM_BIN/llvm-config 
+    # -DCLANG_USE_BUNDLED_LIBC++=on 
+    cmake .. -G "$OME_MAKE" \
+	      -DCMAKE_INSTALL_PREFIX=$OME_PREFIX \
+	      -DCMAKE_EXPORT_COMPILE_COMMANDS=YES \
+	      -DCMAKE_BUILD_TYPE=Release \
+          -DSYSTEM_CLANG=ON
+    # -DCMAKE_PREFIX_PATH=$LLVM_ROOT
+    # make -j4
+    # make install
+    cmake --build . --use-stderr --config Release --target install
+
+    # config: clang-format
+    clang-format_install
+}
+
+cquery_uninstall() {
+    echo_error "'cquery_uninstall' not implemented"
+}
+
+cquery_exist_p() {
+    echo_error "'cquery_exist_p' not implemented"
+}
+
+cquery_info() {
+    echo_error ""
+}

@@ -1,0 +1,124 @@
+#!/usr/bin/env sh
+
+nodejs_install() {
+    local oldir=`pwd`
+    if [ "$OME_OS" = "$OS_MSYS2" ]; then
+        pacman -S mingw-w64-x86_64-nodejs
+    elif [ "$OME_OS" = "$OS_CYGWIN" ]; then
+        # echo_warning "please download form: https://nodejs.org/en/download"
+        # https://nodejs.org/dist
+        
+        
+        if [ ! -d $DEV_ROOT/$NODEJS_VERSION ]; then
+            local zipkg=$NODEJS_VERSION.zip
+            mkdir -p ~/Downloads
+            cd ~/Downloads/
+            if [ ! -f $HOME/Downloads/$zipkg ]; then
+                wget https://nodejs.org/dist/latest-v${NODEJS_MAJOR_VERSION}.x/$zipkg
+            fi
+            if [ ! -d $DEV_ROOT/$NODEJS_VERSION ]; then
+                unzip ./$zipkg -d $DEV_ROOT
+                cd $DEV_ROOT/$NODEJS_VERSION
+                chmod +x ./*
+            fi
+        fi
+    else
+        # nodejs_n_install
+        nodejs_nvm_install
+    fi
+
+    tip "update npm"
+    npm i -g npm
+
+    tip "install grunt-cli"
+    npm install -g grunt-cli
+
+    tip "install gulp"
+    npm install -g gulp
+
+    tip "install js language server"
+    npm i -g javascript-typescript-langserver
+    npm i -g flow-language-server
+    npm i -g typescript-language-server
+
+    tip "install yarn"
+    # curl -o- -L https://yarnpkg.com/install.sh | bash
+    npm install -g yarn
+
+    cd $oldir
+}
+
+nodejs_n_install() {
+    local oldir=`pwd`
+    tip "n_install"
+    if [ ! -f $HOME/n/bin/n ]; then
+        curl -L https://git.io/n_install | bash
+    fi
+    
+    export N_PREFIX="$HOME/.n"; [[ :$PATH: = *":$N_PREFIX/bin:"* ]] || PATH+=":$N_PREFIX/bin"
+    n-update
+    # n latest
+    # n stable
+    n lts
+    
+    find_str "N-INSTALL" ~/.bashrc
+    if [ $? -eq 0 ]; then
+        echo "" >> ~/.bashrc
+	    echo "# N-INSTALL" >> ~/.bashrc
+	    echo "export N_PREFIX=\"\$HOME/n\"; [[ :\$PATH: = *\":\$N_PREFIX/bin:\"* ]] || PATH+=\":\$N_PREFIX/bin\"" \
+             >> ~/.bashrc
+    fi            
+    cd $oldir
+}
+
+nodejs_nvm_install() {
+    local oldir=`pwd`
+    tip "install nvm + nodejs"
+    find_str "NVM_DIR" ~/.bashrc
+    if [ $? -eq 0 ]; then
+	    echo '' >> ~/.bashrc
+	    echo '# NVM' >> ~/.bashrc
+        echo 'export NVM_DIR="$HOME/.nvm"' >> ~/.bashrc
+        echo '[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm' >> ~/.bashrc
+        echo '[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion' >> ~/.bashrc
+
+        . $HOME/.bashrc
+    fi
+    
+    # curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash
+    local NVM_DIR="$HOME/.nvm"
+    # if command -v nvm >/dev/null 2>&1; then
+    if [ ! -d $NVM_DIR ]; then		
+	    git clone https://github.com/creationix/nvm.git "$NVM_DIR"
+	    cd "$NVM_DIR"
+	    git checkout `git describe --abbrev=0 --tags --match "v[0-9]*" $(git rev-list --tags --max-count=1)`
+    else		
+	    cd "$NVM_DIR"
+	    git fetch --tags origin
+	    git checkout `git describe --abbrev=0 --tags --match "v[0-9]*" $(git rev-list --tags --max-count=1)`		
+    fi
+
+    \. "$NVM_DIR/nvm.sh"
+    
+    # nvm install node # lastest version
+    nvm install --lts=dubnium #lastest LFS:dubnium
+    
+    cd $oldir
+}
+
+nodejs_info() {
+    # ome_info "Nodejs" "$NODEJS_VERSION | `ome_fetch_version npm`"
+    ome_info "Nodejs" "`ome_fetch_version node` | `ome_fetch_version npm`"
+}
+
+if [ "$OME_OS" = "$OS_CYGWIN" ]; then
+    NODEJS_MAJOR_VERSION=10
+    NODEJS_MINOR_VERSION=13
+    NODEJS_PATCH_VERSION=0
+    NODEJS_VERSION=node-v${NODEJS_MAJOR_VERSION}.${NODEJS_MINOR_VERSION}.${NODEJS_PATCH_VERSION}-win-x64
+
+    # tip "set env:$DEV_ROOT/$NODEJS_VERSION"
+    export PATH=$DEV_ROOT/$NODEJS_VERSION:$PATH
+fi
+
+# export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"

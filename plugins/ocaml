@@ -1,0 +1,123 @@
+#!/usr/bin/env sh
+
+ocaml_install() {
+    get_os_type
+    case $OME_OS in
+        # Linux
+        # $OS_DEBIAN) ;;
+        # $OS_UBUNTU) ;;
+        $OS_DEBIAN|$OS_UBUNTU) ;;
+        # $OS_REDHAT) ;;
+        # $OS_FEDORA) ;;
+        $OS_REDHAT|$OS_FEDORA) ;;
+        $OS_ARCH) ;;
+        $OS_GENTOO) ;;
+        $OS_SUSE) ;;
+        $OS_SLACKWARE) ;;
+        $OS_NIXOS) ;;
+        $OS_VOID) ;;
+        $OS_ALPINE) ;;
+        $OS_MAGEIA) ;;
+        $OS_SLITAZ) ;;
+        $OS_GUIXSD) ;;
+        # Unix
+        $OS_MACOS) ;;
+        $OS_AIX) ;;
+        $OS_SOLARIS) ;;
+        $OS_FREEBSD)
+            sudo pkg install ocaml ocaml-opam gmake
+            ;;
+        $OS_OPENBSD) ;;
+        $OS_NETBSD) ;;
+        $OS_DFBSD) ;;
+        # Windows
+        $OS_CYGWIN) ;;
+        $OS_MSYS2) ;;
+        # Other
+        $OS_UNKNOW) ;;
+    esac
+
+    tip "install opam"
+    if [ "$OME_OS" = "$OS_CYGWIN" ]; then
+        # https://fdopen.github.io/opam-repository-mingw/installation/
+        if [ ! -f $HOME/Downloads/opam64.tar.xz ]; then
+            cd $HOME/Downloads/
+            wget https://github.com/fdopen/opam-repository-mingw/releases/download/0.0.0.2/opam64.tar.xz
+        fi
+
+        if [ ! -d $HOME/Downloads/opam64/ ]; then
+            tar -zxvf $HOME/Downloads/opam64.tar.xz
+        fi
+
+        bash $HOME/Downloads/opam64/install.sh --prefix $OME_PREFIX
+        tip "opam init"
+        opam init default "https://github.com/fdopen/opam-repository-mingw.git#opam2" -c "ocaml-variants.4.07.1+mingw64c" --disable-sandboxing --debug
+
+        tip "opam update"
+        # opam update --debug
+        # opam switch list-available
+        
+        tip "opam install ocaml-variants.4.07.1+mingw64c"
+        opam switch create 4.07.1+flambda+mingw64c --empty && opam install ocaml-variants.4.07.1+flambda+mingw64c --debug
+        # opam install ocaml-variants.4.07.1+mingw64c --debug
+    else
+        
+        if [ "$OME_OS" != "$OS_FREEBSD" ]; then
+            # sh <(curl -sL https://raw.githubusercontent.com/ocaml/opam/master/shell/install.sh)
+            github_upgrade ocaml/opam $DEV_ROOT/opam
+            cd $DEV_ROOT/opam
+            ./configure --prefix=$OME_PREFIX
+            # make
+            make install
+
+        fi
+        
+        tip "opam init"
+        opam init --debug
+
+        tip "opam switch install 4.07.1+flambda"
+        # opam switch install 4.07.1+flambda
+        opam switch create 4.07.1+flambda --empty && opam install ocaml-variants.4.07.1+flambda --debug
+        
+    fi
+
+    # tip "install ohai"
+    # opam pin add ohai git+https://github.com/jaredly/ohai
+
+    tip "install ocamlbuild"
+    opam pin add ocamlbuild --kind=git "https://github.com/ocaml/ocamlbuild.git#master"
+
+    tip "install dune"
+    opam install dune
+
+    tip "install OASIS"
+    opam install oasis
+    
+    tip "install merlin"
+    opam install merlin
+    opam user-setup install
+    
+    ome_check_install "npm" "nodejs"
+    
+    tip "install bsb-native"
+    npm install -g --save-dev yauzl
+    npm install -g --save-dev bsb-native
+}
+
+ocaml_uninstall() {
+    echo_error "'ocaml_uninstall' not implemented"
+}
+
+ocaml_exist_p() {
+    echo_error "'ocaml_exist_p' not implemented"
+}
+
+ocaml_info() {
+    if [ "`command -v ocaml`" != "" ] || [ "`command -v opam`" != "" ]; then
+        ome_info "OCaml" "ocaml `ome_fetch_version ocaml` | opam `ome_fetch_version opam`"
+    fi
+}
+
+if [ "`command -v opam`" != "" ]; then
+    eval $(opam env)
+fi

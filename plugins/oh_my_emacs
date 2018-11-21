@@ -1,0 +1,42 @@
+#!/usr/bin/env sh
+
+oh_my_emacs_push() {
+    local oldir=`pwd`
+    cd $HOME/.oh-my-emacs/
+    git_push
+    cd $oldir
+}
+link-init-el() {
+    tip "link"
+    bkdir=~/emacs-config-backup/`date +%Y-%m-%d@%H-%M-%S`
+    mkdir -p $bkdir
+
+    if [ -e ~/.emacs ]; then
+	mv ~/.emacs $bkdir
+    fi
+
+    if [ -e ~/emacs-config ]; then
+	mv ~/emacs-config $bkdir
+    fi
+
+    tip "link .emacs"
+    cp -a $OME_ROOT/emacs-config/init.el ~/.emacs 
+    ln -s $OME_ROOT/emacs-config ~/emacs-config 
+}
+
+oh_my_emacs_install() {
+    github_ssh_upgrade damon-kwok/oh-my-emacs $HOME/.oh-my-emacs
+    link-init-el
+}
+
+oh_my_emacs_uninstall() {
+    echo_error "'oh_my_emacs_uninstall' not implemented"
+}
+
+oh_my_emacs_exist_p() {
+    echo_error "'oh_my_emacs_exist_p' not implemented"
+}
+
+oh_my_emacs_info() {
+    echo_error ""
+}

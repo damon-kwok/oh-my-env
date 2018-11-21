@@ -1,0 +1,33 @@
+#!/usr/bin/env sh
+
+goto_define() {
+    goto -r ome $HOME/.oh-my-emacs/
+    goto -r ws $HOME/workspace/
+    goto -r plugins $HOME/workspace/bin/plugins/common/
+}
+
+goto_install() {
+    github_upgrade iridakos/goto $DEV_ROOT/goto
+    cd $DEV_ROOT/goto
+    chmod +x ./*.sh
+
+    goto_define
+}
+
+goto_uninstall() {
+    echo_error "'goto_uninstall' not implemented"
+}
+
+goto_exist_p() {
+    echo_error "'goto_exist_p' not implemented"
+}
+
+goto_info() {
+    echo_error ""
+}
+
+if [ -d $DEV_ROOT/goto ]; then
+    # export PATH=$DEV_ROOT/goto:$PATH
+    . $DEV_ROOT/goto/goto.sh
+    goto_define
+fi

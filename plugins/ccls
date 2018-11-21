@@ -1,0 +1,41 @@
+#!/usr/bin/env sh
+
+ccls_install() {
+    github_upgrade MaskRay/ccls $DEV_ROOT/ccls
+    # github_upgrade damon-kwok/ccls $DEV_ROOT/ccls
+    mkdir -p $HOME/.ccls
+    mkdir -p $DEV_ROOT/ccls/build
+    cd $DEV_ROOT/ccls/build/
+    
+    # -DCMAKE_CXX_STANDARD=17
+    # -DCMAKE_CXX_STANDARD_REQUIRED=ON 
+    # -DCMAKE_CXX_EXTENSIONS=OFF
+    # -DCLANG_USE_BUNDLED_LIBC++=ON
+    # -DUSE_SHARED_LLVM=ON    
+    cmake .. -G "$OME_MAKE" \
+          -DCMAKE_INSTALL_PREFIX=$OME_PREFIX \
+	      -DCMAKE_EXPORT_COMPILE_COMMANDS=YES \
+	      -DCMAKE_BUILD_TYPE=Release \
+          -DSYSTEM_CLANG=ON \
+          -DCMAKE_CXX_STANDARD=17
+    # -DCMAKE_PREFIX_PATH=$LLVM_ROOT
+    # -DCMAKE_CXX_COMPILER=$LLVM_ROOT/bin/clang++
+    # make -j4
+    # make install
+    cmake --build . --use-stderr --config Release --target install
+
+    # config: clang-format
+    clang-format_install
+}
+
+ccls_uninstall() {
+    echo_error "'ccls_uninstall' not implemented"
+}
+
+ccls_exist_p() {
+    echo_error "'ccls_exist_p' not implemented"
+}
+
+ccls_info() {
+    echo_error ""
+}

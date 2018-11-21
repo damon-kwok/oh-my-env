@@ -1,0 +1,541 @@
+#!/usr/bin/env sh
+
+cc_install() {
+    # gcc clang make m4 automake libtool pkg-config"
+    
+    # libdn2 libuv libason-devel
+    # 
+    # libgmime glibc
+    # libiconv
+    # sed awk grep tar zip unzip 7zip flex gawke bison bc mt
+    # guile rush tramp libc scm screen
+
+    cc_install_tools
+
+    readp "install clang by source?"
+    if [ $? -eq 1 ]; then
+        cc_install_clang_git
+    else
+        cc_install_clang_bin
+    fi
+    
+    tip "config: clang_format"
+    cc_install_clang_format
+    
+    readp "install C library?"
+    if [ $? -eq 1 ]; then
+        cc_install_c_library   
+    fi
+
+    readp "install C++ library?"
+    if [ $? -eq 1 ]; then
+        cc_install_cpp_library   
+    fi
+}
+
+cc_uninstall() {
+    echo_error "'cc_uninstall' not implemented"
+}
+
+cc_exist_p() {
+    echo_error "'cc_exist_p' not implemented"
+}
+
+cc_info() {
+    # ome_get_version gcc "GCC_VERSION"
+    # echo_kv "C/C++" "$GCC_VERSION|$CLANG_VERSION"
+    # echo_kv "CTool" "pkg-config $PKGCONF_VERSION|$LIBTOOL_VERSION"
+    # echo_kv "Make" "$MAKE_VERSION|$AUTOMAKE_VERSION|$AUTOCONF_VERSION"
+
+    ome_info "C/C++" "`ome_fetch_version gcc` | `ome_fetch_version clang`"
+    ome_info "Make" "`ome_fetch_version make` | `ome_fetch_version cmake` (default: $OME_MAKE)"
+    ome_info "Auto" "`ome_fetch_version autogen` | `ome_fetch_version automake` | `ome_fetch_version autoconf`"
+    ome_info "CTool" "pkg-config `ome_fetch_version pkg-config` | `ome_fetch_version libtool`" #`ome_fetch_version m4` | 
+}
+
+cc_install_c_library() {
+    readp "install libuv?"
+    if [ $? -eq 1 ]; then
+        github_upgrade libuv/libuv $DEV_ROOT/libuv
+        
+        # mkdir -p $PROJ_ROOT/c/libuv/build
+        # cd $PROJ_ROOT/c/libuv/build/
+        # cmake .. -G "$OME_MAKE" \
+	        # -DCMAKE_INSTALL_PREFIX=$OME_PREFIX
+        # cmake --build . --use-stderr --config Release --target install -- -j4
+        cd $DEV_ROOT/libuv/
+        chmod +x ./autogen.sh
+        ./autogen.sh
+        ./configure --prefix=$OME_PREFIX
+        make
+        make check
+        make install
+    fi
+}
+
+cc_install_cpp_library() {
+    cc_install_cxx_library gflags/gflags $DEV_ROOT/gflags 11
+    cc_install_cxx_library google/snappy $DEV_ROOT/snappy 11
+    cc_install_cxx_library google/double-conversion $DEV_ROOT/double-conversion 11
+    cc_install_cxx_library google/glog $DEV_ROOT/glog 11
+    
+    cc_install_cxx_library pocoproject/poco $DEV_ROOT/poco 14
+    cc_install_cxx_library facebook/folly $DEV_ROOT/folly 14
+    
+    readp "install boost?"
+    if [ $? -eq 1 ]; then
+        github_upgrade boostorg/boost $DEV_ROOT/boost 1 develop
+        cd $DEV_ROOT/boost/
+        # git checkout develop # or whatever branch you want to use
+        ./bootstrap.sh
+        ./b2 headers
+        ./b2 install --prefix=$OME_PREFIX
+    fi
+
+}
+
+cc_install_cxx_library() {
+    local lib=$1
+    local dir=$2
+    local std=$3
+    readp "install $lib(c++$std)?"
+    if [ $? -eq 1 ]; then
+        github_upgrade $lib $dir
+
+        mkdir -p $DEV_ROOT/flooy/build
+        cd $DEV_ROOT/flooy/build/
+
+        cmake .. -G "$OME_MAKE" \
+              -DCMAKE_INSTALL_PREFIX=$OME_PREFIX \
+              -DCMAKE_EXPORT_COMPILE_COMMANDS=1 \
+              -DCMAKE_CXX_STANDARD=$std
+        cmake --build . --use-stderr --config Release --target install
+    fi
+}
+
+cc_install_clang_format() {
+    local oldir=`pwd`
+    if [ ! -e ~/.clang-format ]; then
+        #echo "Language: Cpp" >> ~/.clang-format
+        echo "# 基于哪个配置文件" >> ~/.clang-format
+        echo "BasedOnStyle: LLVM" >> ~/.clang-format
+        echo "# BreakBeforeBraces: Attach" >> ~/.clang-format
+        echo "BreakBeforeBraces: Attach" >> ~/.clang-format
+        echo "# 指针的*的挨着哪边" >> ~/.clang-format
+        echo "PointerAlignment: Right" >> ~/.clang-format
+        echo "# 缩进宽度" >> ~/.clang-format
+        echo "IndentWidth: 4" >> ~/.clang-format
+        echo "# tab的宽度" >> ~/.clang-format
+        echo "TabWidth: 4" >> ~/.clang-format
+        echo "# 使用Tab" >> ~/.clang-format
+        echo "UseTab: Never" >> ~/.clang-format
+        echo "# 行长度限制" >> ~/.clang-format
+        echo "ColumnLimit: 80" >> ~/.clang-format
+
+        echo "# 模板声明单独一行" >> ~/.clang-format
+        echo "AlwaysBreakTemplateDeclarations: true" >> ~/.clang-format
+        echo "# 连续的空行保留几行" >> ~/.clang-format
+        echo "MaxEmptyLinesToKeep: 1" >> ~/.clang-format
+        echo "# 在 @property 后面添加空格, @property (readonly) 而不是 @property(readonly)." >> ~/.clang-format
+        echo "ObjCSpaceAfterProperty: true" >> ~/.clang-format
+        echo "# OC block后面的缩进" >> ~/.clang-format
+        echo "ObjCBlockIndentWidth: 4" >> ~/.clang-format
+        echo "# 是否允许短方法单行" >> ~/.clang-format
+        echo "AllowShortFunctionsOnASingleLine: true" >> ~/.clang-format
+        echo "# 是否允许短if单行 If true, if (a) return; 可以放到同一行" >> ~/.clang-format
+        echo "AllowShortIfStatementsOnASingleLine: true" >> ~/.clang-format
+        echo "# 注释对齐" >> ~/.clang-format
+        echo "AlignTrailingComments: true" >> ~/.clang-format
+        echo "# 换行的时候对齐操作符" >> ~/.clang-format
+        echo "# AlignOperands: true" >> ~/.clang-format
+        echo "# 中括号两边空格 [] " >> ~/.clang-format
+        echo "SpacesInSquareBrackets: false" >> ~/.clang-format
+        echo "# 小括号两边添加空格" >> ~/.clang-format
+        echo "SpacesInParentheses : false" >> ~/.clang-format
+        echo "# 多行声明语句按照=对齐" >> ~/.clang-format
+        echo "AlignConsecutiveDeclarations: true" >> ~/.clang-format
+        echo "# 连续的赋值语句以 = 为中心对齐" >> ~/.clang-format
+        echo "AlignConsecutiveAssignments: true" >> ~/.clang-format
+        echo "# 等号两边的空格" >> ~/.clang-format
+        echo "SpaceBeforeAssignmentOperators: true" >> ~/.clang-format
+        echo "# 容器类的空格 例如 OC的字典" >> ~/.clang-format
+        echo "SpacesInContainerLiterals: true" >> ~/.clang-format
+        echo "# 缩进" >> ~/.clang-format
+        echo "IndentWrappedFunctionNames: true" >> ~/.clang-format
+        echo "# 在block从空行开始" >> ~/.clang-format
+        echo "KeepEmptyLinesAtTheStartOfBlocks: true" >> ~/.clang-format
+        echo "# 在构造函数初始化时按逗号断行，并以冒号对齐" >> ~/.clang-format
+        echo "BreakConstructorInitializersBeforeComma: true" >> ~/.clang-format
+        echo "# 函数参数换行" >> ~/.clang-format
+        echo "AllowAllParametersOfDeclarationOnNextLine: true" >> ~/.clang-format
+        echo "# 括号后添加空格" >> ~/.clang-format
+        echo "SpaceAfterCStyleCast: true" >> ~/.clang-format
+        
+        echo "" >> ~/.clang-format
+        echo "---" >> ~/.clang-format
+        echo "Language: JavaScript" >> ~/.clang-format
+        echo "# Use 100 columns for JS." >> ~/.clang-format
+        echo "ColumnLimit: 0" >> ~/.clang-nformat
+    fi
+    cd $oldir
+}
+
+cc_install_clang_git() {
+        if [ "$OME_OS" = "$OS_MSYS2" ]; then
+        msys2_llvm_install
+    else
+        local llvmdir=$DEV_ROOT/llvm
+        git_upgrade "https://git.llvm.org" "git/llvm" $llvmdir
+        git_upgrade "https://git.llvm.org" "git/clang" $llvmdir/tools/clang
+        git_upgrade "https://git.llvm.org" "git/clang-tools-extra" $llvmdir/tools/clang/tools/extra
+        git_upgrade "https://git.llvm.org" "git/lld" $llvmdir/tools/lld
+        git_upgrade "https://git.llvm.org" "git/lldb" $llvmdir/tools/lldb
+        git_upgrade "https://git.llvm.org" "git/polly" $llvmdir/tools/polly
+        git_upgrade "https://git.llvm.org" "git/compiler-rt" $llvmdir/projects/compiler-rt
+        git_upgrade "https://git.llvm.org" "git/openmp" $llvmdir/projects/openmp
+        git_upgrade "https://git.llvm.org" "git/libcxx" $llvmdir/projects/libcxx
+        git_upgrade "https://git.llvm.org" "git/libcxxabi" $llvmdir/projects/libcxxabi
+        #
+        # git_upgrade "https://git.llvm.org" "git/test-suite" $llvmdir/projects/test-suite
+        cd $llvmdir/
+        git config branch.master.rebase true
+        
+        mkdir -p $llvmdir/../llvm_build
+        cd $llvmdir/../llvm_build/
+
+	    tip "compile"
+        if [ "$OME_OS" = "$OS_MSYS2" ] || [ "$OME_OS" = "$OS_CYGWIN" ]; then
+            cmake $llvmdir -G "$OME_MAKE" \
+	              -DCMAKE_INSTALL_PREFIX=$OME_PREFIX \
+		          -DCMAKE_BUILD_TYPE=Release \
+                  -DCMAKE_C_COMPILER=gcc \
+                  -DCMAKE_CXX_COMPILER=g++ \
+	              -DCMAKE_CXX_STANDARD=14 \
+	              -DCMAKE_CXX_STANDARD_REQUIRED=OFF \
+	              -DCMAKE_CXX_EXTENSIONS=OFF \
+                  -DLLVM_TARGET_ARCH="host" \
+                  -DLLVM_TARGETS_TO_BUILD="X86" \
+                  -DLLVM_ENABLE_DOXYGEN=ON \
+                  -DLLVM_ENABLE_SPHINX=ON \
+                  -DLLVM_BUILD_LLVM_DYLIB=ON \
+                  -DLLVM_OPTIMIZED_TABLEGEN=ON \
+	              -DLLVM_INCLUDE_TESTS=OFF
+        else
+            cmake $llvmdir -G "$OME_MAKE" \
+	              -DCMAKE_INSTALL_PREFIX=$OME_PREFIX \
+                  -DCMAKE_BUILD_TYPE=Release \
+                  -DLLVM_TARGET_ARCH="host" \
+                  -DLLVM_TARGETS_TO_BUILD="X86" \
+                  -DLLVM_ENABLE_DOXYGEN=ON \
+                  -DLLVM_ENABLE_SPHINX=OFF \
+                  -DLLVM_BUILD_LLVM_DYLIB=ON \
+                  -DLLVM_OPTIMIZED_TABLEGEN=ON \
+	              -DLLVM_INCLUDE_TESTS=OFF
+        fi
+
+        cmake --build . --use-stderr --config Release --target install -- -j4
+
+        # cd $llvmdir/../libcxx/
+        # cmake $llvmdir/projects/libcxx -G "$OME_MAKE" \
+              # -DCMAKE_INSTALL_PREFIX=$OME_PREFIX \
+              # -DCMAKE_BUILD_TYPE=Release \
+              # -DLLVM_PATH=path/to/llvm \
+              # -DLIBCXX_CXX_ABI=libcxxabi \
+              # -DLIBCXX_CXX_ABI_INCLUDE_PATHS="$llvmdir/projects/libcxxabi/include"
+        # ninja -j4
+        # ninja install
+    fi
+}
+
+cc_install_clang_bin() {
+    get_os_type
+    case $OME_OS in
+        # Linux
+        # $OS_DEBIAN) ;;
+        # $OS_UBUNTU) ;;
+        $OS_DEBIAN|$OS_UBUNTU)
+            sudo apt install -y llvm-dev clang libclang-dev clang-format \
+                 libc++-dev libc++abi-dev
+            ;;
+        # $OS_REDHAT) ;;
+        # $OS_FEDORA) ;;
+        $OS_REDHAT|$OS_FEDORA)
+            sudo yum install -y llvm-dev clang-dev clang-format \
+                 libc++-devel libc++abi-devel
+            ;;
+        $OS_ARCH)
+            sudo pacman -S llvm-devel clang-devel clang-format \
+                 libc++-devel libc++abi-devel
+            ;;
+        $OS_GENTOO) ;;
+        $OS_SUSE)
+            sudo zypper install llvm-devel clang-devel clang-format \
+                 libc++-devel libc++abi-devel
+            ;;
+        $OS_SLACKWARE) ;;
+        $OS_NIXOS) ;;
+        $OS_VOID) ;;
+        $OS_ALPINE) ;;
+        $OS_MAGEIA) ;;
+        $OS_SLITAZ) ;;
+        $OS_GUIXSD) ;;
+        # Unix
+        $OS_MACOS)
+            brew install llvm-devel clang-devel clang-format \
+                libc++-devel libc++abi-devel
+            ;;
+        $OS_AIX) ;;
+        $OS_SOLARIS) ;;
+        $OS_FREEBSD)
+            sudo pkg install llvm-devel clang-devel clang-format \
+                 libc++-devel libc++abi-devel
+            ;;
+        $OS_OPENBSD) ;;
+        $OS_NETBSD) ;;
+        $OS_DFBSD) ;;
+        # Windows
+        $OS_CYGWIN)
+            apt install libc++-devel libc++abi-devel
+            ;;
+        $OS_MSYS2)
+            pacman -S mingw-w64-x86_64-llvm \
+               mingw-w64-x86_64-clang \
+               mingw-w64-x86_64-clang-analyzer \
+               mingw-w64-x86_64-clang-tools-extra \
+               mingw-w64-x86_64-compiler-rt \
+               mingw-w64-x86_64-lld \
+               mingw-w64-x86_64-polly \
+               mingw-w64-x86_64-compiler-rt \
+               mingw-w64-x86_64-libblocksruntime \
+               mingw-w64-x86_64-libc++ \
+               mingw-w64-x86_64-libc++abi
+            ;;
+        # Other
+        $OS_UNKNOW) ;;
+    esac
+
+}
+
+cc_install_tools() {
+    get_os_type
+    case $OME_OS in
+        # Linux
+        # $OS_DEBIAN) ;;
+        # $OS_UBUNTU) ;;
+        $OS_DEBIAN|$OS_UBUNTU)
+            #libcrypt-dev #libpcre-dev #libiconv-dev libautotrace-dev
+            #bzip2-dev
+            tip "install base devel tool"
+	        sudo apt install -y tar zip unzip coreutils diffutils \
+                 build-essential \
+                 make ninja-build cmake \
+                 automake autogen autoconf autopoint \
+                 pkg-config libtool intltool libtool-bin
+
+            readp "install doc tools?"
+		    if [ $? -eq 1 ]; then
+                sudo apt install texinfo doxygen asciidoc xmlto docbook2x imagemagick ghostscript
+            fi
+
+            sudo apt install -y swig libcppunit-dev\
+                 libssl-dev \
+                 libmcrypt-dev libgcrypt-dev libscrypt-dev libxcrypt-dev \
+                 libcurl4-openssl-dev uuid-dev libncurses-dev \
+                 libxml2-dev libxslt-dev libexpat-dev libyaml-dev \
+                 libffi-dev libreadline-dev gettext \
+                 libevent-dev libpcre2-dev \
+                 libedit-dev libtrace-dev \
+                 libbison-dev libicu-dev libtidy-dev \
+                 zlibc libzip-dev liblz4-dev liblzma-dev \
+                 valgrind libatomic-ops-dev re2c
+
+            # language dev
+            sudo apt install -y libperl-dev libpython-dev libpython3-dev php-dev \
+                 ruby-dev tcl-dev
+            
+            # AutoTrace
+            sudo apt install -y libmagickcore-dev libpstoedit-dev libgif-dev
+            github_upgrade libming/libming $DEV_ROOT/libming
+            cd $DEV_ROOT/libming/
+            ./autogen.sh
+            ./configure --prefix=$OME_PREFIX
+            # --enable-cpp \
+                # --enable-python \
+                # --enable-perl \
+                # --enable-php
+            # --enable-tcl
+            # make test
+	        make install
+            
+            github_upgrade autotrace/autotrace $DEV_ROOT/autotrace
+            cd $DEV_ROOT/autotrace/
+            ./autogen.sh
+            ./configure --prefix=$OME_PREFIX
+	        make
+            ;;
+        # $OS_REDHAT) ;;
+        # $OS_FEDORA) ;;
+        $OS_REDHAT|$OS_FEDORA)
+            sudo yum groupinstall "Development Tools"
+            sudo yum install -y make ninja-build cmake \
+                 automake autogen autoconf autopoint pkg-config libtool intltool \
+                 emacs gcc gcc-c++ #ttf-bitstream-vera
+
+            readp "install doc tools?"
+		    if [ $? -eq 1 ]; then
+                sudo yum install texinfo doxygen asciidoc xmlto docbook2x ImageMagick ghostscript
+            fi
+            
+            sudo yum install redhat-rpm-config \
+                 swig cppunit \
+                 openssl-devel libxcrypt-devel libmcrypt-devel \
+                 libcurl-devel libuuid-devel ncurses-devel \
+                 libxml2-devel libxslt-devel expat-devel libyaml-devel \
+                 libffi-devel readline-devel gettext-devel \
+                 libevent-devel pcre-devel pcre2-devel \
+                 libticonv-devel libedit-devel autotrace-devel \
+                 bison-devel libicu-devel libtidy-devel \
+                 zlib-devel libzip-devel bzip2-devel liblz4-devel liblzma-devel \
+                 valgrind-devel libatomic_ops-devel re2c
+            ;;
+        $OS_ARCH)
+            sudo pacman -Syyu
+            sudo pacman -S trizen
+            #sudo pacman -S opendesktop-fonts
+            #sudo pacman -S firefox
+            trizen -S base-devel \
+                   make ninja cmake automake autogen autoconf autopoint \
+                   pkg-config libtool intltool \
+                   ttf-bitstream-vera emacs
+
+            readp "install doc tools?"
+		    if [ $? -eq 1 ]; then
+                sudo pacman -S texinfo doxygen asciidoc xmlto docbook2x imagemagick ghostscript
+            fi
+            sudo pacman -S swig cppunit \
+                 openssl-devel libcrypt-devel libmcrypt-devel \
+                 libcurl-devel libuuid-devel libncurses-devel \
+                 libxml2-devel libxslt-devel libexpat-devel libyaml-devel \
+                 libffi-devel libreadline-devel gettext-devel \
+                 libevent-devel libpcre-devel libpcre2-devel \
+                 libiconv-devel libedit-devel libautotrace-devel \
+                 bison-devel libicu-devel libtidy-devel \
+                 zlib-devel libzip-devel bzip2-devel liblz4-devel liblzma-devel \
+                 valgrind-devel libatomic_ops-devel re2c
+            ;;
+        $OS_GENTOO) ;;
+        $OS_SUSE)
+            sudo zypper refresh
+            sudo zypper update
+            # zypper info -t pattern devel_basis
+            sudo zypper install -t pattern devel_basis
+            sudo zypper install make ninja cmake \
+                 automake autogen autoconf autopoint \
+                 pkg-config libtool intltool \
+                 bitstream-vera-fonts emacs
+            sudo zypper install swig cppunit
+            ;;
+        $OS_SLACKWARE) ;;
+        $OS_NIXOS) ;;
+        $OS_VOID) ;;
+        $OS_ALPINE) ;;
+        $OS_MAGEIA) ;;
+        $OS_SLITAZ) ;;
+        $OS_GUIXSD) ;;
+        # Unix
+        $OS_MACOS)
+            brew install swig cppunit
+            ;;
+        $OS_AIX) ;;
+        $OS_SOLARIS) ;;
+        $OS_FREEBSD)
+            sudo pkg install ninja cmake \
+                 automake autogen autoconf autopoint pkgconf libtool intltool \
+                 gmake gcc clang-devel zh-font-std bitstream-vera emacs
+
+            sudo pkg install swig30 cppunit \
+                 libgcrypt libmcrypt-devel \
+                 curl ossp-uuid ncurses \
+                 libxml2 libxslt expat libyaml \
+                 libffi readline gettext \
+                 libevent pcre pcre2 \
+                 libticonv libedit autotrace \
+                 bison icu tidy-devel \
+                 fpc-zlib libzip bzip2 liblz4 lzma\
+                 valgrind-devel libatomic_ops re2c
+            ;;
+        $OS_OPENBSD) ;;
+        $OS_NETBSD) ;;
+        $OS_DFBSD) ;;
+        # Windows
+        $OS_CYGWIN)
+            readp "upgrade apt-cyg tools?"
+		    if [ $? -eq 1 ]; then
+                rm -rf /usr/bin/apt-cyg
+                cd /usr/bin/
+                wget https://raw.githubusercontent.com/kou1okada/apt-cyg/master/apt-cyg
+                perl -pi -e 's|http://ftp.jaist.ac.jp/pub/cygwin|http://mirrors.163.com/cygwin|g' /usr/bin/apt-cyg
+                cp -rf /usr/bin/apt-cyg /usr/bin/apt
+                chmod +x /usr/bin/apt-cyg
+                chmod +x /usr/bin/apt
+            fi
+            apt install git subversion wget curl \
+                tar zip unzip coreutils diffutils \
+                make ninja cmake automake autogen autoconf autopoint pkg-config libtool intltool \
+                xdg-utils emacs-w32
+
+            readp "install doc tools?"
+		    if [ $? -eq 1 ]; then
+                apt install texinfo doxygen asciidoc xmlto docbook2X imagemagick ghostscript
+            fi
+            
+            apt install swig cppunit \
+                openssl-devel libcrypt-devel \
+                libcurl-devel libuuid-devel libncurses-devel \
+                libxml2-devel libxslt-devel libexpat-devel libyaml-devel \
+                libffi-devel libreadline-devel gettext-devel \
+                libevent-devel libpcre-devel libpcre2-devel \
+                libiconv-devel libedit-devel libautotrace-devel \
+                bison libicu-devel libtidy-devel \
+                zlib-devel libzip-devel bzip2 liblz4-devel liblzma-devel \
+                libatomic_ops-devel
+
+            # readp "install re2c?"
+            # if [ $? -eq 1 ]; then
+            github_upgrade skvadrik/re2c $DEV_ROOT/re2c
+            # sf_upgrade re2c/code-git $DEV_ROOT/re2c
+
+            cd $DEV_ROOT/re2c/re2c/
+            ./autogen.sh
+            ./configure --prefix=$OME_PREFIX
+            make install
+            # fi
+            ;;
+        $OS_MSYS2)
+            pacman -S make ninja \
+                   automake autogen autoconf autopoint pkg-config libtool intltool \
+	               mingw-w64-x86_64-cmake mingw-w64-x86_64-ninja \
+	               mingw-w64-x86_64-gcc mingw-w64-x86_64-nasm \
+                   mingw-w64-x86_64-python2 mingw-w64-x86_64-python2-pip \
+	               mingw-w64-x86_64-python3 mingw-w64-x86_64-python3-pip \
+	               mingw-w64-x86_64-emacs mingw-w64-x86_64-ttf-dejavu
+
+            readp "install doc tools?"
+		    if [ $? -eq 1 ]; then
+                pacman -S texinfo doxygen asciidoc xmlto docbook2X imagemagick ghostscript
+            fi
+            pacman -S swig cppunit \
+                   openssl-devel libcrypt-devel libmcrypt-devel \
+                   libcurl-devel libuuid-devel libncurses-devel \
+                   libxml2-devel libxslt-devel libexpat-devel libyaml-devel \
+                   libffi-devel libreadline-devel gettext-devel \
+                   libevent-devel libpcre-devel libpcre2-devel \
+                   libiconv-devel libedit-devel libautotrace-devel \
+                   bison-devel libicu-devel libtidy-devel \
+                   zlib-devel libzip-devel bzip2-devel liblz4-devel liblzma-devel \
+                   valgrind-devel libatomic_ops-devel re2c
+            ;;
+        # Other
+        $OS_UNKNOW) ;;
+    esac
+}

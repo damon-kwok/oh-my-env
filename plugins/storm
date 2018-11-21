@@ -1,0 +1,20 @@
+#!/usr/bin/env sh
+
+storm_install() {
+    github_upgrade apache/storm $DEV_ROOT/storm
+    cd $DEV_ROOT/storm/
+    mvn compile
+    mvn package
+}
+
+storm_uninstall() {
+    echo_error "'storm_uninstall' not implemented"
+}
+
+storm_exist_p() {
+    echo_error "'storm_exist_p' not implemented"
+}
+
+storm_info() {
+    echo_error ""
+}

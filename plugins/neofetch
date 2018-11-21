@@ -1,0 +1,33 @@
+#!/usr/bin/env sh
+
+neofetch_install() {
+    get_os_type
+    case $OME_OS in
+        $OS_UNKNOW) ;;
+        $OS_MACOS) ;;
+        $OS_CYGWIN) ;;
+        $OS_MSYS2) ;;
+        $OS_ARCH) ;;
+        $OS_DEBIAN|$OS_UBUNTU)
+            # https://github.com/dylanaraps/neofetch/wiki/Installation
+            sudo add-apt-repository ppa:dawidd0811/neofetch
+            # sudo add-apt-repository ppa:dawidd0811/neofetch-daily
+            sudo apt update
+            sudo apt install neofetch
+            ;;
+        $OS_REDHAT|$OS_FEDORA) ;;
+        $OS_FREEBSD) ;;
+    esac
+}
+
+neofetch_uninstall() {
+    echo_error "neofetch_uninstall not implemented"
+}
+
+neofetch_exist_p() {
+    echo_error "neofetch_uninstall not implemented"
+}
+
+neofetch_info() {
+    echo_error ""
+}

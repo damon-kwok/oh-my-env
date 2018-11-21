@@ -1,0 +1,37 @@
+#!/usr/bin/env sh
+
+shell_install() {
+    # tip "install oh-my-zsh"
+    # sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+
+    tip "install Bash-it"	
+    # if command -v bash-it >/dev/null 2>&1; then
+	if [ "`command -v bash-it`" != "" ]; then
+	    echo "----------------bash-it---update mode!!!!!!"
+	    bash-it update
+    else
+	    echo "----------------bash-it---net install mode!!!!!!"
+	    # git clone --depth=1 https://github.com/Bash-it/bash-it.git ~/.bash_it
+	    github_upgrade Bash-it/bash-it ~/.bash_it
+	    ~/.bash_it/install.sh
+    fi
+
+    #set .bashrc
+
+    ome_check_install "npm" "nodejs"
+    
+    tip "install bash language server"
+    npm i -g bash-language-server
+}
+
+shell_uninstall() {
+    echo_error "'shell_uninstall' not implemented"
+}
+
+shell_exist_p() {
+    echo_error "'shell_exist_p' not implemented"
+}
+
+shell_info() {
+    echo_error ""
+}

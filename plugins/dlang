@@ -1,0 +1,17 @@
+#!/usr/bin/env sh
+
+dlang_install() {
+    echo_error "'dlang_install' not implemented"
+}
+
+dlang_uninstall() {
+    echo_error "'dlang_uninstall' not implemented"
+}
+
+dlang_exist_p() {
+    echo_error "'dlang_exist_p' not implemented"
+}
+
+dlang_info() {
+    echo_error ""
+}

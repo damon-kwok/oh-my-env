@@ -1,0 +1,22 @@
+#!/usr/bin/env sh
+
+libvterm_install() {
+    github_upgrade akermu/emacs-libvterm $DEV_ROOT/libvterm
+    mkdir -p $DEV_ROOT/libvterm/build
+    cd $DEV_ROOT/libvterm/build/
+    cmake .. -G "$OME_MAKE" \
+	      -DCMAKE_INSTALL_PREFIX=$OME_PREFIX
+    cmake --build . --use-stderr --config Release -- -j4
+}
+
+libvterm_uninstall() {
+    echo_error "'libvterm_uninstall' not implemented"
+}
+
+libvterm_exist_p() {
+    echo_error "'libvterm_exist_p' not implemented"
+}
+
+libvterm_info() {
+    echo_error ""
+}

@@ -1,0 +1,17 @@
+#!/usr/bin/env sh
+
+elm_install() {
+    echo_error "'elm_install' not implemented"
+}
+
+elm_uninstall() {
+    echo_error "'elm_uninstall' not implemented"
+}
+
+elm_exist_p() {
+    echo_error "'elm_exist_p' not implemented"
+}
+
+elm_info() {
+    echo_error ""
+}

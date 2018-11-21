@@ -1,0 +1,26 @@
+#!/usr/bin/env sh
+
+crystal_install() {
+    if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
+        echo_error "'crystal' does not support windows"
+        return
+    fi
+    
+    local oldir=`pwd`
+    github_upgrade crystal-lang/crystal $DEV_ROOT/crystal
+    cd $DEV_ROOT/crystal
+    make -j4
+    cd $oldir
+}
+
+crystal_uninstall() {
+    echo_error "'crystal_uninstall' not implemented"
+}
+
+crystal_exist_p() {
+    echo_error "'crystal_exist_p' not implemented"
+}
+
+crystal_info() {
+    echo_error ""
+}

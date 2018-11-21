@@ -1,0 +1,26 @@
+#!/usr/bin/env sh
+
+nim_install() {
+    tip "install nim"
+    #if ! command -v nimble >/dev/null 2>&1; then
+	if [ "`command -v nimble`" = "" ]; then
+        # if test nimble = "" ; then
+        curl https://nim-lang.org/choosenim/init.sh -sSf | sh
+    fi
+    nimble update
+}
+
+nim_uninstall() {
+    echo_error "'nim_uninstall' not implemented"
+}
+
+nim_exist_p() {
+    echo_error "'nim_exist_p' not implemented"
+}
+
+nim_info() {
+    echo_error ""
+}
+
+# Nim-lang
+export PATH=$HOME/.nimble/bin:$PATH

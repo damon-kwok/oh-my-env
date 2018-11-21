@@ -1,0 +1,5 @@
+#!/usr/bin/env sh
+
+# emacsclient --server-file "$HOME/.emacs.d/server/server" --no-wait --alternate-editor="emacs" -n $@
+# emacsclient -a "emacs" -n $@
+emacsclient -n $@

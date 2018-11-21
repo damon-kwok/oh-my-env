@@ -1,0 +1,56 @@
+#!/usr/bin/env sh
+
+roswell_install() {
+    if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
+        if [ ! -d $DEV_ROOT/roswell ]; then
+            local zipkg=Roswell-x86_64.zip
+            mkdir -p ~/Downloads
+            cd ~/Downloads/
+            if [ ! -f $HOME/Downloads/$zipkg ]; then
+                wget "https://ci.appveyor.com/api/projects/snmsts/roswell-en89n/artifacts/Roswell-x86_64.zip?branch=master&job=Environment%3A%20MSYS2_ARCH%3Dx86_64,%20MSYS2_BITS%3D64,%20MSYSTEM%3DMINGW64,%20METHOD%3Dcross" -O Roswell-x86_64.zip
+            fi
+            unzip ./$zipkg -d $DEV_ROOT
+            cd $DEV_ROOT/$roswell
+            chmod +x ./ros
+            export PATH=$DEV_ROOT/roswell:$PATH
+        fi
+    else
+        # sudo apt-get -y install git build-essential automake libcurl4-openssl-dev;
+        github_upgrade roswell/roswell $DEV_ROOT/roswell
+        cd $DEV_ROOT/roswell/
+        echo "sh bootstrap"
+        sh bootstrap
+        echo "./configure --prefix=$OME_PREFIX"
+        ./configure --prefix=$OME_PREFIX
+        echo "make install"
+        make install
+    fi
+
+    tip "ros setup"
+    # ros install sbcl
+    ros use sbcl/system
+    ros setup
+
+    tip "install clack"
+    ros install clack
+}
+
+roswell_uninstall() {
+    echo_error "'roswell_uninstall' not implemented"
+}
+
+roswell_exist_p() {
+    echo_error "'roswell_exist_p' not implemented"
+}
+
+roswell_info() {
+    echo_error ""
+}
+
+if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
+    export PATH=$DEV_ROOT/roswell:$PATH
+fi
+
+if [ -d $HOME/.roswell/ ]; then
+    ome_info "Roswell" "`ome_fetch_version ros` | `ros run -- --version`"
+fi

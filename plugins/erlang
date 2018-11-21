@@ -1,0 +1,61 @@
+#!/usr/bin/env sh
+erlenv_install() {
+    github_upgrade talentdeficit/erlenv $HOME/.erlenv
+    
+}
+
+erlang_install() {
+    # git clone https://github.com/erlang/otp.git
+    github_upgrade erlang/otp $DEV_ROOT/erlang_otp
+    cd $DEV_ROOT/erlang_otp
+    ./otp_build autoconf
+    # ./configure --prefix=$HOME/.erlang_otp
+    ./configure --prefix=$OME_PREFIX
+    make install
+
+    tip "install rebar3 for erlang"
+    # cd $OME_BIN
+    cd $WS_BIN/
+    # wget https://s3.amazonaws.com/rebar3/rebar3 && chmod +x rebar3
+    chmod +x ./rebar3
+    get_os_type
+    case $OME_OS in
+        $OS_UNKNOW) ;;
+        $OS_MACOS)
+            brew install openssl
+            ;;
+        $OS_CYGWIN) ;;
+        $OS_MSYS2) ;;
+        $OS_ARCH)
+            sudo pacman -S libssl-devel
+            ;;
+        $OS_DEBIAN|$OS_UBUNTU)
+            sudo apt install libssl-dev
+            ;;
+        $OS_REDHAT|$OS_FEDORA)
+            sudo yum install openssl-devel
+            ;;
+        $OS_FREEBSD) ;;
+    esac
+    # rebar3 local upgrade DEBUG=1
+    rebar3 update
+    rebar3 upgrade
+}
+
+erlang_uninstall() {
+    echo_error "'erlang_uninstall' not implemented"
+}
+
+erlang_exist_p() {
+    echo_error "'erlang_exist_p' not implemented"
+}
+
+erlang_info() {
+    echo_error ""
+}
+
+ERLANG_VERSION=otp21.1
+if [ -d $HOME/.erlenv/ ]; then
+    export PATH=$HOME/.erlenv/bin:$PATH
+    eval "$(erlenv init -)"
+fi
