@@ -341,7 +341,7 @@ ome_parse() {
             $EDITOR "`dirname $0`/plugins/common/$ARG1"
             ;;
         "pull")
-            ome_upgrade
+            ome_pull
             ;;
         "push")
             ome_push

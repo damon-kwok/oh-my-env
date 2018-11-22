@@ -86,35 +86,6 @@ book_upgrade() {
 
 }
 
-
-me_push() {
-    local oldir=`pwd`
-    cd $HOME/.oh-my-emacs/
-    git push
-    
-    cd $PROJ_ROOT/me/blog
-    git_push
-    
-    cd $HOME/workspace
-    git_push
-
-    cd $PROJ_ROOT/me/awesome-package-manager
-    git_push
-
-    cd $PROJ_ROOT/me/awesome-network-programming
-    git_push
-
-    cd $PROJ_ROOT/me/awesome-web-scraping
-    git_push
-    
-    cd $PROJ_ROOT/me/medusa
-    git_push
-    
-    cd $PROJ_ROOT/me/libknife
-    git_push
-    cd $oldir
-}
-
 blog_push() {
     local oldir=`pwd`
     cd $PROJ_ROOT/me/blog
@@ -155,7 +126,35 @@ oh_my_env_push() {
     cd $oldir
 }
 
-ome_upgrade() {   	
+ome_commit() {
+    local oldir=`pwd`
+    cd $HOME/.oh-my-emacs/
+    git push
+    
+    cd $PROJ_ROOT/me/blog
+    git_push
+    
+    cd $HOME/workspace
+    git_push
+
+    cd $PROJ_ROOT/me/awesome-package-manager
+    git_push
+
+    cd $PROJ_ROOT/me/awesome-network-programming
+    git_push
+
+    cd $PROJ_ROOT/me/awesome-web-scraping
+    git_push
+    
+    cd $PROJ_ROOT/me/medusa
+    git_push
+    
+    cd $PROJ_ROOT/me/libknife
+    git_push
+    cd $oldir
+}
+
+ome_pull() {   	
     ome_upgrade
     
     gitlab_ssh_upgrade damon-kwok/workspace $HOME/workspace
