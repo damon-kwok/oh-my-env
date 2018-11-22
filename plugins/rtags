@@ -62,7 +62,7 @@ rtags_install() {
     cmake --build . --use-stderr --config Release
     
     cp -rf $OME_CACHE/rtags/bin/* $OME_CACHE/rtags/build/bin/
-    cp -rf $OME_CACHE/rtags/build/bin/* $HOME/bin/ 
+    cp -rf $OME_CACHE/rtags/build/bin/* $OME_PREFIX/bin/ 
     
     tip "install irony-server"
     github_upgrade Sarcasm/irony-mode $OME_CACHE/irony-mode
