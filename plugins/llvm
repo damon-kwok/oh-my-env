@@ -67,7 +67,7 @@ llvm_install() {
     if [ "$OME_OS" = "$OS_MSYS2" ]; then
         msys2_llvm_install
     else
-        local llvmdir=$DEV_ROOT/llvm
+        local llvmdir=$OME_CACHE/llvm
         git_upgrade "https://git.llvm.org" "git/llvm" $llvmdir
         git_upgrade "https://git.llvm.org" "git/clang" $llvmdir/tools/clang
         git_upgrade "https://git.llvm.org" "git/clang-tools-extra" $llvmdir/tools/clang/tools/extra

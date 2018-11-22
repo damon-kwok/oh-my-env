@@ -24,17 +24,17 @@ install_jdt_language_server() {
 install_kotlin_language_server() {
     local oldir=`pwd`
     tip "install_kotlin_language_server"
-    github_upgrade fwcd/KotlinLanguageServer $DEV_ROOT/KotlinLanguageServer
+    github_upgrade fwcd/KotlinLanguageServer $OME_CACHE/KotlinLanguageServer
 
-    cd $DEV_ROOT/KotlinLanguageServer/
+    cd $OME_CACHE/KotlinLanguageServer/
     gradle build
     
     cd $oldir
 }
 
 install_graalvm() {
-    github_upgrade oracle/graal $DEV_ROOT/graal
-    cd $DEV_ROOT/graal/
+    github_upgrade oracle/graal $OME_CACHE/graal
+    cd $OME_CACHE/graal/
 }
 
 jvm_install() {

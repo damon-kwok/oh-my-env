@@ -2,22 +2,22 @@
 
 roswell_install() {
     if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
-        if [ ! -d $DEV_ROOT/roswell ]; then
+        if [ ! -d $OME_CACHE/roswell ]; then
             local zipkg=Roswell-x86_64.zip
             mkdir -p ~/Downloads
             cd ~/Downloads/
             if [ ! -f $HOME/Downloads/$zipkg ]; then
                 wget "https://ci.appveyor.com/api/projects/snmsts/roswell-en89n/artifacts/Roswell-x86_64.zip?branch=master&job=Environment%3A%20MSYS2_ARCH%3Dx86_64,%20MSYS2_BITS%3D64,%20MSYSTEM%3DMINGW64,%20METHOD%3Dcross" -O Roswell-x86_64.zip
             fi
-            unzip ./$zipkg -d $DEV_ROOT
-            cd $DEV_ROOT/$roswell
+            unzip ./$zipkg -d $OME_CACHE
+            cd $OME_CACHE/$roswell
             chmod +x ./ros
-            export PATH=$DEV_ROOT/roswell:$PATH
+            export PATH=$OME_CACHE/roswell:$PATH
         fi
     else
         # sudo apt-get -y install git build-essential automake libcurl4-openssl-dev;
-        github_upgrade roswell/roswell $DEV_ROOT/roswell
-        cd $DEV_ROOT/roswell/
+        github_upgrade roswell/roswell $OME_CACHE/roswell
+        cd $OME_CACHE/roswell/
         echo "sh bootstrap"
         sh bootstrap
         echo "./configure --prefix=$OME_PREFIX"
@@ -48,7 +48,7 @@ roswell_info() {
 }
 
 if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
-    export PATH=$DEV_ROOT/roswell:$PATH
+    export PATH=$OME_CACHE/roswell:$PATH
 fi
 
 if [ -d $HOME/.roswell/ ]; then

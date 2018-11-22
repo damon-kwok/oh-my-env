@@ -5,8 +5,8 @@ hylang_install() {
     
     # pip3 install --user -U git+https://github.com/hylang/hy.git
     
-    github_upgrade hylang/hy $DEV_ROOT/hy
-    cd $DEV_ROOT/hy/
+    github_upgrade hylang/hy $OME_CACHE/hy
+    cd $OME_CACHE/hy/
     pip3 install --user -U .
 }
 

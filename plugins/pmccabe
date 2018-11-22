@@ -1,15 +1,15 @@
 #!/usr/bin/env sh
 
 pmccabe_install() {
-    github_upgrade datacom-teracom/pmccabe $DEV_ROOT/pmccabe
-    cd $DEV_ROOT/pmccabe/
+    github_upgrade datacom-teracom/pmccabe $OME_CACHE/pmccabe
+    cd $OME_CACHE/pmccabe/
     make
     
-    chmod +x $DEV_ROOT/pmccabe/pmccabe
-    chmod +x $DEV_ROOT/pmccabe/decomment
+    chmod +x $OME_CACHE/pmccabe/pmccabe
+    chmod +x $OME_CACHE/pmccabe/decomment
     
-    cp -rf $DEV_ROOT/pmccabe/pmccabe $OME_PREFIX/bin/
-    cp -rf $DEV_ROOT/pmccabe/decomment $OME_PREFIX/bin/
+    cp -rf $OME_CACHE/pmccabe/pmccabe $OME_PREFIX/bin/
+    cp -rf $OME_CACHE/pmccabe/decomment $OME_PREFIX/bin/
 }
 
 pmccabe_uninstall() {

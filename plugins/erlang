@@ -6,8 +6,8 @@ erlenv_install() {
 
 erlang_install() {
     # git clone https://github.com/erlang/otp.git
-    github_upgrade erlang/otp $DEV_ROOT/erlang_otp
-    cd $DEV_ROOT/erlang_otp
+    github_upgrade erlang/otp $OME_CACHE/erlang_otp
+    cd $OME_CACHE/erlang_otp
     ./otp_build autoconf
     # ./configure --prefix=$HOME/.erlang_otp
     ./configure --prefix=$OME_PREFIX

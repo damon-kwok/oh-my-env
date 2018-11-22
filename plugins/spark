@@ -1,8 +1,8 @@
 #!/usr/bin/env sh
 
 spark_install() {
-    github_upgrade apache/spark $DEV_ROOT/spark
-    cd $DEV_ROOT/spark/
+    github_upgrade apache/spark $OME_CACHE/spark
+    cd $OME_CACHE/spark/
     mvn compile
     mvn package
     cd $olddir

@@ -37,8 +37,8 @@ cmake_install() {
         $OS_UNKNOW) ;;
     esac
 
-    git_upgrade "https://gitlab.kitware.com" "cmake/cmake" $DEV_ROOT/cmake
-    cd $DEV_ROOT/cmake/
+    git_upgrade "https://gitlab.kitware.com" "cmake/cmake" $OME_CACHE/cmake
+    cd $OME_CACHE/cmake/
 
     # build cmake with bjam
     ./bootstrap
@@ -47,8 +47,8 @@ cmake_install() {
     make install
 
     # build cmake with cmake
-    # mkdir -p $DEV_ROOT/cmake/build
-    # cd $DEV_ROOT/cmake/build/
+    # mkdir -p $OME_CACHE/cmake/build
+    # cd $OME_CACHE/cmake/build/
     # cmake .. -G "$OME_MAKE" \
         # -DCMAKE_INSTALL_PREFIX=$OME_PREFIX \
 	    # -DCMAKE_BUILD_TYPE=Release

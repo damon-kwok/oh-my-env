@@ -119,7 +119,7 @@ export PATH=$HOME/catkin_ws/bin:$PATH
 # export PATH=$HOME/Cyberman:$PATH
 
 # Pyenv
-# export PYENV_ROOT=$DEV_ROOT/pyenv
+# export PYENV_ROOT=$OME_CACHE/pyenv
 # export PATH=$PYENV_ROOT/bin:$PATH
 # if command -v pyenv 1>/dev/null 2>&1; then
     # eval "$(pyenv init -)"
@@ -145,7 +145,10 @@ export OME_ROOT=$HOME/.oh-my-env
 export OME_BIN=$OME_ROOT/bin
 export PATH=$OME_BIN:$PATH
 
-export DEV_ROOT=$HOME/.ome_local/caches
+export OME_CACHE=$HOME/.ome_local/caches
+export OME_EMACS=$HOME/.oh-my-emacs
+export OME_EMACS_MODULE=$HOME/.oh-my-emacs/emacs-config/modules
+export OME_EMACS_SNIPPET=$HOME/.oh-my-emacs/emacs-config/snippets
 
 export OME_WS=$HOME/workspace
 export WS_BIN=$OME_WS/bin

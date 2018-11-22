@@ -111,19 +111,19 @@ python_install() {
     pip3 install --user -U python-language-server
 
     tip "install build tools"
-    github_upgrade chromium/gyp $DEV_ROOT/gyp
-    cd $DEV_ROOT/gyp/
+    github_upgrade chromium/gyp $OME_CACHE/gyp
+    cd $OME_CACHE/gyp/
     pip2 install --user -U .
 
-    git_upgrade "https://gitlab.com" ita1024/waf $DEV_ROOT/waf
-    cd $DEV_ROOT/waf/
+    git_upgrade "https://gitlab.com" ita1024/waf $OME_CACHE/waf
+    cd $OME_CACHE/waf/
     python3 ./waf-light configure build
     cp -rf ./waf $HOME/bin/
     
-    git_upgrade "https://github.com" SCons/scons $DEV_ROOT/scons
-    cd $DEV_ROOT/scons/
+    git_upgrade "https://github.com" SCons/scons $OME_CACHE/scons
+    cd $OME_CACHE/scons/
     python2 bootstrap.py build/scons
-    cd $DEV_ROOT/scons/build/scons/
+    cd $OME_CACHE/scons/build/scons/
     pip2 install --user -U .
     
     # pip2.7 install ipython jupyter rope jedi flake8 importmagic autopep8 yapf

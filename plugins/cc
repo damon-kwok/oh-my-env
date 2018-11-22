@@ -56,14 +56,14 @@ cc_info() {
 cc_install_c_library() {
     readp "install libuv?"
     if [ $? -eq 1 ]; then
-        github_upgrade libuv/libuv $DEV_ROOT/libuv
+        github_upgrade libuv/libuv $OME_CACHE/libuv
         
         # mkdir -p $PROJ_ROOT/c/libuv/build
         # cd $PROJ_ROOT/c/libuv/build/
         # cmake .. -G "$OME_MAKE" \
 	        # -DCMAKE_INSTALL_PREFIX=$OME_PREFIX
         # cmake --build . --use-stderr --config Release --target install -- -j4
-        cd $DEV_ROOT/libuv/
+        cd $OME_CACHE/libuv/
         chmod +x ./autogen.sh
         ./autogen.sh
         ./configure --prefix=$OME_PREFIX
@@ -74,18 +74,18 @@ cc_install_c_library() {
 }
 
 cc_install_cpp_library() {
-    cc_install_cxx_library gflags/gflags $DEV_ROOT/gflags 11
-    cc_install_cxx_library google/snappy $DEV_ROOT/snappy 11
-    cc_install_cxx_library google/double-conversion $DEV_ROOT/double-conversion 11
-    cc_install_cxx_library google/glog $DEV_ROOT/glog 11
+    cc_install_cxx_library gflags/gflags $OME_CACHE/gflags 11
+    cc_install_cxx_library google/snappy $OME_CACHE/snappy 11
+    cc_install_cxx_library google/double-conversion $OME_CACHE/double-conversion 11
+    cc_install_cxx_library google/glog $OME_CACHE/glog 11
     
-    cc_install_cxx_library pocoproject/poco $DEV_ROOT/poco 14
-    cc_install_cxx_library facebook/folly $DEV_ROOT/folly 14
+    cc_install_cxx_library pocoproject/poco $OME_CACHE/poco 14
+    cc_install_cxx_library facebook/folly $OME_CACHE/folly 14
     
     readp "install boost?"
     if [ $? -eq 1 ]; then
-        github_upgrade boostorg/boost $DEV_ROOT/boost 1 develop
-        cd $DEV_ROOT/boost/
+        github_upgrade boostorg/boost $OME_CACHE/boost 1 develop
+        cd $OME_CACHE/boost/
         # git checkout develop # or whatever branch you want to use
         ./bootstrap.sh
         ./b2 headers
@@ -102,8 +102,8 @@ cc_install_cxx_library() {
     if [ $? -eq 1 ]; then
         github_upgrade $lib $dir
 
-        mkdir -p $DEV_ROOT/flooy/build
-        cd $DEV_ROOT/flooy/build/
+        mkdir -p $OME_CACHE/flooy/build
+        cd $OME_CACHE/flooy/build/
 
         cmake .. -G "$OME_MAKE" \
               -DCMAKE_INSTALL_PREFIX=$OME_PREFIX \
@@ -184,7 +184,7 @@ cc_install_clang_git() {
         if [ "$OME_OS" = "$OS_MSYS2" ]; then
         msys2_llvm_install
     else
-        local llvmdir=$DEV_ROOT/llvm
+        local llvmdir=$OME_CACHE/llvm
         git_upgrade "https://git.llvm.org" "git/llvm" $llvmdir
         git_upgrade "https://git.llvm.org" "git/clang" $llvmdir/tools/clang
         git_upgrade "https://git.llvm.org" "git/clang-tools-extra" $llvmdir/tools/clang/tools/extra
@@ -355,8 +355,8 @@ cc_install_tools() {
             
             # AutoTrace
             sudo apt install -y libmagickcore-dev libpstoedit-dev libgif-dev
-            github_upgrade libming/libming $DEV_ROOT/libming
-            cd $DEV_ROOT/libming/
+            github_upgrade libming/libming $OME_CACHE/libming
+            cd $OME_CACHE/libming/
             ./autogen.sh
             ./configure --prefix=$OME_PREFIX
             # --enable-cpp \
@@ -367,8 +367,8 @@ cc_install_tools() {
             # make test
 	        make install
             
-            github_upgrade autotrace/autotrace $DEV_ROOT/autotrace
-            cd $DEV_ROOT/autotrace/
+            github_upgrade autotrace/autotrace $OME_CACHE/autotrace
+            cd $OME_CACHE/autotrace/
             ./autogen.sh
             ./configure --prefix=$OME_PREFIX
 	        make
@@ -502,10 +502,10 @@ cc_install_tools() {
 
             # readp "install re2c?"
             # if [ $? -eq 1 ]; then
-            github_upgrade skvadrik/re2c $DEV_ROOT/re2c
-            # sf_upgrade re2c/code-git $DEV_ROOT/re2c
+            github_upgrade skvadrik/re2c $OME_CACHE/re2c
+            # sf_upgrade re2c/code-git $OME_CACHE/re2c
 
-            cd $DEV_ROOT/re2c/re2c/
+            cd $OME_CACHE/re2c/re2c/
             ./autogen.sh
             ./configure --prefix=$OME_PREFIX
             make install

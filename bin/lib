@@ -706,12 +706,17 @@ ome_upgrade() {
 ome_replace() {
     local oldir=`pwd`
     tip "ome_replace ($1) to ($2)"
-    local bakdir=$HOME/ome_backup_`date +%Y-%m-%d@%H-%M-%S`
-    mkdir -p $bakdir
-    perl -pi -e 's|"$1"|"$2"|g' $HOME/.oh-my-env/bin/*
-    mv $HOME/.oh-my-env/*.bak $bakdir
-    perl -pi -e 's|"$1"|"$2"|g' $HOME/.oh-my-env/plugins/*
-    mv $HOME/.oh-my-env/plugins/*.bak $bakdir
+    # local bakdir=$HOME/ome_backup_`date +%Y-%m-%d@%H-%M-%S`
+    # mkdir -p $bakdir
+    # perl -pi -e 's|"$1"|"$2"|g' $HOME/.oh-my-env/bin/*
+    # mv $HOME/.oh-my-env/*.bak $bakdir
+    # perl -pi -e 's|"$1"|"$2"|g' $HOME/.oh-my-env/plugins/*
+    # mv $HOME/.oh-my-env/plugins/*.bak $bakdir
+    sed -i "s#$1#$2#g" $OME_ROOT/env
+    sed -i "s#$1#$2#g" $OME_ROOT/install.sh
+    sed -i "s#$1#$2#g" $OME_ROOT/bin/*
+    sed -i "s#$1#$2#g" $OME_ROOT/plugins/*
+    sed -i "s#$1#$2#g" $OME_EMACS_SNIPPET/sh-mode/*
     cd $oldir
 }
 

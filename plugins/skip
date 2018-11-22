@@ -1,10 +1,10 @@
 #!/usr/bin/env sh
 
 skip_install() {
-    github_upgrade skiplang/skip $DEV_ROOT/skip
+    github_upgrade skiplang/skip $OME_CACHE/skip
     
-    mkdir -p cd $DEV_ROOT/skip/build
-    cd $DEV_ROOT/skip/build/
+    mkdir -p cd $OME_CACHE/skip/build
+    cd $OME_CACHE/skip/build/
     cmake ../server/ -G "$OME_MAKE" \
           -DCMAKE_INSTALL_PREFIX=$OME_PREFIX \
           -DCMAKE_EXPORT_COMPILE_COMMANDS=1 \

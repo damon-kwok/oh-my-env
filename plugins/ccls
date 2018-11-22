@@ -1,11 +1,11 @@
 #!/usr/bin/env sh
 
 ccls_install() {
-    github_upgrade MaskRay/ccls $DEV_ROOT/ccls
-    # github_upgrade damon-kwok/ccls $DEV_ROOT/ccls
+    github_upgrade MaskRay/ccls $OME_CACHE/ccls
+    # github_upgrade damon-kwok/ccls $OME_CACHE/ccls
     mkdir -p $HOME/.ccls
-    mkdir -p $DEV_ROOT/ccls/build
-    cd $DEV_ROOT/ccls/build/
+    mkdir -p $OME_CACHE/ccls/build
+    cd $OME_CACHE/ccls/build/
     
     # -DCMAKE_CXX_STANDARD=17
     # -DCMAKE_CXX_STANDARD_REQUIRED=ON 

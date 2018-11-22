@@ -7,8 +7,8 @@ crystal_install() {
     fi
     
     local oldir=`pwd`
-    github_upgrade crystal-lang/crystal $DEV_ROOT/crystal
-    cd $DEV_ROOT/crystal
+    github_upgrade crystal-lang/crystal $OME_CACHE/crystal
+    cd $OME_CACHE/crystal
     make -j4
     cd $oldir
 }

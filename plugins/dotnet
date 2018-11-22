@@ -62,12 +62,12 @@ mono_install() {
 }
 
 fsharp_install() {
-    # github_upgrade fsharp/fsharp $DEV_ROOT/fsharp
-    # cd $DEV_ROOT/fsharp
+    # github_upgrade fsharp/fsharp $OME_CACHE/fsharp
+    # cd $OME_CACHE/fsharp
     # make -j4
     
-    github_upgrade georgewfraser/fsharp-language-server $DEV_ROOT/fsharp-language-server
-    cd $DEV_ROOT/fsharp-language-server
+    github_upgrade georgewfraser/fsharp-language-server $OME_CACHE/fsharp-language-server
+    cd $OME_CACHE/fsharp-language-server
     npm install
     mono build -c Release
 }

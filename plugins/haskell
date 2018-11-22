@@ -8,8 +8,8 @@ if [ "$OME_OS" = "$OS_CYGWIN" ]; then
     
     STACK_VERSION=1.9.1
 
-    # tip "set env:$DEV_ROOT/$STACK_VERSION"
-    export PATH=$DEV_ROOT/stack:$PATH
+    # tip "set env:$OME_CACHE/$STACK_VERSION"
+    export PATH=$OME_CACHE/stack:$PATH
 fi
 
 haskell_install() {
@@ -18,7 +18,7 @@ haskell_install() {
             local pkgver=stack-${STACK_VERSION}-windows-x86_64
             local zipkg=$pkgver.zip
             
-            if [ ! -d $DEV_ROOT/$pkgver ]; then
+            if [ ! -d $OME_CACHE/$pkgver ]; then
                 mkdir -p ~/Downloads
                 cd ~/Downloads/
                 
@@ -27,9 +27,9 @@ haskell_install() {
                     wget -c https://github.com/commercialhaskell/stack/releases/download/v${STACK_VERSION}/$zipkg
                 fi
                 
-                # if [ ! -d $DEV_ROOT/$pkgver ]; then
-                unzip ./$zipkg -d $DEV_ROOT/stack
-                cd $DEV_ROOT/stack/
+                # if [ ! -d $OME_CACHE/$pkgver ]; then
+                unzip ./$zipkg -d $OME_CACHE/stack
+                cd $OME_CACHE/stack/
                 chmod +x ./*
                 # fi
             fi
