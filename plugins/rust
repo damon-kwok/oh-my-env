@@ -19,7 +19,7 @@ rust_install() {
         echo "replace-with = 'ustc'" >> $HOME/.cargo/config
         echo "" >> $HOME/.cargo/config
         echo "[source.ustc]" >> $HOME/.cargo/config
-        echo 'registry = "git://mirrors.ustc.edu.cn/crates.io-index"' >> $HOME/.cargo/config
+        #echo 'registry = "git://mirrors.ustc.edu.cn/crates.io-index"' >> $HOME/.cargo/config
         echo 'registry = "https://mirrors.ustc.edu.cn/crates.io-index"' >> $HOME/.cargo/config
     fi
     
@@ -54,7 +54,15 @@ rust_install() {
 
     tip "rustup install nightly" 
     rustup toolchain add nightly
+    
+    tip "rustup default nightly"
+    rustup default nightly
+
+    tip "rustup component add rust-src"
 	rustup component add rust-src
+
+    tip "rust set env"
+    rust_set_env
     
     tip "install tool:racer"
     cargo install --force racer
