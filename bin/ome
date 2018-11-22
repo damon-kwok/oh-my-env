@@ -322,36 +322,37 @@ ome_parse() {
     local ARG2=$3
     
     case "$OPT_TYPE" in
-        "c")
+        "config")
             ome_config
             ;;
-        "i"|"install")
+        "install")
             ome_eval "install" $ARG1
             ;;
-        "d"|"delete"|"rm"|"remove"|"uninstall")
+        "uninstall")
             ome_eval "uninstall" $ARG1
             ;;
-        "m"|"menu")
+        "menu")
             ask_menu;;
-        "l"|"list")
+        "list")
             ome_package_list
             ome_os_list
             ;;
-        "o"|"open"|"n"|"new"|"a"|"add")
+        "oopen")
             $EDITOR "`dirname $0`/plugins/common/$ARG1"
             ;;
-        "u"|"U"|"update"|"upgrade")
-            me_upgrade
+        "pull")
+            ome_upgrade
             ;;
-        "p"|"push"|"commit")
-            oh_my_env_push
-            oh_my_emacs_push
-            ws_push
+        "push")
+            ome_push
             ;;
-        "v")
+        "status")
+            ome_status
+            ;;
+        "version")
             ome_package_info
             ;;
-        "t")
+        "test")
             echo -n -e "\033[?25l"  #隐藏光标
             for i in `seq 100`
             do

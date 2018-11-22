@@ -1,11 +1,5 @@
 #!/usr/bin/env sh
 
-oh_my_emacs_push() {
-    local oldir=`pwd`
-    cd $HOME/.oh-my-emacs/
-    git_push
-    cd $oldir
-}
 link_init_el() {
     tip "link"
     bkdir=$HOME/emacs-config-backup/`date +%Y-%m-%d@%H-%M-%S`
