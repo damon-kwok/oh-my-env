@@ -1,4 +1,18 @@
 #!/usr/bin/env sh
+find_str() {
+    local str=$1
+    local file=$2
+    
+    grep $str $file >/dev/null
+    
+    if [ $? -eq 0 ]; then
+	    # echo "found:$str"
+	    return $(( 1 ));
+    else
+	    # echo "not found:$str"
+	    return $(( 0 ));
+    fi
+}
 
 ome_write_env_to_dotfile() {
     local dotfile=$1
