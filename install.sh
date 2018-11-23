@@ -1,4 +1,5 @@
 #!/usr/bin/env sh
+
 find_str() {
     local str=$1
     local file=$2

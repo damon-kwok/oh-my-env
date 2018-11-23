@@ -5,14 +5,35 @@
 #+OPTIONS: toc:nil creator:nil author:nil email:nil timestamp:nil html-postamble:nil
 #+TODO: TODO DOING DONE
 
-** Requires
+*** Requires
 - git
 - curl
 - wget
-** Install
+*** Install
 - curl -L https://raw.githubusercontent.com/damon-kwok/oh-my-env/master/install.sh | bash
 
-** Uninstall
+*** Uninstall
 rm -rf ~/.oh-my-env/
 
 rm -rf ~/.ome_local/
+*** Usage
+- init
+#+BEGIN_SRC shell
+ome init
+#+END_SRC
+- install
+#+BEGIN_SRC shell
+ome install cc
+ome install jvm
+ome install golang
+ome install rust
+ome install python
+ome install ruby
+ome install perl
+ome install erlang
+ome install nim
+#+END_SRC
+- uninstall
+#+BEGIN_SRC shell
+ome uninstall cc
+#+END_SRC

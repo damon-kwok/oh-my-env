@@ -325,6 +325,9 @@ ome_parse() {
         "config")
             ome_config
             ;;
+        "init")
+            ome install basedev
+            ;;
         "install")
             ome_eval "install" $ARG1
             ;;
@@ -337,7 +340,7 @@ ome_parse() {
             ome_package_list
             ome_os_list
             ;;
-        "oopen")
+        "open")
             $EDITOR "`dirname $0`/plugins/common/$ARG1"
             ;;
         "pull")
@@ -378,7 +381,7 @@ ome_parse() {
             echo
             ;;
         *)
-            echo "ome | version:2018.1121"
+            echo "ome | version:2018.1123"
             ;;
     esac
     cd $oldir
