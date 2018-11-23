@@ -63,5 +63,5 @@ ome uninstall cc
 ome update
 #+END_SRC
 
-*** link
+*** Link
 - [[https://github.com/damon-kwok/oh-my-emacs][oh-my-emacs]]
