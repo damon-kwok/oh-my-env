@@ -14,7 +14,7 @@
 |--------+--------------------------------------------|
 | Linux  | Debian/Ubuntu/Redhat/Fedora/SUSE/ArchLinux |
 | Unix   | FreeBSD/Solaris/iilumo                     |
-| Window | Cygwin/MS2                               |
+| Window | Cygwin/MSYS2                               |
 *** Install
 #+BEGIN_SRC 
 curl -L https://raw.githubusercontent.com/damon-kwok/oh-my-env/master/install.sh | bash
