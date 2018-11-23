@@ -26,7 +26,7 @@ ome_write_env_to_dotfile() {
     fi
 }
 
-if [ ! -f "$HOME/.oh-my-emacs/.git/index" ]; then
+if [ ! -f "$HOME/.oh-my-env/.git/index" ]; then
     git clone https://github.com/damon-kwok/oh-my-env $HOME/.oh-my-env --depth=1
 else
     cd $HOME/.oh-my-env
