@@ -725,7 +725,7 @@ ome_check_install() {
     local app=${2:-$1}
 
     if [ "`command -v $cmd`" == "" ]; then
-            ome install $app
+        ome install $app
     fi
 }
 

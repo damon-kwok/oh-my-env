@@ -236,7 +236,7 @@ sogou_arch_install() {
 sogou_install () {
     if [ ! -f $HOME/Downloads/sogoupinyin_2.2.0.0108_amd64.deb ]; then
         #curl -O http://cdn2.ime.sogou.com/dl/index/1524572264/sogoupinyin_2.2.0.0108_amd64.deb?st=82X4cdqzv85LoI-o_GHzrQ&e=1536661455&fn=sogoupinyin_2.2.0.0108_amd64.deb
-curl -O http://cdn2.ime.sogou.com/dl/index/1524572264/sogoupinyin_2.2.0.0108_amd64.deb?st=6EKJ-QquFZM0_P-0-vjv4g&e=1542685529&fn=sogoupinyin_2.2.0.0108_amd64.deb
+        curl -O http://cdn2.ime.sogou.com/dl/index/1524572264/sogoupinyin_2.2.0.0108_amd64.deb?st=6EKJ-QquFZM0_P-0-vjv4g&e=1542685529&fn=sogoupinyin_2.2.0.0108_amd64.deb
         #wget http://cdn2.ime.sogou.com/dl/index/1524572264/sogoupinyin_2.2.0.0108_amd64.deb?st=82X4cdqzv85LoI-o_GHzrQ&e=1536661455&fn=sogoupinyin_2.2.0.0108_amd64.deb
     fi
     cd $HOME/Downloads/
