@@ -332,7 +332,11 @@ ome_parse() {
             ome_eval "install" $ARG1
             ;;
         "uninstall")
-            ome_eval "uninstall" $ARG1
+            if [ "$ARG1" = "self" ]; then
+                . ../uninstall.sh
+            else
+                ome_eval "uninstall" $ARG1
+            fi
             ;;
         "menu")
             ask_menu;;

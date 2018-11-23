@@ -16,6 +16,10 @@ curl -L https://raw.githubusercontent.com/damon-kwok/oh-my-env/master/install.sh
 
 *** Uninstall
 #+BEGIN_SRC shell
+ome uninstall self
+#+END_SRC
+or
+#+BEGIN_SRC shell
 curl -L https://raw.githubusercontent.com/damon-kwok/oh-my-env/master/uninstall.sh | bash
 #+END_SRC
 or
@@ -43,4 +47,8 @@ ome install nim
 - uninstall
 #+BEGIN_SRC shell
 ome uninstall cc
+#+END_SRC
+- update
+#+BEGIN_SRC shell
+ome update
 #+END_SRC
