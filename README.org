@@ -20,6 +20,10 @@ ome uninstall self
 #+END_SRC
 or
 #+BEGIN_SRC shell
+source $OME_ROOT/uninstall.sh
+#+END_SRC
+or
+#+BEGIN_SRC shell
 curl -L https://raw.githubusercontent.com/damon-kwok/oh-my-env/master/uninstall.sh | bash
 #+END_SRC
 or
