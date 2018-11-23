@@ -10,12 +10,19 @@
 - curl
 - wget
 *** Install
-- curl -L https://raw.githubusercontent.com/damon-kwok/oh-my-env/master/install.sh | bash
+#+BEGIN_SRC 
+curl -L https://raw.githubusercontent.com/damon-kwok/oh-my-env/master/install.sh | bash
+#+END_SRC
 
 *** Uninstall
+#+BEGIN_SRC shell
+curl -L https://raw.githubusercontent.com/damon-kwok/oh-my-env/master/uninstall.sh | bash
+#+END_SRC
+or
+#+BEGIN_SRC shell
 rm -rf ~/.oh-my-env/
-
 rm -rf ~/.ome_local/
+#+END_SRC
 *** Usage
 - init
 #+BEGIN_SRC shell
