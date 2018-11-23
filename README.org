@@ -13,7 +13,7 @@
 | OS     | Distribution/Environment                   |
 |--------+--------------------------------------------|
 | Linux  | Debian/Ubuntu/Redhat/Fedora/SUSE/ArchLinux |
-| Unix   | FreeBSD/Solaris/iilumo                     |
+| Unix   | FreeBSD/Solaris/illumo                     |
 | Window | Cygwin/MSYS2                               |
 *** Install
 #+BEGIN_SRC 
