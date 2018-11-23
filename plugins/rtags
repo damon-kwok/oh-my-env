@@ -78,7 +78,7 @@ rtags_install() {
     cmake --build . --use-stderr --config Release --target install
 
     # config: clang-format
-    clang_format_install
+    cc_install_clang_format
 }
 
 rtags_uninstall() {

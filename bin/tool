@@ -20,7 +20,7 @@ toolchain_install() {
     
     # c++
     llvm_install
-    clang_format_install
+    cc_install_clang_format
     cquery_install
     # ccls_install
     # rtags_install

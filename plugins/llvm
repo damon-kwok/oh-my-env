@@ -130,7 +130,7 @@ llvm_install() {
     fi
 
     # config: clang_format
-    clang_format_install
+    cc_install_clang_format
 }
 
 llvm_uninstall() {
@@ -141,7 +141,7 @@ llvm_exist_p() {
     echo_error "'llvm_exist_p' not implemented"
 }
 
-clang_format_install() {
+cc_install_clang_format() {
     local oldir=`pwd`
     if [ ! -e ~/.clang-format ]; then
         #echo "Language: Cpp" >> ~/.clang-format

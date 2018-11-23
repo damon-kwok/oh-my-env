@@ -25,7 +25,7 @@ ccls_install() {
     cmake --build . --use-stderr --config Release --target install
 
     # config: clang-format
-    clang-format_install
+    cc_install_clang_format
 }
 
 ccls_uninstall() {

@@ -1,7 +1,0 @@
-#!/usr/bin/env sh
-
-# . /opt/ros/kinetic/setup.bash
-. $HOME/.oh-my-env/env
-. $HOME/.oh-my-env/lib
-
-auto-gen-rtags $1
