@@ -9,11 +9,16 @@
 - git
 - curl
 - wget
+*** Support OS
+| OS     | Distribution/Environment                   |
+|--------+--------------------------------------------|
+| Linux  | Debian/Ubuntu/Redhat/Fedora/SUSE/ArchLinux |
+| Unix   | FreeBsd/Solaris/iilumo                     |
+| Window | Cygwin/Msys2                               |
 *** Install
 #+BEGIN_SRC 
 curl -L https://raw.githubusercontent.com/damon-kwok/oh-my-env/master/install.sh | bash
 #+END_SRC
-
 *** Uninstall
 #+BEGIN_SRC shell
 ome uninstall self
