@@ -200,8 +200,7 @@ ome_info() {
 
 ome_info "OME" "OS:$OME_OS | Arch:$OME_ARCH | Shell:$OME_SHELL | EDITOR:$EDITOR"
 ome_info "PREFIX:$OME_PREFIX"
-ome_info "VCS" "`git --version | head -n 1` | `svn --version | head -n 1`"
-# ome_info "VCS" "`ome_fetch_version git` | `ome_fetch_version svn`"
+ome_info "VCS" "`ome_fetch_version git` | `ome_fetch_version svn`"
 
 for plugin in $HOME/.oh-my-env/plugins/* ; do
     if [ "$plugin" != "$HOME/.oh-my-env/plugins/README.org" ]; then
