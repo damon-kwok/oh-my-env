@@ -347,10 +347,10 @@ ome_parse() {
         "open")
             $EDITOR "`dirname $0`/plugins/common/$ARG1"
             ;;
-        "pull")
+        "pull"|"update"|"upgrade")
             ome_pull
             ;;
-        "push")
+        "push"|"commit"")
             ome_push
             ;;
         "status")
