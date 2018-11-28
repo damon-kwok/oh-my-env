@@ -350,7 +350,7 @@ ome_parse() {
         "pull"|"update"|"upgrade")
             ome_pull
             ;;
-        "push"|"commit"")
+        "push"|"commit")
             ome_push
             ;;
         "status")
