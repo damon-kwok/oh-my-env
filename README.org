@@ -13,8 +13,8 @@
 | OS     | Distribution/Environment                   |
 |--------+--------------------------------------------|
 | Linux  | Debian/Ubuntu/Redhat/Fedora/SUSE/ArchLinux |
-| Unix   | FreeBsd/Solaris/iilumo                     |
-| Window | Cygwin/Msys2                               |
+| Unix   | FreeBSD/Solaris/illumo                     |
+| Window | Cygwin/MSYS2                               |
 *** Install
 #+BEGIN_SRC 
 curl -L https://raw.githubusercontent.com/damon-kwok/oh-my-env/master/install.sh | bash
@@ -33,8 +33,8 @@ curl -L https://raw.githubusercontent.com/damon-kwok/oh-my-env/master/uninstall.
 #+END_SRC
 or
 #+BEGIN_SRC shell
-rm -rf ~/.oh-my-env/
-rm -rf ~/.ome_local/
+rm -rf ~/.oh-my-env
+rm -rf ~/.ome_local
 #+END_SRC
 *** Usage
 - init
@@ -43,7 +43,7 @@ ome init
 #+END_SRC
 - install
 #+BEGIN_SRC shell
-ome install oh_my_emacs # emacs config
+ome install oh_my_emacs # oh-my-emacs config
 ome install cc          # c/c++ development environment
 ome install jvm         # java/kotlin/groovy/scala development environment
 ome install golang      # golang development environment
@@ -62,3 +62,6 @@ ome uninstall cc
 #+BEGIN_SRC shell
 ome update
 #+END_SRC
+
+*** Link
+- [[https://github.com/damon-kwok/oh-my-emacs][oh-my-emacs]]
