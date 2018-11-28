@@ -1,7 +1,71 @@
 #!/usr/bin/env sh
 
 unity3d_install() {
-    echo_error "'unity3d_install' not implemented"
+    get_os_type
+    case $OME_OS in
+        # Linux Editor:
+        # https://forum.unity.com/threads/unity-on-linux-release-notes-and-known-issues.350256/page-2#post-3662605
+
+        # Unity: Open Beta:
+        # https://unity3d.com/unity/beta
+
+        # Unity download archive
+        # https://unity3d.com/get-unity/download/archive?
+
+        # Unity Hub
+        # https://forum.unity.com/threads/unity-hub-release-candidate-0-20-1-is-now-available.546315/
+        
+        # Linux
+        # $OS_DEBIAN) ;;
+        # $OS_UBUNTU) ;;
+        $OS_DEBIAN|$OS_UBUNTU)
+            sudo apt install libgtk2.0-dev libnss3-dev libnspr4-dev tar gzip cpio zip
+            ;;
+        # $OS_REDHAT) ;;
+        # $OS_FEDORA) ;;
+        $OS_REDHAT|$OS_FEDORA) ;;
+        $OS_ARCH) ;;
+        $OS_GENTOO) ;;
+        $OS_SUSE) ;;
+        $OS_SLACKWARE) ;;
+        $OS_NIXOS) ;;
+        $OS_VOID) ;;
+        $OS_ALPINE) ;;
+        $OS_MAGEIA) ;;
+        $OS_SLITAZ) ;;
+        $OS_GUIXSD) ;;
+        # Unix
+        $OS_MACOS) ;;
+        $OS_AIX) ;;
+        $OS_SOLARIS) ;;
+        $OS_FREEBSD) ;;
+        $OS_OPENBSD) ;;
+        $OS_NETBSD) ;;
+        $OS_DFBSD) ;;
+        # Windows
+        $OS_CYGWIN) ;;
+        $OS_MSYS2) ;;
+        # Other
+        $OS_UNKNOW) ;;
+    esac
+
+    cd $OME_PREFIX/bin/
+    if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
+        local url=https://public-cdn.cloud.unity3d.com/hub/prod/UnityHubSetup.exe
+        wget $url
+        chmod +x ./UnityHubSetup.exe
+        cp ./UnityHubSetup.exe ./unityhub.exe
+    elif [ "$OME_OS" = "$OS_MACOS" ]; then
+        local url=https://public-cdn.cloud.unity3d.com/hub/prod/UnityHubSetup.dmg
+        wget $url
+        chmod +x ./UnityHubSetup.dmg
+        cp ./UnityHubSetup.AppImage ./unityhub.dmg
+    else
+        local url=https://public-cdn.cloud.unity3d.com/hub/prod/UnityHubSetup.AppImage
+        wget $url
+        chmod +x ./UnityHubSetup.AppImage
+        cp ./UnityHubSetup.AppImage ./unityhub
+    fi
 }
 
 unity3d_uninstall() {

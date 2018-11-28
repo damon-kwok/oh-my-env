@@ -386,13 +386,13 @@ auto_gen_rtags() {
         cd $1
     fi
     local proj_root=`pwd`
-    tip "auto_gen_rtags:$proj_root"
+    echo "auto_gen_rtags:$proj_root"
     if [ ! -f "$proj_root/compile_commands.json" ]; then        
         auto_gen_cmake_file $proj_root
     fi
 
     cd $proj_root
-    echo "auto_gen_rtags::rc:`pwd`"
+    # echo "auto_gen_rtags::rc:`pwd`"
     rc -J .
 }
 
