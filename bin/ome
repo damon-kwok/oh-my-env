@@ -360,6 +360,7 @@ ome_parse() {
             ome_package_info
             ;;
         "test")
+            # spin
             echo -n -e "\033[?25l"  #隐藏光标
             for i in `seq 100`
             do
@@ -368,11 +369,12 @@ ome_parse() {
                 local vv=${strload[$idx]}
                 echo -n -e "$vv"
                 # sleep 0.05
-                echo -n -e "\b\b\b"
+                echo -n -e "\b"
             done
-            echo -n -e "\b\b\b"
+            echo -n -e "\b"
             echo -n -e "\033[?25h" #显示光标
 
+            # progress_bar
             i=0
             while [ $i -lt 50 ]
             do
@@ -382,7 +384,7 @@ ome_parse() {
                 echo -ne "\033[40;50H"$((i*100*2/100))%"\033[u\033[1D"
                 sleep 0.05
             done
-            echo
+            echo ""
             ;;
         *)
             echo "ome | version:2018.1123"
