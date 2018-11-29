@@ -43,8 +43,8 @@ libuv_install() {
     ./configure --prefix=$OME_PREFIX
     # make
     #--disable-dependency-tracking
-    gmake check
-    #make install
+    make check
+    make install
 }
 
 libuv_uninstall() {

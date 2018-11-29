@@ -287,8 +287,9 @@ cc_install_clang_bin() {
         $OS_AIX) ;;
         $OS_SOLARIS) ;;
         $OS_FREEBSD)
-            sudo pkg install llvm-devel clang-devel clang-format \
-                 libc++-devel libc++abi-devel
+            sudo pkg install llvm-devel clang-devel
+				#clang-format
+				#libc++-devel libc++abi-devel
             ;;
         $OS_OPENBSD) ;;
         $OS_NETBSD) ;;
