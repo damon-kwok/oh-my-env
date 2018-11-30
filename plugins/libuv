@@ -24,7 +24,7 @@ libuv_install() {
         # Other
         $OS_UNKNOW) ;;
     esac
-    github_upgrade libuv/libuv $OME_PREFIX/libuv
+    github_upgrade libuv/libuv $OME_CACHE/libuv
 	#mkdir -p $OME_PREFIX/libuv/build
 
     #github_ssh_upgrade damon-kwok/libuv $PROJ_ROOT/c/libuv
