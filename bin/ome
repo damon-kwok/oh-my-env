@@ -394,5 +394,6 @@ ome_parse() {
 }
 
 #echo $@
-
+mkdir -p $OME_PREFIX/bin/
+mkdir -p $OME_CACHE/
 ome_parse $@

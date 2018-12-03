@@ -264,8 +264,7 @@ cc_install_clang_bin() {
                  libc++-devel libc++abi-devel
             ;;
         $OS_ARCH)
-            sudo pacman -S llvm-devel clang-devel clang-format \
-                 libc++-devel libc++abi-devel
+            sudo pacman -S llvm clang clang-format
             ;;
         $OS_GENTOO) ;;
         $OS_SUSE)
@@ -400,12 +399,15 @@ cc_install_tools() {
                  valgrind-devel libatomic_ops-devel re2c
             ;;
         $OS_ARCH)
-            sudo pacman -Syyu
-            sudo pacman -S trizen
+            readp "upgrade os?"
+		    if [ $? -eq 1 ]; then
+                sudo pacman -Syyu
+                sudo pacman -S trizen
+            fi
             #sudo pacman -S opendesktop-fonts
             #sudo pacman -S firefox
             trizen -S base-devel \
-                   make ninja cmake automake autogen autoconf autopoint \
+                   make ninja cmake automake autogen autoconf \
                    pkg-config libtool intltool \
                    ttf-bitstream-vera emacs
 
@@ -413,16 +415,16 @@ cc_install_tools() {
 		    if [ $? -eq 1 ]; then
                 sudo pacman -S texinfo doxygen asciidoc xmlto docbook2x imagemagick ghostscript
             fi
-            sudo pacman -S swig cppunit \
-                 openssl-devel libcrypt-devel libmcrypt-devel \
-                 libcurl-devel libuuid-devel libncurses-devel \
-                 libxml2-devel libxslt-devel libexpat-devel libyaml-devel \
-                 libffi-devel libreadline-devel gettext-devel \
-                 libevent-devel libpcre-devel libpcre2-devel \
-                 libiconv-devel libedit-devel libautotrace-devel \
-                 bison-devel libicu-devel libtidy-devel \
-                 zlib-devel libzip-devel bzip2-devel liblz4-devel liblzma-devel \
-                 valgrind-devel libatomic_ops-devel re2c
+            trizen -S swig cppunit \
+                 openssl libgcrypt libmcrypt \
+                 curl libutil-linux ncurses \
+                 libxml2 libxslt expat libyaml \
+                 libffi readline gettext \
+                 libevent pcre pcre2 \
+                 libiconv libedit potrace \
+                 bison icu tidy \
+                 zlib libzip bzip2 lz4 xz \
+                 valgrind libatomic_ops re2c
             ;;
         $OS_GENTOO) ;;
         $OS_SUSE)
