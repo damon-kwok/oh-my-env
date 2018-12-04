@@ -287,6 +287,10 @@ cc_install_clang_bin() {
         $OS_SOLARIS) ;;
         $OS_FREEBSD)
             sudo pkg install llvm-devel clang-devel
+            local tmp1=`which clangd-devel`
+            local tmp2=`which clang-format-devel`
+            sudo cp -rf $tmp1 `dirname $tmp1`/clangd
+            sudo cp -rf $tmp2 `dirname $tmp2`/clang-format
 				#clang-format
 				#libc++-devel libc++abi-devel
             ;;
@@ -457,14 +461,14 @@ cc_install_tools() {
         $OS_SOLARIS) ;;
         $OS_FREEBSD)
             sudo pkg install ninja cmake \
-                 automake autogen autoconf autopoint pkgconf libtool intltool \
+                 automake autogen autoconf pkgconf libtool intltool \
                  gmake gcc clang-devel zh-font-std bitstream-vera emacs
             readp "install doc tools?"
 		    if [ $? -eq 1 ]; then
                 sudo pkg install texinfo doxygen asciidoc xmlto docbook2X imagemagick ghostscript
             fi
             sudo pkg install swig30 cppunit \
-                 libgcrypt libmcrypt-devel \
+                 libgcrypt libmcrypt \
                  curl ossp-uuid ncurses \
                  libxml2 libxslt expat libyaml \
                  libffi readline gettext \

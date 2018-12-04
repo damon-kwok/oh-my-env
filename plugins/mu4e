@@ -140,7 +140,7 @@ mu4e_install() {
         $OS_AIX) ;;
         $OS_SOLARIS) ;;
         $OS_FREEBSD)
-            # sudo pkg install sqlite3 py27-sqlite3 pmccabe gmime30 xapian-core
+            # sudo pkg install sqlite3 py27-sqlite3 pmccabe gpgme gmime30 xapian-core
             sudo pkg install mu
             ;;
         $OS_OPENBSD) ;;
@@ -155,7 +155,7 @@ mu4e_install() {
         $OS_UNKNOW) ;;
     esac
 
-    if [ "$OME_OS" != "$OS_FREEBSD2" ]; then
+    if [ "$OME_OS" != "$OS_FREEBSD" ]; then
         tip "install mu4e-git"
         github_upgrade djcb/mu $HOME/.emacs.d/libs/mu-git
         cd $HOME/.emacs.d/libs/mu-git/

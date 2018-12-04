@@ -52,7 +52,7 @@ python_bin_install() {
             sudo pkg install python2 python3
             ;;
         $OS_OPENBSD)
-            sudo pkg install python2 python3 #py27-sqlite3 sqlite3
+            sudo pkg install python27 python37 #py27-sqlite3 sqlite3
             ;;
         $OS_NETBSD) ;;
         $OS_DFBSD) ;;
