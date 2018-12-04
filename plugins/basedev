@@ -54,11 +54,12 @@ basedev_install() {
 		         tar zip unzip coreutils diffutils
             ;;
         $OS_ARCH)
-            if [ -n "$1" ]; then
-                sudo pacman-mirrors -g
+            readp "upgrade os?"
+		    if [ $? -eq 1 ]; then
+                sudo pacman-mirrors -c China
+                sudo pacman -Syyu
+                sudo pacman -S trizen
             fi
-            sudo pacman -Syyu
-            sudo pacman -S trizen
             #sudo pacman -S opendesktop-fonts
             #sudo pacman -S firefox
 

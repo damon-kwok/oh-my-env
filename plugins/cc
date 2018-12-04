@@ -379,7 +379,7 @@ cc_install_tools() {
             sudo yum groupinstall "Development Tools"
             sudo yum install -y make ninja-build cmake \
                  automake autogen autoconf autopoint pkg-config libtool intltool \
-                 emacs gcc gcc-c++ #ttf-bitstream-vera
+                 emacs gcc gcc-c++
 
             readp "install doc tools?"
 		    if [ $? -eq 1 ]; then
@@ -399,17 +399,9 @@ cc_install_tools() {
                  valgrind-devel libatomic_ops-devel re2c
             ;;
         $OS_ARCH)
-            readp "upgrade os?"
-		    if [ $? -eq 1 ]; then
-                sudo pacman -Syyu
-                sudo pacman -S trizen
-            fi
-            #sudo pacman -S opendesktop-fonts
-            #sudo pacman -S firefox
             trizen -S base-devel \
                    make ninja cmake automake autogen autoconf \
-                   pkg-config libtool intltool \
-                   ttf-bitstream-vera emacs
+                   pkg-config libtool intltool
 
             readp "install doc tools?"
 		    if [ $? -eq 1 ]; then
@@ -428,15 +420,27 @@ cc_install_tools() {
             ;;
         $OS_GENTOO) ;;
         $OS_SUSE)
-            sudo zypper refresh
-            sudo zypper update
+            # sudo zypper refresh
+            # sudo zypper update
             # zypper info -t pattern devel_basis
             sudo zypper install -t pattern devel_basis
             sudo zypper install make ninja cmake \
                  automake autogen autoconf autopoint \
-                 pkg-config libtool intltool \
-                 bitstream-vera-fonts emacs
-            sudo zypper install swig cppunit
+                 pkg-config libtool intltool
+            readp "install doc tools?"
+		    if [ $? -eq 1 ]; then
+                sudo zypper install texinfo doxygen asciidoc xmlto docbook2X imagemagick ghostscript
+            fi
+            sudo zypper install swig cppunit \
+                 libgcrypt libmcrypt-devel \
+                 curl ossp-uuid ncurses \
+                 libxml2 libxslt expat libyaml \
+                 libffi readline gettext \
+                 libevent pcre pcre2 \
+                 libticonv libedit autotrace \
+                 bison icu tidy-devel \
+                 fpc-zlib libzip bzip2 liblz4 lzma\
+                 valgrind-devel libatomic_ops re2c
             ;;
         $OS_SLACKWARE) ;;
         $OS_NIXOS) ;;
@@ -455,7 +459,10 @@ cc_install_tools() {
             sudo pkg install ninja cmake \
                  automake autogen autoconf autopoint pkgconf libtool intltool \
                  gmake gcc clang-devel zh-font-std bitstream-vera emacs
-
+            readp "install doc tools?"
+		    if [ $? -eq 1 ]; then
+                sudo pkg install texinfo doxygen asciidoc xmlto docbook2X imagemagick ghostscript
+            fi
             sudo pkg install swig30 cppunit \
                  libgcrypt libmcrypt-devel \
                  curl ossp-uuid ncurses \
@@ -472,20 +479,8 @@ cc_install_tools() {
         $OS_DFBSD) ;;
         # Windows
         $OS_CYGWIN)
-            readp "upgrade apt-cyg tools?"
-		    if [ $? -eq 1 ]; then
-                rm -rf /usr/bin/apt-cyg
-                cd /usr/bin/
-                wget https://raw.githubusercontent.com/kou1okada/apt-cyg/master/apt-cyg
-                perl -pi -e 's|http://ftp.jaist.ac.jp/pub/cygwin|http://mirrors.163.com/cygwin|g' /usr/bin/apt-cyg
-                cp -rf /usr/bin/apt-cyg /usr/bin/apt
-                chmod +x /usr/bin/apt-cyg
-                chmod +x /usr/bin/apt
-            fi
-            apt install git subversion wget curl \
-                tar zip unzip coreutils diffutils \
-                make ninja cmake automake autogen autoconf autopoint pkg-config libtool intltool \
-                xdg-utils emacs-w32
+            apt install make ninja cmake \
+                automake autogen autoconf autopoint pkg-config libtool intltool
 
             readp "install doc tools?"
 		    if [ $? -eq 1 ]; then
