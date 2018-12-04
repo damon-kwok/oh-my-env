@@ -165,26 +165,13 @@ alias emacsc='emacsclient -c -n'
 alias emacst='TERM=xterm-256color emacsclient -t'
 
 OME_PREFIX=$HOME/.ome_local
-# if [ -d $OME_PREFIX ]; then
-export PATH=$OME_PREFIX/bin:$PATH
-export MANPATH=$OME_PREFIX/share/man:$MANPATH
-export INFOPATH=$OME_PREFIX/share/info:$INFOPATH
-export LIBRARY_PATH=$OME_PREFIX/lib:$LIBRARY_PATH
-export LD_LIBRARY_PATH=$OME_PREFIX/lib:$LD_LIBRARY_PATH
-export LD_RUN_PATH=$OME_PREFIX/lib:$LD_RUN_PATH
-export PKG_CONFIG_PATH=$OME_PREFIX/lib/pkgconfig:$OME_PREFIX/share/pkgconfig:$PKG_CONFIG_PATH
-# libtool --finish $OME_PREFIX/lib
-
-export DCMAKE_INCLUDE_PATH=$OME_PREFIX/include:$DCMAKE_INCLUDE_PATH
-export CMAKE_LIBRARY_PATH=$OME_PREFIX/lib:$CMAKE_LIBRARY_PATH
-
-export C_INCLUDE_PATH=$OME_PREFIX/include:$C_INCLUDE_PATH
-export CPLUS_INCLUDE_PATH=$OME_PREFIX/include:$CPLUS_INCLUDE_PATH
-# fi
 
 . $HOME/.oh-my-env/bin/lib
 . $HOME/.oh-my-env/bin/tool
 . $HOME/.oh-my-env/bin/proj
+
+ome_dev_path $OME_PREFIX
+ome_dev_path $HOME/.local
 
 # ome login info
 # echo_kv "OME" "OS:$OME_OS | Arch:$OME_ARCH | Shell:$OME_SHELL | PREFIX:$OME_PREFIX"
