@@ -36,7 +36,7 @@ libuv_install() {
     # cmake --build . --use-stderr --config Release --target install -- -j4
 
     #cd $PROJ_ROOT/c/libuv/
-	cd $OME_PREFIX/libuv
+	cd $OME_CACHE/libuv
 
     chmod +x ./autogen.sh
     ./autogen.sh
