@@ -1,0 +1,5 @@
+#!/usr/bin/env sh
+
+echo $OME_ROOT
+cd $OME_ROOT/$@
+tree
