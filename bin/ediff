@@ -1,3 +1,3 @@
 #!/usr/bin/env sh
 
-emacsclient -a "" -c -n --eval "(require 'ediff)" --eval "(ediff-files \"$1\" \"$2\")"
+emacsclient -a "emacs -nw" -c -n --eval "(require 'ediff)" --eval "(ediff-files $@)"

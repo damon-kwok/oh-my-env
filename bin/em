@@ -1,0 +1,17 @@
+#!/usr/bin/env sh
+
+# old:
+# emacsclient --server-file "$HOME/.emacs.d/server/server" --no-wait --alternate-editor="emacs" -n $@
+# emacsclient -a "emacs" -n $@
+
+# ec config:
+# emacsclient -nc $@
+# or
+#emacsclient --no-wait --create-frame $@
+
+if [ -n "$DISPLAY" ]; then
+  TERM=xterm-256color emacsclient --no-wait --alternate-editor="emacs" $@ &
+else
+  TERM=xterm-256color emacsclient --create-frame --no-wait --alternate-editor="emacs" $@
+fi
+

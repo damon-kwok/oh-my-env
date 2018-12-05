@@ -172,18 +172,7 @@ ask_menu() {
 	    # 5) unzipapp;;
 	    # b|B) basedevel_install;;
 	    i|I) toolchain_menu;;
-	    g|G)
-	        git config --global color.ui true
-	        git config --global core.editor "ec"
-	        
-	        git config --global merge.tool ediff_merge
-	        git config --global mergetool.diffmerge.cmd "ediff_merge \$LOCAL \$REMOTE \$BASE \$MERGED"
-	        git config --global mergetool.keepBackup false
-
-	        # git config --global diff.tool ediff
-	        # git config --global difftool.ediff.cmd "ediff \"\$LOCAL\" \"\$REMOTE\""
-	        # git config --global difftool.prompt false
-	        ;;
+	    g|G) ome_config;;
 	    e|E) run_emacs;;
 	    n|N) run_emacs_nw;;
 	    c|C) compile_elc;;
@@ -203,28 +192,31 @@ ome_doctor() {
 }
 
 ome_config() {
-    title "ome_config"
+    title "ome config"
     
     # tip "ldconfig"
     # if [ ! -f "/etc/ld.so.conf.d/`whoami`.conf" ]; then
-    # sudo sh -c "echo \"$HOME/lib\" >> /etc/ld.so.conf.d/`whoami`.conf"
+    # sudo sh -c 'echo "$OME_PREFIX/lib" >> /etc/ld.so.conf.d/`whoami`.conf'
     # sudo ldconfig
     # fi
 
+    # tip "libtool"
+    # libtool --finish $OME_PREFIX/lib
+    
     tip "git config"
     git config --global user.email "563066990@qq.com"
     git config --global user.name "damon-kwok"
     
     git config --global color.ui true
-	git config --global core.editor "ec"
+	git config --global core.editor "em"
 	
-	git config --global merge.tool ediff_merge
-	git config --global mergetool.diffmerge.cmd "ediff_merge \$LOCAL \$REMOTE \$BASE \$MERGED"
+	git config --global merge.tool emerge
+	git config --global mergetool.diffmerge.cmd "emerge \$LOCAL \$BASE \$REMOTE \$MERGED"
 	git config --global mergetool.keepBackup false
 
-	# git config --global diff.tool ediff
-	# git config --global difftool.ediff.cmd "ediff \"\$LOCAL\" \"\$REMOTE\""
-	# git config --global difftool.prompt false
+	git config --global diff.tool ediff
+	git config --global difftool.ediff.cmd "ediff \"\$LOCAL\" \"\$REMOTE\""
+	git config --global difftool.prompt false
 }
 
 ome_package_list() {

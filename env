@@ -158,11 +158,8 @@ export BOOK_ROOT=$HOME/book
 export PROJ_ROOT=$HOME/projects
 
 # Emacs
-# alias emacsd='emacs --daemon'
-export EDITOR='emacsclient -c -n'
-export ALTERNATE_EDITOR=""
-alias emacsc='emacsclient -c -n'
-alias emacst='TERM=xterm-256color emacsclient -t'
+export EDITOR=em
+#export ALTERNATE_EDITOR=""
 
 OME_PREFIX=$HOME/.ome_local
 

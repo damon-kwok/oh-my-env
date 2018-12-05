@@ -48,6 +48,7 @@ app_wizard() {
     
     local proj_name=`basename $2`
     local proj_ws=`dirname $2`
+    
 
     if [ -d $proj_root ]; then
         echo "'$proj_root' already exist!"
@@ -58,6 +59,7 @@ app_wizard() {
 
     mkdir -p $proj_ws
     cd $proj_ws
+    proj_ws=`pwd`
     case "$proj_lang" in
         "0"|"c"|"C"|"cc"|"CC")
             gen_cmake_file $proj_root
@@ -234,9 +236,14 @@ app_wizard() {
         "r") ask_menu;;
         "q") exit;;
     esac
+    echo "root:$proj_root"
+    cd $proj_ws
+    if [ -d "$proj_root" ]; then
+        cd $proj_root
+        tree
+    fi
+
     cd $oldir
 }
-# CURRENT_DIR=$(dirname $(readlink -f $0))
-# . $CURRENT_DIR/env
 . $OME_ROOT/env
 app_wizard $@

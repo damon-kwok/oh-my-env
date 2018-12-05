@@ -1,0 +1,10 @@
+#!/usr/bin/env sh
+# TERM=xterm-256color emacsclient -t $@
+
+if [ -n "$DISPLAY" ]; then
+  TERM=xterm-256color emacs -Q $@ &
+else
+  TERM=xterm-256color emacs -Q $@
+fi
+
+
