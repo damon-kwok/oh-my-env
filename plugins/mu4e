@@ -53,6 +53,7 @@ config_offlineimap() {
     
     tip "install offlineiamp"
 	pip2 install --user -U six
+    pip2 install --user -U pysqlite
     pip2 install --user -U offlineimap	
 
     # sync email
@@ -110,24 +111,25 @@ mu4e_install() {
             readp "mu4e::ubuntu-18(Y) | ubuntu-14/16(n)?"
 	        if [ $? -eq 1 ]; then
                 # libgmime3 :ubuntu18.04
-                sudo apt install libgmime-3.0-dev \
-                     libxapian-dev
+                sudo apt install libgmime-3.0-dev libxapian-dev libsqlite3-dev
             else
                 # libgmime3 :ubuntu16.04
                 sudo apt install -y gtk-doc-tools libglib2.0-dev libidn2-0-dev libgpgme11-dev \
-                     libxapian-dev
+                     libxapian-dev libsqlite3-dev
             fi
             ;;
         # $OS_REDHAT) ;;
         # $OS_FEDORA) ;;
         $OS_REDHAT|$OS_FEDORA) 
-            sudo yum install xapian-core-devel gmime30-devel libticonv-devel
+            sudo yum install xapian-core-devel gmime30-devel libticonv-devel sqlite-devel
             ;;
         $OS_ARCH)
-            sudo pacman -S xapian-core gmime3
+            sudo pacman -S xapian-core gmime3 sqlite
             ;;
         $OS_GENTOO) ;;
-        $OS_SUSE) ;;
+        $OS_SUSE)
+            sudo zypper install libxapian30 libgmime-3_0 libsqlite3
+            ;;
         $OS_SLACKWARE) ;;
         $OS_NIXOS) ;;
         $OS_VOID) ;;
@@ -140,7 +142,7 @@ mu4e_install() {
         $OS_AIX) ;;
         $OS_SOLARIS) ;;
         $OS_FREEBSD)
-            # sudo pkg install sqlite3 py27-sqlite3 pmccabe gpgme gmime30 xapian-core
+            # sudo pkg install sqlite3 pmccabe gpgme gmime30 xapian-core
             sudo pkg install mu
             ;;
         $OS_OPENBSD) ;;

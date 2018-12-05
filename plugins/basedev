@@ -48,14 +48,17 @@ basedev_install() {
         # $OS_REDHAT) ;;
         # $OS_FEDORA) ;;
         $OS_REDHAT|$OS_FEDORA)
-            sudo yum -y update
+            readp "update system?"
+            if [ $? -eq 1 ]; then
+                sudo yum -y update
+            fi
             sudo yum groupinstall "Development Tools"
             sudo yum install -y git subversion wget curl \
 		         tar zip unzip coreutils diffutils
             ;;
         $OS_ARCH)
-            readp "upgrade os?"
-		    if [ $? -eq 1 ]; then
+            readp "update system?"
+            if [ $? -eq 1 ]; then
                 sudo pacman-mirrors -c China
                 sudo pacman -Syyu
                 sudo pacman -S trizen
@@ -69,8 +72,11 @@ basedev_install() {
             ;;
         $OS_GENTOO) ;;
         $OS_SUSE)
-            sudo zypper refresh
-            sudo zypper update
+            readp "update system?"
+            if [ $? -eq 1 ]; then
+                sudo zypper refresh
+                sudo zypper update
+            fi
             sudo zypper install git subversion wget curl \
 		         tar zip unzip coreutils diffutils \
                  bitstream-vera-fonts emacs
@@ -86,8 +92,11 @@ basedev_install() {
         $OS_AIX) ;;
         $OS_SOLARIS) ;;
         $OS_FREEBSD)
-            sudo pkg update
-            sudo pkg upgrade
+            readp "update system?"
+            if [ $? -eq 1 ]; then
+                sudo pkg update
+                sudo pkg upgrade
+            fi
 
             sudo pkg install git subversion wget curl \
 		         bash zip unzip coreutils diffutils \
@@ -130,6 +139,10 @@ basedev_install() {
                 xdg-utils emacs-w32
             ;;
         $OS_MSYS2)
+            readp "update system?"
+            if [ $? -eq 1 ]; then
+                pacman -Syyu
+            fi
             pacman -S git subversion wget curl \
                    tar zip unzip coreutils diffutils \
 	               mingw-w64-x86_64-emacs mingw-w64-x86_64-ttf-dejavu

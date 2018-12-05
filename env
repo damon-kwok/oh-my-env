@@ -170,9 +170,6 @@ OME_PREFIX=$HOME/.ome_local
 . $HOME/.oh-my-env/bin/tool
 . $HOME/.oh-my-env/bin/proj
 
-ome_dev_path $OME_PREFIX
-ome_dev_path $HOME/.local
-
 # ome login info
 # echo_kv "OME" "OS:$OME_OS | Arch:$OME_ARCH | Shell:$OME_SHELL | PREFIX:$OME_PREFIX"
 # echo_kv "VCS" "`git --version | head -n 1` | `svn --version | head -n 1`"
@@ -195,6 +192,9 @@ for plugin in $HOME/.oh-my-env/plugins/* ; do
         . "$plugin"
     fi
 done
+
+ome_dev_path $OME_PREFIX
+ome_dev_path $HOME/.local
 
 # alias
 alias ls='ls --color'

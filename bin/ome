@@ -356,6 +356,9 @@ ome_parse() {
         "status")
             ome_status
             ;;
+        "new")
+            app_wizard $ARG1 $ARG2
+            ;;
         "version")
             ome_package_info
             ;;

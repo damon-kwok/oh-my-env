@@ -160,6 +160,8 @@ ome_pull() {
     gitlab_ssh_upgrade damon-kwok/workspace $HOME/workspace
     chmod +x $HOME/.oh-my-env/*
 
+    ome install oh_my_emacs
+
     github_ssh_upgrade damon-kwok/damon-kwok.github.io $PROJ_ROOT/me/blog
     
     github_ssh_upgrade damon-kwok/awesome-package-manager $PROJ_ROOT/me/awesome-package-manager

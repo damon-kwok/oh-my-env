@@ -5,7 +5,7 @@ redis_install() {
     local ver=stable
     local pkg=redis-$ver
     local zip=$pkg.tar.gz
-    if [ ! -f $HOME/bin/redis-server ]; then
+    if [ ! -f $OME_PREFIX/bin/redis-server ]; then
         cd $HOME/Downloads/
         if [ ! -f "$HOME/Downloads/$zip" ]; then
             wget http://download.redis.io/$zip

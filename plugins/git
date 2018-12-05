@@ -47,7 +47,7 @@ git_install() {
     local ver=2.19.1
     local pkg=git-$ver
     local zip=$pkg.tar.gz
-    if [ ! -f $HOME/bin/git ]; then
+    if [ ! -f $OME_PREFIX/bin/git ]; then
         cd $HOME/Downloads/
         if [ ! -f "$HOME/Downloads/$zip" ]; then
             wget https://mirrors.edge.kernel.org/pub/software/scm/git/$zip

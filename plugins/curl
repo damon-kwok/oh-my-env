@@ -42,7 +42,7 @@ curl_install() {
     cd $PROJ_ROOT/c/curl/build/
     cmake .. -G "$OME_MAKE" \
 	      -DCMAKE_INSTALL_PREFIX=$OME_PREFIX \
-          -DCMAKE_INSTALL_BINDIR=$HOME/bin \
+          -DCMAKE_INSTALL_BINDIR=$OME_PREFIX/bin \
           -DCMAKE_USE_WINSSL=OFF \
           -DCMAKE_USE_DARWINSSL=OFF \
           -DCMAKE_USE_OPENSSL=ON \

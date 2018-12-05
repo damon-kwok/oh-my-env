@@ -8,10 +8,13 @@ python_pyenv_install() {
     tip "install python"
     pyenv install $PYTHON2_VERSION
     pyenv install $PYTHON3_VERSION
-    pyenv global $PYTHON3_VERSION
+    pyenv global $PYTHON2_VERSION $PYTHON3_VERSION
     
     tip "pyenv whence rackup"
     pyenv whence rackup
+
+    # use $HOME/.local pip
+    ome_dev_path $HOME/.local
 }
 
 python_bin_install() {
@@ -73,7 +76,7 @@ python_install() {
 
     # python_bin_install
     python_pyenv_install
-    
+
     # if ! command -v pip2 >/dev/null 2>&1; then
 	if [ "`command -v pip2`" = "" ]; then
         tip "install pip2"
@@ -93,10 +96,22 @@ python_install() {
         fi
         python3 get-pip.py --user
     fi
+
+    tip "check pip2 pip3"
+    which pip2
+    pip2 --version
+    which pip3
+    pip3 --version
     
-    tip "pip upgrade"
+    tip "pip2 upgrade"
     pip2 install --user -U pip
+    pip2 install --user -U setuptools
+    pip2 --version
+
+    tip "pip3 upgrade"
     pip3 install --user -U pip
+    pip3 install --user -U setuptools
+    pip3 --version
 
     tip "install pipenv"
     pip3 install --user -U pipenv
@@ -110,21 +125,30 @@ python_install() {
     tip "install python-language-server"
     pip3 install --user -U python-language-server
 
-    tip "install build tools"
+    tip "install build tools:gyp"
     github_upgrade chromium/gyp $OME_CACHE/gyp
     cd $OME_CACHE/gyp/
     pip2 install --user -U .
 
+    tip "install build tools:waf"
     git_upgrade "https://gitlab.com" ita1024/waf $OME_CACHE/waf
     cd $OME_CACHE/waf/
     python3 ./waf-light configure build
-    cp -rf ./waf $HOME/bin/
-    
+    cp -rf ./waf $OME_PREFIX/bin/
+
+    tip "install build tools:scons"
+    pip2 install --user -U virtualenv
     git_upgrade "https://github.com" SCons/scons $OME_CACHE/scons
     cd $OME_CACHE/scons/
     python2 bootstrap.py build/scons
-    cd $OME_CACHE/scons/build/scons/
-    pip2 install --user -U .
+    if [ -d $OME_CACHE/scons/build/scons/ ]; then
+        cd $OME_CACHE/scons/build/scons/
+        pip2 install --user -U .        
+    else
+        echo_error "gen project file failed!"
+    fi
+
+    
     
     # pip2.7 install ipython jupyter rope jedi flake8 importmagic autopep8 yapf
     tip "install ebook build tool"
@@ -178,3 +202,4 @@ pyenv_set_env() {
     fi
 
 }
+pyenv_set_env
