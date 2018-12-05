@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
 app_wizard() {
     local oldir=`pwd`
@@ -236,6 +236,7 @@ app_wizard() {
     esac
     cd $oldir
 }
-CURRENT_DIR=$(dirname $(readlink -f $0))
-. $CURRENT_DIR/env
+# CURRENT_DIR=$(dirname $(readlink -f $0))
+# . $CURRENT_DIR/env
+. $OME_ROOT/env
 app_wizard $@

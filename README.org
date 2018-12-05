@@ -47,6 +47,7 @@ ome install oh_my_emacs # oh-my-emacs config
 ome install cc          # c/c++ development environment
 ome install jvm         # java/kotlin/groovy/scala development environment
 ome install golang      # golang development environment
+ome install haskell     # haskell development environment
 ome install rust        # rust development environment
 ome install python      # python2/3 development environment
 ome install ruby        # ruby development environment
@@ -62,6 +63,32 @@ ome uninstall cc
 #+BEGIN_SRC shell
 ome update
 #+END_SRC
+- create project
+#+BEGIN_SRC shell
+ome new c helloc
+ome new c++ hellocpp
+ome new clojure helloclj
+ome new commonlisp hellocl
+ome new erlang helloerl
+ome new elixir helloex
+ome new golang hellogo
+ome new groovy hellogroovy
+ome new haskell hellohs
+ome new java hellojava
+ome new kotlin hellokt
+ome new nim hellonim
+ome new grunt hello_nodejs_grunt
+ome new gulp hello_nodejs_gulp
+ome new pipenv hellopy1
+ome new poetry hellopy2
+ome new hatch hellopy3
+ome new reason hellore
+ome new reason-bs hellores
+ome new ruby helloby
+ome new scala helloscala
+ome new swift helloswift
+ome new rust hellors
 
+#+END_SRC
 *** Link
 - [[https://github.com/damon-kwok/oh-my-emacs][oh-my-emacs]]
