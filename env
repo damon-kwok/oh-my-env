@@ -161,7 +161,7 @@ export PROJ_ROOT=$HOME/projects
 export EDITOR=em
 #export ALTERNATE_EDITOR=""
 
-OME_PREFIX=$HOME/.ome_local
+export OME_PREFIX=$HOME/.ome_local
 
 . $HOME/.oh-my-env/bin/lib
 . $HOME/.oh-my-env/bin/tool

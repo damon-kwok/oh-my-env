@@ -1,11 +1,16 @@
 #!/usr/bin/env sh
 
 perl_install() {
-    local oldir=`pwd`
-    cd $OME_PREFIX/bin/
+    tip "install cpanm"
+    # cd $OME_PREFIX/bin/
+    cd $HOME/Downloads/
+    rm -rf ./cpanm
     curl -L https://cpanmin.us/ -o cpanm
-    chmod +x cpanm
-    cd $oldir
+    sudo cp -rf ./cpanm /usr/local/bin/
+    sudo chmod +x /usr/local/bin/cpanm
+
+    tip "cpanm self-upgrade"
+    sudo cpanm --self-upgrade
 }
 
 perl_uninstall() {
@@ -19,3 +24,8 @@ perl_exist_p() {
 perl_info() {
     ome_info "Perl" "`perl -V | head -n 1 | cut -c 15-57`"
 }
+
+# alias cpanm 'cpanm --mirror http://mirrors.163.com/cpan --mirror-only '
+alias cpanm='cpanm --mirror http://mirrors.163.com/cpan '
+# export PERL_CPANM_OPT="--prompt --reinstall -l $HOME/.cpanm --mirror http://cpan.cpantesters.org"
+export PERL_CPANM_OPT="--prompt --reinstall -l $HOME/.cpanm --mirror http://mirrors.163.com/cpan"

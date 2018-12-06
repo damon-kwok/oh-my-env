@@ -25,16 +25,18 @@ ome_app_wizard() {
         echo "    14) Nodejs(gulp)"
         echo "    15) OCaml(ohai)"
         echo "    16) OCaml-BuckleScript(bsb-native)"
-        echo "    17) Python(pipenv)"
-        echo "    18) Python(poetry)"
-        echo "    19) Python(hatch)"
-        echo "    20) Reason(ohai)"
-        echo "    21) Reason-BuckleScript(bsb-native)"
-        echo "    22) Ruby(rbenv)"
-        echo "    23) Rust(cargo)"
-        echo "    24) Scala(gradle)"
-        echo "    25) Swift(SPM)"
-        # echo "    26) .net"
+        echo "    17) Perl"
+        echo "    18) PHP(Composer)"
+        echo "    19) Python(pipenv)"
+        echo "    20) Python(poetry)"
+        echo "    21) Python(hatch)"
+        echo "    22) Reason(ohai)"
+        echo "    23) Reason-BuckleScript(bsb-native)"
+        echo "    24) Ruby(rbenv)"
+        echo "    25) Rust(cargo)"
+        echo "    26) Scala(gradle)"
+        echo "    27) Swift(SPM)"
+        # echo "    28) .net"
         echo "    --------------------------"
         echo "    r) return"
         echo "    q) quit"
@@ -169,68 +171,89 @@ ome_app_wizard() {
             mv src/demo.ml src/${proj_name}.ml
             $EDITOR "src/${proj_name}.ml"
             ;;
-        "17"|"python"|"py"|"pipenv")
+        "17"|"perl"|"pl")
+            ome_check_install "cpanm" "perl"
+            mkdir -p $proj_root
+            cd $proj_root
+            echo '#!/usr/bin/perl -w' >> ${proj_name}.pl
+            echo '# assume these two lines are in all subsequent examples' >> ${proj_name}.pl
+            echo 'use strict;' >> ${proj_name}.pl
+            echo 'use warnings;' >> ${proj_name}.pl
+            echo '' >> ${proj_name}.pl
+            echo '# Print a message.' >> ${proj_name}.pl
+            echo 'print "Hello, World!\n";' >> ${proj_name}.pl
+            chmod +x ./${proj_name}.pl
+            git init
+            $EDITOR "${proj_name}.pl"
+            ;;
+        "18"|"php"|"composer")
+            ome_check_install "nimble" "nim"
+            php composer.phar create-project doctrine/orm $proj_name 1.0
+            cd $proj_root
+            $EDITOR "composer.json"
+            ;;
+        "19"|"python"|"py"|"pipenv")
             ome_check_install "pipenv" "python"
             mkdir -p $proj_root
             cd $proj_root
             pipenv --three
             $EDITOR "Pipfile"
             ;;
-        "18"|"poetry")
+        "20"|"poetry")
             ome_check_install "poetry" "python"
             poetry new $proj_name
             cd $proj_root
             git init
             $EDITOR "pyproject.toml"
             ;;
-        "19"|"hatch")
+        "21"|"hatch")
             ome_check_install "hatch" "python"
             hatch new $proj_name
             cd $proj_root
             git init
             $EDITOR "pyproject.toml"
             ;;
-        "20"|"reason"|"re")
+        "22"|"reason"|"re")
             ome_check_install "opam" "ocaml"
             ohai --bin $proj_name
             cd $proj_root
             $EDITOR "lib/Main.re"
             ;;
-        "21"|"reason-bs"|"bs-reason")
+        "23"|"reason-bs"|"bs-reason")
             ome_check_install "bsb" "ocaml"
             bsb -init $proj_name -theme basic-reason
             cd $proj_root
             mv src/Demo.re src/${proj_name}.re
             $EDITOR "src/${proj_name}.re"
             ;;
-        "22"|"ruby"|"rb")
+        "24"|"ruby"|"rb")
             ome_check_install "bundle" "ruby"
             mkdir -p $proj_root
             cd $proj_root
             bundle init
             $EDITOR "Gemfile"
             ;;
-        "23"|"rust"|"rs")
+        "25"|"rust"|"rs")
             ome_check_install "cargo" "rust"
             cargo new $proj_name --bin
             cd $proj_root
             $EDITOR "Cargo.toml"
             ;;
-        "24"|"scala")
+        "26"|"scala")
             ome_check_install "gradle" "jvm"
             mkdir -p $proj_root
             cd $proj_root
             gradle init --type scala-application
             $EDITOR "src/main/scala/App.scala"
             ;;
-        "25"|"swift")
+        "27"|"swift")
             ome_check_install "swift" "swift"
             mkdir -p $proj_root
             cd $proj_root
             swift package init --type executable
             $EDITOR "Sources/main.swift"
             ;;
-        "26"|".net")
+        "28"|".net")
             ;;
         "r") ask_menu;;
         "q") exit;;
@@ -239,7 +262,7 @@ ome_app_wizard() {
     cd $proj_ws
     if [ -d "$proj_root" ]; then
         cd $proj_root
-        tree
+        ls
     fi
 
     cd $oldir

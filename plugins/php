@@ -65,11 +65,6 @@ php_install_phpenv() {
     tip "install php-$PHP_VERSION"
     phpenv install $PHP_VERSION
     phpenv global $PHP_VERSION
-    
-    tip "install composer"
-    # README: https://getcomposer.org/doc/faqs/how-to-install-composer-programmatically.md
-    wget https://raw.githubusercontent.com/composer/getcomposer.org/1b137f8bf6db3e79a38a5bc45324414a6b1f9df2/web/installer \
-         -O - -q | php -- --quiet
 }
 
 php_install_phpbrew() {
@@ -83,6 +78,9 @@ php_install_phpbrew() {
         phpbrew init
     fi
 
+    tip "phpbrew set env"
+    phpbrew_set_env
+    
     tip "phpbrew self-update"
     phpbrew self-update
 
@@ -91,9 +89,24 @@ php_install_phpbrew() {
 
     tip "phpbrew install $PHP_VERSION"
     phpbrew install $PHP_VERSION +default
+    phpbrew switch $PHP_VERSION
 
-    tip "phpbrew set env"
-    phpbrew_set_env
+    tip "install composer"
+    # README: https://getcomposer.org/doc/faqs/how-to-install-composer-programmatically.md
+    wget https://raw.githubusercontent.com/composer/getcomposer.org/1b137f8bf6db3e79a38a5bc45324414a6b1f9df2/web/installer \
+         -O - -q | php -- --quiet
+
+    tip "composer self-update"
+    php composer.phar self-update
+
+
+    # tip "install XPM"
+    # cd $OME_PREFIX/bin/
+    # curl 'http://eirt.science/xpm/installer/' > xpinstaller.php
+    # chmod +x ./xpinstaller.php
+
+    # tip "XPM check --health"
+    # xpm check --health
 }
 
 php_install() {
