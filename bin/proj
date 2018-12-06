@@ -154,13 +154,21 @@ ome_commit() {
     cd $oldir
 }
 
-ome_pull() {   	
-    ome_upgrade
+ome_pull() {
+	tip "ome upgrade"
+	cd $OME_ROOT
+	git pull
+
+    ome_write_env_to_dotfile $HOME/.profile 
+    ome_write_env_to_dotfile $HOME/.shrc
+    ome_write_env_to_dotfile $HOME/.bashrc
+    ome_write_env_to_dotfile $HOME/.zshrc
     
+	ome install oh_my_emacs
+
+	tip "wrokspace upgrade"
     gitlab_ssh_upgrade damon-kwok/workspace $HOME/workspace
     chmod +x $HOME/.oh-my-env/*
-
-    ome install oh_my_emacs
 
     github_ssh_upgrade damon-kwok/damon-kwok.github.io $PROJ_ROOT/me/blog
     

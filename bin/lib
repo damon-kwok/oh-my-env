@@ -693,16 +693,6 @@ ome_write_env_to_dotfile() {
     fi
 }
 
-ome_upgrade() {
-    local oldir=`pwd`
-    ome_write_env_to_dotfile $HOME/.profile 
-    ome_write_env_to_dotfile $HOME/.shrc
-    ome_write_env_to_dotfile $HOME/.bashrc
-    ome_write_env_to_dotfile $HOME/.zshrc
-    
-    cd $oldir
-}
-
 ome_replace() {
     local oldir=`pwd`
     tip "ome_replace ($1) to ($2)"
