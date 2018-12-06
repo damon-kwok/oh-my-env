@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-app_wizard() {
+ome_app_wizard() {
     local oldir=`pwd`
     local proj_lang=$1
     local proj_root=$2
@@ -54,7 +54,6 @@ app_wizard() {
         echo "'$proj_root' already exist!"
         cd $oldir
         exit
-        app_wizard $@
     fi
 
     mkdir -p $proj_ws
@@ -246,4 +245,4 @@ app_wizard() {
     cd $oldir
 }
 . $OME_ROOT/env
-app_wizard $@
+ome_app_wizard $@
