@@ -104,25 +104,20 @@ golang_install() {
     fi
 
     
-    tip "install go language server"
-    go get -u github.com/sourcegraph/go-langserver
-    # github_go_get sourcegraph/go-langserver
+    # tip "install go language server"
+    # go get -u github.com/sourcegraph/go-langserver
 
-    # tip "install gocode"
+    tip "install gocode"
     go get -u github.com/mdempsky/gocode
-    # github_go_get mdempsky/gocode
 
-    # tip "install dep"
+    tip "install dep"
     go get -u github.com/golang/dep/cmd/dep
-    # github_go_get golang/dep/cmd/dep
 
-    # tip "install gom"
+    tip "install gom"
     go get -u github.com/mattn/gom
-    # github_go_get mattn/gom
 
-    # tip "install vgo"
+    tip "install vgo"
     go get -u github.com/golang/vgo
-    # github_go_get golang/vgo
     
     # tip "install golang/tool"
     # go get -u github.com/golang/tools/cmd/godoc
