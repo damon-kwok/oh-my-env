@@ -675,7 +675,7 @@ ome_export_version() {
 ome_fetch_version() {
     local tool=$1
     if [ "`command -v $tool`" != "" ]; then
-        echo "`$tool --version 2>&1 | head -n 1`"
+        echo "`$tool --version 2>&1 | head -n 1 | cut -d ' ' -f 1-4`"
     else
         echo "$tool:miss"
     fi

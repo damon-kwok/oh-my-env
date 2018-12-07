@@ -140,7 +140,7 @@ jvm_info() {
 `sdkman_info scala Scala` | \
 `sdkman_info groovy Groovy`"
 
-    ome_info "JTool" "`sdkman_info maven Maven` | \
+    ome_info "JVMTool" "`sdkman_info maven Maven` | \
 `sdkman_info sbt SBT` | \
 `sdkman_info gradle Gradle` | \
 `sdkman_info leiningen Lein`"

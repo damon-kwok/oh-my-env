@@ -47,10 +47,11 @@ cc_info() {
     # echo_kv "CTool" "pkg-config $PKGCONF_VERSION|$LIBTOOL_VERSION"
     # echo_kv "Make" "$MAKE_VERSION|$AUTOMAKE_VERSION|$AUTOCONF_VERSION"
 
-    ome_info "C/C++" "`ome_fetch_version gcc` | `ome_fetch_version clang`"
+    ome_info "GCC" "`ome_fetch_version gcc`"
+    ome_info "Clang" "`ome_fetch_version clang`"
     ome_info "Make" "`ome_fetch_version make` | `ome_fetch_version cmake` (default: $OME_MAKE)"
-    ome_info "Auto" "`ome_fetch_version autogen` | `ome_fetch_version automake` | `ome_fetch_version autoconf`"
-    ome_info "CTool" "pkg-config `ome_fetch_version pkg-config` | `ome_fetch_version libtool`" #`ome_fetch_version m4` | 
+    # ome_info "Auto" "`ome_fetch_version autogen` | `ome_fetch_version automake` | `ome_fetch_version autoconf`"
+    # ome_info "CTool" "pkg-config `ome_fetch_version pkg-config` | `ome_fetch_version libtool`" #`ome_fetch_version m4` | 
 }
 
 cc_install_c_library() {

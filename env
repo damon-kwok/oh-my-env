@@ -173,14 +173,20 @@ export OME_PREFIX=$HOME/.ome_local
 # echo_kv "Perl" "`perl -V | head -n 1 | cut -c 15-57`"
 export OME_INFO=""
 ome_info() {
-    for i in $@; do
-        export OME_INFO="$OME_INFO$i "
+    local index=0
+    for item in $@; do
+        if [ "$index" = "0" ]; then
+            export OME_INFO="${OME_INFO}${item}\t"
+        else
+            export OME_INFO="$OME_INFO${item} "
+        fi
+        let index++
     done
     export OME_INFO="$OME_INFO\n"
 }
 
 ome_info "OME" "OS:$OME_OS | Arch:$OME_ARCH | Shell:$OME_SHELL | EDITOR:$EDITOR"
-ome_info "PREFIX:$OME_PREFIX"
+ome_info "PREFIX $OME_PREFIX"
 ome_info "VCS" "`ome_fetch_version git` | `ome_fetch_version svn`"
 
 for plugin in $HOME/.oh-my-env/plugins/* ; do
