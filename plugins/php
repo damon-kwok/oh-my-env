@@ -126,7 +126,7 @@ php_info() {
     ome_info "PHP" "`ome_fetch_version php` | `ome_fetch_version composer`"
 }
 
-PHP_VERSION=7.2.13
+PHP_VERSION=7.2.12
 
 phpenv_set_env() {
     export PHPENV_ROOT="/home/damon/.phpenv"
