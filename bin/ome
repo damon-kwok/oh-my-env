@@ -372,8 +372,8 @@ ome_parse() {
         "new")
             app_wizard $ARG1 $ARG2
             ;;
-        "version"|"--version")
-            echo "ome | version:2018.1207"
+        "version"|"show"|"--version"|"ver"|"v")
+            echo "$OME_VERSION"
             ome_package_info
             ;;
         "help"|"--help")
@@ -407,12 +407,14 @@ ome_parse() {
             echo ""
             ;;
         *)
+            echo "$OME_VERSION"
             ome_help
             ;;
     esac
     cd $oldir
 }
 
+export OME_VERSION="ome 2018.1207 copyleft 2018 damon-kwok"
 #echo $@
 mkdir -p $OME_PREFIX/bin/
 mkdir -p $OME_CACHE/
