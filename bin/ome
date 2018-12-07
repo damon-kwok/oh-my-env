@@ -132,6 +132,8 @@ new_project() {
 }
 
 ome_help() {
+    echo "$OME_VERSION"
+    echo ""
     echo "Usage: ome [OPTION]..."
     echo "init                           first run initialization"
     echo "install [plugin_name]          install plugin"
@@ -141,7 +143,8 @@ ome_help() {
     echo "commit, push                   commit your modify content"
     echo "status                         lookup your modify content"
     echo "new [language] [project_name]  create project"
-    echo "version                        output version information"
+    echo "show                           output version information"
+    echo "help                           display this help and exit"
 }
 
 ask_menu() {
@@ -258,7 +261,7 @@ strload=("-" "\\" "|" "/")
 
 ome_package_info() {
     local olddir=`pwd`
-    tip "package list"
+    # tip "package list"
     local index=0
 
     echo -n -e "\033[?25l"  #隐藏光标
@@ -372,13 +375,6 @@ ome_parse() {
         "new")
             app_wizard $ARG1 $ARG2
             ;;
-        "version"|"show"|"--version"|"ver"|"v")
-            echo "$OME_VERSION"
-            ome_package_info
-            ;;
-        "help"|"--help")
-            ome_help
-            ;;
         "test")
             # spin
             echo -n -e "\033[?25l"  #隐藏光标
@@ -406,15 +402,20 @@ ome_parse() {
             done
             echo ""
             ;;
-        *)
+        "version"|"show"|"--version"|"ver"|"v")
             echo "$OME_VERSION"
+            ome_package_info
+            ;;
+        "help"|"--help")
+            ome_help
+            ;;
+        *)
             ome_help
             ;;
     esac
     cd $oldir
 }
-
-export OME_VERSION="ome 2018.1207 copyleft 2018 damon-kwok"
+export OME_VERSION="OME     2018.1207 copyleft 2018 damon-kwok"
 #echo $@
 mkdir -p $OME_PREFIX/bin/
 mkdir -p $OME_CACHE/

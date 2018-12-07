@@ -185,8 +185,8 @@ ome_info() {
     export OME_INFO="$OME_INFO\n"
 }
 
-ome_info "OME" "OS:$OME_OS | Arch:$OME_ARCH | Shell:$OME_SHELL | EDITOR:$EDITOR"
-ome_info "PREFIX $OME_PREFIX"
+ome_info "SYSTEM" "OS:$OME_OS | Arch:$OME_ARCH | Shell:$OME_SHELL | EDITOR:$EDITOR"
+ome_info "PREFIX" "\"$OME_PREFIX\""
 ome_info "VCS" "`ome_fetch_version git` | `ome_fetch_version svn`"
 
 for plugin in $HOME/.oh-my-env/plugins/* ; do
