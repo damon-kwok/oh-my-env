@@ -284,12 +284,15 @@ ome_package_info() {
     cd $olddir
 }
 
-ome_os_list() {
+ome_package_list() {
     local olddir=`pwd`
-    tip "package list:"
-    for plugin in $HOME/.oh-my-env/plugins/* ; do
-        echo_success `basename $plugin`
-    done
+    # tip "package list:"
+    # for plugin in $HOME/.oh-my-env/plugins/* ; do
+        # echo_success `basename $plugin`
+    # done
+
+    cd $HOME/.oh-my-env/plugins/
+    ls
 
     cd $olddir
 }
@@ -353,7 +356,6 @@ ome_parse() {
             ask_menu;;
         "list")
             ome_package_list
-            ome_os_list
             ;;
         "open")
             $EDITOR "$OME_ROOT/plugins/$ARG1"
