@@ -89,7 +89,9 @@ erlang_install_kerl() {
 }
 
 kerl_set_env() {
-    . $OME_CACHE/otp_${KERL_ERLANG_VERSION}/activate
+    if [ -f $OME_CACHE/otp_${KERL_ERLANG_VERSION}/activate ]; then
+        . $OME_CACHE/otp_${KERL_ERLANG_VERSION}/activate
+    fi
 }
 
 erlenv_install() {
