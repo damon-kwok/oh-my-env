@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-python_pyenv_install() {
+python_install_pyenv() {
     tip "install pyenv"
     github_upgrade pyenv/pyenv $HOME/.pyenv
 
@@ -19,7 +19,7 @@ python_pyenv_install() {
     ome_dev_path $HOME/.local
 }
 
-python_bin_install() {
+python_install_bin() {
     #deps
     get_os_type
     case $OME_OS in
@@ -76,8 +76,8 @@ python_bin_install() {
 python_install() {
     local oldir=`pwd`
 
-    # python_bin_install
-    python_pyenv_install
+    # python_install_bin
+    python_install_pyenv
 
     # if ! command -v pip2 >/dev/null 2>&1; then
 	if [ "`command -v pip2`" = "" ]; then

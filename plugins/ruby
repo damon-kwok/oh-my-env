@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-ruby_rvm_install() {
+ruby_install_rvm() {
     get_os_type
     case $OME_OS in
         # Linux
@@ -51,7 +51,7 @@ ruby_rvm_install() {
     rvm install $RUBY_VERSION
 }
 
-ruby_rbenv_install() {
+ruby_install_rbenv() {
     github_upgrade rbenv/rbenv $HOME/.rbenv
     cd $HOME/.rbenv && src/configure && make -C src && chmod +x bin/rbenv
 
@@ -86,9 +86,9 @@ ruby_rbenv_install() {
 }
 
 ruby_install() {
-    # ruby_rvm_install
+    # ruby_install_rvm
     # or
-    ruby_rbenv_install
+    ruby_install_rbenv
     
     tip "install bundler"
     gem env home

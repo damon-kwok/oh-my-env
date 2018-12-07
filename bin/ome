@@ -131,6 +131,19 @@ new_project() {
     fi
 }
 
+ome_help() {
+    echo "Usage: ome [OPTION]..."
+    echo "init                           first run initialization"
+    echo "install [plugin_name]          install plugin"
+    echo "uninstall [plugin_name]        uninstall plugin"
+    echo "list                           list all plugins"
+    echo "update, pull                   self update"
+    echo "commit, push                   commit your modify content"
+    echo "status                         lookup your modify content"
+    echo "new [language] [project_name]  create project"
+    echo "version                        output version information"
+}
+
 ask_menu() {
     cd $OME_ROOT
     tip "hello $USER, what's up?"
@@ -324,6 +337,7 @@ ome_parse() {
         "init")
             ome install basedev
             ome install cc
+            ome_config
             ;;
         "install")
             ome_eval "install" $ARG1
@@ -356,8 +370,12 @@ ome_parse() {
         "new")
             app_wizard $ARG1 $ARG2
             ;;
-        "version")
+        "version"|"--version")
+            echo "ome | version:2018.1207"
             ome_package_info
+            ;;
+        "help"|"--help")
+            ome_help
             ;;
         "test")
             # spin
@@ -387,7 +405,7 @@ ome_parse() {
             echo ""
             ;;
         *)
-            echo "ome | version:2018.1123"
+            ome_help
             ;;
     esac
     cd $oldir

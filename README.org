@@ -49,10 +49,12 @@ ome install jvm         # java/kotlin/groovy/scala development environment
 ome install golang      # golang development environment
 ome install haskell     # haskell development environment
 ome install rust        # rust development environment
+ome install php         # php development environment
 ome install python      # python2/3 development environment
 ome install ruby        # ruby development environment
 ome install perl        # perl development environment
-ome install erlang      # erlang/elixir development environment
+ome install erlang      # erlang development environment
+ome install elixir      # elixir development environment
 ome install nim         # nim development environment
 #+END_SRC
 - uninstall
