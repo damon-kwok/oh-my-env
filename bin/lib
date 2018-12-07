@@ -284,20 +284,20 @@ replace_str() {
     fi
 }
 
-cmake_build() {
-    local oldir=`pwd`
+# cmake_build() {
+#     local oldir=`pwd`
     
-    local dir="$1"
-    tip "cmake_build:$1"
-    mkdir -p $dir/build
-    cd $dir/build
-    cmake $dir -G "$MAKE_TYPE" \
-	      -DCMAKE_INSTALL_PREFIX=$OME_PREFIX \
-          -DCMAKE_BUILD_TYPE=Release
-    cmake --build . --use-stderr --config Release --target install -- -j4
+#     local dir="$1"
+#     tip "cmake_build:$1"
+#     mkdir -p $dir/build
+#     cd $dir/build
+#     cmake $dir -G "$MAKE_TYPE" \
+# 	      -DCMAKE_INSTALL_PREFIX=$OME_PREFIX \
+#           -DCMAKE_BUILD_TYPE=Release
+#     cmake --build . --use-stderr --config Release --target install -- -j4
     
-    cd $oldir
-}
+#     cd $oldir
+# }
 
 auto_gen_cmake_file() {
     if [ "$1" != "" ]; then

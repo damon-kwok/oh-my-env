@@ -1,16 +1,26 @@
 #!/usr/bin/env sh
 
 ome_cmake_build() {
-    cd $1
-    local proj_root=`pwd`
-    mkdir -p $proj_root/build
-    cd $proj_root/build/
+    local oldir=`pwd`
+    if [ -n $1 ]; then
+        cd $1
+    fi
 
-    cmake .. -G "$OME_MAKE" \
-          -DCMAKE_INSTALL_PREFIX=$OME_PREFIX \
-          -DCMAKE_EXPORT_COMPILE_COMMANDS=1 \
-          -DCMAKE_CXX_STANDARD=11
-    cmake --build . --use-stderr --config Release #--target install
+    local proj_root=`pwd`
+    if [ -f "$proj_root/CMakeLists.txt" ]; then
+        echo $proj_root
+        mkdir -p $proj_root/build
+        cd $proj_root/build/
+
+        cmake .. -G "$OME_MAKE" \
+              -DCMAKE_INSTALL_PREFIX=$OME_PREFIX \
+              -DCMAKE_EXPORT_COMPILE_COMMANDS=1 \
+              -DCMAKE_CXX_STANDARD=11
+        cmake --build . --use-stderr --config Release #--target install
+    else
+        echo "'CMakeLists.txt' not found!"
+    fi
+    cd $oldir
 }
 
 ome_cmake_build $@

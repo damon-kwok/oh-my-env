@@ -1,5 +1,0 @@
-#!/usr/bin/env bash
-
-echo $OME_ROOT
-cd $OME_ROOT/$@
-ls

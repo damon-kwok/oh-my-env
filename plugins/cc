@@ -338,7 +338,7 @@ cc_install_tools() {
 
             readp "install doc tools?"
 		    if [ $? -eq 1 ]; then
-                sudo apt install texinfo doxygen asciidoc xmlto docbook2x imagemagick ghostscript
+                sudo apt install texinfo doxygen fop asciidoc xmlto docbook2x imagemagick ghostscript
             fi
 
             sudo apt install -y swig libcppunit-dev\
@@ -387,7 +387,7 @@ cc_install_tools() {
 
             readp "install doc tools?"
 		    if [ $? -eq 1 ]; then
-                sudo yum install texinfo doxygen asciidoc xmlto docbook2x ImageMagick ghostscript
+                sudo yum install texinfo doxygen fop asciidoc xmlto docbook2x ImageMagick ghostscript
             fi
             
             sudo yum install redhat-rpm-config \
@@ -409,7 +409,7 @@ cc_install_tools() {
 
             readp "install doc tools?"
 		    if [ $? -eq 1 ]; then
-                sudo pacman -S texinfo doxygen asciidoc xmlto docbook2x imagemagick ghostscript
+                sudo pacman -S texinfo doxygen fop asciidoc xmlto docbook2x imagemagick ghostscript
             fi
             trizen -S swig cppunit \
                  openssl libgcrypt libmcrypt \
@@ -433,7 +433,7 @@ cc_install_tools() {
                  pkg-config libtool intltool
             readp "install doc tools?"
 		    if [ $? -eq 1 ]; then
-                sudo zypper install texinfo doxygen asciidoc xmlto docbook2X imagemagick ghostscript
+                sudo zypper install texinfo doxygen fop asciidoc xmlto docbook2X imagemagick ghostscript
             fi
             sudo zypper install swig cppunit \
                  libgcrypt libmcrypt-devel \
@@ -465,7 +465,7 @@ cc_install_tools() {
                  gmake gcc clang-devel zh-font-std bitstream-vera emacs
             readp "install doc tools?"
 		    if [ $? -eq 1 ]; then
-                sudo pkg install texinfo doxygen asciidoc xmlto docbook2X imagemagick ghostscript
+                sudo pkg install texinfo doxygen fop asciidoc xmlto docbook2X imagemagick ghostscript
             fi
             sudo pkg install swig30 cppunit \
                  libgcrypt libmcrypt \
@@ -488,7 +488,7 @@ cc_install_tools() {
 
             readp "install doc tools?"
 		    if [ $? -eq 1 ]; then
-                apt install texinfo doxygen asciidoc xmlto docbook2X imagemagick ghostscript
+                apt install texinfo doxygen fop asciidoc xmlto docbook2X imagemagick ghostscript
             fi
             
             apt install swig cppunit \
@@ -524,7 +524,7 @@ cc_install_tools() {
 
             readp "install doc tools?"
 		    if [ $? -eq 1 ]; then
-                pacman -S texinfo doxygen asciidoc xmlto docbook2X imagemagick ghostscript
+                pacman -S texinfo doxygen fop asciidoc xmlto docbook2X imagemagick ghostscript
             fi
             pacman -S swig cppunit \
                    openssl-devel libcrypt-devel libmcrypt-devel \

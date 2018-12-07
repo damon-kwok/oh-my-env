@@ -196,6 +196,7 @@ ome_dev_path $HOME/.local
 # alias
 alias ls='ls --color'
 alias wget='wget -c'
+alias omecd='f(){ cd $OME_ROOT/$1; ls; unset -f f; }; f'
 # alias opam='opam --debug'
 
 if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then

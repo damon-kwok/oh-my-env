@@ -1,15 +1,17 @@
 #!/usr/bin/env sh
 
 python_pyenv_install() {
+    tip "install pyenv"
     github_upgrade pyenv/pyenv $HOME/.pyenv
 
+    tip "pyenv_set_env"
     pyenv_set_env
-    
+
     tip "install python"
     pyenv install $PYTHON2_VERSION
     pyenv install $PYTHON3_VERSION
     pyenv global $PYTHON2_VERSION $PYTHON3_VERSION
-    
+
     tip "pyenv whence rackup"
     pyenv whence rackup
 
@@ -82,7 +84,7 @@ python_install() {
         tip "install pip2"
         cd $HOME/Downloads/
         if [ ! -f get-pip.py ]; then
-            curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py            
+            curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
         fi
         python2 get-pip.py --user
     fi
@@ -92,7 +94,7 @@ python_install() {
         tip "install pip3"
         cd $HOME/Downloads/
         if [ ! -f get-pip.py ]; then
-            curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py            
+            curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
         fi
         python3 get-pip.py --user
     fi
@@ -148,8 +150,6 @@ python_install() {
         echo_error "gen project file failed!"
     fi
 
-    
-    
     # pip2.7 install ipython jupyter rope jedi flake8 importmagic autopep8 yapf
     tip "install ebook build tool"
     pip3 install --user -U jinja2

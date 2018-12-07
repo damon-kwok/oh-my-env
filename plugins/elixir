@@ -1,0 +1,21 @@
+#!/usr/bin/env sh
+
+elixir_install() {
+    ome_check_install "erl" "erlang"
+    github_upgrade elixir-lang/elixir $OME_CACHE/elixir
+    cd $OME_CACHE/elixir
+    make test
+}
+
+elixir_uninstall() {
+    echo_error "'elixir_uninstall' not implemented"
+}
+
+elixir_exist_p() {
+    echo_error "'elixir_exist_p' not implemented"
+}
+
+elixir_info() {
+    ome_info "Elixir" "`ome_fetch_version elixir`"
+}
+export PATH=$OME_CACHE/elixir/bin:$PATH

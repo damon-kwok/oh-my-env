@@ -60,6 +60,9 @@ ruby_rbenv_install() {
     cd $HOME/.ruby-build/
     PREFIX=$OME_PREFIX $HOME/.ruby-build/install.sh
 
+    tip "rbenv_set_env"
+    rbenv_set_env
+    
     # 用来管理 gemset, 可选, 因为有 bundler 也没什么必要
     github_upgrade jamis/rbenv-gemset  ~/.rbenv/plugins/rbenv-gemset
     
@@ -101,10 +104,13 @@ ruby_exist_p() {
     echo_error "'ruby_exist_p' not implemented"
 }
 RUBY_VERSION=2.5.3
-export PATH=$HOME/.rbenv/bin:$HOME/.rbenv/shims:$PATH
-if [ -f $HOME/.rbenv/bin/rbenv ]; then
-    eval "$(rbenv init -)"
-fi
+
+rbenv_set_env() {
+    export PATH=$HOME/.rbenv/bin:$HOME/.rbenv/shims:$PATH
+    if [ -f $HOME/.rbenv/bin/rbenv ]; then
+        eval "$(rbenv init -)"
+    fi
+}
 
 ruby_info() {
     ome_info "Ruby" "`ome_fetch_version ruby`"

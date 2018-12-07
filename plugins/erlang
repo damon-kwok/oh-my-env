@@ -1,10 +1,6 @@
 #!/usr/bin/env sh
-erlenv_install() {
-    github_upgrade talentdeficit/erlenv $HOME/.erlenv
-    
-}
 
-erlang_install() {
+erlang_install_git() {
     # git clone https://github.com/erlang/otp.git
     github_upgrade erlang/otp $OME_CACHE/erlang_otp
     cd $OME_CACHE/erlang_otp
@@ -14,9 +10,10 @@ erlang_install() {
     make install
 
     tip "install rebar3 for erlang"
-    # cd $OME_BIN
-    cd $WS_BIN/
+    # cd $OME_PREFIX/bin/
     # wget https://s3.amazonaws.com/rebar3/rebar3 && chmod +x rebar3
+    
+    cd $OME_ROOT/bin/
     chmod +x ./rebar3
     get_os_type
     case $OME_OS in
@@ -42,6 +39,72 @@ erlang_install() {
     rebar3 upgrade
 }
 
+erlang_install_zip() {
+    if [ "`command -v erl`" = "" ]; then
+        local zipkg=otp-${ERLANG_VERSION}.zip
+        # echo "zipkg:$zipkg"
+        mkdir -p $HOME/Downloads
+        cd $HOME/Downloads/
+        if [ ! -f $HOME/Downloads/$zipkg ]; then
+            # https://codeload.github.com/erlang/otp/zip/OTP-21.1.4
+            wget https://codeload.github.com/erlang/otp/zip/${ERLANG_VERSION}
+        fi
+        if [ ! -d $HOME/Downloads/otp-$ERLANG_VERSION/ ]; then
+            unzip ./$zipkg
+        fi
+        cd $HOME/Downloads/otp-$ERLANG_VERSION/
+        ./otp_build autoconf
+        ./configure --prefix=$HOME/.erlang_otp
+        # ./configure --prefix=$OME_PREFIX
+        make install
+    fi
+}
+
+KERL_ERLANG_VERSION=21.1
+erlang_install_kerl() {
+    tip "install kerl"
+    cd $OME_PREFIX/bin/
+    curl -O https://raw.githubusercontent.com/kerl/kerl/master/kerl
+    chmod +x ./kerl
+
+    tip "build $KERL_ERLANG_VERSION"
+    kerl build $KERL_ERLANG_VERSION
+
+    # tip "kerl build form a github fork"
+    # export KERL_BUILD_BACKEND=git
+    # export OTP_GITHUB_URL="https://github.com/basho/otp"
+    # kerl update releases
+
+    # tip "kerl build form github"
+    # kerl build git https://github.com/erlang/otp.git dev 19.2_dev
+
+    tip "kerl install otp_${KERL_ERLANG_VERSION}"
+    local dir=$OME_CACHE/otp_${KERL_ERLANG_VERSION}
+    if [ ! -d $dir ]; then
+        kerl install ${KERL_ERLANG_VERSION} $OME_CACHE/otp_${KERL_ERLANG_VERSION}
+    fi
+
+    tip "kerl_set_env"
+    kerl_set_env
+}
+
+kerl_set_env() {
+    . $OME_CACHE/otp_${KERL_ERLANG_VERSION}/activate
+}
+
+erlenv_install() {
+    github_upgrade talentdeficit/erlenv $HOME/.erlenv
+
+    tip "erlenv_set_env"
+    erlenv_set_env
+}
+
+erlang_install() {
+    # erlang_install_git
+    # erlang_install_zip
+    erlang_install_kerl
+}
+
 erlang_uninstall() {
     echo_error "'erlang_uninstall' not implemented"
 }
@@ -51,11 +114,16 @@ erlang_exist_p() {
 }
 
 erlang_info() {
-    echo_error ""
+    echo ""
 }
 
-ERLANG_VERSION=otp21.1
+ERLANG_VERSION=OTP-21.1
+
+erlenv_set_env() {
 if [ -d $HOME/.erlenv/ ]; then
     export PATH=$HOME/.erlenv/bin:$PATH
     eval "$(erlenv init -)"
 fi
+}
+
+kerl_set_env
