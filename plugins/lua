@@ -1,0 +1,48 @@
+#!/usr/bin/env sh
+
+lua_install_lenv() {
+    if [ "`command -v lenv`" = "" ]; then
+        tip "install lenv"
+        curl -L http://git.io/lenv | perl
+    fi
+    
+    tip "lenv_set_env"
+    lenv_set_env
+
+    if [ ! -d $HOME/.lenv/lua/$LUA_VERSION ]; then
+        tip "install lua $LUA_VERSION"
+        lenv install $LUA_VERSION   
+    fi
+
+    tip "lua version info"
+    lenv use $LUA_VERSION
+    lua -v
+}
+
+lenv_set_env() {
+    if [ -f $HOME/.lenvrc ]; then
+        . $HOME/.lenvrc
+    fi
+}
+
+lua_install() {
+    lua_install_lenv
+}
+
+lua_uninstall() {
+    echo_error "'lua_uninstall' not implemented"
+}
+
+lua_exist_p() {
+    echo_error "'lua_exist_p' not implemented"
+}
+
+lua_info() {
+    if [ "`command -v lua`" = "" ]; then
+        ome_info "Lua" "miss"
+    else
+        ome_info "Lua" "`lua -v`"
+    fi
+}
+
+LUA_VERSION=5.3.5
