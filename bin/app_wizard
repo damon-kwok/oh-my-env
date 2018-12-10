@@ -145,10 +145,13 @@ ome_app_wizard() {
             ome_check_install "npm" "nodejs"
             mkdir -p $proj_root
             cd $proj_root
+            echo "module.exports = function(grunt) {" >> Gruntfile.js
+            echo "    // Do grunt-related things in here" >> Gruntfile.js
+            echo "};" >> Gruntfile.js
             npm init
             npm install grunt --save-dev
             npm install grunt-contrib-jshint --save-dev
-            $EDITOR "package.json"
+            $EDITOR "Gruntfile.js"
             ;;
         "14"|"nodejs-gulp"|"gulp")
             ome_check_install "npm" "nodejs"
@@ -159,7 +162,7 @@ ome_app_wizard() {
             echo "" >> gulpfile.js
             echo "});" >> gulpfile.js
             npm init
-            # npm install gulp --save-dev
+            npm install gulp --save-dev
             $EDITOR "gulpfile.js"
             ;;
         "15"|"ocaml"|"ml")
