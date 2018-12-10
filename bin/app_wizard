@@ -154,9 +154,13 @@ ome_app_wizard() {
             ome_check_install "npm" "nodejs"
             mkdir -p $proj_root
             cd $proj_root
+            echo "var gulp = require('gulp');" >> gulpfile.js
+            echo "gulp.task('default', function() {" >> gulpfile.js
+            echo "" >> gulpfile.js
+            echo "});" >> gulpfile.js
             npm init
-            npm install gulp --save-dev 
-            $EDITOR "package.json"
+            # npm install gulp --save-dev
+            $EDITOR "gulpfile.js"
             ;;
         "15"|"ocaml"|"ml")
             ome_check_install "opam" "ocaml"
