@@ -94,6 +94,9 @@ ruby_install() {
     gem env home
     gem install bundler
     gem update
+
+    tip "install ruby-language-server:Solargraph"
+    gem install solargraph
 }
 
 ruby_uninstall() {

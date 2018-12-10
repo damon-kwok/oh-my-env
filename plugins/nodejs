@@ -36,10 +36,10 @@ nodejs_install() {
     tip "install gulp"
     npm install -g gulp
 
-    tip "install js language server"
+    tip "install js/ts language server"
     npm i -g javascript-typescript-langserver
-    npm i -g flow-language-server
-    npm i -g typescript-language-server
+    # npm i -g flow-language-server
+    # npm i -g typescript-language-server
 
     tip "install yarn"
     # curl -o- -L https://yarnpkg.com/install.sh | bash

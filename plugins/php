@@ -107,6 +107,11 @@ php_install_phpbrew() {
 
     # tip "XPM check --health"
     # xpm check --health
+
+    tip "install php language server"
+    # https://github.com/felixfbecker/php-language-server#installation
+    composer require felixfbecker/language-server
+    composer run-script --working-dir=vendor/felixfbecker/language-server parse-stubs
 }
 
 php_install() {
@@ -126,7 +131,7 @@ php_info() {
     ome_info "PHP" "`ome_fetch_version php` | `ome_fetch_version composer`"
 }
 
-PHP_VERSION=7.2.12
+PHP_VERSION=7.3.0
 
 phpenv_set_env() {
     export PHPENV_ROOT="/home/damon/.phpenv"

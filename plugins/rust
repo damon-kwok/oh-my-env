@@ -63,6 +63,9 @@ rust_install() {
 
     tip "rust set env"
     rust_set_env
+
+    # tip "install rust language server: rls"
+    # rustup component add rls-preview rust-analysis rust-src
     
     tip "install tool:racer"
     cargo install --force racer

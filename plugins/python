@@ -124,7 +124,7 @@ python_install() {
     tip "install hatch"
     pip3 install --user hatch
 
-    tip "install python-language-server"
+    tip "install python language server"
     pip3 install --user -U python-language-server
 
     tip "install build tools:gyp"

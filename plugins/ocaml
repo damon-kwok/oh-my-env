@@ -102,6 +102,9 @@ ocaml_install() {
     tip "install bsb-native"
     npm install -g --save-dev yauzl
     npm install -g --save-dev bsb-native
+
+    tip "install ocaml language server"
+    npm install -g ocaml-language-server
 }
 
 ocaml_uninstall() {

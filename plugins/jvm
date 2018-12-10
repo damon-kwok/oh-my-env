@@ -38,7 +38,6 @@ install_graalvm() {
 }
 
 jvm_install() {
-    local oldir=`pwd`
     tip "install sdkman"
     #if ! command -v sdk >/dev/null 2>&1; then
 	if [ "`command -v sdk`" = "" ]; then
@@ -106,9 +105,11 @@ jvm_install() {
         sdk install sbt
     fi
 
-    # java lang server
+    tip "install java language server"
     install_jdt_language_server
-    cd $oldir
+
+    tip "install kotlin language server"
+    install_kotlin_language_server
 }
 
 jvm_uninstall() {

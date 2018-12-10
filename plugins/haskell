@@ -86,6 +86,14 @@ haskell_install_bin() {
 
 }
 
+install_haskell_language_server() {
+    # https://github.com/haskell/haskell-ide-engine#installation
+    github_update haskell/haskell-ide-engine $OME_CACHE/haskell-ide-engine
+    cd $OME_CACHE/haskell-ide-engine/
+
+    make build-all
+}
+
 haskell_install()
 {
     haskell_install_download
@@ -93,6 +101,13 @@ haskell_install()
     
     tip "stack upgrade"
     stack upgrade
+
+    tip "install cabal"
+    stack install cabal-install
+    cabal update
+
+    tip "install haskell language server"
+    install_haskell_language_server
 }
 
 haskell_uninstall() {
