@@ -27,6 +27,11 @@ lenv_set_env() {
 
 lua_install() {
     lua_install_lenv
+
+    github_upgrade luarocks/luarocks $OME_CACHE/luarocks
+    cd $OME_CACHE/luarocks/
+    ./configure --prefix=$OME_PREFIX
+    make build
 }
 
 lua_uninstall() {

@@ -1,5 +1,70 @@
 #!/usr/bin/env sh
 
+nodejs_install_n() {
+    local oldir=`pwd`
+    tip "n_install"
+    if [ ! -f $HOME/n/bin/n ]; then
+        curl -L https://git.io/n_install | bash
+    fi
+    
+    export N_PREFIX="$HOME/.n"; [[ :$PATH: = *":$N_PREFIX/bin:"* ]] || PATH+=":$N_PREFIX/bin"
+    n-update
+    # n latest
+    # n stable
+    n lts
+    
+    find_str "N-INSTALL" ~/.bashrc
+    if [ $? -eq 0 ]; then
+        echo "" >> ~/.bashrc
+	    echo "# N-INSTALL" >> ~/.bashrc
+	    echo "export N_PREFIX=\"\$HOME/n\"; [[ :\$PATH: = *\":\$N_PREFIX/bin:\"* ]] || PATH+=\":\$N_PREFIX/bin\"" \
+             >> ~/.bashrc
+    fi            
+    cd $oldir
+}
+
+nodejs_install_nvm() {
+    tip "install nvm + nodejs"
+    
+    find_str "NVM_DIR" ~/.bashrc
+    if [ $? -eq 0 ]; then
+	    echo '' >> ~/.bashrc
+	    echo '# NVM' >> ~/.bashrc
+        echo 'export NVM_DIR="$HOME/.nvm"' >> ~/.bashrc
+        echo '[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> ~/.bashrc
+        echo '[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"' >> ~/.bashrc
+        . $HOME/.bashrc
+    fi
+
+    find_str "NVM_DIR" ~/.profile
+    if [ $? -eq 0 ]; then
+	    echo '' >> ~/.profile
+	    echo '# NVM' >> ~/.profile
+        echo 'export NVM_DIR="$HOME/.nvm"' >> ~/.profile
+        echo '[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> ~/.profile
+        echo '[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"' >> ~/.profile
+        . $HOME/.profile
+    fi
+    
+    # curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash
+    local NVM_DIR="$HOME/.nvm"
+    # if command -v nvm >/dev/null 2>&1; then
+    if [ ! -d $NVM_DIR ]; then		
+	    git clone https://github.com/creationix/nvm.git "$NVM_DIR"
+	    cd "$NVM_DIR"
+	    git checkout `git describe --abbrev=0 --tags --match "v[0-9]*" $(git rev-list --tags --max-count=1)`
+    else		
+	    cd "$NVM_DIR"
+	    git fetch --tags origin
+	    git checkout `git describe --abbrev=0 --tags --match "v[0-9]*" $(git rev-list --tags --max-count=1)`		
+    fi
+
+    \. "$NVM_DIR/nvm.sh"
+    
+    # nvm install node # lastest version
+    nvm install --lts=dubnium #lastest LFS:dubnium
+}
+
 nodejs_install() {
     local oldir=`pwd`
     if [ "$OME_OS" = "$OS_MSYS2" ]; then
@@ -23,8 +88,8 @@ nodejs_install() {
             fi
         fi
     else
-        # nodejs_n_install
-        nodejs_nvm_install
+        # nodejs_install_n
+        nodejs_install_nvm
     fi
 
     tip "update npm"
@@ -45,64 +110,6 @@ nodejs_install() {
     # curl -o- -L https://yarnpkg.com/install.sh | bash
     npm install -g yarn
 
-    cd $oldir
-}
-
-nodejs_n_install() {
-    local oldir=`pwd`
-    tip "n_install"
-    if [ ! -f $HOME/n/bin/n ]; then
-        curl -L https://git.io/n_install | bash
-    fi
-    
-    export N_PREFIX="$HOME/.n"; [[ :$PATH: = *":$N_PREFIX/bin:"* ]] || PATH+=":$N_PREFIX/bin"
-    n-update
-    # n latest
-    # n stable
-    n lts
-    
-    find_str "N-INSTALL" ~/.bashrc
-    if [ $? -eq 0 ]; then
-        echo "" >> ~/.bashrc
-	    echo "# N-INSTALL" >> ~/.bashrc
-	    echo "export N_PREFIX=\"\$HOME/n\"; [[ :\$PATH: = *\":\$N_PREFIX/bin:\"* ]] || PATH+=\":\$N_PREFIX/bin\"" \
-             >> ~/.bashrc
-    fi            
-    cd $oldir
-}
-
-nodejs_nvm_install() {
-    local oldir=`pwd`
-    tip "install nvm + nodejs"
-    find_str "NVM_DIR" ~/.bashrc
-    if [ $? -eq 0 ]; then
-	    echo '' >> ~/.bashrc
-	    echo '# NVM' >> ~/.bashrc
-        echo 'export NVM_DIR="$HOME/.nvm"' >> ~/.bashrc
-        echo '[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm' >> ~/.bashrc
-        echo '[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion' >> ~/.bashrc
-
-        . $HOME/.bashrc
-    fi
-    
-    # curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash
-    local NVM_DIR="$HOME/.nvm"
-    # if command -v nvm >/dev/null 2>&1; then
-    if [ ! -d $NVM_DIR ]; then		
-	    git clone https://github.com/creationix/nvm.git "$NVM_DIR"
-	    cd "$NVM_DIR"
-	    git checkout `git describe --abbrev=0 --tags --match "v[0-9]*" $(git rev-list --tags --max-count=1)`
-    else		
-	    cd "$NVM_DIR"
-	    git fetch --tags origin
-	    git checkout `git describe --abbrev=0 --tags --match "v[0-9]*" $(git rev-list --tags --max-count=1)`		
-    fi
-
-    \. "$NVM_DIR/nvm.sh"
-    
-    # nvm install node # lastest version
-    nvm install --lts=dubnium #lastest LFS:dubnium
-    
     cd $oldir
 }
 
