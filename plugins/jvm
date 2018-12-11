@@ -27,7 +27,7 @@ install_kotlin_language_server() {
     github_upgrade fwcd/KotlinLanguageServer $OME_CACHE/KotlinLanguageServer
 
     cd $OME_CACHE/KotlinLanguageServer/
-    gradle build
+    gradle build --stacktrace
     
     cd $oldir
 }
@@ -38,7 +38,7 @@ install_groovy_language_server() {
     github_upgrade palantir/language-servers $OME_CACHE/groovy-language-servers
 
     cd $OME_CACHE/groovy-language-servers/
-    gradle build
+    gradle build --stacktrace
     
     cd $oldir
 }
