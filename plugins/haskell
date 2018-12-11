@@ -88,7 +88,7 @@ haskell_install_bin() {
 
 install_haskell_language_server() {
     # https://github.com/haskell/haskell-ide-engine#installation
-    github_update haskell/haskell-ide-engine $OME_CACHE/haskell-ide-engine
+    github_upgrade haskell/haskell-ide-engine $OME_CACHE/haskell-ide-engine
     cd $OME_CACHE/haskell-ide-engine/
 
     make build-all
