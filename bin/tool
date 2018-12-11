@@ -297,7 +297,7 @@ office_upgrade() {
 	host_upgrade "10.2.35.202" "rancher.51vr.local"
 	host_upgrade "10.2.35.204" "git.51vr.local"
 	host_upgrade "10.2.35.206" "shp4proxy.51vr.local"
-	host_upgrade "10.2.35.206" "artfactory.51vr.local"
+	host_upgrade "10.2.35.206" "artifactory.51vr.local"
 
     tip "git config"
     git config --global user.email "563066990@qq.com"

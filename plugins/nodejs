@@ -106,6 +106,12 @@ nodejs_install() {
     # npm i -g flow-language-server
     # npm i -g typescript-language-server
 
+    tip "install css language server"
+    npm install -g vscode-css-languageserver-bin
+
+    tip "install html language server"
+    npm install -g vscode-html-languageserver-bin
+
     tip "install yarn"
     # curl -o- -L https://yarnpkg.com/install.sh | bash
     npm install -g yarn
