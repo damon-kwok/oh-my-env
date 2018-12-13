@@ -17,7 +17,10 @@ elixir_exist_p() {
 
 elixir_info() {
     # ome_info "Elixir" "`ome_fetch_version elixir`"
-    ome_info "Erlang" "`elixir --version 2>&1 | head -n 1 | cut -d ' ' -f 1-3`"
-    ome_info "Elixir" "`elixir --version 2>&1 | tail -n 1 | cut -d ' ' -f 1-3`"
+    if [ "`command -v elixir`" != "" ]; then
+        ome_info "Erlang" "`elixir --version 2>&1 | head -n 1 | cut -d ' ' -f 1-3`"
+        ome_info "Elixir" "`elixir --version 2>&1 | tail -n 1 | cut -d ' ' -f 1-3`"        
+    fi
+    
 }
 export PATH=$OME_CACHE/elixir/bin:$PATH
