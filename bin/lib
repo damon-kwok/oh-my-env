@@ -286,16 +286,16 @@ replace_str() {
 
 # cmake_build() {
 #     local oldir=`pwd`
-    
+
 #     local dir="$1"
 #     tip "cmake_build:$1"
 #     mkdir -p $dir/build
 #     cd $dir/build
 #     cmake $dir -G "$MAKE_TYPE" \
-# 	      -DCMAKE_INSTALL_PREFIX=$OME_PREFIX \
-#           -DCMAKE_BUILD_TYPE=Release
+    # 	      -DCMAKE_INSTALL_PREFIX=$OME_PREFIX \
+    #           -DCMAKE_BUILD_TYPE=Release
 #     cmake --build . --use-stderr --config Release --target install -- -j4
-    
+
 #     cd $oldir
 # }
 
@@ -434,6 +434,11 @@ auto_gen_rtags2() {
 }
 
 dns_upgrade() {
+    if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
+        echo_error "'dns_upgrade' does not support windows"
+        return
+    fi
+    
     local ip=$1
     
     tip "Add '$ip' to /etc/network/interfaces"
@@ -448,9 +453,16 @@ dns_upgrade() {
 host_upgrade() {
     local ip=$1
     local name=$2
-
+    
+    if [ "$OME_OS" = "$OS_MSYS2" ]; then
+        local hostfile=/c/Windows/System32/drivers/etc
+    elif [ "$OME_OS" = "$OS_CYGWIN" ]; then
+        local hostfile=/cygdrive/c/Windows/System32/drivers/etc
+    else
+        local hostfile=/etc/hosts
+    fi
     tip "Add '$ip $name' to /etc/hosts"
-    find_str $name /etc/hosts
+    find_str $name $hostfile
     if [ $? -eq 0 ]; then
 	    sudo sh -c "echo '$ip $name' >> /etc/hosts"
     else
@@ -459,6 +471,10 @@ host_upgrade() {
 }
 
 apt_repo_upgrade() {
+    if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
+        echo_error "'apt_repo_upgrade' does not support windows"
+        return
+    fi
     local arch=$1
     local url=$2
     tip "Add docker apt repository"

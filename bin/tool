@@ -295,6 +295,7 @@ office_upgrade() {
     tip "hosts"
 	host_upgrade "10.2.35.202" "docker.51vr.local"
 	host_upgrade "10.2.35.202" "rancher.51vr.local"
+    host_upgrade "10.2.35.202" "jenkins.51vr.local"
 	host_upgrade "10.2.35.204" "git.51vr.local"
 	host_upgrade "10.2.35.206" "shp4proxy.51vr.local"
 	host_upgrade "10.2.35.206" "artifactory.51vr.local"
