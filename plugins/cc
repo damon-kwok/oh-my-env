@@ -345,7 +345,7 @@ cc_install_tools() {
             sudo apt install -y swig libcppunit-dev\
                  libssl-dev \
                  libmcrypt-dev libgcrypt-dev libscrypt-dev libxcrypt-dev \
-                 libcurl4-openssl-dev uuid-dev libncurses-dev \
+                 libcurl4-gnutls-dev libcurl4-openssl-dev uuid-dev libncurses-dev \
                  libxml2-dev libxslt-dev libexpat-dev libyaml-dev \
                  libffi-dev libreadline-dev gettext \
                  libevent-dev libpcre2-dev \

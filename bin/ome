@@ -375,6 +375,12 @@ ome_parse() {
         "new")
             app_wizard $ARG1 $ARG2
             ;;
+        "look")
+            xdg-open "https://www.erlang.org/downloads"
+            xdg-open "https://www.python.org/downloads/"
+            xdg-open "https://www.ruby-lang.org/en/downloads/"
+            xdg-open "http://php.net/downloads.php"
+            ;;
         "test")
             # spin
             echo -n -e "\033[?25l"  #隐藏光标
