@@ -1,0 +1,25 @@
+#!/usr/bin/env sh
+
+dale_install() {
+    github_upgrade tomhrr/dale $OME_CACHE/dale
+    mkdir -p $OME_CACHE/dale/build
+    cd $OME_CACHE/dale/build/
+
+    cmake .. -G "$OME_MAKE" \
+          -DCMAKE_INSTALL_PREFIX=$OME_PREFIX \
+          -DCMAKE_EXPORT_COMPILE_COMMANDS=1 \
+          -DCMAKE_CXX_STANDARD=11
+    cmake --build . --use-stderr --config Release --target install
+}
+
+dale_uninstall() {
+    echo_error "'dale_uninstall' not implemented"
+}
+
+dale_exist_p() {
+    echo_error "'dale_exist_p' not implemented"
+}
+
+dale_info() {
+    echo_error ""
+}
