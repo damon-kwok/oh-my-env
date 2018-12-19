@@ -65,6 +65,7 @@ ome_app_wizard() {
         "0"|"c"|"C"|"cc"|"CC")
             gen_cmake_file $proj_root
             cd $proj_root
+            gen_clang_format
             $EDITOR "CMakeLists.txt"
             ;;
         "1"|"c++"|"C++"|"cpp"|"CPP"|"cxx"|"CXX")

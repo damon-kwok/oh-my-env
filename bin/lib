@@ -343,32 +343,22 @@ auto_gen_cmake_file() {
         
         echo "" >> $proj_root/CMakeLists.txt
         echo "set(ROOT \${CMAKE_CURRENT_LIST_DIR})" >> $proj_root/CMakeLists.txt
+
         echo "" >> $proj_root/CMakeLists.txt
-        echo "# include_directories(\"\${ROOT}/Core/\")" >> $proj_root/CMakeLists.txt
-        echo "file(GLOB_RECURSE new_list *.h *.hh *.hpp *.hxx *.ipp)" >> $proj_root/CMakeLists.txt
-        echo "set(dir_list "")" >> $proj_root/CMakeLists.txt
-        echo "foreach(file_path ${new_list})" >> $proj_root/CMakeLists.txt
-        echo "  get_filename_component(dir_path ${file_path} PATH)" >> $proj_root/CMakeLists.txt
-        echo "  include_directories(${dir_path})" >> $proj_root/CMakeLists.txt
-        echo "  #message (STATUS ${dir_path})" >> $proj_root/CMakeLists.txt
-        echo "  set(dir_list "${dir_list}" "${dir_path}")" >> $proj_root/CMakeLists.txt
-        echo "endforeach()" >> $proj_root/CMakeLists.txt
+        echo "file(GLOB_RECURSE hdrs *.h *.hh *.hpp *.hxx *.ipp)" >> $proj_root/CMakeLists.txt
+        echo "# file(GLOB_RECURSE srcs \${ROOT}/src/*.c \${ROOT}/src/*.cc \${ROOT}/src/*.cxx \${ROOT}/src/*.ixx \${ROOT}/src/*.cpp \${ROOT}/src/*.m \${ROOT}/src/*.mm)" >> $proj_root/CMakeLists.txt
+
+        echo "" >> $proj_root/CMakeLists.txt
+        echo "# add_library(pro_a STATIC \${srcs})" >> $proj_root/CMakeLists.txt
+        echo "# add_library(pro SHARED \${srcs})" >> $proj_root/CMakeLists.txt
+        echo "# message(STATUS \${srcs})" >> $proj_root/CMakeLists.txt
         
         echo "" >> $proj_root/CMakeLists.txt
-        echo "file(GLOB_RECURSE example_srcs *.c *.cc *.cxx *.ixx *.cpp *.m *.mm)" >> $proj_root/CMakeLists.txt
-        echo "" >> $proj_root/CMakeLists.txt
-        echo "# target_sources(example PRIVATE \${example_srcs})" >> $proj_root/CMakeLists.txt
-        echo "# source_group(Source FILES \${example_srcs})" >> $proj_root/CMakeLists.txt
-        echo "" >> $proj_root/CMakeLists.txt
-
-        echo "add_library(pro_a STATIC \${example_srcs})" >> $proj_root/CMakeLists.txt
-        echo "# add_library(pro SHARED \${example_srcs})" >> $proj_root/CMakeLists.txt
-        echo "" >> $proj_root/CMakeLists.txt
-        echo "# add_executable(pro \${example_srcs})" >> $proj_root/CMakeLists.txt
-        echo "# target_link_libraries(pro pro_a)" >> $proj_root/CMakeLists.txt
+        echo "add_executable(main \${srcs} \${hdrs})" >> $proj_root/CMakeLists.txt
+        echo "target_link_libraries(main)" >> $proj_root/CMakeLists.txt
     fi
 
-    if [ ! -f "$proj_root/compile_commands.json" ]; then        
+    if [ ! -f "$proj_root/compile_commands.json" ]; then
         mkdir -p $proj_root/build
         cd $proj_root/build/
         cmake .. -DCMAKE_EXPORT_COMPILE_COMMANDS=YES
@@ -392,45 +382,7 @@ auto_gen_rtags() {
     fi
 
     cd $proj_root
-    # echo "auto_gen_rtags::rc:`pwd`"
     rc -J .
-}
-
-# smart_rtags $void
-gen_rtags_impl2() {    
-    local proj_root=$1
-    tip "gen_rtags_impl:$proj_root"
-    # if [ "/" != "$proj_root" ]; then
-    cd $proj_root
-    # if [ ! -d "$dir/rtags_indexes" ]; then
-    echo "$dir/rtags_indexes is creating..."
-    mkdir -p $proj_root/.rtags_indexes
-    cd $proj_root/.rtags_indexes/
-    cmake .. -DCMAKE_EXPORT_COMPILE_COMMANDS=1
-    rc -J .
-    cd ..
-    # else
-    # echo "$dir/rtags_indexes is exist!"
-    # fi
-    # fi
-}
-auto_gen_rtags2() {
-    local proj_root=`pwd`
-    # echo "check proj_root:$proj_root"
-    if [ -f "$proj_root/CMakeLists.txt" ]; then
-	    gen_rtags_impl $proj_root 
-    elif [ -f "$proj_root/build/CMakeLists.txt" ]; then
-	    gen_rtags_impl $proj_root/build
-    elif [ -f "$proj_root/Build/CMakeLists.txt" ]; then
-	    gen_rtags_impl
-    elif [ -f "$proj_root/cmake/CMakeLists.txt" ]; then
-	    gen_rtags_impl $proj_root/cmake
-    else
-	    cd ..
-	    if [ "/" != "$proj_root" ]; then
-	        auto_gen_rtags
-	    fi
-    fi
 }
 
 dns_upgrade() {
@@ -754,6 +706,73 @@ ome_dev_path() {
 
         export C_INCLUDE_PATH=$dir/include:$C_INCLUDE_PATH
         export CPLUS_INCLUDE_PATH=$dir/include:$CPLUS_INCLUDE_PATH
+    fi
+    cd $oldir
+}
+
+gen_clang_format() {
+    local oldir=`pwd`
+    if [ ! -e ./.clang-format ]; then
+        #echo "Language: Cpp" >> ./.clang-format
+        echo "# 基于哪个配置文件" >> ./.clang-format
+        echo "BasedOnStyle: LLVM" >> ./.clang-format
+        echo "# BreakBeforeBraces: Attach" >> ./.clang-format
+        echo "BreakBeforeBraces: Attach" >> ./.clang-format
+        echo "# 指针的*的挨着哪边" >> ./.clang-format
+        echo "PointerAlignment: Right" >> ./.clang-format
+        echo "# 缩进宽度" >> ./.clang-format
+        echo "IndentWidth: 4" >> ./.clang-format
+        echo "# tab的宽度" >> ./.clang-format
+        echo "TabWidth: 4" >> ./.clang-format
+        echo "# 使用Tab" >> ./.clang-format
+        echo "UseTab: Never" >> ./.clang-format
+        echo "# 行长度限制" >> ./.clang-format
+        echo "ColumnLimit: 80" >> ./.clang-format
+
+        echo "# 模板声明单独一行" >> ./.clang-format
+        echo "AlwaysBreakTemplateDeclarations: true" >> ./.clang-format
+        echo "# 连续的空行保留几行" >> ./.clang-format
+        echo "MaxEmptyLinesToKeep: 1" >> ./.clang-format
+        echo "# 在 @property 后面添加空格, @property (readonly) 而不是 @property(readonly)." >> ./.clang-format
+        echo "ObjCSpaceAfterProperty: true" >> ./.clang-format
+        echo "# OC block后面的缩进" >> ./.clang-format
+        echo "ObjCBlockIndentWidth: 4" >> ./.clang-format
+        echo "# 是否允许短方法单行" >> ./.clang-format
+        echo "AllowShortFunctionsOnASingleLine: true" >> ./.clang-format
+        echo "# 是否允许短if单行 If true, if (a) return; 可以放到同一行" >> ./.clang-format
+        echo "AllowShortIfStatementsOnASingleLine: true" >> ./.clang-format
+        echo "# 注释对齐" >> ./.clang-format
+        echo "AlignTrailingComments: true" >> ./.clang-format
+        echo "# 换行的时候对齐操作符" >> ./.clang-format
+        echo "# AlignOperands: true" >> ./.clang-format
+        echo "# 中括号两边空格 [] " >> ./.clang-format
+        echo "SpacesInSquareBrackets: false" >> ./.clang-format
+        echo "# 小括号两边添加空格" >> ./.clang-format
+        echo "SpacesInParentheses : false" >> ./.clang-format
+        echo "# 多行声明语句按照=对齐" >> ./.clang-format
+        echo "AlignConsecutiveDeclarations: true" >> ./.clang-format
+        echo "# 连续的赋值语句以 = 为中心对齐" >> ./.clang-format
+        echo "AlignConsecutiveAssignments: true" >> ./.clang-format
+        echo "# 等号两边的空格" >> ./.clang-format
+        echo "SpaceBeforeAssignmentOperators: true" >> ./.clang-format
+        echo "# 容器类的空格 例如 OC的字典" >> ./.clang-format
+        echo "SpacesInContainerLiterals: true" >> ./.clang-format
+        echo "# 缩进" >> ./.clang-format
+        echo "IndentWrappedFunctionNames: true" >> ./.clang-format
+        echo "# 在block从空行开始" >> ./.clang-format
+        echo "KeepEmptyLinesAtTheStartOfBlocks: true" >> ./.clang-format
+        echo "# 在构造函数初始化时按逗号断行，并以冒号对齐" >> ./.clang-format
+        echo "BreakConstructorInitializersBeforeComma: true" >> ./.clang-format
+        echo "# 函数参数换行" >> ./.clang-format
+        echo "AllowAllParametersOfDeclarationOnNextLine: true" >> ./.clang-format
+        echo "# 括号后添加空格" >> ./.clang-format
+        echo "SpaceAfterCStyleCast: true" >> ./.clang-format
+        
+        echo "" >> ./.clang-format
+        echo "---" >> ./.clang-format
+        echo "Language: JavaScript" >> ./.clang-format
+        echo "# Use 100 columns for JS." >> ./.clang-format
+        echo "ColumnLimit: 0" >> ./.clang-nformat
     fi
     cd $oldir
 }
