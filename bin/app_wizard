@@ -66,12 +66,16 @@ ome_app_wizard() {
             gen_cmake_file $proj_root
             cd $proj_root
             gen_clang_format
-            $EDITOR "CMakeLists.txt"
+            # $EDITOR "CMakeLists.txt"
+            mkdir -p src
+            $EDITOR "src/main.c"
             ;;
         "1"|"c++"|"C++"|"cpp"|"CPP"|"cxx"|"CXX")
             gen_cmake_file $proj_root
             cd $proj_root
-            $EDITOR "CMakeLists.txt"
+            # $EDITOR "CMakeLists.txt"
+            mkdir -p src
+            $EDITOR "src/main.cpp"
             ;;
         "2"|"clojure"|"clj"|"clojurescript"|"cls")
             ome_check_install "lein" "jvm"
@@ -109,7 +113,8 @@ ome_app_wizard() {
             # dep init
             # $EDITOR "Gopkg.toml"
             go mod init $proj_name
-            $EDITOR "go.mod"
+            # $EDITOR "go.mod"
+            $EDITOR "main.go"
             ;;
         "8"|"groovy")
             ome_check_install "gradle" "jvm"
