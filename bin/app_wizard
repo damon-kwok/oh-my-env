@@ -106,8 +106,10 @@ ome_app_wizard() {
             ome_check_install "go" "golang"
             mkdir -p $proj_root
             cd $proj_root
-            dep init
-            $EDITOR "Gopkg.toml"
+            # dep init
+            # $EDITOR "Gopkg.toml"
+            go mod init $proj_name
+            $EDITOR "go.mod"
             ;;
         "8"|"groovy")
             ome_check_install "gradle" "jvm"

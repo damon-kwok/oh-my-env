@@ -6,7 +6,9 @@ ocaml_install() {
         # Linux
         # $OS_DEBIAN) ;;
         # $OS_UBUNTU) ;;
-        $OS_DEBIAN|$OS_UBUNTU) ;;
+        $OS_DEBIAN|$OS_UBUNTU)
+            sudo apt install -y ocaml libcmdliner-ocaml-dev
+            ;;
         # $OS_REDHAT) ;;
         # $OS_FEDORA) ;;
         $OS_REDHAT|$OS_FEDORA) ;;

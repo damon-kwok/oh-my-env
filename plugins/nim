@@ -19,7 +19,9 @@ nim_exist_p() {
 }
 
 nim_info() {
-    echo_error ""
+    if [ "`command -v nim`" != "" ]; then
+        ome_info "Nim" "`ome_fetch_version nim` | `ome_fetch_version nimble`"
+    fi
 }
 
 # Nim-lang

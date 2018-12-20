@@ -62,7 +62,7 @@ cc_install_c_library() {
         # mkdir -p $PROJ_ROOT/c/libuv/build
         # cd $PROJ_ROOT/c/libuv/build/
         # cmake .. -G "$OME_MAKE" \
-	        # -DCMAKE_INSTALL_PREFIX=$OME_PREFIX
+            # -DCMAKE_INSTALL_PREFIX=$OME_PREFIX
         # cmake --build . --use-stderr --config Release --target install -- -j4
         cd $OME_CACHE/libuv/
         chmod +x ./autogen.sh
@@ -117,11 +117,11 @@ cc_install_cxx_library() {
 cc_install_clang_format() {
     pushd $HOME
     gen_clang_format
-    popd $HOME
+    popd
 }
 
 cc_install_clang_git() {
-        if [ "$OME_OS" = "$OS_MSYS2" ]; then
+    if [ "$OME_OS" = "$OS_MSYS2" ]; then
         msys2_llvm_install
     else
         local llvmdir=$OME_CACHE/llvm
@@ -143,26 +143,26 @@ cc_install_clang_git() {
         mkdir -p $llvmdir/../llvm_build
         cd $llvmdir/../llvm_build/
 
-	    tip "compile"
+        tip "compile"
         if [ "$OME_OS" = "$OS_MSYS2" ] || [ "$OME_OS" = "$OS_CYGWIN" ]; then
             cmake $llvmdir -G "$OME_MAKE" \
-	              -DCMAKE_INSTALL_PREFIX=$OME_PREFIX \
-		          -DCMAKE_BUILD_TYPE=Release \
+                  -DCMAKE_INSTALL_PREFIX=$OME_PREFIX \
+                  -DCMAKE_BUILD_TYPE=Release \
                   -DCMAKE_C_COMPILER=gcc \
                   -DCMAKE_CXX_COMPILER=g++ \
-	              -DCMAKE_CXX_STANDARD=14 \
-	              -DCMAKE_CXX_STANDARD_REQUIRED=OFF \
-	              -DCMAKE_CXX_EXTENSIONS=OFF \
+                  -DCMAKE_CXX_STANDARD=14 \
+                  -DCMAKE_CXX_STANDARD_REQUIRED=OFF \
+                  -DCMAKE_CXX_EXTENSIONS=OFF \
                   -DLLVM_TARGET_ARCH="host" \
                   -DLLVM_TARGETS_TO_BUILD="X86" \
                   -DLLVM_ENABLE_DOXYGEN=ON \
                   -DLLVM_ENABLE_SPHINX=ON \
                   -DLLVM_BUILD_LLVM_DYLIB=ON \
                   -DLLVM_OPTIMIZED_TABLEGEN=ON \
-	              -DLLVM_INCLUDE_TESTS=OFF
+                  -DLLVM_INCLUDE_TESTS=OFF
         else
             cmake $llvmdir -G "$OME_MAKE" \
-	              -DCMAKE_INSTALL_PREFIX=$OME_PREFIX \
+                  -DCMAKE_INSTALL_PREFIX=$OME_PREFIX \
                   -DCMAKE_BUILD_TYPE=Release \
                   -DLLVM_TARGET_ARCH="host" \
                   -DLLVM_TARGETS_TO_BUILD="X86" \
@@ -170,18 +170,18 @@ cc_install_clang_git() {
                   -DLLVM_ENABLE_SPHINX=ON \
                   -DLLVM_BUILD_LLVM_DYLIB=ON \
                   -DLLVM_OPTIMIZED_TABLEGEN=ON \
-	              -DLLVM_INCLUDE_TESTS=OFF
+                  -DLLVM_INCLUDE_TESTS=OFF
         fi
 
         cmake --build . --use-stderr --config Release --target install -- -j4
 
         # cd $llvmdir/../libcxx/
         # cmake $llvmdir/projects/libcxx -G "$OME_MAKE" \
-              # -DCMAKE_INSTALL_PREFIX=$OME_PREFIX \
-              # -DCMAKE_BUILD_TYPE=Release \
-              # -DLLVM_PATH=path/to/llvm \
-              # -DLIBCXX_CXX_ABI=libcxxabi \
-              # -DLIBCXX_CXX_ABI_INCLUDE_PATHS="$llvmdir/projects/libcxxabi/include"
+            # -DCMAKE_INSTALL_PREFIX=$OME_PREFIX \
+            # -DCMAKE_BUILD_TYPE=Release \
+            # -DLLVM_PATH=path/to/llvm \
+            # -DLIBCXX_CXX_ABI=libcxxabi \
+            # -DLIBCXX_CXX_ABI_INCLUDE_PATHS="$llvmdir/projects/libcxxabi/include"
         # ninja -j4
         # ninja install
     fi
@@ -221,7 +221,7 @@ cc_install_clang_bin() {
         # Unix
         $OS_MACOS)
             brew install llvm-devel clang-devel clang-format \
-                libc++-devel libc++abi-devel
+                 libc++-devel libc++abi-devel
             ;;
         $OS_AIX) ;;
         $OS_SOLARIS) ;;
@@ -231,8 +231,8 @@ cc_install_clang_bin() {
             local tmp2=`which clang-format-devel`
             sudo cp -rf $tmp1 `dirname $tmp1`/clangd
             sudo cp -rf $tmp2 `dirname $tmp2`/clang-format
-				#clang-format
-				#libc++-devel libc++abi-devel
+            #clang-format
+            #libc++-devel libc++abi-devel
             ;;
         $OS_OPENBSD) ;;
         $OS_NETBSD) ;;
@@ -243,16 +243,16 @@ cc_install_clang_bin() {
             ;;
         $OS_MSYS2)
             pacman -S mingw-w64-x86_64-llvm \
-               mingw-w64-x86_64-clang \
-               mingw-w64-x86_64-clang-analyzer \
-               mingw-w64-x86_64-clang-tools-extra \
-               mingw-w64-x86_64-compiler-rt \
-               mingw-w64-x86_64-lld \
-               mingw-w64-x86_64-polly \
-               mingw-w64-x86_64-compiler-rt \
-               mingw-w64-x86_64-libblocksruntime \
-               mingw-w64-x86_64-libc++ \
-               mingw-w64-x86_64-libc++abi
+                   mingw-w64-x86_64-clang \
+                   mingw-w64-x86_64-clang-analyzer \
+                   mingw-w64-x86_64-clang-tools-extra \
+                   mingw-w64-x86_64-compiler-rt \
+                   mingw-w64-x86_64-lld \
+                   mingw-w64-x86_64-polly \
+                   mingw-w64-x86_64-compiler-rt \
+                   mingw-w64-x86_64-libblocksruntime \
+                   mingw-w64-x86_64-libc++ \
+                   mingw-w64-x86_64-libc++abi
             ;;
         # Other
         $OS_UNKNOW) ;;
@@ -270,14 +270,14 @@ cc_install_tools() {
             #libcrypt-dev #libpcre-dev #libiconv-dev libautotrace-dev
             #bzip2-dev
             tip "install base devel tool"
-	        sudo apt install -y tar zip unzip coreutils diffutils \
+            sudo apt install -y tar zip unzip coreutils diffutils \
                  build-essential \
                  make ninja-build cmake \
                  automake autogen autoconf autopoint \
                  pkg-config libtool intltool libtool-bin
 
             readp "install doc tools?"
-		    if [ $? -eq 1 ]; then
+            if [ $? -eq 1 ]; then
                 sudo apt install texinfo doxygen fop asciidoc xmlto docbook2x imagemagick ghostscript
             fi
 
@@ -298,24 +298,28 @@ cc_install_tools() {
                  ruby-dev tcl-dev
             
             # AutoTrace
-            sudo apt install -y libmagickcore-dev libpstoedit-dev libgif-dev
-            github_upgrade libming/libming $OME_CACHE/libming
-            cd $OME_CACHE/libming/
-            ./autogen.sh
-            ./configure --prefix=$OME_PREFIX
-            # --enable-cpp \
-                # --enable-python \
-                # --enable-perl \
-                # --enable-php
-            # --enable-tcl
-            # make test
-	        make install
-            
-            github_upgrade autotrace/autotrace $OME_CACHE/autotrace
-            cd $OME_CACHE/autotrace/
-            ./autogen.sh
-            ./configure --prefix=$OME_PREFIX
-	        make
+            readp "install AutoTrace?"
+            if [ $? -eq 1 ]; then
+                
+                sudo apt install -y libmagickcore-dev libpstoedit-dev libgif-dev
+                github_upgrade libming/libming $OME_CACHE/libming
+                cd $OME_CACHE/libming/
+                ./autogen.sh
+                ./configure --prefix=$OME_PREFIX
+                # --enable-cpp \
+                    # --enable-python \
+                    # --enable-perl \
+                    # --enable-php
+                # --enable-tcl
+                # make test
+                make install
+                
+                github_upgrade autotrace/autotrace $OME_CACHE/autotrace
+                cd $OME_CACHE/autotrace/
+                ./autogen.sh
+                ./configure --prefix=$OME_PREFIX
+                make
+            fi
             ;;
         # $OS_REDHAT) ;;
         # $OS_FEDORA) ;;
@@ -326,7 +330,7 @@ cc_install_tools() {
                  emacs gcc gcc-c++
 
             readp "install doc tools?"
-		    if [ $? -eq 1 ]; then
+            if [ $? -eq 1 ]; then
                 sudo yum install texinfo doxygen fop asciidoc xmlto docbook2x ImageMagick ghostscript
             fi
             
@@ -348,19 +352,19 @@ cc_install_tools() {
                    pkg-config libtool intltool
 
             readp "install doc tools?"
-		    if [ $? -eq 1 ]; then
+            if [ $? -eq 1 ]; then
                 sudo pacman -S texinfo doxygen fop asciidoc xmlto docbook2x imagemagick ghostscript
             fi
             trizen -S swig cppunit \
-                 openssl libgcrypt libmcrypt \
-                 curl libutil-linux ncurses \
-                 libxml2 libxslt expat libyaml \
-                 libffi readline gettext \
-                 libevent pcre pcre2 \
-                 libiconv libedit potrace \
-                 bison icu tidy \
-                 zlib libzip bzip2 lz4 xz \
-                 valgrind libatomic_ops re2c
+                   openssl libgcrypt libmcrypt \
+                   curl libutil-linux ncurses \
+                   libxml2 libxslt expat libyaml \
+                   libffi readline gettext \
+                   libevent pcre pcre2 \
+                   libiconv libedit potrace \
+                   bison icu tidy \
+                   zlib libzip bzip2 lz4 xz \
+                   valgrind libatomic_ops re2c
             ;;
         $OS_GENTOO) ;;
         $OS_SUSE)
@@ -372,7 +376,7 @@ cc_install_tools() {
                  automake autogen autoconf autopoint \
                  pkg-config libtool intltool
             readp "install doc tools?"
-		    if [ $? -eq 1 ]; then
+            if [ $? -eq 1 ]; then
                 sudo zypper install texinfo doxygen fop asciidoc xmlto docbook2X imagemagick ghostscript
             fi
             sudo zypper install swig cppunit \
@@ -404,7 +408,7 @@ cc_install_tools() {
                  automake autogen autoconf pkgconf libtool intltool \
                  gmake gcc clang-devel zh-font-std bitstream-vera emacs
             readp "install doc tools?"
-		    if [ $? -eq 1 ]; then
+            if [ $? -eq 1 ]; then
                 sudo pkg install texinfo doxygen fop asciidoc xmlto docbook2X imagemagick ghostscript
             fi
             sudo pkg install swig30 cppunit \
@@ -427,7 +431,7 @@ cc_install_tools() {
                 automake autogen autoconf autopoint pkg-config libtool intltool
 
             readp "install doc tools?"
-		    if [ $? -eq 1 ]; then
+            if [ $? -eq 1 ]; then
                 apt install texinfo doxygen fop asciidoc xmlto docbook2X imagemagick ghostscript
             fi
             
@@ -456,14 +460,14 @@ cc_install_tools() {
         $OS_MSYS2)
             pacman -S make ninja \
                    automake autogen autoconf autopoint pkg-config libtool intltool \
-	               mingw-w64-x86_64-cmake mingw-w64-x86_64-ninja \
-	               mingw-w64-x86_64-gcc mingw-w64-x86_64-nasm \
+                   mingw-w64-x86_64-cmake mingw-w64-x86_64-ninja \
+                   mingw-w64-x86_64-gcc mingw-w64-x86_64-nasm \
                    mingw-w64-x86_64-python2 mingw-w64-x86_64-python2-pip \
-	               mingw-w64-x86_64-python3 mingw-w64-x86_64-python3-pip \
-	               mingw-w64-x86_64-emacs mingw-w64-x86_64-ttf-dejavu
+                   mingw-w64-x86_64-python3 mingw-w64-x86_64-python3-pip \
+                   mingw-w64-x86_64-emacs mingw-w64-x86_64-ttf-dejavu
 
             readp "install doc tools?"
-		    if [ $? -eq 1 ]; then
+            if [ $? -eq 1 ]; then
                 pacman -S texinfo doxygen fop asciidoc xmlto docbook2X imagemagick ghostscript
             fi
             pacman -S swig cppunit \

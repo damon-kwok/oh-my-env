@@ -17,6 +17,28 @@ gitlab_go_get() {
     gitlab_upgrade $1 $HOME/goprojects/src/gitlab.com/$1
     go get -u gitlab.com/$1
 }
+
+export GOLANG_VERSION=1.11.4
+
+golang_src_download_zip() {
+    local zipkg="go${GOLANG_VERSION}.src.tar.gz"
+    echo "zipkg:$zipkg"
+    mkdir -p $HOME/Downloads
+    cd $HOME/Downloads/
+    if [ ! -f $HOME/Downloads/$zipkg ]; then
+        wget https://dl.google.com/go/$zipkg
+    fi
+    if [ ! -d $OME_CACHE/go ]; then
+        tar xvzf $zipkg -C $OME_CACHE/
+    fi
+}
+
+golang_src_download_git() {
+    tip "compile golang-git:master"
+    github_upgrade golang/go $OME_CACHE/go
+    cd $OME_CACHE/go/src
+}
+
 golang_install() {
     if [ "$OME_OS" = "$OS_MSYS2" ] || [ "$OME_OS" = "$OS_CYGWIN" ]; then
         if [ ! -f $OME_CACHE/go/bin/go ]; then
@@ -66,12 +88,12 @@ golang_install() {
             cd $OME_CACHE/go_bootstrap/go/src
             if [ "$OME_OS" = "$OS_MSYS2" ] || [ "$OME_OS" = "$OS_CYGWIN" ]; then
                 chmod +x ./make.bat
-			    ./make.bat
-		    else
-			    chmod +x ./*.bash
-			    # ./all.bash
-			    ./make.bash
-		    fi
+                ./make.bat
+            else
+                chmod +x ./*.bash
+                # ./all.bash
+                ./make.bash
+            fi
         fi
 
         tip "set GOROOT_BOOTSTRAP"
@@ -79,18 +101,19 @@ golang_install() {
         unset GOROOT
         unset GOROOT_FINAL
 
-        tip "compile golang-git:master"
-        github_upgrade golang/go $OME_CACHE/go
-        cd $OME_CACHE/go/src
-	    
-	    if [ "$OME_OS" = "$OS_MSYS2" ] || [ "$OME_OS" = "$OS_CYGWIN" ]; then
+        tip "compile golang-$GOLANG_VERSION"
+        # golang_src_download_git
+        golang_src_download_zip
+        cd $OME_CACHE/go/src/
+        
+        if [ "$OME_OS" = "$OS_MSYS2" ] || [ "$OME_OS" = "$OS_CYGWIN" ]; then
             chmod +x ./make.bat
-		    ./make.bat
-	    else
-		    chmod +x ./*.bash
-		    # ./all.bash
-		    ./make.bash
-	    fi
+            ./make.bat
+        else
+            chmod +x ./*.bash
+            # ./all.bash
+            ./make.bash
+        fi
 
         # set golang env
         #{
@@ -99,8 +122,8 @@ golang_install() {
         export GOPATH=$HOME/goprojects
         export GOBIN=$GOPATH/bin
         export PATH=$GOROOT/bin:$GOBIN:$PATH
-        #}        
-      
+        #}
+        
     fi
 
     

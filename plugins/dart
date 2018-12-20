@@ -1,0 +1,18 @@
+#!/usr/bin/env sh
+
+dart_install() {
+    tip "install dart language server"
+    pub global activate dart_language_server
+}
+
+dart_uninstall() {
+    echo_error "'dart_uninstall' not implemented"
+}
+
+dart_exist_p() {
+    echo_error "'dart_exist_p' not implemented"
+}
+
+dart_info() {
+    echo_error ""
+}
