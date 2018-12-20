@@ -42,7 +42,7 @@ golang_src_download_git() {
 golang_install() {
     if [ "$OME_OS" = "$OS_MSYS2" ] || [ "$OME_OS" = "$OS_CYGWIN" ]; then
         if [ ! -f $OME_CACHE/go/bin/go ]; then
-            local zipkg=go1.11.1.windows-amd64.zip
+            local zipkg=go${GOLANG_VERSION}.windows-amd64.zip
             mkdir -p ~/Downloads
             cd ~/Downloads/
             if [ ! -f $HOME/Downloads/$zipkg ]; then
