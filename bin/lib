@@ -301,6 +301,7 @@ replace_str() {
 
 auto_gen_cmake_file() {
     if [ "$1" != "" ]; then
+        mkdir -p $1
         cd $1
     fi
     local proj_root=`pwd`
@@ -358,12 +359,15 @@ auto_gen_cmake_file() {
         echo "target_link_libraries(main)" >> $proj_root/CMakeLists.txt
     fi
 
+    # if [ ! -f "$proj_root/compile_commands.json" ]; then
+        # mkdir -p $proj_root/build
+        # cd $proj_root/build/
+        # cmake .. -DCMAKE_EXPORT_COMPILE_COMMANDS=YES
+        # cd ..
+        # ln -s build/compile_commands.json
+    # fi
     if [ ! -f "$proj_root/compile_commands.json" ]; then
-        mkdir -p $proj_root/build
-        cd $proj_root/build/
-        cmake .. -DCMAKE_EXPORT_COMPILE_COMMANDS=YES
-        cd ..
-        ln -s build/compile_commands.json
+        cmake_build $proj_root
     fi
 }
 

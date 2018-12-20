@@ -1,5 +1,7 @@
 #!/usr/bin/env sh
 
+. $HOME/.oh-my-env/env
+
 ome_cmake_build() {
     local oldir=`pwd`
     if [ -n $1 ]; then
@@ -17,6 +19,8 @@ ome_cmake_build() {
               -DCMAKE_EXPORT_COMPILE_COMMANDS=1 \
               -DCMAKE_CXX_STANDARD=11
         cmake --build . --use-stderr --config Release #--target install
+        cd ..
+        ln -s build/compile_commands.json
     else
         echo "'CMakeLists.txt' not found!"
     fi

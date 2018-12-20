@@ -199,7 +199,6 @@ ome_app_wizard() {
             echo '# Print a message.' >> ${proj_name}.pl
             echo 'print "Hello, World!\n";' >> ${proj_name}.pl
             chmod +x ./${proj_name}.pl
-            git init
             $EDITOR "${proj_name}.pl"
             ;;
         "18"|"php"|"composer")
@@ -219,14 +218,12 @@ ome_app_wizard() {
             ome_check_install "poetry" "python"
             poetry new $proj_name
             cd $proj_root
-            git init
             $EDITOR "pyproject.toml"
             ;;
         "21"|"hatch")
             ome_check_install "hatch" "python"
             hatch new $proj_name
             cd $proj_root
-            git init
             $EDITOR "pyproject.toml"
             ;;
         "22"|"reason"|"re")
