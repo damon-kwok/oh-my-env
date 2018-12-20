@@ -278,6 +278,7 @@ ome_app_wizard() {
     cd $proj_ws
     if [ -d "$proj_root" ]; then
         cd $proj_root
+        git init
         ls
     fi
 

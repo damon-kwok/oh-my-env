@@ -346,7 +346,7 @@ auto_gen_cmake_file() {
 
         echo "" >> $proj_root/CMakeLists.txt
         echo "file(GLOB_RECURSE hdrs *.h *.hh *.hpp *.hxx *.ipp)" >> $proj_root/CMakeLists.txt
-        echo "# file(GLOB_RECURSE srcs \${ROOT}/src/*.c \${ROOT}/src/*.cc \${ROOT}/src/*.cxx \${ROOT}/src/*.ixx \${ROOT}/src/*.cpp \${ROOT}/src/*.m \${ROOT}/src/*.mm)" >> $proj_root/CMakeLists.txt
+        echo "file(GLOB_RECURSE srcs \${ROOT}/src/*.c \${ROOT}/src/*.cc \${ROOT}/src/*.cxx \${ROOT}/src/*.ixx \${ROOT}/src/*.cpp \${ROOT}/src/*.m \${ROOT}/src/*.mm)" >> $proj_root/CMakeLists.txt
 
         echo "" >> $proj_root/CMakeLists.txt
         echo "# add_library(pro_a STATIC \${srcs})" >> $proj_root/CMakeLists.txt
