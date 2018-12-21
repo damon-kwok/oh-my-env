@@ -3,4 +3,4 @@
 # . /opt/ros/kinetic/setup.bash
 . $HOME/.oh-my-env/env
 
-auto_gen_rtags $1
+ome_gen_rtags $1

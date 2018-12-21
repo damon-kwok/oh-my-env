@@ -16,4 +16,4 @@
 #    echo "}" >> $srcfile
 #fi
 
-auto_gen_cmake_file $1 1
+ome_gen_cmake_file $1 1

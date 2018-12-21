@@ -284,22 +284,47 @@ replace_str() {
     fi
 }
 
-# cmake_build() {
-#     local oldir=`pwd`
+ome_cmake_build() {
+    local oldir=`pwd`
+    if [ -n $1 ]; then
+        cd $1
+    fi
 
-#     local dir="$1"
-#     tip "cmake_build:$1"
-#     mkdir -p $dir/build
-#     cd $dir/build
-#     cmake $dir -G "$MAKE_TYPE" \
-    # 	      -DCMAKE_INSTALL_PREFIX=$OME_PREFIX \
-    #           -DCMAKE_BUILD_TYPE=Release
-#     cmake --build . --use-stderr --config Release --target install -- -j4
+    local proj_root=`pwd`
+    if [ -f "$proj_root/CMakeLists.txt" ]; then
+        echo $proj_root
+        mkdir -p $proj_root/build
+        cd $proj_root/build/
 
-#     cd $oldir
-# }
+        cmake .. -G "$OME_MAKE" \
+              -DCMAKE_INSTALL_PREFIX=$OME_PREFIX \
+              -DCMAKE_EXPORT_COMPILE_COMMANDS=1 \
+              -DCMAKE_CXX_STANDARD=11
+        cmake --build . --use-stderr --config Release #--target install
+        cd ..
+        rm -rf ./compile_commands.json
+        ln -s build/compile_commands.json
+    else
+        echo "'CMakeLists.txt' not found!"
+    fi
+    cd $oldir
+}
 
-auto_gen_cmake_file() {
+ome_gen_rtags() {
+    if [ "$1" != "" ]; then
+        cd $1
+    fi
+    local proj_root=`pwd`
+    echo "ome_gen_rtags:$proj_root"
+    if [ ! -f "$proj_root/compile_commands.json" ]; then        
+        ome_gen_cmake_file $proj_root
+    fi
+
+    cd $proj_root
+    rc -J .
+}
+
+ome_gen_cmake_file() {
     if [ "$1" != "" ]; then
         mkdir -p $1
         cd $1
@@ -365,29 +390,16 @@ auto_gen_cmake_file() {
         # cd $proj_root/build/
         # cmake .. -DCMAKE_EXPORT_COMPILE_COMMANDS=YES
         # cd ..
+        # rm -rf ./compile_commands.json
         # ln -s build/compile_commands.json
     # fi
     if [ ! -f "$proj_root/compile_commands.json" ] && [ "$disable_compile" = "" ]; then
-        cmake_build $proj_root
+        ome_cmake_build $proj_root
     fi
 }
 
 cmake_export_commands() {
     cmake .. -DCMAKE_EXPORT_COMPILE_COMMANDS=YES
-}
-
-auto_gen_rtags() {
-    if [ "$1" != "" ]; then
-        cd $1
-    fi
-    local proj_root=`pwd`
-    echo "auto_gen_rtags:$proj_root"
-    if [ ! -f "$proj_root/compile_commands.json" ]; then        
-        auto_gen_cmake_file $proj_root
-    fi
-
-    cd $proj_root
-    rc -J .
 }
 
 dns_upgrade() {
