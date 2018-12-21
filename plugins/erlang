@@ -9,34 +9,26 @@ erlang_install_git() {
     ./configure --prefix=$OME_PREFIX
     make install
 
-    tip "install rebar3 for erlang"
-    # cd $OME_PREFIX/bin/
-    # wget https://s3.amazonaws.com/rebar3/rebar3 && chmod +x rebar3
     
-    cd $OME_ROOT/bin/
-    chmod +x ./rebar3
-    get_os_type
-    case $OME_OS in
-        $OS_UNKNOW) ;;
-        $OS_MACOS)
-            brew install openssl
-            ;;
-        $OS_CYGWIN) ;;
-        $OS_MSYS2) ;;
-        $OS_ARCH)
-            sudo pacman -S libssl-devel
-            ;;
-        $OS_DEBIAN|$OS_UBUNTU)
-            sudo apt install libssl-dev
-            ;;
-        $OS_REDHAT|$OS_FEDORA)
-            sudo yum install openssl-devel
-            ;;
-        $OS_FREEBSD) ;;
-    esac
-    # rebar3 local upgrade DEBUG=1
-    rebar3 update
-    rebar3 upgrade
+    # get_os_type
+    # case $OME_OS in
+        # $OS_UNKNOW) ;;
+        # $OS_MACOS)
+            # brew install openssl
+            # ;;
+        # $OS_CYGWIN) ;;
+        # $OS_MSYS2) ;;
+        # $OS_ARCH)
+            # sudo pacman -S libssl-devel
+            # ;;
+        # $OS_DEBIAN|$OS_UBUNTU)
+            # sudo apt install libssl-dev
+            # ;;
+        # $OS_REDHAT|$OS_FEDORA)
+            # sudo yum install openssl-devel
+            # ;;
+        # $OS_FREEBSD) ;;
+    # esac
 }
 
 erlang_install_zip() {
@@ -107,6 +99,28 @@ erlang_install() {
     # erlang_install_git
     # erlang_install_zip
     erlang_install_kerl
+
+    # tip "install rebar3 for erlang(download)"
+    # cd $OME_PREFIX/bin/
+    # wget https://s3.amazonaws.com/rebar3/rebar3 && chmod +x rebar3
+    # rebar3 local upgrade DEBUG=1
+    # cd $OME_ROOT/bin/
+    # chmod +x ./rebar3
+
+    tip "install rebar3 for erlang(git)"
+    github_upgrade erlang/rebar3 $OME_CACHE/rebar3
+    cd $OME_CACHE/rebar3/
+    chmod +x ./bootstrap
+    ./bootstrap
+    cp -rf ./rebar3 $OME_PREFIX/bin/
+    chmod +x $OME_PREFIX/bin/rebar3
+
+    tip "rebar3 local upgrade"
+    rebar3 local upgrade DEBUG=1
+    tip "rebar3 update"
+    rebar3 update
+    tip "rebar3 upgrade"
+    rebar3 upgrade
 }
 
 erlang_uninstall() {
@@ -119,6 +133,7 @@ erlang_exist_p() {
 
 erlang_info() {
     echo ""
+    # ome_info "Erlang" "`ome_fetch_version rebar3`"
 }
 
 ERLANG_VERSION=21.2

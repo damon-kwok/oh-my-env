@@ -16,7 +16,6 @@ elixir_exist_p() {
 }
 
 elixir_info() {
-    # ome_info "Elixir" "`ome_fetch_version elixir`"
     if [ "`command -v elixir`" != "" ]; then
         ome_info "Erlang" "`elixir --version 2>&1 | head -n 1 | cut -d ' ' -f 1-3`"
         ome_info "Elixir" "`elixir --version 2>&1 | tail -n 1 | cut -d ' ' -f 1-3`"        
