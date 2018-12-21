@@ -8,7 +8,7 @@ CURRENT_DIR=$(dirname $(readlink -f $0))
 ################################################################################
 run_emacs() {
     if [ ! -f $HOME/.emacs ]; then
-	    link_init_el
+        link_init_el
     fi
 
     emacs --debug-init
@@ -17,7 +17,7 @@ run_emacs() {
 
 run_emacs_nw() {
     if [ ! -f $HOME/.emacs ]; then
-	    link_init_el
+        link_init_el
     fi
 
     emacs -nw --debug-init
@@ -35,11 +35,11 @@ link_init_el() {
     mkdir -p $bkdir
 
     if [ -e $HOME/.emacs ]; then
-	    mv $HOME/.emacs $bkdir
+        mv $HOME/.emacs $bkdir
     fi
 
     if [ -e $HOME/emacs-config ]; then
-	    mv $HOME/emacs-config $bkdir
+        mv $HOME/emacs-config $bkdir
     fi
 
     tip "link .emacs"
@@ -47,164 +47,11 @@ link_init_el() {
     ln -s $OME_ROOT/emacs-config $HOME/emacs-config 
 }
 
-ask_repl() {
-    echo ""
-    tip "what do you need?"
-    echo "    1) clojure"
-    echo "    2) haskell"
-    echo "    3) elixir"
-    echo "    4) erlang"
-    echo "    -------------------------"
-    echo "    r) return"
-
-    read -p "please enter your choice:" item
-    case $item in
-	    1) echo abort with "^C | ^D | (exit) | (quit)" && lein repl;;
-	    2) echo abort with "^D :quit" && stack repl;;
-	    3) echo abort with "^C" && iex;;
-	    4) echo abort with "^C | ^G | q()." && erl;;
-	    r | R) ask_menu;;
-	    *) ask_repl;;
-    esac
-}
-
-toolchain_menu() {
-    cd $OME_ROOT
-
-    # echo "=============================="
-    tip "what do you need?"
-    echo "    0) base-devel"
-    echo "    --------------------------"
-    echo "    1) Python"
-    echo "    2) Nodejs"
-    echo "    3) Rust"
-    echo "    c) C&C++"
-    echo "    4) JVM"
-    echo "    5) .net"
-    echo "    6) Golang"
-    echo "    7) Erlang/Elixir"
-    echo "    8) Nim"
-    echo "    9) CommonLisp"
-    echo "    a) Crystal"
-    echo "    --------------------------"
-    echo "    e) Emacs"
-    echo "    m) mu4e"
-    echo "    --------------------------"
-    echo "    r) return"
-    echo "    q) quit"
-
-    cd $OME_ROOT
-    read -p "please enter your choice:" item
-    case $item in
-        0)
-            basedevel_install
-            toolchain_install
-            ;;
-        1) python_install;;
-        2) n_install;;
-        3) rust_install;;
-        c|C)
-            cmake_install
-            llvm_install
-            cquery_install;;
-        4) jvm_install;;
-        5) mono_install;;
-        6) golang_install;;
-        7)
-            erlang_install
-            elixir_install;;
-        8) nim_install;;
-        9) cl_install;;
-        a) crystal_install;;
-        e) emacs_install;;
-        m) mu4e_install;;
-        r) ask_menu;;
-        q) exit;;
-    esac
-    toolchain_menu
-}
-
 new_project() {
     local lang=$1
     if [ "$lang" = ""]; then
         echo "123"
     fi
-}
-
-ome_help() {
-    echo "$OME_VERSION"
-    echo ""
-    echo "Usage: ome [OPTION]..."
-    echo "init                           first run initialization"
-    echo "install [plugin_name]          install plugin"
-    echo "uninstall [plugin_name]        uninstall plugin"
-    echo "list                           list all plugins"
-    echo "update, pull                   self update"
-    echo "commit, push                   commit your modify content"
-    echo "status                         lookup your modify content"
-    echo "new [language] [project_name]  create project"
-    echo "show                           output version information"
-    echo "help                           display this help and exit"
-}
-
-ask_menu() {
-    cd $OME_ROOT
-    tip "hello $USER, what's up?"
-    #echo "ask_menu"
-    # echo "    0) ask_blog"
-    # echo "=============================="
-    echo "    1) pull"
-    echo "    2) push"
-    # echo "    2) getapp"
-    # echo "    3) pushapp"
-    # echo "    4) zipapp"
-    # echo "    5) unzipapp"
-    # echo "    b) install basedevel"
-    echo "    i) install toolchain"
-    echo "    g) git config"
-    echo "    e) emacs"
-    echo "    n) emacs_nw"
-    # echo "    c) complie_elc"
-    echo "    l) link init.el"
-    echo "    d) delete_elc"
-    echo "    --------------------------"
-    echo "    r) return"
-    echo "    s) shell"
-    echo "    z) REPL"
-    echo "    q) quit"
-
-    cd $OME_ROOT
-    read -p "please enter your choice:" item
-    case $item in
-	    1)
-	        git_pull
-	        . $HOME/.bashrc
-	        ;;
-	    2) git_push;;
-	    3) git_push_a;;
-	    # 2) getapp;;
-	    # 3) pushapp;;
-	    # 4) zipapp;;
-	    # 5) unzipapp;;
-	    # b|B) basedevel_install;;
-	    i|I) toolchain_menu;;
-	    g|G) ome_config;;
-	    e|E) run_emacs;;
-	    n|N) run_emacs_nw;;
-	    c|C) compile_elc;;
-	    l|L) link_init_el;;
-	    d|D) delete_elc;;
-	    s|S) sh;;
-	    z|Z) ask_repl;;
-	    q|Q) exit;;
-	    *) ask_menu;;	    
-    esac
-    ask_menu
-}
-
-ome_doctor() {
-    title "ome doctor"
-    tip "check PATH"
 }
 
 ome_config() {
@@ -220,7 +67,7 @@ ome_config() {
     # libtool --finish $OME_PREFIX/lib
     
     tip "git config"
-	git config --global core.editor "em"
+    git config --global core.editor "em"
     git config --global core.autocrlf false
     git config --global core.safecrlf false
     git config --global core.safecrlf warn
@@ -229,14 +76,14 @@ ome_config() {
     git config --global user.name "damon-kwok"
     
     git config --global color.ui true
-	
-	git config --global merge.tool emerge
-	git config --global mergetool.diffmerge.cmd "emerge \$LOCAL \$BASE \$REMOTE \$MERGED"
-	git config --global mergetool.keepBackup false
+    
+    git config --global merge.tool emerge
+    git config --global mergetool.diffmerge.cmd "emerge \$LOCAL \$BASE \$REMOTE \$MERGED"
+    git config --global mergetool.keepBackup false
 
-	git config --global diff.tool ediff
-	git config --global difftool.ediff.cmd "ediff \"\$LOCAL\" \"\$REMOTE\""
-	git config --global difftool.prompt false
+    git config --global diff.tool ediff
+    git config --global difftool.ediff.cmd "ediff \"\$LOCAL\" \"\$REMOTE\""
+    git config --global difftool.prompt false
 }
 
 ome_package_list() {
@@ -291,7 +138,7 @@ ome_package_list() {
     local olddir=`pwd`
     # tip "package list:"
     # for plugin in $HOME/.oh-my-env/plugins/* ; do
-        # echo_success `basename $plugin`
+    # echo_success `basename $plugin`
     # done
 
     cd $HOME/.oh-my-env/plugins/
@@ -318,15 +165,60 @@ ome_eval() {
 
     if [ -f "$OME_ROOT/plugins/$OME_OS/$PLUGIN" ]; then
         . "$OME_ROOT/plugins/$OME_OS/$PLUGIN"
-	    #echo "eval $EVAL"
+        #echo "eval $EVAL"
         eval "$EVAL"
     elif [ -f "$OME_ROOT/plugins/$PLUGIN" ]; then
         . "$OME_ROOT/plugins/$PLUGIN"
-	    #echo "eval $EVAL"
+        #echo "eval $EVAL"
         eval "$EVAL"
     else
         echo_error "$PLUGIN is not exist!"
     fi
+}
+
+ome_repl() {
+    echo ""
+    tip "what do you need?"
+    echo "    1) clojure"
+    echo "    2) haskell"
+    echo "    3) elixir"
+    echo "    4) erlang"
+    echo "    -------------------------"
+    echo "    r) return"
+
+    read -p "please enter your choice:" item
+    case $item in
+        1) echo abort with "^C | ^D | (exit) | (quit)" && lein repl;;
+        2) echo abort with "^D :quit" && stack repl;;
+        3) echo abort with "^C" && iex;;
+        4) echo abort with "^C | ^G | q()." && erl;;
+        q) exit;;
+        *) ask_repl;;
+    esac
+}
+
+ome_doctor() {
+    title "ome doctor"
+    tip "check PATH"
+}
+
+ome_help() {
+    echo "$OME_VERSION"
+    echo ""
+    echo "Usage: ome [OPTION]..."
+    echo "config                         ome base config"
+    echo "doctor                         ceheck ome config"
+    echo "repl                           show REPL menu"
+    echo "init                           first run initialization"
+    echo "install   [plugin_name]        install plugin"
+    echo "uninstall [plugin_name]        uninstall plugin"
+    echo "list                           list all plugins"
+    echo "update, pull                   self update"
+    echo "commit, push                   commit your modify content"
+    echo "status                         lookup your modify content"
+    echo "new [language] [project_name]  create project"
+    echo "show                           output version information"
+    echo "help                           display this help and exit"
 }
 
 ome_parse() {
@@ -355,8 +247,8 @@ ome_parse() {
                 ome_eval "uninstall" $ARG1
             fi
             ;;
-        "menu")
-            ask_menu;;
+        "repl")
+            ome_repl;;
         "list")
             ome_package_list
             ;;
@@ -421,7 +313,7 @@ ome_parse() {
     esac
     cd $oldir
 }
-export OME_VERSION="OME     2018.1207 copyleft 2018 damon-kwok"
+export OME_VERSION="OME     2018.1221 copyleft 2018 damon-kwok"
 #echo $@
 mkdir -p $OME_PREFIX/bin/
 mkdir -p $OME_CACHE/

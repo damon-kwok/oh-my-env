@@ -272,7 +272,6 @@ ome_app_wizard() {
             ;;
         "28"|".net")
             ;;
-        "r") ask_menu;;
         "q") exit;;
     esac
     echo "root:$proj_root"
