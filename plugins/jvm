@@ -185,6 +185,6 @@ jvm_info() {
     ome_info "JVMTool" "`sdkman_info maven Maven` | \
 `sdkman_info sbt SBT` | \
 `sdkman_info gradle Gradle` | \
-`ome_fetch_version lein`"
+`ome_fetch_version lein | cut -d ' ' -f 1-2`"
 # `sdkman_info leiningen Lein`"
 }
