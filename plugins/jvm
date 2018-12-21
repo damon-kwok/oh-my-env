@@ -118,7 +118,11 @@ jvm_install() {
     fi
     #if ! command -v lein >/dev/null 2>&1; then
 	if [ "`command -v lein`" = "" ]; then
-        sdk install leiningen
+        # sdk install leiningen
+        cd $OME_PREFIX/bin/
+        rm -rf ./lein
+        wget https://raw.githubusercontent.com/technomancy/leiningen/stable/bin/lein
+        chmod +x ./lein
     fi
 
     #if ! command -v mvn >/dev/null 2>&1; then
@@ -181,5 +185,6 @@ jvm_info() {
     ome_info "JVMTool" "`sdkman_info maven Maven` | \
 `sdkman_info sbt SBT` | \
 `sdkman_info gradle Gradle` | \
-`sdkman_info leiningen Lein`"
+`ome_fetch_version lein`"
+# `sdkman_info leiningen Lein`"
 }
