@@ -121,8 +121,9 @@ ome_app_wizard() {
             ome_check_install "gradle" "jvm"
             mkdir -p $proj_root
             cd $proj_root
-            gradle init --type groovy-application
-            $EDITOR "src/main/groovy/App.groovy"
+            gradle init --type groovy-application --test-framework spock \
+                   --dsl groovy --project-name $proj_name --package $proj_name
+            $EDITOR "src/main/groovy/$proj_name/App.groovy"
             ;;
         "9"|"haskell"|"hs")
             ome_check_install "stack" "haskell"
@@ -134,15 +135,17 @@ ome_app_wizard() {
             ome_check_install "gradle" "jvm"
             mkdir -p $proj_root
             cd $proj_root
-            gradle init --type java-application
-            $EDITOR "src/main/java/App.java"
+            gradle init --type java-application --test-framework spock \
+                   --dsl kotlin --project-name $proj_name --package $proj_name
+            $EDITOR "src/main/java/$proj_name/App.java"
             ;;
         "11"|"kotlin"|"kt")
             ome_check_install "gradle" "kotlin"
             mkdir -p $proj_root
             cd $proj_root
-            gradle init --type kotlin-application
-            $EDITOR "src/main/kotlin/App.kt"
+            gradle init --type kotlin-application --test-framework kotlintest \
+                   --dsl kotlin --project-name $proj_name --package $proj_name
+            $EDITOR "src/main/kotlin/$proj_name/App.kt"
             ;;
         "12"|"nim")
             ome_check_install "nimble" "nim"
@@ -256,8 +259,9 @@ ome_app_wizard() {
             ome_check_install "gradle" "jvm"
             mkdir -p $proj_root
             cd $proj_root
-            gradle init --type scala-application
-            $EDITOR "src/main/scala/App.scala"
+            gradle init --type scala-library --test-framework scalatest \
+                   --dsl kotlin --project-name $proj_name --package $proj_name
+            $EDITOR "src/main/scala/$proj_name/App.scala"
             ;;
         "27"|"swift")
             ome_check_install "swift" "swift"

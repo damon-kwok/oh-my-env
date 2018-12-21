@@ -5,6 +5,7 @@ install_jdt_language_server() {
     tip "install eclipse language server"	
     local del_force=$1
     if [ "$del_force" = "1" ]; then
+        rm -rf ~/Downloads/jdt-language-server-latest.tar.gz
 	    rm -rf ~/.emacs.d/eclipse.jdt.ls/server/
     fi
     
