@@ -268,7 +268,8 @@ ome_parse() {
             app_wizard $ARG1 $ARG2
             ;;
         "look")
-            xdg-open "https://www.erlang.org/downloads"
+            xdg-open "https://golang.google.cn/dl/"
+            xdg-open "https://www.erlang.org/downloads/"
             xdg-open "https://www.python.org/downloads/"
             xdg-open "https://www.ruby-lang.org/en/downloads/"
             xdg-open "http://php.net/downloads.php"

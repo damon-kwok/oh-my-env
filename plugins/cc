@@ -103,8 +103,8 @@ cc_install_cxx_library() {
     if [ $? -eq 1 ]; then
         github_upgrade $lib $dir
 
-        mkdir -p $OME_CACHE/flooy/build
-        cd $OME_CACHE/flooy/build/
+        mkdir -p $dir/build
+        cd $dir/build/
 
         cmake .. -G "$OME_MAKE" \
               -DCMAKE_INSTALL_PREFIX=$OME_PREFIX \

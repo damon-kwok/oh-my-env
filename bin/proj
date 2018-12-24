@@ -1,17 +1,12 @@
 #!/usr/bin/env sh
 
-PROJECT_BLOG=demo-kwok.github.io
-
-DIR_LLVM_WHERE=$OME_ROOT/dev
-DIR_LLVM=$OME_ROOT/dev/llvm
-
 project_upgrade() {
     # C
     github_upgrade curl/curl $PROJ_ROOT/c/curl
     mkdir -p $PROJ_ROOT/c/curl/build
     cd $PROJ_ROOT/c/curl/build/
     cmake .. -G "$OME_MAKE" \
-	      -DCMAKE_INSTALL_PREFIX=$OME_PREFIX \
+          -DCMAKE_INSTALL_PREFIX=$OME_PREFIX \
           -DBUILD_SHARED_LIBS=0
     cmake --build . --use-stderr --config Release --target install -- -j4
     
@@ -155,18 +150,18 @@ ome_commit() {
 }
 
 ome_pull() {
-	tip "ome upgrade"
-	cd $OME_ROOT
-	git pull
+    tip "ome upgrade"
+    cd $OME_ROOT
+    git pull
 
     ome_write_env_to_dotfile $HOME/.profile 
     ome_write_env_to_dotfile $HOME/.shrc
     ome_write_env_to_dotfile $HOME/.bashrc
     ome_write_env_to_dotfile $HOME/.zshrc
     
-	ome install oh_my_emacs
+    ome install oh_my_emacs
 
-	tip "wrokspace upgrade"
+    tip "wrokspace upgrade"
     gitlab_ssh_upgrade damon-kwok/workspace $HOME/workspace
     chmod +x $HOME/.oh-my-env/*
 

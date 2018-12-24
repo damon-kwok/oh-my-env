@@ -193,3 +193,5 @@ mu4e_exist_p() {
 mu4e_info() {
     echo_error ""
 }
+# zh-cn search
+export XAPIAN_CJK_NGRAM=1
