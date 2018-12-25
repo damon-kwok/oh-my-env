@@ -125,6 +125,12 @@ jvm_install() {
         chmod +x ./lein
     fi
 
+    if [ "`command -v boot`" = "" ]; then
+        cd $OME_PREFIX/bin/
+        curl -fsSLo boot https://github.com/boot-clj/boot-bin/releases/download/latest/boot.sh
+        chmod 755 ./boot
+    fi
+
     #if ! command -v mvn >/dev/null 2>&1; then
 	if [ "`command -v mvn`" = "" ]; then
         sdk install maven
