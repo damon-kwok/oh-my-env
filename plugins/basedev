@@ -9,41 +9,41 @@ basedev_install() {
         $OS_DEBIAN|$OS_UBUNTU)
             # if [ ! -f /etc/apt/sources.list.d/ubuntu-elisp-ubuntu-ppa-xenial.list ]; then
             tip "add ppa:emacs"
-    	    sudo add-apt-repository -y ppa:ubuntu-elisp
-	        # fi
+            sudo add-apt-repository -y ppa:ubuntu-elisp
+            # fi
 
-	        # if [ ! -f /etc/apt/sources.list.d/graphics-drivers-ubuntu-ppa-xenial.list ]; then
+            # if [ ! -f /etc/apt/sources.list.d/graphics-drivers-ubuntu-ppa-xenial.list ]; then
             tip "add ppa:nvidia-driver"
-    	    sudo add-apt-repository -y ppa:graphics-drivers/ppa
+            sudo add-apt-repository -y ppa:graphics-drivers/ppa
             # fi
             
             readp "update system?"
             if [ $? -eq 1 ]; then
                 sudo apt update
-	            sudo apt dist-upgrade -y   
+                sudo apt dist-upgrade -y   
             fi
 
             tip "install base devel tool"
-	        sudo apt install -y git subversion wget curl \
-		         tar zip unzip coreutils diffutils \
+            sudo apt install -y git subversion wget curl \
+                 tar zip unzip rlwrap coreutils diffutils \
                  ttf-bitstream-vera
 
-	        readp "X11 mode?" #"tty mode"
+            readp "X11 mode?" #"tty mode"
             if [ $? -eq 1 ]; then
                 sudo apt install -y software-properties-gtk emacs-snapshot
-		        readp "install nvidia-driver?"
-		        if [ $? -eq 1 ]; then
-			        sudo apt install -y nvidia-driver-390     
-			        # nomodeset
-			        readp "nomodeset for grub.cfg?"
-			        if [ $? -eq 1 ]; then
-				        # replace-str "quiet splash" "nomodeset" /boot/grub/grub.cfg 1
-				        sudo perl -pi -e 's|quiet splash|nomodeset|g' /boot/grub/grub.cfg        
-			        fi
-		        fi
+                readp "install nvidia-driver?"
+                if [ $? -eq 1 ]; then
+                    sudo apt install -y nvidia-driver-390     
+                    # nomodeset
+                    readp "nomodeset for grub.cfg?"
+                    if [ $? -eq 1 ]; then
+                        # replace-str "quiet splash" "nomodeset" /boot/grub/grub.cfg 1
+                        sudo perl -pi -e 's|quiet splash|nomodeset|g' /boot/grub/grub.cfg        
+                    fi
+                fi
             else
                 sudo apt install -y emacs-snapshot-nox
-	        fi
+            fi
             ;;
         # $OS_REDHAT) ;;
         # $OS_FEDORA) ;;
@@ -54,7 +54,7 @@ basedev_install() {
             fi
             sudo yum groupinstall "Development Tools"
             sudo yum install -y git subversion wget curl \
-		         tar zip unzip coreutils diffutils
+                 tar zip unzip rlwrap coreutils diffutils
             ;;
         $OS_ARCH)
             readp "update system?"
@@ -67,7 +67,7 @@ basedev_install() {
             #sudo pacman -S firefox
 
             trizen -S git subversion wget curl \
-		           tar zip unzip coreutils diffutils \
+                   tar zip unzip rlwrap coreutils diffutils \
                    ttf-bitstream-vera emacs
             ;;
         $OS_GENTOO) ;;
@@ -78,7 +78,7 @@ basedev_install() {
                 sudo zypper update
             fi
             sudo zypper install git subversion wget curl \
-		         tar zip unzip coreutils diffutils \
+                 tar zip unzip rlwrap coreutils diffutils \
                  bitstream-vera-fonts emacs
             ;;
         $OS_SLACKWARE) ;;
@@ -99,7 +99,7 @@ basedev_install() {
             fi
 
             sudo pkg install git subversion wget curl \
-		         bash zip unzip coreutils diffutils \
+                 bash zip unzip rlwrap coreutils diffutils \
                  zh-font-std bitstream-vera emacs
             
             # tip "install mate desktop"
@@ -125,7 +125,7 @@ basedev_install() {
         # Windows
         $OS_CYGWIN)
             readp "upgrade apt-cyg tools?"
-		    if [ $? -eq 1 ]; then
+            if [ $? -eq 1 ]; then
                 rm -rf /usr/bin/apt-cyg
                 cd /usr/bin/
                 wget https://raw.githubusercontent.com/kou1okada/apt-cyg/master/apt-cyg
@@ -135,7 +135,7 @@ basedev_install() {
                 chmod +x /usr/bin/apt
             fi
             apt install git subversion wget curl \
-                tar zip unzip coreutils diffutils \
+                tar zip unzip rlwrap coreutils diffutils \
                 xdg-utils emacs-w32
             ;;
         $OS_MSYS2)
@@ -144,8 +144,8 @@ basedev_install() {
                 pacman -Syyu
             fi
             pacman -S git subversion wget curl \
-                   tar zip unzip coreutils diffutils \
-	               mingw-w64-x86_64-emacs mingw-w64-x86_64-ttf-dejavu
+                   tar zip unzip rlwrap coreutils diffutils \
+                   mingw-w64-x86_64-emacs mingw-w64-x86_64-ttf-dejavu
             ;;
         # Other
         $OS_UNKNOW) ;;
@@ -173,84 +173,84 @@ basedev_install_old() {
 
     read -p "please enter your choice:" item
     case $item in
-	    1)  # Debian / Ubuntu / LinuxMint
-	        # Erlang
-	        # wget https://packages.erlang-solutions.com/erlang-solutions_1.0_all.deb \
-		        # && sudo dpkg -i erlang-solutions_1.0_all.deb
+        1)  # Debian / Ubuntu / LinuxMint
+            # Erlang
+            # wget https://packages.erlang-solutions.com/erlang-solutions_1.0_all.deb \
+                # && sudo dpkg -i erlang-solutions_1.0_all.deb
 
-	        # Golang
-	        # sudo add-apt-repository -y ppa:longsleep/golang-backports
-	        
-	        sudo apt update
-	        sudo apt dist_upgrade
-	        
-	        sudo apt install -y build-essential swig net-tools cppunit texinfo doxygen \
+            # Golang
+            # sudo add-apt-repository -y ppa:longsleep/golang-backports
+            
+            sudo apt update
+            sudo apt dist_upgrade
+            
+            sudo apt install -y build-essential swig net-tools cppunit texinfo doxygen \
                  libtool intltool autoscan aclocal autogen autoconf autopoint pkg-config autoheader automake \
-		         coreutils diffutils wget curl zip unzip git subversion silversearcher-ag
-	        sudo apt install -y python-pip perl ruby ocaml # haskell-stack #openjdk-8-jdk
-	        sudo apt install -y ttf-bitstream-vera #zmq ghostscript
-	        sudo apt install -y i3 #{i3-wm i3status i3lock dmenu} dmenu feh xcompmgr roxterm
+                 coreutils diffutils wget curl zip unzip rlwrap git subversion silversearcher-ag
+            sudo apt install -y python-pip perl ruby ocaml # haskell-stack #openjdk-8-jdk
+            sudo apt install -y ttf-bitstream-vera #zmq ghostscript
+            sudo apt install -y i3 #{i3-wm i3status i3lock dmenu} dmenu feh xcompmgr roxterm
 
-	        # - Erlang 			
-	        # sudo apt install libssl-dev libwxbase3.0-dev libwxgtk3.0-dev esl-erlang
-	        # sudo apt install erlang-nox
-	        # sudo apt install elixir
+            # - Erlang             
+            # sudo apt install libssl-dev libwxbase3.0-dev libwxgtk3.0-dev esl-erlang
+            # sudo apt install erlang-nox
+            # sudo apt install elixir
 
-	        # - Bazel---Build and test software of any size, quickly and reliably
-	        # sudo apt -y install pkg-config zip g++ zlib1g-dev unzip python
-	        # echo "deb [arch=amd64] http://storage.googleapis.com/bazel-apt stable jdk1.8" | \
-		        # sudo tee /etc/apt/sources.list.d/bazel.list
-	        # curl https://bazel.build/bazel-release.pub.gpg | sudo apt-key add -
-	        # sudo apt-get update && sudo apt-get install -y bazel
-	        
-	        # - Golang LTS PPA
-	        # sudo apt-get install golang-go			
-	        ;;
-	    
-	    2)  # ArchLinux / Manjaro
-	        yaourt -Syyu
-	        yaourt -S base-devel swig net-tools cppunit coreutils diffutils wget curl zip unzip git subversion the_silver_searcher
-	        yaourt -S python2-pip rubygems ocaml haskell-stack-git jdk go-bin
-	        yaourt -S nerd-fonts-bitstream-vera-mono
-	        yaourt -S i3-wm i3lock i3status dmenu
-	        ;;
-	    
-	    3)  # Fedora / Redhat / CentOS
-	        sudo yum update
-	        sudo yum upgrade --refresh
-	        
-	        sudo yum groupinstall "Development Tools and Libraries"
-	        sudo yum install swig net-tools cppunit automake \
-		         coreutils diffutils wget curl zip unzip git subversion the_silver_searcher
-	        sudo yum install python2-pip perl rubygems ocaml haskell-stack #openjdk-8-jdk golang
-	        sudo yum install ttf-bitstream-vera
-	        ;;
-	    
-	    4) # macOS
-	        brew update
-	        brew upgrade
-	        
-	        brew install swig net-tools cppunit automake \
-		         coreutils diffutils wget curl zip unzip git subversion the_silver_searcher
-	        brew install python2-pip perl rubygems ocaml haskell-stack #openjdk-8-jdk golang
-	        brew install ttf-bitstream-vera
-	        ;;
-	    
-	    5) # msys2
-	        pacman -Syyu	    
-	        pacman -S base-devel msys2-devel swig net-tools cppunit automake \
-		           coreutils diffutils wget curl zip unzip git subversion camke mingw-w64-x86_64-ag
-	        pacman -S python2-pip perl rubygems mingw-w64-x86_64-gcc mingw-w64-x86_64-ocaml golang
-	        pacman -S ttf-bitstream-vera
-	        #mingw-w64-x86_64-zeromq mingw-w64-x86_64-ghostscript
-	        ;;
-	    
-	    r | R)
-	        ask-menu
-	        ;;
-	    *)
-	        ask-repl
-	        ;;
+            # - Bazel---Build and test software of any size, quickly and reliably
+            # sudo apt -y install pkg-config zip g++ zlib1g-dev unzip rlwrap python
+            # echo "deb [arch=amd64] http://storage.googleapis.com/bazel-apt stable jdk1.8" | \
+                # sudo tee /etc/apt/sources.list.d/bazel.list
+            # curl https://bazel.build/bazel-release.pub.gpg | sudo apt-key add -
+            # sudo apt-get update && sudo apt-get install -y bazel
+            
+            # - Golang LTS PPA
+            # sudo apt-get install golang-go            
+            ;;
+        
+        2)  # ArchLinux / Manjaro
+            yaourt -Syyu
+            yaourt -S base-devel swig net-tools cppunit coreutils diffutils wget curl zip unzip rlwrap git subversion the_silver_searcher
+            yaourt -S python2-pip rubygems ocaml haskell-stack-git jdk go-bin
+            yaourt -S nerd-fonts-bitstream-vera-mono
+            yaourt -S i3-wm i3lock i3status dmenu
+            ;;
+        
+        3)  # Fedora / Redhat / CentOS
+            sudo yum update
+            sudo yum upgrade --refresh
+            
+            sudo yum groupinstall "Development Tools and Libraries"
+            sudo yum install swig net-tools cppunit automake \
+                 coreutils diffutils wget curl zip unzip rlwrap git subversion the_silver_searcher
+            sudo yum install python2-pip perl rubygems ocaml haskell-stack #openjdk-8-jdk golang
+            sudo yum install ttf-bitstream-vera
+            ;;
+        
+        4) # macOS
+            brew update
+            brew upgrade
+            
+            brew install swig net-tools cppunit automake \
+                 coreutils diffutils wget curl zip unzip rlwrap git subversion the_silver_searcher
+            brew install python2-pip perl rubygems ocaml haskell-stack #openjdk-8-jdk golang
+            brew install ttf-bitstream-vera
+            ;;
+        
+        5) # msys2
+            pacman -Syyu        
+            pacman -S base-devel msys2-devel swig net-tools cppunit automake \
+                   coreutils diffutils wget curl zip unzip rlwrap git subversion camke mingw-w64-x86_64-ag
+            pacman -S python2-pip perl rubygems mingw-w64-x86_64-gcc mingw-w64-x86_64-ocaml golang
+            pacman -S ttf-bitstream-vera
+            #mingw-w64-x86_64-zeromq mingw-w64-x86_64-ghostscript
+            ;;
+        
+        r | R)
+            ask-menu
+            ;;
+        *)
+            ask-repl
+            ;;
     esac
 
     # pdf compile tool: fop xsltproc
@@ -260,29 +260,29 @@ basedev_install_old() {
 }
 
 msys2_init() {
-    #pacman -S tar zip unzip net-tools coreutils diffutils \
-	    #	   wget curl zip unzip texinfo doxygen \
+    #pacman -S tar zip unzip rlwrap net-tools coreutils diffutils \
+        #       wget curl zip unzip rlwrap texinfo doxygen \
         #       base-devel msys2-devel cmake libtool intltool automake cppunit \
         #       git subversion \
         #       ttf-bitstream-vera imagemagick ghostscript \
         #       emacs
-	# pacman -Sy pacman-mirrors	   
-	
+    # pacman -Sy pacman-mirrors       
+    
     pacman -S git subversion wget curl \
-           tar zip unzip coreutils diffutils \
+           tar zip unzip rlwrap coreutils diffutils \
            texinfo doxygen asciidoc xmlto docbook2x \
            make automake autogen autoconf autopoint pkg-config \
-	       mingw-w64-x86_64-cmake mingw-w64-x86_64-ninja \
-	       mingw-w64-x86_64-gcc mingw-w64-x86_64-nasm \
+           mingw-w64-x86_64-cmake mingw-w64-x86_64-ninja \
+           mingw-w64-x86_64-gcc mingw-w64-x86_64-nasm \
            mingw-w64-x86_64-python2 mingw-w64-x86_64-python2-pip \
-	       mingw-w64-x86_64-python3 mingw-w64-x86_64-python3-pip \
-	       mingw-w64-x86_64-emacs mingw-w64-x86_64-ttf-dejavu
+           mingw-w64-x86_64-python3 mingw-w64-x86_64-python3-pip \
+           mingw-w64-x86_64-emacs mingw-w64-x86_64-ttf-dejavu
 }
 
 cygwin_init() {
-	apt install gcc g++ make cmake automake libtool intltool gettext wget curl python2 python3
-	apt install libxapian-devel
-	apt install libgmime3.0-devel
+    apt install gcc g++ make cmake automake libtool intltool gettext wget curl python2 python3
+    apt install libxapian-devel
+    apt install libgmime3.0-devel
     apt install libc++-devel libc++abi-devel
 }
 
@@ -295,8 +295,8 @@ arch_init() {
     #sudo pacman -S opendesktop-fonts
     #sudo pacman -S firefox
 
-    trizen -S tar zip unzip net-tools coreutils diffutils \
-		   wget curl zip unzip texinfo doxygen \
+    trizen -S tar zip unzip rlwrap net-tools coreutils diffutils \
+           wget curl zip unzip rlwrap texinfo doxygen \
            base-devel cmake libtool intltool automake cppunit \
            git subversion \
            ttf-bitstream-vera imagemagick ghostscript \
@@ -305,41 +305,41 @@ arch_init() {
 
 ubuntu_init() {
     local oldir=`pwd`
-	
-	if [ ! -e /etc/apt/sources.list.d/ubuntu-elisp-ubuntu-ppa-xenial.list ]; then
-    	sudo add-apt-repository -y ppa:ubuntu-elisp
-	fi
-
-	if [ ! -e /etc/apt/sources.list.d/graphics-drivers-ubuntu-ppa-xenial.list ]; then
-    	sudo add-apt-repository -y ppa:graphics-drivers/ppa
+    
+    if [ ! -e /etc/apt/sources.list.d/ubuntu-elisp-ubuntu-ppa-xenial.list ]; then
+        sudo add-apt-repository -y ppa:ubuntu-elisp
     fi
-	sudo apt update
-	sudo apt dist_upgrade -y
-	
-	sudo apt install -y swig net-tools coreutils diffutils \
-		 wget curl zip unzip texinfo doxygen \
+
+    if [ ! -e /etc/apt/sources.list.d/graphics-drivers-ubuntu-ppa-xenial.list ]; then
+        sudo add-apt-repository -y ppa:graphics-drivers/ppa
+    fi
+    sudo apt update
+    sudo apt dist_upgrade -y
+    
+    sudo apt install -y swig net-tools coreutils diffutils \
+         wget curl zip unzip rlwrap texinfo doxygen \
          build-essential cmake libtool intltool automake libcppunit-dev \
          git subversion \
          ttf-bitstream-vera imagemagick ghostscript
     
-	readp "tty mode?"
+    readp "tty mode?"
     if [ $? -eq 1 ]; then
-		sudo apt install emacs-snapshot-nox
-	else
+        sudo apt install emacs-snapshot-nox
+    else
         sudo apt install software-properties-gtk emacs-snapshot
-		
-		readp "install nvidia-396?"
-		if [ $? -eq 1 ]; then
-			sudo apt install -y nvidia-396     
-			# nomodeset
-			readp "nomodeset for grub.cfg?"
-			if [ $? -eq 1 ]; then
-				# replace-str "quiet splash" "nomodeset" /boot/grub/grub.cfg 1
-				sudo perl -pi -e 's|quiet splash|nomodeset|g' /boot/grub/grub.cfg        
-			fi
-		fi
-	fi
-	
+        
+        readp "install nvidia-396?"
+        if [ $? -eq 1 ]; then
+            sudo apt install -y nvidia-396     
+            # nomodeset
+            readp "nomodeset for grub.cfg?"
+            if [ $? -eq 1 ]; then
+                # replace-str "quiet splash" "nomodeset" /boot/grub/grub.cfg 1
+                sudo perl -pi -e 's|quiet splash|nomodeset|g' /boot/grub/grub.cfg        
+            fi
+        fi
+    fi
+    
     cd $oldir
 }
 

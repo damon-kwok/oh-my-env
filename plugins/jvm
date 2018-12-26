@@ -2,22 +2,22 @@
 
 install_jdt_language_server() {
     local oldir=`pwd`
-    tip "install eclipse language server"	
+    tip "install eclipse language server"    
     local del_force=$1
     if [ "$del_force" = "1" ]; then
         rm -rf ~/Downloads/jdt-language-server-latest.tar.gz
-	    rm -rf ~/.emacs.d/eclipse.jdt.ls/server/
+        rm -rf ~/.emacs.d/eclipse.jdt.ls/server/
     fi
     
     if [ ! -d ~/.emacs.d/eclipse.jdt.ls/server/ ]; then
-	    mkdir -p ~/.emacs.d/eclipse.jdt.ls/server/
+        mkdir -p ~/.emacs.d/eclipse.jdt.ls/server/
         if [ ! -f ~/Downloads/jdt-language-server-latest.tar.gz ]; then
-	        # wget http://mirror.switch.ch/eclipse/jdtls/snapshots/jdt-language-server-latest.tar.gz  \
+            # wget http://mirror.switch.ch/eclipse/jdtls/snapshots/jdt-language-server-latest.tar.gz  \
                 # -O ~/Downloads/jdt-language-server-latest.tar.gz
-	        wget http://download.eclipse.org/jdtls/snapshots/jdt-language-server-latest.tar.gz -O \
+            wget http://download.eclipse.org/jdtls/snapshots/jdt-language-server-latest.tar.gz -O \
                  ~/Downloads/jdt-language-server-latest.tar.gz
         fi
-	    tar xf ~/Downloads/jdt-language-server-latest.tar.gz -C ~/.emacs.d/eclipse.jdt.ls/server/
+        tar xf ~/Downloads/jdt-language-server-latest.tar.gz -C ~/.emacs.d/eclipse.jdt.ls/server/
     fi
     cd $oldir
 }
@@ -71,25 +71,25 @@ install_graalvm() {
 jvm_install() {
     tip "install sdkman"
     #if ! command -v sdk >/dev/null 2>&1; then
-	if [ "`command -v sdk`" = "" ]; then
-	    curl -s "https://get.sdkman.io" | sh
-	    . $HOME/.sdkman/bin/sdkman-init.sh
+    if [ "`command -v sdk`" = "" ]; then
+        curl -s "https://get.sdkman.io" | sh
+        . $HOME/.sdkman/bin/sdkman-init.sh
     fi
     find_str "SDKMAN_DIR" ~/.bashrc
     if [ $? -eq 0 ]; then
         echo "" >> ~/.bashrc
-	    echo "#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!" >> ~/.bashrc
-	    echo "export SDKMAN_DIR=\"\$HOME/.sdkman\"" >> ~/.bashrc
-	    echo "[[ -s \"\$HOME/.sdkman/bin/sdkman-init.sh\" ]] && . \"\$HOME/.sdkman/bin/sdkman-init.sh\"" \
+        echo "#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!" >> ~/.bashrc
+        echo "export SDKMAN_DIR=\"\$HOME/.sdkman\"" >> ~/.bashrc
+        echo "[[ -s \"\$HOME/.sdkman/bin/sdkman-init.sh\" ]] && . \"\$HOME/.sdkman/bin/sdkman-init.sh\"" \
              >> ~/.bashrc
     fi
 
     find_str "SDKMAN_DIR" ~/.shrc
     if [ $? -eq 0 ]; then
         echo "" >> ~/.shrc
-	    echo "#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!" >> ~/.shrc
-	    echo "export SDKMAN_DIR=\"\$HOME/.sdkman\"" >> ~/.shrc
-	    echo "[[ -s \"\$HOME/.sdkman/bin/sdkman-init.sh\" ]] && . \"\$HOME/.sdkman/bin/sdkman-init.sh\"" \
+        echo "#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!" >> ~/.shrc
+        echo "export SDKMAN_DIR=\"\$HOME/.sdkman\"" >> ~/.shrc
+        echo "[[ -s \"\$HOME/.sdkman/bin/sdkman-init.sh\" ]] && . \"\$HOME/.sdkman/bin/sdkman-init.sh\"" \
              >> ~/.shrc
     fi
 
@@ -101,48 +101,34 @@ jvm_install() {
     sdk upgrade
 
     #if ! command -v javac >/dev/null 2>&1; then
-	if [ "`command -v javac`" = "" ]; then
+    if [ "`command -v javac`" = "" ]; then
         sdk install java
     fi
     #if ! command -v kotlinc >/dev/null 2>&1; then
-	if [ "`command -v kotlinc`" = "" ]; then
+    if [ "`command -v kotlinc`" = "" ]; then
         sdk install kotlin
     fi
     #if ! command -v scalac >/dev/null 2>&1; then
-	if [ "`command -v scalac`" = "" ]; then
+    if [ "`command -v scalac`" = "" ]; then
         sdk install scala
     fi
     #if ! command -v groovy >/dev/null 2>&1; then
-	if [ "`command -v groovy`" = "" ]; then
+    if [ "`command -v groovy`" = "" ]; then
         sdk install groovy
-    fi
-    #if ! command -v lein >/dev/null 2>&1; then
-	if [ "`command -v lein`" = "" ]; then
-        # sdk install leiningen
-        cd $OME_PREFIX/bin/
-        rm -rf ./lein
-        wget https://raw.githubusercontent.com/technomancy/leiningen/stable/bin/lein
-        chmod +x ./lein
-    fi
-
-    if [ "`command -v boot`" = "" ]; then
-        cd $OME_PREFIX/bin/
-        curl -fsSLo boot https://github.com/boot-clj/boot-bin/releases/download/latest/boot.sh
-        chmod 755 ./boot
     fi
 
     #if ! command -v mvn >/dev/null 2>&1; then
-	if [ "`command -v mvn`" = "" ]; then
+    if [ "`command -v mvn`" = "" ]; then
         sdk install maven
     fi
 
     #if ! command -v gradle >/dev/null 2>&1; then
-	if [ "`command -v gradle`" = "" ]; then
+    if [ "`command -v gradle`" = "" ]; then
         sdk install gradle
     fi
 
     #if ! command -v sbt >/dev/null 2>&1; then
-	if [ "`command -v sbt`" = "" ]; then
+    if [ "`command -v sbt`" = "" ]; then
         sdk install sbt
     fi
 
@@ -190,7 +176,6 @@ jvm_info() {
 
     ome_info "JVMTool" "`sdkman_info maven Maven` | \
 `sdkman_info sbt SBT` | \
-`sdkman_info gradle Gradle` | \
-`ome_fetch_version lein | cut -d ' ' -f 1-2`"
-# `sdkman_info leiningen Lein`"
+`sdkman_info gradle Gradle`"
+    # `sdkman_info leiningen Lein`"
 }
