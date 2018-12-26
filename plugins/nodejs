@@ -16,10 +16,10 @@ nodejs_install_n() {
     find_str "N-INSTALL" ~/.bashrc
     if [ $? -eq 0 ]; then
         echo "" >> ~/.bashrc
-	    echo "# N-INSTALL" >> ~/.bashrc
-	    echo "export N_PREFIX=\"\$HOME/n\"; [[ :\$PATH: = *\":\$N_PREFIX/bin:\"* ]] || PATH+=\":\$N_PREFIX/bin\"" \
+        echo "# N-INSTALL" >> ~/.bashrc
+        echo "export N_PREFIX=\"\$HOME/n\"; [[ :\$PATH: = *\":\$N_PREFIX/bin:\"* ]] || PATH+=\":\$N_PREFIX/bin\"" \
              >> ~/.bashrc
-    fi            
+    fi
     cd $oldir
 }
 
@@ -28,8 +28,8 @@ nodejs_install_nvm() {
     
     find_str "NVM_DIR" ~/.bashrc
     if [ $? -eq 0 ]; then
-	    echo '' >> ~/.bashrc
-	    echo '# NVM' >> ~/.bashrc
+        echo '' >> ~/.bashrc
+        echo '# NVM' >> ~/.bashrc
         echo 'export NVM_DIR="$HOME/.nvm"' >> ~/.bashrc
         echo '[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> ~/.bashrc
         echo '[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"' >> ~/.bashrc
@@ -38,8 +38,8 @@ nodejs_install_nvm() {
 
     find_str "NVM_DIR" ~/.profile
     if [ $? -eq 0 ]; then
-	    echo '' >> ~/.profile
-	    echo '# NVM' >> ~/.profile
+        echo '' >> ~/.profile
+        echo '# NVM' >> ~/.profile
         echo 'export NVM_DIR="$HOME/.nvm"' >> ~/.profile
         echo '[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> ~/.profile
         echo '[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"' >> ~/.profile
@@ -49,14 +49,14 @@ nodejs_install_nvm() {
     # curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash
     local NVM_DIR="$HOME/.nvm"
     # if command -v nvm >/dev/null 2>&1; then
-    if [ ! -d $NVM_DIR ]; then		
-	    git clone https://github.com/creationix/nvm.git "$NVM_DIR"
-	    cd "$NVM_DIR"
-	    git checkout `git describe --abbrev=0 --tags --match "v[0-9]*" $(git rev-list --tags --max-count=1)`
-    else		
-	    cd "$NVM_DIR"
-	    git fetch --tags origin
-	    git checkout `git describe --abbrev=0 --tags --match "v[0-9]*" $(git rev-list --tags --max-count=1)`		
+    if [ ! -d $NVM_DIR ]; then        
+        git clone https://github.com/creationix/nvm.git "$NVM_DIR"
+        cd "$NVM_DIR"
+        git checkout `git describe --abbrev=0 --tags --match "v[0-9]*" $(git rev-list --tags --max-count=1)`
+    else
+        cd "$NVM_DIR"
+        git fetch --tags origin
+        git checkout `git describe --abbrev=0 --tags --match "v[0-9]*" $(git rev-list --tags --max-count=1)`
     fi
 
     \. "$NVM_DIR/nvm.sh"
@@ -124,7 +124,7 @@ nodejs_install() {
 
 nodejs_info() {
     # ome_info "Nodejs" "$NODEJS_VERSION | `ome_fetch_version npm`"
-    ome_info "Nodejs" "`ome_fetch_version node` | `ome_fetch_version npm`"
+    ome_info "Nodejs" "node `ome_fetch_version node` | npm `ome_fetch_version npm`"
 }
 
 if [ "$OME_OS" = "$OS_CYGWIN" ]; then

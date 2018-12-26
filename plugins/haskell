@@ -120,6 +120,6 @@ haskell_exist_p() {
 
 haskell_info() {
     if [ "`command -v stack`" != "" ]; then
-        ome_info "Haskell" "Stack `stack --version | cut -c 9-13`"
+        ome_info "Haskell" "stack `stack --version 2>&1 | head -n 1 | cut -d ' ' -f 1-3`"
     fi
 }

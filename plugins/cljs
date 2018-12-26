@@ -10,12 +10,6 @@ cljs_install() {
         ./linux-install-1.10.0.403.sh --prefix $OME_PREFIX
     fi
     
-    tip "install planck"
-    github_upgrade planck-repl/planck $OME_CACHE/planck
-    cd $OME_CACHE/planck/
-    script/build
-    script/install --prefix $OME_PREFIX
-    
     ome_check_install "npm" "nodejs"
     
     tip "install lumo-cljs"
@@ -24,10 +18,18 @@ cljs_install() {
     tip "install shadow-cljs"
     npm install -g shadow-cljs
 
-    tip "install calvin"
-    npm install -g calvin-cljs
-    npm install -g shelljs
+    readp "install calvin and planck?"
+    if [ $? -eq 1 ]; then
+        tip "install calvin"
+        npm install -g calvin-cljs
+        npm install -g shelljs
 
+        tip "install planck"
+        github_upgrade planck-repl/planck $OME_CACHE/planck
+        cd $OME_CACHE/planck/
+        script/build
+        script/install --prefix $OME_PREFIX
+    fi
 }
 
 cljs_uninstall() {
