@@ -8,35 +8,35 @@ ome_app_wizard() {
     if [ "$proj_lang" == "" ]; then
         tip "what do you need?"
         echo "    --------------------------"
-        echo "    0)  C(cmake)"
-        echo "    1)  C++(cmake)"
-        echo "    2)  Clojure(leiningen)"
-        echo "    3)  ClojureScript(lumo+shadow-cljs)"
-        echo "    4)  CommonLisp(roswell)"
+        echo "    0)  C (cmake)"
+        echo "    1)  C++ (cmake)"
+        echo "    2)  Clojure (lein + luminus)"
+        echo "    3)  ClojureScript (lumo + shadow-cljs)"
+        echo "    4)  CommonLisp (roswell)"
         echo "    5)  Crystal"
-        echo "    6)  Erlang(rebar3)"
-        echo "    7)  Elixir(mix)"
-        echo "    8)  Golang(dep)"
-        echo "    9)  Groovy(gradle)"
-        echo "    10) Haskell(stack)"
-        echo "    11) Java(gradle)"
-        echo "    12) Kotlin(gradle)"
-        echo "    13) Nim(nimble)"
-        echo "    14) Nodejs(grunt)"
-        echo "    15) Nodejs(gulp)"
-        echo "    16) OCaml(ohai)"
-        echo "    17) OCaml-BuckleScript(bsb-native)"
+        echo "    6)  Erlang (rebar3)"
+        echo "    7)  Elixir (mix)"
+        echo "    8)  Golang (dep)"
+        echo "    9)  Groovy (gradle)"
+        echo "    10) Haskell (stack)"
+        echo "    11) Java (gradle)"
+        echo "    12) Kotlin (gradle)"
+        echo "    13) Nim (nimble)"
+        echo "    14) Nodejs (grunt)"
+        echo "    15) Nodejs (gulp)"
+        echo "    16) OCaml (ohai)"
+        echo "    17) OCaml-BuckleScript (bsb-native)"
         echo "    18) Perl"
-        echo "    19) PHP(Composer)"
-        echo "    20) Python(pipenv)"
-        echo "    21) Python(poetry)"
-        echo "    22) Python(hatch)"
-        echo "    23) Reason(ohai)"
-        echo "    24) Reason-BuckleScript(bsb-native)"
-        echo "    25) Ruby(rbenv)"
-        echo "    26) Rust(cargo)"
-        echo "    27) Scala(gradle)"
-        echo "    28) Swift(SPM)"
+        echo "    19) PHP (Composer)"
+        echo "    20) Python (pipenv)"
+        echo "    21) Python (poetry)"
+        echo "    22) Python (hatch)"
+        echo "    23) Reason (ohai)"
+        echo "    24) Reason-BuckleScript (bsb-native)"
+        echo "    25) Ruby (rbenv)"
+        echo "    26) Rust (cargo)"
+        echo "    27) Scala (gradle)"
+        echo "    28) Swift (SPM)"
         # echo "    29) .net"
         echo "    --------------------------"
         echo "    r) return"
@@ -85,9 +85,18 @@ ome_app_wizard() {
             mkdir -p src
             $EDITOR "src/main.cpp"
             ;;
-        "2"|"clojure"|"clj")
-            ome_check_install "lein" "jvm"
-            lein new $proj_name
+        "2"|"clojure"|"clj"|"luminus")
+            ome_check_install "lein" "clj"
+            lein new luminus $proj_name +reagent +swagger +h2
+            cd $proj_root
+            # local aa='[clj-commons/secretary "1.2.4"]'
+            # local bb='[org.flatland/ordered "1.5.7"] [clj-commons/secretary "1.2.4"]'
+            # sed -i 's#$aa#$bb#g' project.clj
+            $EDITOR "project.clj"
+            ;;
+        "figwheel")
+            ome_check_install "lein" "clj"
+            lein new figwheel $proj_name -- --reagent
             cd $proj_root
             $EDITOR "project.clj"
             ;;
