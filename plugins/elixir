@@ -1,11 +1,36 @@
 #!/usr/bin/env sh
 
-elixir_install() {
+elixir_install_language_server() {
+    github_upgrade JakeBecker/elixir-ls $OME_CACHE/elixir-ls
+    cd $OME_CACHE/elixir-ls/
+    mix deps.get
+    # Shall I install rebar3? (if running non-interactively, use "mix local.rebar --force") [Yn]
+    mix compile
+    mix elixir_ls.release -o $HOME/elixier-ls-release
+}
+
+elixir_install_kiex() {
+    \curl -sSL https://raw.githubusercontent.com/taylor/kiex/master/install | bash -s
+    test -s "$HOME/.kiex/scripts/kiex" && source "$HOME/.kiex/scripts/kiex"
+}
+
+elixir_install_git() {
     ome_check_install "erl" "erlang"
     github_upgrade elixir-lang/elixir $OME_CACHE/elixir
     cd $OME_CACHE/elixir
-    make test
+    make
+    # make test
 }
+
+elixir_install() {
+    tip "install elixir(git)"
+    # elixir_install_kiex
+    elixir_install_git
+
+    tip "install elixir language server"
+    elixir_install_language_server
+}
+
 
 elixir_uninstall() {
     echo_error "'elixir_uninstall' not implemented"
@@ -22,4 +47,6 @@ elixir_info() {
     fi
     
 }
+
 export PATH=$OME_CACHE/elixir/bin:$PATH
+test -s "$HOME/.kiex/scripts/kiex" && source "$HOME/.kiex/scripts/kiex"
