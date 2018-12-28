@@ -94,6 +94,12 @@ ome_app_wizard() {
             # sed -i 's#$aa#$bb#g' project.clj
             $EDITOR "project.clj"
             ;;
+        "hoplon")
+            ome_check_install "lein" "clj"
+            boot -d boot/new new -t hoplon -n $proj_name
+            cd $proj_root
+            $EDITOR "project.clj"
+            ;;
         "figwheel")
             ome_check_install "lein" "clj"
             lein new figwheel $proj_name -- --reagent

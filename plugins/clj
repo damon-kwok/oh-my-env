@@ -14,6 +14,7 @@ clj_install() {
         rm -rf ./lein
         wget https://raw.githubusercontent.com/technomancy/leiningen/stable/bin/lein
         chmod +x ./lein
+        lein --version
     else
         lein upgrade
     fi
@@ -21,7 +22,8 @@ clj_install() {
     if [ "`command -v boot`" = "" ]; then
         cd $OME_PREFIX/bin/
         curl -fsSLo boot https://github.com/boot-clj/boot-bin/releases/download/latest/boot.sh
-        chmod 755 ./boot
+        chmod +x ./boot
+        boot --version
     fi
 }
 
