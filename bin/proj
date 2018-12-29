@@ -171,7 +171,8 @@ ome_pull() {
     github_ssh_upgrade damon-kwok/awesome-network-programming $PROJ_ROOT/me/awesome-network-programming
     github_ssh_upgrade damon-kwok/awesome-web-scraping $PROJ_ROOT/me/awesome-web-scraping
     github_ssh_upgrade damon-kwok/medusa $PROJ_ROOT/me/medusa
-    github_ssh_upgrade damon-kwok/balisong $PROJ_ROOT/me/balisong
+    # github_ssh_upgrade damon-kwok/balisong $PROJ_ROOT/me/balisong
+    github_ssh_upgrade damon-kwok/cljs-example $PROJ_ROOT/me/cljs-example
     
     github_ssh_upgrade damon-kwok/libknife $PROJ_ROOT/me/libknife    
     # cd $PROJ_ROOT/c/libknife

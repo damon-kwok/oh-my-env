@@ -268,6 +268,9 @@ ome_parse() {
             app_wizard $ARG1 $ARG2
             ;;
         "look")
+            xdg-open "https://github.com/clojure/core.async"
+            xdg-open "https://clojars.org/reagent"
+            
             xdg-open "https://golang.google.cn/dl/"
             xdg-open "https://www.erlang.org/downloads/"
             xdg-open "https://www.python.org/downloads/"

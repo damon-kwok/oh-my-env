@@ -109,13 +109,22 @@ ome_app_wizard() {
         "3"|"clojurescript"|"cljs")
             ome_check_install "npm" "nodejs"
             npx create-cljs-project $proj_name
+            mkdir -p $proj_root/src/main/{server,client}
             cd $proj_root
+            npm install shadow-cljs --save-dev
+            npm install express --save
             echo "#!/usr/bin/env bash" >> repl.sh
             echo "" >> repl.sh
             echo "npx shadow-cljs node-repl" >> repl.sh
             echo "# or" >> repl.sh
             echo "# npx shadow-cljs browser-repl" >> repl.sh
-            $EDITOR "shadow-cljs.edn"
+            # $EDITOR "shadow-cljs.edn"
+            cd src/main/server
+            wget https://raw.githubusercontent.com/damon-kwok/cljs-example/master/src/main/server/core.cljs
+            cd ../client/
+            wget https://raw.githubusercontent.com/damon-kwok/cljs-example/master/src/main/client/core.cljs
+            # $EDITOR "src/main/$proj_name/core.cljs"
+            $EDITOR "core.cljs"
             ;;
         "4"|"commonlisp"|"cl"|"roswell")
             ome_check_install "ros" "roswell"

@@ -76,8 +76,8 @@ python_install_bin() {
 python_install() {
     local oldir=`pwd`
 
-    # python_install_bin
-    python_install_pyenv
+    python_install_bin
+    # python_install_pyenv
 
     # if ! command -v pip2 >/dev/null 2>&1; then
 	if [ "`command -v pip2`" = "" ]; then
@@ -192,7 +192,7 @@ python_info() {
 }
 
 PYTHON2_VERSION=2.7.15
-PYTHON3_VERSION=3.7.1
+PYTHON3_VERSION=3.7.2
 pyenv_set_env() {
     export PYENV_ROOT="$HOME/.pyenv"
     export PATH="$PYENV_ROOT/bin:$PATH"
