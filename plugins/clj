@@ -1,15 +1,20 @@
 #!/usr/bin/env sh
 
 clj_install() {
-    if [ "`command -v clj`" = "" ]; then
+    ome_check_install "javac" "jvm"
+    
+    if [ "`command -v clojure`" = "" ]; then
+        tip "install Clojure Cli"
         cd $HOME/Downloads/
         rm -rf ./linux-install-1.10.0.403.sh
         curl -O https://download.clojure.org/install/linux-install-1.10.0.403.sh
         chmod +x linux-install-1.10.0.403.sh
+        mkdir -p $OME_PREFIX/lib/clojure/libexec/
         ./linux-install-1.10.0.403.sh --prefix $OME_PREFIX
     fi
-
+    
     if [ "`command -v lein`" = "" ]; then
+        tip "install leiningen"
         cd $OME_PREFIX/bin/
         rm -rf ./lein
         wget https://raw.githubusercontent.com/technomancy/leiningen/stable/bin/lein
@@ -20,6 +25,7 @@ clj_install() {
     fi
 
     if [ "`command -v boot`" = "" ]; then
+        tip "install boot"
         cd $OME_PREFIX/bin/
         curl -fsSLo boot https://github.com/boot-clj/boot-bin/releases/download/latest/boot.sh
         chmod +x ./boot

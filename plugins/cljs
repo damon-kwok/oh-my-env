@@ -1,35 +1,27 @@
 #!/usr/bin/env sh
 
 cljs_install() {
-    if [ "`command -v clj`" = "" ]; then
-        tip "install Clojure Cli"
-        cd $HOME/Downloads/
-        rm -rf ./linux-install-1.10.0.403.sh
-        curl -O https://download.clojure.org/install/linux-install-1.10.0.403.sh
-        chmod +x linux-install-1.10.0.403.sh
-        ./linux-install-1.10.0.403.sh --prefix $OME_PREFIX
-    fi
-    
+    ome_check_install "clojure" "clj"
     ome_check_install "npm" "nodejs"
-    
-    tip "install lumo-cljs"
-    npm install -g lumo-cljs
+
+    # tip "install lumo-cljs"
+    # npm install -g lumo-cljs
 
     tip "install shadow-cljs"
     npm install -g shadow-cljs
 
-    readp "install calvin and planck?"
-    if [ $? -eq 1 ]; then
-        tip "install calvin"
-        npm install -g calvin-cljs
-        npm install -g shelljs
+    # readp "install calvin and planck?"
+    # if [ $? -eq 1 ]; then
+        # tip "install calvin"
+        # npm install -g calvin-cljs
+        # npm install -g shelljs
 
-        tip "install planck"
-        github_upgrade planck-repl/planck $OME_CACHE/planck
-        cd $OME_CACHE/planck/
-        script/build
-        script/install --prefix $OME_PREFIX
-    fi
+        # tip "install planck"
+        # github_upgrade planck-repl/planck $OME_CACHE/planck
+        # cd $OME_CACHE/planck/
+        # script/build
+        # script/install --prefix $OME_PREFIX
+    # fi
 }
 
 cljs_uninstall() {

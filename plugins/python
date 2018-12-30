@@ -54,7 +54,7 @@ python_install_bin() {
         $OS_AIX) ;;
         $OS_SOLARIS) ;;
         $OS_FREEBSD)
-            sudo pkg install python2 python3
+            sudo pkg install python27 python37
             ;;
         $OS_OPENBSD)
             sudo pkg install python27 python37 #py27-sqlite3 sqlite3
@@ -202,4 +202,4 @@ pyenv_set_env() {
     fi
 
 }
-pyenv_set_env
+# pyenv_set_env

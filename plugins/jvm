@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
 install_jdt_language_server() {
     local oldir=`pwd`
@@ -68,7 +68,7 @@ install_graalvm() {
     cd $OME_CACHE/graal/
 }
 
-jvm_install() {
+jvm_install_sdkman() {
     tip "install sdkman"
     #if ! command -v sdk >/dev/null 2>&1; then
     if [ "`command -v sdk`" = "" ]; then
@@ -143,6 +143,62 @@ jvm_install() {
 
     tip "install scala language server"
     install_scala_language_server
+}
+
+jvm_install_download() {
+    get_os_type
+    case $OME_OS in
+        # Linux
+        # $OS_DEBIAN) ;;
+        # $OS_UBUNTU) ;;
+        $OS_DEBIAN|$OS_UBUNTU)
+            sudo apt install openjdk8
+            ;;
+        # $OS_REDHAT) ;;
+        # $OS_FEDORA) ;;
+        $OS_REDHAT|$OS_FEDORA)
+            sudo yum install openjdk8
+            ;;
+        $OS_ARCH)
+            sudo pacman -S openjdk8
+            ;;
+        $OS_GENTOO) ;;
+        $OS_SUSE)
+            sudo zypper install openjdk8
+            ;;
+        $OS_SLACKWARE) ;;
+        $OS_NIXOS) ;;
+        $OS_VOID) ;;
+        $OS_ALPINE) ;;
+        $OS_MAGEIA) ;;
+        $OS_SLITAZ) ;;
+        $OS_GUIXSD) ;;
+        # Unix
+        $OS_MACOS)
+            brew install openjdk8
+            ;;
+        $OS_AIX) ;;
+        $OS_SOLARIS) ;;
+        $OS_FREEBSD)
+            sudo pkg install openjdk8
+            ;;
+        $OS_OPENBSD) ;;
+        $OS_NETBSD) ;;
+        $OS_DFBSD) ;;
+        # Windows
+        $OS_CYGWIN) ;;
+        $OS_MSYS2) ;;
+        # Other
+        $OS_UNKNOW) ;;
+    esac
+}
+
+jvm_install() {
+    if [ "$OME_OS" = "$OS_FREEBSD" ]; then
+        jvm_install_download
+    else
+        jvm_install_sdkman
+    fi
 }
 
 jvm_uninstall() {
