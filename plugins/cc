@@ -204,7 +204,7 @@ cc_install_clang_bin() {
                  libc++-devel libc++abi-devel
             ;;
         $OS_ARCH)
-            sudo pacman -S llvm clang
+            yaourt -S llvm-svn clang-svn lld-svn lldb-svn
             ;;
         $OS_GENTOO) ;;
         $OS_SUSE)
