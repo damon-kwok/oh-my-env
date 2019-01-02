@@ -92,8 +92,10 @@ nodejs_install() {
         nodejs_install_nvm
     fi
 
-    tip "update npm"
-    npm i -g npm
+    if [ "$OME_OS" != "$OS_CYGWIN" ]; then
+        tip "update npm"
+        npm install -g npm
+    fi
 
     tip "install grunt-cli"
     npm install -g grunt-cli
@@ -129,7 +131,7 @@ nodejs_info() {
 
 if [ "$OME_OS" = "$OS_CYGWIN" ]; then
     NODEJS_MAJOR_VERSION=10
-    NODEJS_MINOR_VERSION=13
+    NODEJS_MINOR_VERSION=15
     NODEJS_PATCH_VERSION=0
     NODEJS_VERSION=node-v${NODEJS_MAJOR_VERSION}.${NODEJS_MINOR_VERSION}.${NODEJS_PATCH_VERSION}-win-x64
 
