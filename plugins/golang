@@ -126,9 +126,13 @@ golang_install() {
         
     fi
 
-    
-    # tip "install go language server"
+    # tip "install go language server (go-langserver)"
     # go get -u github.com/sourcegraph/go-langserver
+
+    tip "install go language server (bingo)"
+    github_upgrade saibing/bingo $OME_REPO/bingo
+    cd $OME_REPO/bingo/
+    GO111MODULE=on go install
 
     tip "install gocode"
     go get -u github.com/mdempsky/gocode
@@ -180,3 +184,7 @@ else
     export GOBIN=$GOPATH/bin
     export PATH=$GOROOT/bin:$GOBIN:$PATH
 fi
+
+# If you live in China and may not be able to download golang.org/x/dependency
+# module, please set GOPROXY as follow:
+export GOPROXY=https://athens.azurefd.net/

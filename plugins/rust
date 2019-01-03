@@ -14,7 +14,7 @@ rust_install() {
 
     tip "set cargo mirror"
     if [ ! -f $HOME/.cargo/config ]; then
-	    mkdir -p $HOME/.cargo
+        mkdir -p $HOME/.cargo
         echo "[source.crates-io]" >> $HOME/.cargo/config
         echo "replace-with = 'ustc'" >> $HOME/.cargo/config
         echo "" >> $HOME/.cargo/config
@@ -59,12 +59,12 @@ rust_install() {
     rustup default nightly
 
     tip "rustup component add rust-src"
-	rustup component add rust-src
+    rustup component add rust-src
 
     tip "rust set env"
     rust_set_env
 
-    # tip "install rust language server: rls"
+    # tip "install rust language server: (RLS)"
     # rustup component add rls-preview rust-analysis rust-src
     
     tip "install tool:racer"
@@ -141,7 +141,7 @@ rust_install_cn() {
     # fi
     
     # if [ ! -f $HOME/.cargo/config ]; then
-	    # mkdir -p $HOME/.cargo
+        # mkdir -p $HOME/.cargo
         # echo "[source.crates-io]" >> $HOME/.cargo/config
         # echo "replace-with = 'ustc'" >> $HOME/.cargo/config
         # echo "" >> $HOME/.cargo/config
@@ -164,8 +164,8 @@ rust_old() {
     #if command -v rustup >/dev/null 2>&1; then
     if [ "`command -v rustup`" != "" ]; then
         tip "rustup self update"
-	    rustup self update
-	    rustup update
+        rustup self update
+        rustup update
     else
         
         tip "install rustup"
@@ -174,16 +174,16 @@ rust_old() {
         chmod +x ./rustup.sh
         
         # curl -sSf https://mirrors.ustc.edu.cn/rust-static/rustup.sh | sh -s
-	    # curl https://mirrors.ustc.edu.cn/rust-static/rustup.sh -sSf | sh
+        # curl https://mirrors.ustc.edu.cn/rust-static/rustup.sh -sSf | sh
 
 
-	    # curl https://sh.rustup.rs -sSf | sh
+        # curl https://sh.rustup.rs -sSf | sh
         #  export RUST_SRC_PATH="$(rustc --print sysroot)/lib/rustlib/src/rust/src"
         
         tip "rustup install toolchain"
         # rustup toolchain add stable
-	    # rustup toolchain add beta
+        # rustup toolchain add beta
         # rustup toolchain add nightly
-	    # rustup component add rust-src
+        # rustup component add rust-src
     fi
 }

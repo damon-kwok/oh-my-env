@@ -41,6 +41,16 @@ cc_exist_p() {
     echo_error "'cc_exist_p' not implemented"
 }
 
+# if [ "$OME_OS" == "$OS_MSYS2" ]; then
+#     # MAKE_TYPE="MSYS Makefiles"
+#     OME_MAKE="Ninja"
+# else
+#     OME_MAKE="Ninja"
+#     MAKE_PROG="make"
+# fi
+
+export OME_MAKE="Ninja"
+export MAKE_PROG="make"
 cc_info() {
     # ome_get_version gcc "GCC_VERSION"
     # echo_kv "C/C++" "$GCC_VERSION|$CLANG_VERSION"

@@ -123,6 +123,26 @@ ocaml_info() {
     fi
 }
 
-if [ "`command -v opam`" != "" ]; then
-    eval $(opam env)
-fi
+ocaml_set_env() {
+    # Ocaml: OPAM configuration
+    if [ -d $HOME/.opam/opam-init/ ]; then
+        case "$OME_SHELL" in
+            "zsh")
+	            . $HOME/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
+	            ;;
+            "bash")
+	            . $HOME/.opam/opam-init/init.sh > /dev/null 2> /dev/null || true
+	            ;;
+            "csh")
+	            . $HOME/.opam/opam-init/init.csh > /dev/null 2> /dev/null || true
+	            ;;
+        esac
+    fi
+    
+    if [ "`command -v opam`" != "" ]; then
+        eval $(opam env)
+    fi
+
+}
+
+ocaml_set_env

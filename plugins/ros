@@ -15,3 +15,25 @@ ros_exist_p() {
 ros_info() {
     echo_error ""
 }
+
+ros_set_env () {
+    # ROS
+    if [ -d /opt/ros/kinetic/ ] && [ -d $HOME/catkin_ws/ ]; then
+        case "$OME_SHELL" in
+            "zsh")
+                . /opt/ros/kinetic/env.zsh
+                . $HOME/catkin_ws/devel/env.zsh
+                ;;
+            "bash")
+                . /opt/ros/kinetic/env.bash
+                . $HOME/catkin_ws/devel/env.bash
+                ;;
+        esac
+        export PATH=$HOME/catkin_ws/bin:$PATH
+    fi
+
+    # Cyberman
+    # export PATH=$HOME/Cyberman:$PATH
+}
+
+ros_set_env

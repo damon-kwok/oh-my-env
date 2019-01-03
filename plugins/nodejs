@@ -117,6 +117,9 @@ nodejs_install() {
     tip "install vue language server"
     npm install -g vue-language-server
 
+    tip "install bash language server"
+    npm i -g bash-language-server
+
     tip "install yarn"
     # curl -o- -L https://yarnpkg.com/install.sh | bash
     npm install -g yarn

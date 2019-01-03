@@ -75,48 +75,7 @@ case "`uname -o`" in
     *) export OME_OS=$OS_UNKNOW;;
 esac
 
-# if [ "$OME_OS" == "$OS_MSYS2" ]; then
-#     # MAKE_TYPE="MSYS Makefiles"
-#     OME_MAKE="Ninja"
-# else
-#     OME_MAKE="Ninja"
-#     MAKE_PROG="make"
-# fi
-OME_MAKE="Ninja"
-MAKE_PROG="make"
 ################################################################################
-# Ocaml: OPAM configuration
-if [ -d $HOME/.opam/opam-init/ ]; then
-    case "$OME_SHELL" in
-        "zsh")
-	        . $HOME/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
-	        ;;
-        "bash")
-	        . $HOME/.opam/opam-init/init.sh > /dev/null 2> /dev/null || true
-	        ;;
-        "csh")
-	        . $HOME/.opam/opam-init/init.csh > /dev/null 2> /dev/null || true
-	        ;;
-    esac
-fi
-
-# ROS
-if [ -d /opt/ros/kinetic/ ] && [ -d $HOME/catkin_ws/ ]; then
-    case "$OME_SHELL" in
-        "zsh")
-	        . /opt/ros/kinetic/env.zsh
-	        . $HOME/catkin_ws/devel/env.zsh
-	        ;;
-        "bash")
-	        . /opt/ros/kinetic/env.bash
-	        . $HOME/catkin_ws/devel/env.bash
-	        ;;
-    esac
-fi
-export PATH=$HOME/catkin_ws/bin:$PATH
-
-# Cyberman
-# export PATH=$HOME/Cyberman:$PATH
 
 # Oh-My-Emacs
 # export OME_BIN=$(dirname $(readlink -f $0))
@@ -144,6 +103,7 @@ export OME_EMACS_SNIPPET=$HOME/.oh-my-emacs/emacs-config/snippets
 . $HOME/.oh-my-env/bin/tool
 . $HOME/.oh-my-env/bin/proj
 
+################################################################################
 export OME_SHOW=""
 ome_show() {
     local index=0
@@ -165,6 +125,7 @@ ome_show "SYSTEM" "OS:$OME_OS | Arch:$OME_ARCH | Shell:$OME_SHELL | EDITOR:$EDIT
 ome_show "PREFIX" "\"$OME_PREFIX\""
 ome_show "VCS" "`ome_fetch_version git` | `ome_fetch_version svn`"
 
+################################################################################
 # load plugins
 for plugin in $HOME/.oh-my-env/plugins/* ; do
     if [ "$plugin" != "$HOME/.oh-my-env/plugins/README.org" ]; then
@@ -172,7 +133,7 @@ for plugin in $HOME/.oh-my-env/plugins/* ; do
         . "$plugin"
     fi
 done
-
+################################################################################
 # User Settings
 # if [ -d /mingw64/bin2 ]; then
 # export PATH=/mingw64/bin:$PATH
@@ -193,6 +154,7 @@ alias wget='wget -c'
 alias omecd='f(){ cd $OME_ROOT/$1; ls; unset -f f; }; f'
 alias pjcd='f(){ cd $OME_PROJ/$1; ls; unset -f f; }; f'
 alias emcd='f(){ cd $OME_EMACS/$1; ls; unset -f f; }; f'
+alias repocd='f(){ cd $OME_REPO/$1; ls; unset -f f; }; f'
 # alias opam='opam --debug'
 
 if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
