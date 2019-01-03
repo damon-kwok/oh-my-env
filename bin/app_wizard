@@ -10,34 +10,37 @@ ome_app_wizard() {
         echo "    --------------------------"
         echo "    0)  C (cmake)"
         echo "    1)  C++ (cmake)"
-        echo "    2)  Clojure (lein + luminus)"
-        echo "    3)  ClojureScript (lumo + shadow-cljs)"
-        echo "    4)  CommonLisp (roswell)"
-        echo "    5)  Crystal"
-        echo "    6)  Erlang (rebar3)"
-        echo "    7)  Elixir (mix)"
-        echo "    8)  Golang (dep)"
-        echo "    9)  Groovy (gradle)"
-        echo "    10) Haskell (stack)"
-        echo "    11) Java (gradle)"
-        echo "    12) Kotlin (gradle)"
-        echo "    13) Nim (nimble)"
-        echo "    14) Nodejs (grunt)"
-        echo "    15) Nodejs (gulp)"
-        echo "    16) OCaml (ohai)"
-        echo "    17) OCaml-BuckleScript (bsb-native)"
-        echo "    18) Perl"
-        echo "    19) PHP (Composer)"
-        echo "    20) Python (pipenv)"
-        echo "    21) Python (poetry)"
-        echo "    22) Python (hatch)"
-        echo "    23) Reason (ohai)"
-        echo "    24) Reason-BuckleScript (bsb-native)"
-        echo "    25) Ruby (rbenv)"
-        echo "    26) Rust (cargo)"
-        echo "    27) Scala (gradle)"
-        echo "    28) Swift (SPM)"
-        # echo "    29) .net"
+        echo "    2)  Clojure (fullstack:lein+luminus)"
+        echo "    3)  Clojure (fullstack:lein+hoplon)"
+        echo "    4)  Clojure (fullstack:lein+fulcro)"
+        echo "    5)  ClojureScript (fullstack:shadow-cljs)"
+        echo "    6)  ClojureScript (browser:lein+figwheel)"
+        echo "    7)  CommonLisp (roswell)"
+        echo "    8)  Crystal"
+        echo "    9)  Erlang (rebar3)"
+        echo "    10) Elixir (mix)"
+        echo "    11) Golang (dep)"
+        echo "    12) Groovy (gradle)"
+        echo "    13) Haskell (stack)"
+        echo "    14) Java (gradle)"
+        echo "    15) Kotlin (gradle)"
+        echo "    16) Nim (nimble)"
+        echo "    17) Nodejs (grunt)"
+        echo "    18) Nodejs (gulp)"
+        echo "    19) OCaml (ohai)"
+        echo "    20) OCaml-BuckleScript (bsb-native)"
+        echo "    21) Perl"
+        echo "    22) PHP (Composer)"
+        echo "    23) Python (pipenv)"
+        echo "    24) Python (poetry)"
+        echo "    25) Python (hatch)"
+        echo "    26) Reason (ohai)"
+        echo "    27) Reason-BuckleScript (bsb-native)"
+        echo "    28) Ruby (rbenv)"
+        echo "    29) Rust (cargo)"
+        echo "    30) Scala (gradle)"
+        echo "    31) Swift (SPM)"
+        # echo "    32) .net"
         echo "    --------------------------"
         echo "    r) return"
         echo "    q) quit"
@@ -94,19 +97,19 @@ ome_app_wizard() {
             # sed -i 's#$aa#$bb#g' project.clj
             $EDITOR "project.clj"
             ;;
-        "hoplon")
+        "3"|"hoplon")
             ome_check_install "lein" "clj"
             boot -d boot/new new -t hoplon -n $proj_name
             cd $proj_root
             $EDITOR "project.clj"
             ;;
-        "figwheel")
+        "5"|"fulcro")
             ome_check_install "lein" "clj"
-            lein new figwheel $proj_name -- --reagent
+            lein new fulcro $proj_name
             cd $proj_root
             $EDITOR "project.clj"
             ;;
-        "3"|"clojurescript"|"cljs")
+        "4"|"clojurescript"|"cljs")
             ome_check_install "npm" "nodejs"
             npx create-cljs-project $proj_name
             mkdir -p $proj_root/src/main/{server,client}
@@ -126,30 +129,36 @@ ome_app_wizard() {
             # $EDITOR "src/main/$proj_name/core.cljs"
             $EDITOR "core.cljs"
             ;;
-        "4"|"commonlisp"|"cl"|"roswell")
+        "6"|"figwheel")
+            ome_check_install "lein" "clj"
+            lein new figwheel $proj_name -- --reagent
+            cd $proj_root
+            $EDITOR "project.clj"
+            ;;
+        "7"|"commonlisp"|"cl"|"roswell")
             ome_check_install "ros" "roswell"
             mkdir -p $proj_root
             cd $proj_root
             ros init main
             $EDITOR "main.ros"
             ;;
-        "5"|"crystall")
+        "8"|"crystall")
             ome_check_install "crystal" "crystal"
             ome install crystal
             ;;
-        "6"|"erlang"|"erl"|"rebar"|"rebar3")
+        "9"|"erlang"|"erl"|"rebar"|"rebar3")
             ome_check_install "erl" "erlang"
             rebar3 new release $proj_name
             cd $proj_root
             $EDITOR "${proj_name}.rebar"
             ;;
-        "7"|"elixir"|"elx"|"ex")
+        "10"|"elixir"|"elx"|"ex")
             ome_check_install "mix" "elixir"
             mix new $proj_name
             cd $proj_root
             $EDITOR "${proj_name}.exs"
             ;;
-        "8"|"golang"|"go")
+        "11"|"golang"|"go")
             ome_check_install "go" "golang"
             mkdir -p $proj_root
             cd $proj_root
@@ -159,7 +168,7 @@ ome_app_wizard() {
             # $EDITOR "go.mod"
             $EDITOR "main.go"
             ;;
-        "9"|"groovy")
+        "12"|"groovy")
             ome_check_install "gradle" "jvm"
             mkdir -p $proj_root
             cd $proj_root
@@ -167,13 +176,13 @@ ome_app_wizard() {
                    --dsl groovy --project-name $proj_name --package $proj_name
             $EDITOR "src/main/groovy/$proj_name/App.groovy"
             ;;
-        "10"|"haskell"|"hs")
+        "13"|"haskell"|"hs")
             ome_check_install "stack" "haskell"
             stack new $proj_name
             cd $proj_root
             $EDITOR "src/Main.hs"
             ;;
-        "11"|"java")
+        "14"|"java")
             ome_check_install "gradle" "jvm"
             mkdir -p $proj_root
             cd $proj_root
@@ -181,7 +190,7 @@ ome_app_wizard() {
                    --dsl kotlin --project-name $proj_name --package $proj_name
             $EDITOR "src/main/java/$proj_name/App.java"
             ;;
-        "12"|"kotlin"|"kt")
+        "15"|"kotlin"|"kt")
             ome_check_install "gradle" "kotlin"
             mkdir -p $proj_root
             cd $proj_root
@@ -189,13 +198,13 @@ ome_app_wizard() {
                    --dsl kotlin --project-name $proj_name --package $proj_name
             $EDITOR "src/main/kotlin/$proj_name/App.kt"
             ;;
-        "13"|"nim")
+        "16"|"nim")
             ome_check_install "nimble" "nim"
             nimble init $proj_name
             cd $proj_root
             $EDITOR "src/${proj_name}.nim"
             ;;
-        "14"|"nodejs-grunt"|"grunt")
+        "17"|"nodejs-grunt"|"grunt")
             ome_check_install "npm" "nodejs"
             mkdir -p $proj_root
             cd $proj_root
@@ -207,7 +216,7 @@ ome_app_wizard() {
             npm install grunt-contrib-jshint --save-dev
             $EDITOR "Gruntfile.js"
             ;;
-        "15"|"nodejs-gulp"|"gulp")
+        "18"|"nodejs-gulp"|"gulp")
             ome_check_install "npm" "nodejs"
             mkdir -p $proj_root
             cd $proj_root
@@ -219,20 +228,20 @@ ome_app_wizard() {
             npm install gulp --save-dev
             $EDITOR "gulpfile.js"
             ;;
-        "16"|"ocaml"|"ml")
+        "19"|"ocaml"|"ml")
             ome_check_install "opam" "ocaml"
             ohai --ml --bin $proj_name
             cd $proj_root
             $EDITOR "lib/Main.ml"
             ;;
-        "17"|"ocaml-bs"|"bs-ocaml")
+        "20"|"ocaml-bs"|"bs-ocaml")
             ome_check_install "bsb" "ocaml"
             bsb -init $proj_name -theme basic-reason
             cd $proj_root
             mv src/demo.ml src/${proj_name}.ml
             $EDITOR "src/${proj_name}.ml"
             ;;
-        "18"|"perl"|"pl")
+        "21"|"perl"|"pl")
             ome_check_install "cpanm" "perl"
             mkdir -p $proj_root
             cd $proj_root
@@ -246,58 +255,58 @@ ome_app_wizard() {
             chmod +x ./${proj_name}.pl
             $EDITOR "${proj_name}.pl"
             ;;
-        "19"|"php"|"composer")
+        "22"|"php"|"composer")
             ome_check_install "nimble" "nim"
             php composer.phar create-project doctrine/orm $proj_name 1.0
             cd $proj_root
             $EDITOR "composer.json"
             ;;
-        "20"|"python"|"py"|"pipenv")
+        "23"|"python"|"py"|"pipenv")
             ome_check_install "pipenv" "python"
             mkdir -p $proj_root
             cd $proj_root
             pipenv --three
             $EDITOR "Pipfile"
             ;;
-        "21"|"poetry")
+        "24"|"poetry")
             ome_check_install "poetry" "python"
             poetry new $proj_name
             cd $proj_root
             $EDITOR "pyproject.toml"
             ;;
-        "22"|"hatch")
+        "25"|"hatch")
             ome_check_install "hatch" "python"
             hatch new $proj_name
             cd $proj_root
             $EDITOR "pyproject.toml"
             ;;
-        "23"|"reason"|"re")
+        "26"|"reason"|"re")
             ome_check_install "opam" "ocaml"
             ohai --bin $proj_name
             cd $proj_root
             $EDITOR "lib/Main.re"
             ;;
-        "24"|"reason-bs"|"bs-reason")
+        "27"|"reason-bs"|"bs-reason")
             ome_check_install "bsb" "ocaml"
             bsb -init $proj_name -theme basic-reason
             cd $proj_root
             mv src/Demo.re src/${proj_name}.re
             $EDITOR "src/${proj_name}.re"
             ;;
-        "25"|"ruby"|"rb")
+        "28"|"ruby"|"rb")
             ome_check_install "bundle" "ruby"
             mkdir -p $proj_root
             cd $proj_root
             bundle init
             $EDITOR "Gemfile"
             ;;
-        "26"|"rust"|"rs")
+        "29"|"rust"|"rs")
             ome_check_install "cargo" "rust"
             cargo new $proj_name --bin
             cd $proj_root
             $EDITOR "Cargo.toml"
             ;;
-        "27"|"scala")
+        "30"|"scala")
             ome_check_install "gradle" "jvm"
             mkdir -p $proj_root
             cd $proj_root
@@ -305,23 +314,25 @@ ome_app_wizard() {
                    --dsl kotlin --project-name $proj_name --package $proj_name
             $EDITOR "src/main/scala/$proj_name/App.scala"
             ;;
-        "28"|"swift")
+        "31"|"swift")
             ome_check_install "swift" "swift"
             mkdir -p $proj_root
             cd $proj_root
             swift package init --type executable
             $EDITOR "Sources/main.swift"
             ;;
-        "29"|".net")
+        "32"|".net")
             ;;
         "q") exit;;
     esac
     echo "root:$proj_root"
     cd $proj_ws
     if [ -d "$proj_root" ]; then
-        cd $proj_root
-        git init
-        ls
+        cd $proj_name
+        if [ ! -d "$proj_root/.git" ]; then
+            git init
+        fi
+        ls -a
     fi
 
     cd $oldir
