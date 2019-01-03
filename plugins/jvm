@@ -25,9 +25,9 @@ install_jdt_language_server() {
 install_kotlin_language_server() {
     local oldir=`pwd`
     tip "install_kotlin_language_server"
-    github_upgrade fwcd/KotlinLanguageServer $OME_CACHE/KotlinLanguageServer
+    github_upgrade fwcd/KotlinLanguageServer $OME_REPO/KotlinLanguageServer
 
-    cd $OME_CACHE/KotlinLanguageServer/
+    cd $OME_REPO/KotlinLanguageServer/
     gradle build --stacktrace
     
     cd $oldir
@@ -36,9 +36,9 @@ install_kotlin_language_server() {
 install_groovy_language_server() {
     local oldir=`pwd`
     tip "install_groovy_language_server"
-    github_upgrade palantir/language-servers $OME_CACHE/groovy-language-servers
+    github_upgrade palantir/language-servers $OME_REPO/groovy-language-servers
 
-    cd $OME_CACHE/groovy-language-servers/
+    cd $OME_REPO/groovy-language-servers/
     gradle build --stacktrace
     
     cd $oldir
@@ -64,8 +64,8 @@ install_scala_language_server() {
 }
 
 install_graalvm() {
-    github_upgrade oracle/graal $OME_CACHE/graal
-    cd $OME_CACHE/graal/
+    github_upgrade oracle/graal $OME_REPO/graal
+    cd $OME_REPO/graal/
 }
 
 jvm_install_sdkman() {
@@ -225,12 +225,12 @@ sdkman_info() {
 }
 
 jvm_info() {
-    ome_info "JVM" "`sdkman_info java Java` | \
+    ome_show "JVM" "`sdkman_info java Java` | \
 `sdkman_info kotlin Kotlin` | \
 `sdkman_info scala Scala` | \
 `sdkman_info groovy Groovy`"
 
-    ome_info "JVMTool" "`sdkman_info maven Maven` | \
+    ome_show "JVMTool" "`sdkman_info maven Maven` | \
 `sdkman_info sbt SBT` | \
 `sdkman_info gradle Gradle`"
     # `sdkman_info leiningen Lein`"

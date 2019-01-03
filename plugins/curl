@@ -37,9 +37,9 @@ curl_install() {
         $OS_UNKNOW) ;;
     esac
 
-    github_upgrade curl/curl $PROJ_ROOT/c/curl
-    mkdir -p $PROJ_ROOT/c/curl/build
-    cd $PROJ_ROOT/c/curl/build/
+    github_upgrade curl/curl $OME_PROJ/c/curl
+    mkdir -p $OME_PROJ/c/curl/build
+    cd $OME_PROJ/c/curl/build/
     cmake .. -G "$OME_MAKE" \
 	      -DCMAKE_INSTALL_PREFIX=$OME_PREFIX \
           -DCMAKE_INSTALL_BINDIR=$OME_PREFIX/bin \

@@ -24,19 +24,19 @@ libuv_install() {
         # Other
         $OS_UNKNOW) ;;
     esac
-    github_upgrade libuv/libuv $OME_CACHE/libuv
+    github_upgrade libuv/libuv $OME_REPO/libuv
 	#mkdir -p $OME_PREFIX/libuv/build
 
-    #github_ssh_upgrade damon-kwok/libuv $PROJ_ROOT/c/libuv
-    #mkdir -p $PROJ_ROOT/c/libuv/build
+    #github_ssh_upgrade damon-kwok/libuv $OME_PROJ/c/libuv
+    #mkdir -p $OME_PROJ/c/libuv/build
 
-    # cd $PROJ_ROOT/c/libuv/build/
+    # cd $OME_PROJ/c/libuv/build/
     # cmake .. -G "$OME_MAKE" \
 	      # -DCMAKE_INSTALL_PREFIX=$OME_PREFIX
     # cmake --build . --use-stderr --config Release --target install -- -j4
 
-    #cd $PROJ_ROOT/c/libuv/
-	cd $OME_CACHE/libuv
+    #cd $OME_PROJ/c/libuv/
+	cd $OME_REPO/libuv
 
     chmod +x ./autogen.sh
     ./autogen.sh

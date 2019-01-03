@@ -2,8 +2,8 @@
 
 boost_install() {
     # git clone --recursive https://github.com/boostorg/boost.git
-    github_upgrade boostorg/boost $OME_CACHE/boost 1 develop
-    cd $OME_CACHE/boost/
+    github_upgrade boostorg/boost $OME_REPO/boost 1 develop
+    cd $OME_REPO/boost/
     # git checkout develop # or whatever branch you want to use
     ./bootstrap.sh
     ./b2 headers

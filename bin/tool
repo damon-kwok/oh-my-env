@@ -66,8 +66,8 @@ upgrade() {
 
 dptrp1_install() {
     local oldir=`pwd`
-    github_upgrade janten/dpt-rp1-py $OME_CACHE/dpt-rp1-py
-    cd $OME_CACHE/dpt-rp1-py
+    github_upgrade janten/dpt-rp1-py $OME_REPO/dpt-rp1-py
+    cd $OME_REPO/dpt-rp1-py
     # sudo python3 setup.py install
     pip3 install --user .
     cd $oldir

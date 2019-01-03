@@ -66,8 +66,8 @@ libgmime3_install() {
     
     readp "install libgmime3 from source?"
     if [ $? -eq 1 ]; then
-        github_upgrade jstedfast/gmime $OME_CACHE/gmime3
-        cd $OME_CACHE/gmime3/
+        github_upgrade jstedfast/gmime $OME_REPO/gmime3
+        cd $OME_REPO/gmime3/
         #./autogen.sh
         #./configure --prefix=$OME_PREFIX \
             #            --disable-static

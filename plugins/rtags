@@ -48,9 +48,9 @@ rtags_install() {
 
 
     tip "install rtags"
-    github_upgrade Andersbakken/rtags $OME_CACHE/rtags
-    mkdir -p $OME_CACHE/rtags/build
-    cd $OME_CACHE/rtags/build/
+    github_upgrade Andersbakken/rtags $OME_REPO/rtags
+    mkdir -p $OME_REPO/rtags/build
+    cd $OME_REPO/rtags/build/
 
     # -DLIBCLANG_LIBDIR=$HOME/lib
     # -DCMAKE_CXX_COMPILER=g++
@@ -61,13 +61,13 @@ rtags_install() {
           -DLIBCLANG_LLVM_CONFIG_EXECUTABLE=llvm-config
     cmake --build . --use-stderr --config Release
     
-    cp -rf $OME_CACHE/rtags/bin/* $OME_CACHE/rtags/build/bin/
-    cp -rf $OME_CACHE/rtags/build/bin/* $OME_PREFIX/bin/ 
+    cp -rf $OME_REPO/rtags/bin/* $OME_REPO/rtags/build/bin/
+    cp -rf $OME_REPO/rtags/build/bin/* $OME_PREFIX/bin/ 
     
     tip "install irony-server"
-    github_upgrade Sarcasm/irony-mode $OME_CACHE/irony-mode
-    mkdir -p $OME_CACHE/irony-mode/build
-    cd $OME_CACHE/irony-mode/build/
+    github_upgrade Sarcasm/irony-mode $OME_REPO/irony-mode
+    mkdir -p $OME_REPO/irony-mode/build
+    cd $OME_REPO/irony-mode/build/
     # -DCMAKE_INSTALL_PREFIX=$OME_PREFIX/.emacs.d/irony
     # -DCMAKE_CXX_COMPILER=g++
     # -DCMAKE_PREFIX_PATH=$LLVM_ROOT

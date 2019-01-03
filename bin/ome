@@ -130,7 +130,7 @@ ome_package_info() {
     done
     echo -n -e "\033[?25h"  #显示光标
     echo -n -e "\b\c"
-    echo -e $OME_INFO
+    echo -e $OME_SHOW
     cd $olddir
 }
 
@@ -322,5 +322,5 @@ ome_parse() {
 export OME_VERSION="OME     2018.1221 copyleft 2018 damon-kwok"
 #echo $@
 mkdir -p $OME_PREFIX/bin/
-mkdir -p $OME_CACHE/
+mkdir -p $OME_REPO/
 ome_parse $@

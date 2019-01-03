@@ -20,7 +20,7 @@ nim_exist_p() {
 
 nim_info() {
     if [ "`command -v nim`" != "" ]; then
-        ome_info "Nim" "`ome_fetch_version nim` | `ome_fetch_version nimble`"
+        ome_show "Nim" "`ome_fetch_version nim` | `ome_fetch_version nimble`"
     fi
 }
 

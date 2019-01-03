@@ -28,8 +28,8 @@ lenv_set_env() {
 lua_install() {
     lua_install_lenv
 
-    github_upgrade luarocks/luarocks $OME_CACHE/luarocks
-    cd $OME_CACHE/luarocks/
+    github_upgrade luarocks/luarocks $OME_REPO/luarocks
+    cd $OME_REPO/luarocks/
     ./configure --prefix=$OME_PREFIX
     make build
 }
@@ -44,9 +44,9 @@ lua_exist_p() {
 
 lua_info() {
     if [ "`command -v lua`" = "" ]; then
-        ome_info "Lua" "miss"
+        ome_show "Lua" "miss"
     else
-        ome_info "Lua" "`lua -v`"
+        ome_show "Lua" "`lua -v`"
     fi
 }
 

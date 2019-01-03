@@ -128,7 +128,7 @@ php_exist_p() {
 }
 
 php_info() {
-    ome_info "PHP" "`ome_fetch_version php` | `ome_fetch_version composer`"
+    ome_show "PHP" "`ome_fetch_version php` | `ome_fetch_version composer`"
 }
 
 PHP_VERSION=7.3.0

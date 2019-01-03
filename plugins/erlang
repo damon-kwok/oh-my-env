@@ -2,8 +2,8 @@
 
 erlang_install_git() {
     # git clone https://github.com/erlang/otp.git
-    github_upgrade erlang/otp $OME_CACHE/erlang_otp
-    cd $OME_CACHE/erlang_otp
+    github_upgrade erlang/otp $OME_REPO/erlang_otp
+    cd $OME_REPO/erlang_otp
     ./otp_build autoconf
     # ./configure --prefix=$HOME/.erlang_otp
     ./configure --prefix=$OME_PREFIX
@@ -73,9 +73,9 @@ erlang_install_kerl() {
     # kerl build git https://github.com/erlang/otp.git dev 19.2_dev
 
     tip "kerl install otp_${ERLANG_VERSION}"
-    local dir=$OME_CACHE/otp_${ERLANG_VERSION}
+    local dir=$OME_REPO/otp_${ERLANG_VERSION}
     if [ ! -d $dir ]; then
-        kerl install ${ERLANG_VERSION} $OME_CACHE/otp_${ERLANG_VERSION}
+        kerl install ${ERLANG_VERSION} $OME_REPO/otp_${ERLANG_VERSION}
     fi
 
     tip "kerl_set_env"
@@ -83,8 +83,8 @@ erlang_install_kerl() {
 }
 
 kerl_set_env() {
-    if [ -f $OME_CACHE/otp_${ERLANG_VERSION}/activate ]; then
-        . $OME_CACHE/otp_${ERLANG_VERSION}/activate
+    if [ -f $OME_REPO/otp_${ERLANG_VERSION}/activate ]; then
+        . $OME_REPO/otp_${ERLANG_VERSION}/activate
     fi
 }
 
@@ -108,8 +108,8 @@ erlang_install() {
     # chmod +x ./rebar3
 
     tip "install rebar3 for erlang(git)"
-    github_upgrade erlang/rebar3 $OME_CACHE/rebar3
-    cd $OME_CACHE/rebar3/
+    github_upgrade erlang/rebar3 $OME_REPO/rebar3
+    cd $OME_REPO/rebar3/
     chmod +x ./bootstrap
     ./bootstrap
     cp -rf ./rebar3 $OME_PREFIX/bin/
@@ -133,7 +133,7 @@ erlang_exist_p() {
 
 erlang_info() {
     echo ""
-    # ome_info "Erlang" "`ome_fetch_version rebar3`"
+    # ome_show "Erlang" "`ome_fetch_version rebar3`"
 }
 
 ERLANG_VERSION=21.2

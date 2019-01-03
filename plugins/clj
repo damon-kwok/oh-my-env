@@ -42,5 +42,5 @@ clj_exist_p() {
 }
 
 clj_info() {
-    ome_info "clj" "`ome_fetch_version lein | cut -d ' ' -f 1-2`"
+    ome_show "clj" "`ome_fetch_version lein | cut -d ' ' -f 1-2`"
 }

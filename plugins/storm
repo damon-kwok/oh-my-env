@@ -1,8 +1,8 @@
 #!/usr/bin/env sh
 
 storm_install() {
-    github_upgrade apache/storm $OME_CACHE/storm
-    cd $OME_CACHE/storm/
+    github_upgrade apache/storm $OME_REPO/storm
+    cd $OME_REPO/storm/
     mvn compile
     mvn package
 }

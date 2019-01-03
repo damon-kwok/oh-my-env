@@ -119,7 +119,7 @@ export PATH=$HOME/catkin_ws/bin:$PATH
 # export PATH=$HOME/Cyberman:$PATH
 
 # Pyenv
-# export PYENV_ROOT=$OME_CACHE/pyenv
+# export PYENV_ROOT=$OME_REPO/pyenv
 # export PATH=$PYENV_ROOT/bin:$PATH
 # if command -v pyenv 1>/dev/null 2>&1; then
 # eval "$(pyenv init -)"
@@ -145,7 +145,7 @@ export OME_ROOT=$HOME/.oh-my-env
 export OME_BIN=$OME_ROOT/bin
 export PATH=$OME_BIN:$PATH
 
-export OME_CACHE=$HOME/.ome_local/caches
+export OME_REPO=$HOME/.ome_local/repo
 export OME_EMACS=$HOME/.oh-my-emacs
 export OME_EMACS_MODULE=$HOME/.oh-my-emacs/emacs-config/modules
 export OME_EMACS_SNIPPET=$HOME/.oh-my-emacs/emacs-config/snippets
@@ -154,8 +154,8 @@ export OME_WS=$HOME/workspace
 export WS_BIN=$OME_WS/bin
 export PATH=$WS_BIN:$PATH
 
-export BOOK_ROOT=$HOME/book
-export PROJ_ROOT=$HOME/projects
+export OME_BOOK=$HOME/book
+export OME_PROJ=$HOME/projects
 
 # Emacs
 export EDITOR=em
@@ -171,23 +171,23 @@ export OME_PREFIX=$HOME/.ome_local
 # echo_kv "OME" "OS:$OME_OS | Arch:$OME_ARCH | Shell:$OME_SHELL | PREFIX:$OME_PREFIX"
 # echo_kv "VCS" "`git --version | head -n 1` | `svn --version | head -n 1`"
 # echo_kv "Perl" "`perl -V | head -n 1 | cut -c 15-57`"
-export OME_INFO=""
-ome_info() {
+export OME_SHOW=""
+ome_show() {
     local index=0
     for item in $@; do
         if [ "$index" = "0" ]; then
-            export OME_INFO="${OME_INFO}${item}\t"
+            export OME_SHOW="${OME_SHOW}${item}\t"
         else
-            export OME_INFO="$OME_INFO${item} "
+            export OME_SHOW="$OME_SHOW${item} "
         fi
         let index++
     done
-    export OME_INFO="$OME_INFO\n"
+    export OME_SHOW="$OME_SHOW\n"
 }
 
-ome_info "SYSTEM" "OS:$OME_OS | Arch:$OME_ARCH | Shell:$OME_SHELL | EDITOR:$EDITOR"
-ome_info "PREFIX" "\"$OME_PREFIX\""
-ome_info "VCS" "`ome_fetch_version git` | `ome_fetch_version svn`"
+ome_show "SYSTEM" "OS:$OME_OS | Arch:$OME_ARCH | Shell:$OME_SHELL | EDITOR:$EDITOR"
+ome_show "PREFIX" "\"$OME_PREFIX\""
+ome_show "VCS" "`ome_fetch_version git` | `ome_fetch_version svn`"
 
 for plugin in $HOME/.oh-my-env/plugins/* ; do
     if [ "$plugin" != "$HOME/.oh-my-env/plugins/README.org" ]; then
@@ -203,7 +203,8 @@ ome_dev_path $HOME/.local
 alias ls='ls --color'
 alias wget='wget -c'
 alias omecd='f(){ cd $OME_ROOT/$1; ls; unset -f f; }; f'
-alias pjcd='f(){ cd $PROJ_ROOT/$1; ls; unset -f f; }; f'
+alias pjcd='f(){ cd $OME_PROJ/$1; ls; unset -f f; }; f'
+alias emcd='f(){ cd $OME_EMACS/$1; ls; unset -f f; }; f'
 # alias opam='opam --debug'
 
 if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then

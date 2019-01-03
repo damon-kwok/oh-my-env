@@ -6,8 +6,8 @@ carp_install() {
     mkdir -p ~/Carp
     export CARP_DIR=~/Carp/
 
-    github_upgrade carp-lang/Carp $OME_CACHE/carp
-    cd $OME_CACHE/carp/
+    github_upgrade carp-lang/Carp $OME_REPO/carp
+    cd $OME_REPO/carp/
     stack build
     stack install
 }

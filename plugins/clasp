@@ -41,8 +41,8 @@ clasp_install() {
         $OS_UNKNOW) ;;
     esac
 
-    github_upgrade clasp-developers/clasp $OME_CACHE/clasp
-    cd $OME_CACHE/clasp/
+    github_upgrade clasp-developers/clasp $OME_REPO/clasp
+    cd $OME_REPO/clasp/
     ./waf configure
     ./waf build_cboehm
 }

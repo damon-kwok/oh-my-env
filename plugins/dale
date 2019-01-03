@@ -1,9 +1,9 @@
 #!/usr/bin/env sh
 
 dale_install() {
-    github_upgrade tomhrr/dale $OME_CACHE/dale
-    mkdir -p $OME_CACHE/dale/build
-    cd $OME_CACHE/dale/build/
+    github_upgrade tomhrr/dale $OME_REPO/dale
+    mkdir -p $OME_REPO/dale/build
+    cd $OME_REPO/dale/build/
 
     cmake .. -G "$OME_MAKE" \
           -DCMAKE_INSTALL_PREFIX=$OME_PREFIX \

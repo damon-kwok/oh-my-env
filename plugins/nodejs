@@ -74,16 +74,16 @@ nodejs_install() {
         # https://nodejs.org/dist
         
         
-        if [ ! -d $OME_CACHE/$NODEJS_VERSION ]; then
+        if [ ! -d $OME_REPO/$NODEJS_VERSION ]; then
             local zipkg=$NODEJS_VERSION.zip
             mkdir -p ~/Downloads
             cd ~/Downloads/
             if [ ! -f $HOME/Downloads/$zipkg ]; then
                 wget https://nodejs.org/dist/latest-v${NODEJS_MAJOR_VERSION}.x/$zipkg
             fi
-            if [ ! -d $OME_CACHE/$NODEJS_VERSION ]; then
-                unzip ./$zipkg -d $OME_CACHE
-                cd $OME_CACHE/$NODEJS_VERSION
+            if [ ! -d $OME_REPO/$NODEJS_VERSION ]; then
+                unzip ./$zipkg -d $OME_REPO
+                cd $OME_REPO/$NODEJS_VERSION
                 chmod +x ./*
             fi
         fi
@@ -125,8 +125,8 @@ nodejs_install() {
 }
 
 nodejs_info() {
-    # ome_info "Nodejs" "$NODEJS_VERSION | `ome_fetch_version npm`"
-    ome_info "Nodejs" "node `ome_fetch_version node` | npm `ome_fetch_version npm`"
+    # ome_show "Nodejs" "$NODEJS_VERSION | `ome_fetch_version npm`"
+    ome_show "Nodejs" "node `ome_fetch_version node` | npm `ome_fetch_version npm`"
 }
 
 if [ "$OME_OS" = "$OS_CYGWIN" ]; then
@@ -135,8 +135,8 @@ if [ "$OME_OS" = "$OS_CYGWIN" ]; then
     NODEJS_PATCH_VERSION=0
     NODEJS_VERSION=node-v${NODEJS_MAJOR_VERSION}.${NODEJS_MINOR_VERSION}.${NODEJS_PATCH_VERSION}-win-x64
 
-    # tip "set env:$OME_CACHE/$NODEJS_VERSION"
-    export PATH=$OME_CACHE/$NODEJS_VERSION:$PATH
+    # tip "set env:$OME_REPO/$NODEJS_VERSION"
+    export PATH=$OME_REPO/$NODEJS_VERSION:$PATH
 fi
 
 # export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"

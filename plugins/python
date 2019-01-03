@@ -128,23 +128,23 @@ python_install() {
     pip3 install --user -U python-language-server
 
     tip "install build tools:gyp"
-    github_upgrade chromium/gyp $OME_CACHE/gyp
-    cd $OME_CACHE/gyp/
+    github_upgrade chromium/gyp $OME_REPO/gyp
+    cd $OME_REPO/gyp/
     pip2 install --user -U .
 
     tip "install build tools:waf"
-    git_upgrade "https://gitlab.com" ita1024/waf $OME_CACHE/waf
-    cd $OME_CACHE/waf/
+    git_upgrade "https://gitlab.com" ita1024/waf $OME_REPO/waf
+    cd $OME_REPO/waf/
     python3 ./waf-light configure build
     cp -rf ./waf $OME_PREFIX/bin/
 
     tip "install build tools:scons"
     pip2 install --user -U virtualenv
-    git_upgrade "https://github.com" SCons/scons $OME_CACHE/scons
-    cd $OME_CACHE/scons/
+    git_upgrade "https://github.com" SCons/scons $OME_REPO/scons
+    cd $OME_REPO/scons/
     python2 bootstrap.py build/scons
-    if [ -d $OME_CACHE/scons/build/scons/ ]; then
-        cd $OME_CACHE/scons/build/scons/
+    if [ -d $OME_REPO/scons/build/scons/ ]; then
+        cd $OME_REPO/scons/build/scons/
         pip2 install --user -U .        
     else
         echo_error "gen project file failed!"
@@ -187,7 +187,7 @@ python_info() {
         PYTHON3_VERSION="!miss!"
     fi
     if [ "`command -v python2`" != "" ] || [ "`command -v python3`" != "" ]; then
-        ome_info "Python" "py2:$PYTHON2_VERSION | py3:$PYTHON3_VERSION"
+        ome_show "Python" "py2:$PYTHON2_VERSION | py3:$PYTHON3_VERSION"
     fi
 }
 

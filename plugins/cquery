@@ -2,9 +2,9 @@
 
 cquery_install() {
     tip "install cquery"
-    github_upgrade cquery-project/cquery $OME_CACHE/cquery
-    mkdir -p $OME_CACHE/cquery/build
-    cd $OME_CACHE/cquery/build/
+    github_upgrade cquery-project/cquery $OME_REPO/cquery
+    mkdir -p $OME_REPO/cquery/build
+    cd $OME_REPO/cquery/build/
     # -DLIBCLANG_LLVM_CONFIG_EXECUTABLE=$LLVM_BIN/llvm-config 
     # -DCLANG_USE_BUNDLED_LIBC++=on 
     cmake .. -G "$OME_MAKE" \

@@ -38,7 +38,7 @@ mysql_install() {
 
     # https://codeload.github.com/mysql/mysql-server/zip/mysql-8.0.12
     # http://mirrors.neusoft.edu.cn/mariadb//mariadb-10.3.10/source/mariadb-10.3.10.tar.gz
-    github_upgrade mysql/mysql-server $OME_CACHE/mysql-server
+    github_upgrade mysql/mysql-server $OME_REPO/mysql-server
 
     tip "add mysql user"
     groupadd mysql
@@ -49,8 +49,8 @@ mysql_install() {
     mkdir -p /data/mysql
 
     tip "compile"
-    mkdir -p $OME_CACHE/mysql-server/build
-    cd $OME_CACHE/mysql-server/build/
+    mkdir -p $OME_REPO/mysql-server/build
+    cd $OME_REPO/mysql-server/build/
     
     cmake .. -G "$OME_MAKE" \
           -DCMAKE_INSTALL_PREFIX=/usr/local/mysql \

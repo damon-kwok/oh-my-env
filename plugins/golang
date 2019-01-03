@@ -28,38 +28,38 @@ golang_src_download_zip() {
     if [ ! -f $HOME/Downloads/$zipkg ]; then
         wget https://dl.google.com/go/$zipkg
     fi
-    if [ ! -d $OME_CACHE/go ]; then
-        tar xvzf $zipkg -C $OME_CACHE/
+    if [ ! -d $OME_REPO/go ]; then
+        tar xvzf $zipkg -C $OME_REPO/
     fi
 }
 
 golang_src_download_git() {
     tip "compile golang-git:master"
-    github_upgrade golang/go $OME_CACHE/go
-    cd $OME_CACHE/go/src
+    github_upgrade golang/go $OME_REPO/go
+    cd $OME_REPO/go/src
 }
 
 golang_install() {
     if [ "$OME_OS" = "$OS_MSYS2" ] || [ "$OME_OS" = "$OS_CYGWIN" ]; then
-        if [ ! -f $OME_CACHE/go/bin/go ]; then
+        if [ ! -f $OME_REPO/go/bin/go ]; then
             local zipkg=go${GOLANG_VERSION}.windows-amd64.zip
             mkdir -p ~/Downloads
             cd ~/Downloads/
             if [ ! -f $HOME/Downloads/$zipkg ]; then
                 wget https://dl.google.com/go/$zipkg
             fi
-            unzip ./zipkg -d $OME_CACHE
+            unzip ./zipkg -d $OME_REPO
         fi
-        cd $OME_CACHE/go/bin/
+        cd $OME_REPO/go/bin/
         chmod +x ./*
 
-        cd $OME_CACHE/go/pkg/tool/windows_amd64/
+        cd $OME_REPO/go/pkg/tool/windows_amd64/
         chmod +x ./*
         cd ~
         # set golang env
         #{
         export CGO_ENABLED=0
-        export GOROOT=`cygpath -w $OME_CACHE/go`
+        export GOROOT=`cygpath -w $OME_REPO/go`
         export GOPATH=`cygpath -w $HOME/goprojects`
         export GOBIN=$GOPATH/bin
         export PATH=$GOROOT/bin:$GOBIN:/bin:$PATH
@@ -70,22 +70,22 @@ golang_install() {
         export CGO_ENABLED=0
         unset GOROOT
         unset GOBIN
-        mkdir -p $OME_CACHE/go_bootstrap
+        mkdir -p $OME_REPO/go_bootstrap
         
         # bootstrap get src 
-        # github_upgrade golang/go $OME_CACHE/go_bootstrap/go 1 "release-branch.go1.4"        
-        if [ ! -d $OME_CACHE/go_bootstrap/go/ ]; then
+        # github_upgrade golang/go $OME_REPO/go_bootstrap/go 1 "release-branch.go1.4"        
+        if [ ! -d $OME_REPO/go_bootstrap/go/ ]; then
             if [ ! -f ~/Downloads/go1.4.3.src.tar.gz ]; then
                 cd ~/Downloads/
                 wget https://dl.google.com/go/go1.4.3.src.tar.gz
             fi
-            # tar -zxvf ~/workspace/res/go1.4.3.src.tar.gz  -C $OME_CACHE/go_bootstrap/
-            tar -zxvf ~/Downloads/go1.4.3.src.tar.gz  -C $OME_CACHE/go_bootstrap/
+            # tar -zxvf ~/workspace/res/go1.4.3.src.tar.gz  -C $OME_REPO/go_bootstrap/
+            tar -zxvf ~/Downloads/go1.4.3.src.tar.gz  -C $OME_REPO/go_bootstrap/
         fi
 
         # bootstrap compile
-        if [ ! -f $OME_CACHE/go_bootstrap/go/bin/go ]; then
-            cd $OME_CACHE/go_bootstrap/go/src
+        if [ ! -f $OME_REPO/go_bootstrap/go/bin/go ]; then
+            cd $OME_REPO/go_bootstrap/go/src
             if [ "$OME_OS" = "$OS_MSYS2" ] || [ "$OME_OS" = "$OS_CYGWIN" ]; then
                 chmod +x ./make.bat
                 ./make.bat
@@ -97,14 +97,14 @@ golang_install() {
         fi
 
         tip "set GOROOT_BOOTSTRAP"
-        export GOROOT_BOOTSTRAP=$OME_CACHE/go_bootstrap/go
+        export GOROOT_BOOTSTRAP=$OME_REPO/go_bootstrap/go
         unset GOROOT
         unset GOROOT_FINAL
 
         tip "compile golang-$GOLANG_VERSION"
         # golang_src_download_git
         golang_src_download_zip
-        cd $OME_CACHE/go/src/
+        cd $OME_REPO/go/src/
         
         if [ "$OME_OS" = "$OS_MSYS2" ] || [ "$OME_OS" = "$OS_CYGWIN" ]; then
             chmod +x ./make.bat
@@ -118,7 +118,7 @@ golang_install() {
         # set golang env
         #{
         export CGO_ENABLED=0
-        export GOROOT=$OME_CACHE/go
+        export GOROOT=$OME_REPO/go
         export GOPATH=$HOME/goprojects
         export GOBIN=$GOPATH/bin
         export PATH=$GOROOT/bin:$GOBIN:$PATH
@@ -159,23 +159,23 @@ golang_exist_p() {
 
 golang_info() {
     if [ "`command -v go`" != "" ]; then
-        ome_info "Golang" "`go version`"
+        ome_show "Golang" "`go version`"
     fi
 }
 # Golang
-# export GOROOT_BOOTSTRAP=$OME_CACHE/go
+# export GOROOT_BOOTSTRAP=$OME_REPO/go
 # export GOOS=linux
 # export GOARCH=amd64
 
 if [ "$OME_OS" = "$OS_CYGWIN" ]; then
     export CGO_ENABLED=0
-    export GOROOT=`cygpath -w $OME_CACHE/go`
+    export GOROOT=`cygpath -w $OME_REPO/go`
     export GOPATH=`cygpath -w $HOME/goprojects`
     export GOBIN=$GOPATH/bin
     export PATH=$GOROOT/bin:$GOBIN:/bin:$PATH
 else
     export CGO_ENABLED=0
-    export GOROOT=$OME_CACHE/go
+    export GOROOT=$OME_REPO/go
     export GOPATH=$HOME/goprojects
     export GOBIN=$GOPATH/bin
     export PATH=$GOROOT/bin:$GOBIN:$PATH

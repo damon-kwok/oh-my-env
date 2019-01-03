@@ -1,9 +1,9 @@
 #!/usr/bin/env sh
 
 libvterm_install() {
-    github_upgrade akermu/emacs-libvterm $OME_CACHE/libvterm
-    mkdir -p $OME_CACHE/libvterm/build
-    cd $OME_CACHE/libvterm/build/
+    github_upgrade akermu/emacs-libvterm $OME_REPO/libvterm
+    mkdir -p $OME_REPO/libvterm/build
+    cd $OME_REPO/libvterm/build/
     cmake .. -G "$OME_MAKE" \
 	      -DCMAKE_INSTALL_PREFIX=$OME_PREFIX
     cmake --build . --use-stderr --config Release -- -j4

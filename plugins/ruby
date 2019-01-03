@@ -116,7 +116,7 @@ rbenv_set_env() {
 }
 
 ruby_info() {
-    ome_info "Ruby" "`ome_fetch_version ruby`"
+    ome_show "Ruby" "`ome_fetch_version ruby`"
 }
 
 rbenv_doctor() {

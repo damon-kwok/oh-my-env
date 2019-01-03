@@ -1,8 +1,8 @@
 #!/usr/bin/env sh
 
 elixir_install_language_server() {
-    github_upgrade JakeBecker/elixir-ls $OME_CACHE/elixir-ls
-    cd $OME_CACHE/elixir-ls/
+    github_upgrade JakeBecker/elixir-ls $OME_REPO/elixir-ls
+    cd $OME_REPO/elixir-ls/
     mix deps.get
     # Shall I install rebar3? (if running non-interactively, use "mix local.rebar --force") [Yn]
     mix compile
@@ -16,8 +16,8 @@ elixir_install_kiex() {
 
 elixir_install_git() {
     ome_check_install "erl" "erlang"
-    github_upgrade elixir-lang/elixir $OME_CACHE/elixir
-    cd $OME_CACHE/elixir
+    github_upgrade elixir-lang/elixir $OME_REPO/elixir
+    cd $OME_REPO/elixir
     make
     # make test
 }
@@ -42,11 +42,11 @@ elixir_exist_p() {
 
 elixir_info() {
     if [ "`command -v elixir`" != "" ]; then
-        ome_info "Erlang" "`elixir --version 2>&1 | head -n 1 | cut -d ' ' -f 1-3`"
-        ome_info "Elixir" "`elixir --version 2>&1 | tail -n 1 | cut -d ' ' -f 1-3`"
+        ome_show "Erlang" "`elixir --version 2>&1 | head -n 1 | cut -d ' ' -f 1-3`"
+        ome_show "Elixir" "`elixir --version 2>&1 | tail -n 1 | cut -d ' ' -f 1-3`"
     fi
     
 }
 
-export PATH=$OME_CACHE/elixir/bin:$PATH
+export PATH=$OME_REPO/elixir/bin:$PATH
 test -s "$HOME/.kiex/scripts/kiex" && source "$HOME/.kiex/scripts/kiex"

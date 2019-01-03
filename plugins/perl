@@ -22,7 +22,7 @@ perl_exist_p() {
 }
 
 perl_info() {
-    ome_info "Perl" "`perl -V | head -n 1 | cut -c 15-57`"
+    ome_show "Perl" "`perl -V | head -n 1 | cut -c 15-57`"
 }
 
 # alias cpanm 'cpanm --mirror http://mirrors.163.com/cpan --mirror-only '

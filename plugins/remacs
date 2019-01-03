@@ -5,8 +5,8 @@ remacs_install() {
          libgif-dev libxpm-dev libgtk-3-dev gnutls-dev \
          libncurses5-dev libxml2-dev
     
-    github_upgrade Wilfred/remacs $OME_CACHE/remacs    
-    cd $OME_CACHE/remacs/
+    github_upgrade Wilfred/remacs $OME_REPO/remacs    
+    cd $OME_REPO/remacs/
     ./autogen.sh --prefix=$OME_PREFIX --enable-rust-debug
     #./configure --prefix=$OME_PREFIX --enable-rust-debug
     make install

@@ -7,8 +7,8 @@ goto_define() {
 }
 
 goto_install() {
-    github_upgrade iridakos/goto $OME_CACHE/goto
-    cd $OME_CACHE/goto
+    github_upgrade iridakos/goto $OME_REPO/goto
+    cd $OME_REPO/goto
     chmod +x ./*.sh
 
     goto_define
@@ -26,8 +26,8 @@ goto_info() {
     echo_error ""
 }
 
-if [ -d $OME_CACHE/goto ]; then
-    # export PATH=$OME_CACHE/goto:$PATH
-    . $OME_CACHE/goto/goto.sh
+if [ -d $OME_REPO/goto ]; then
+    # export PATH=$OME_REPO/goto:$PATH
+    . $OME_REPO/goto/goto.sh
     goto_define
 fi
