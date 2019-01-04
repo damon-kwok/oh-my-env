@@ -89,7 +89,7 @@ export OME_WS=$HOME/workspace
 export OME_BOOK=$HOME/book
 export OME_PROJ=$HOME/projects
 
-export PATH=$$OME_WS/bin:$OME_BIN:$PATH
+export PATH=$OME_WS/bin:$OME_BIN:$PATH
 
 # Emacs
 export EDITOR=em

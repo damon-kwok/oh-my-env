@@ -424,9 +424,9 @@ host_upgrade() {
     local name=$2
     
     if [ "$OME_OS" = "$OS_MSYS2" ]; then
-        local hostfile=/c/Windows/System32/drivers/etc
+        local hostfile=/c/Windows/System32/drivers/etc/hosts
     elif [ "$OME_OS" = "$OS_CYGWIN" ]; then
-        local hostfile=/cygdrive/c/Windows/System32/drivers/etc
+        local hostfile=/cygdrive/c/Windows/System32/drivers/etc/hosts
     else
         local hostfile=/etc/hosts
     fi
