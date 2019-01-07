@@ -1,10 +1,11 @@
 #!/usr/bin/env sh
 
 ethr_install() {
-    github_upgrade Microsoft/ethr $OME_REPO/ethr
-    cd $OME_REPO/ethr/
-    dep ensure -v
-    go build
+    # github_upgrade Microsoft/ethr $OME_REPO/ethr
+    # cd $OME_REPO/ethr/
+    # dep ensure -v
+    # go build
+    go get github.com/Microsoft/ethr
 }
 
 ethr_uninstall() {

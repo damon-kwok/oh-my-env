@@ -125,7 +125,8 @@ python_install() {
     pip3 install --user hatch
 
     tip "install python language server"
-    pip3 install --user -U python-language-server
+    # pip3 install --user -U python-language-server
+    pip install --user -U 'python-language-server[all]'
 
     tip "install build tools:gyp"
     github_upgrade chromium/gyp $OME_REPO/gyp
@@ -145,7 +146,7 @@ python_install() {
     python2 bootstrap.py build/scons
     if [ -d $OME_REPO/scons/build/scons/ ]; then
         cd $OME_REPO/scons/build/scons/
-        pip2 install --user -U .        
+        pip2 install --user -U .
     else
         echo_error "gen project file failed!"
     fi
