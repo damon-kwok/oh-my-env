@@ -64,80 +64,6 @@ upgrade() {
     cd $oldir
 }
 
-dptrp1_install() {
-    local oldir=`pwd`
-    github_upgrade janten/dpt-rp1-py $OME_REPO/dpt-rp1-py
-    cd $OME_REPO/dpt-rp1-py
-    # sudo python3 setup.py install
-    pip3 install --user .
-    cd $oldir
-}
-
-dptrp1_run() {
-    local oldir=`pwd`
-    local ip=$1
-    local opt=$2
-    dptrp1 --client-id $HOME/workspace/conf/dptrp1/deviceid.dat \
-           --key $HOME/workspace/conf/dptrp1/privatekey.dat \
-           --addr $ip \
-           $opt $3 $4 $5 $6
-    cd $oldir
-}
-
-dptrp1_register() {
-    local oldir=`pwd`
-    local ip=$1
-    dptrp1 --client-id $HOME/workspace/conf/dptrp1/deviceid.dat \
-           --key $HOME/workspace/conf/dptrp1/privatekey.dat \
-           --addr $ip \
-           register
-    cd $oldir
-}
-
-dptrp1_list() {
-    local ip=$1
-    dptrp1 --client-id $HOME/workspace/conf/dptrp1/deviceid.dat \
-           --key $HOME/workspace/conf/dptrp1/privatekey.dat \
-           --addr $ip \
-           list-documents
-}
-
-dptrp1_upload() {
-    local ip=$1
-    local file="$2"
-    if [ ! -n "$3" ]; then
-        local folder=""
-    else
-        local folder="$3/"
-    fi
-    
-    dptrp1 --client-id $HOME/workspace/conf/dptrp1/deviceid.dat \
-           --key $HOME/workspace/conf/dptrp1/privatekey.dat \
-           --addr $ip \
-           upload "$file" "Document/Received/$folder`basename \"$file\"`"
-}
-
-dptrp1_download() {
-    local ip=$1
-    local file=$2
-    mkdir -p $HOME/Downloads/dptrp1/
-    echo "download" "Document/Received/$file" "$HOME/Downloads/dptrp1/`basename \"$file\"`"
-    dptrp1 --client-id $HOME/workspace/conf/dptrp1/deviceid.dat \
-           --key $HOME/workspace/conf/dptrp1/privatekey.dat \
-           --addr $ip \
-           download "Document/Received/$file" "$HOME/Downloads/dptrp1/`basename \"$file\"`" 
-}
-
-dptrp1_delete() {
-    local ip=$1
-    local file=$2
-    
-    dptrp1 --client-id $HOME/workspace/conf/dptrp1/deviceid.dat \
-           --key $HOME/workspace/conf/dptrp1/privatekey.dat \
-           --addr $ip \
-           delete "Document/Received/$file"
-}
-
 blog_localserver() {
     local oldir=`pwd`
     cd $HOME/workspace/projects/nodejs/http_server
@@ -170,15 +96,6 @@ steam_on_freebsd() {
         ./install_x86_64.sh
         ./steamrun
     fi
-    cd $oldir
-}
-
-wine_install() {
-    local oldir=`pwd`
-    sudo dpkg --add-architecture i386
-    wget -nc https://dl.winehq.org/wine-builds/Release.key
-    sudo apt-key add Release.key
-    sudo apt-add-repository https://dl.winehq.org/wine-builds/ubuntu/
     cd $oldir
 }
 
