@@ -95,7 +95,7 @@ ruby_install() {
     gem install bundler
     gem update
 
-    tip "install ruby-language-server:Solargraph"
+    tip "install ruby-language-server: solargraph"
     gem install solargraph
 }
 

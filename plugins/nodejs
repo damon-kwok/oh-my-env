@@ -62,7 +62,8 @@ nodejs_install_nvm() {
     \. "$NVM_DIR/nvm.sh"
     
     # nvm install node # lastest version
-    nvm install --lts=dubnium #lastest LFS:dubnium
+    nvm install --lts=dubnium
+    nvm use --lts=dubnium
 }
 
 nodejs_install() {
@@ -136,6 +137,7 @@ if [ "$OME_OS" = "$OS_CYGWIN" ]; then
     NODEJS_MAJOR_VERSION=10
     NODEJS_MINOR_VERSION=15
     NODEJS_PATCH_VERSION=0
+
     NODEJS_VERSION=node-v${NODEJS_MAJOR_VERSION}.${NODEJS_MINOR_VERSION}.${NODEJS_PATCH_VERSION}-win-x64
 
     # tip "set env:$OME_REPO/$NODEJS_VERSION"

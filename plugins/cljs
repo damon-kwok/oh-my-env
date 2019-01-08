@@ -22,6 +22,9 @@ cljs_install() {
         # script/build
         # script/install --prefix $OME_PREFIX
     # fi
+    
+    # tip "install closh"
+    # npm install -g closh
 }
 
 cljs_uninstall() {
@@ -36,6 +39,6 @@ cljs_info() {
     if [ "`command -v lumo`" != "" ]; then
         # ome_show "Erlang" "`elixir --version 2>&1 | head -n 1 | cut -d ' ' -f 1-3`"
         # ome_show "Elixir" "`elixir --version 2>&1 | tail -n 1 | cut -d ' ' -f 1-3`"
-        ome_show "cljs" "lumo `lumo --version`"
+        ome_show "CLJS" "lumo `lumo --version`"
     fi
 }
