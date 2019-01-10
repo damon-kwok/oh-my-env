@@ -62,6 +62,13 @@ erlang_install_kerl() {
     kerl update releases
     
     tip "build $ERLANG_VERSION"
+    if [ -d $HOME/.kerl/builds/${ERLANG_VERSION} ]; then
+        readp "${ERLANG_VERSION} is builded, delete?"
+        if [ $? -eq 1 ]; then
+            kerl delete build ${ERLANG_VERSION}
+        fi
+    fi
+    
     kerl build $ERLANG_VERSION
 
     # tip "kerl build form a github fork"
@@ -74,12 +81,24 @@ erlang_install_kerl() {
 
     tip "kerl install otp_${ERLANG_VERSION}"
     local dir=$OME_REPO/otp_${ERLANG_VERSION}
+
+    if [ -d $dir ]; then
+        readp "${ERLANG_VERSION} is installed, delete?"
+        if [ $? -eq 1 ]; then
+            kerl_deactivate
+            kerl delete installation $OME_REPO/otp_${ERLANG_VERSION}   
+        fi
+    fi
+    
     if [ ! -d $dir ]; then
         kerl install ${ERLANG_VERSION} $OME_REPO/otp_${ERLANG_VERSION}
     fi
 
     tip "kerl_set_env"
     kerl_set_env
+
+    tip "kerl status"
+    kerl status
 }
 
 kerl_set_env() {
