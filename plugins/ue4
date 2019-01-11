@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 ue4_install() {
-    github-ssh_upgrade EpicGames/UnrealEngine $OME_REPO/ue4/UnrealEngine 1 4.21
+    github_ssh_upgrade EpicGames/UnrealEngine $OME_REPO/ue4/UnrealEngine 1 release
     cd $OME_REPO/ue4/UnrealEngine/
     ./Setup.sh
     ./GenerateProjectFiles.sh
