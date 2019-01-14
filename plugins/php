@@ -95,6 +95,11 @@ php_install_phpbrew() {
     # README: https://getcomposer.org/doc/faqs/how-to-install-composer-programmatically.md
     wget https://raw.githubusercontent.com/composer/getcomposer.org/1b137f8bf6db3e79a38a5bc45324414a6b1f9df2/web/installer \
          -O - -q | php -- --quiet
+}
+
+php_install() {
+    php_install_phpenv
+    # php_install_phpbrew
 
     tip "composer self-update"
     php composer.phar self-update
@@ -114,11 +119,6 @@ php_install_phpbrew() {
     composer run-script --working-dir=vendor/felixfbecker/language-server parse-stubs
 }
 
-php_install() {
-    php_install_phpenv
-    # php_install_phpbrew
-}
-
 php_uninstall() {
     echo_error "'php_uninstall' not implemented"
 }
@@ -131,7 +131,17 @@ php_info() {
     ome_show "PHP" "`ome_fetch_version php` | `ome_fetch_version composer`"
 }
 
-PHP_VERSION=7.3.0
+php_edit_ini() {
+    if [ -f $HOME/.phpbrew/php/php-${PHP_VERSION}/etc/php.ini ]; then
+        ed $HOME/.phpbrew/php/php-${PHP_VERSION}/etc/php.ini
+    fi
+
+    if [ -f $HOME/.phpenv/versions/${PHP_VERSION}/etc/php.ini ]; then
+        ed $HOME/.phpenv/versions/${PHP_VERSION}/etc/php.ini
+    fi
+}
+
+PHP_VERSION=7.3.1
 # PHP_VERSION=5.6.39
 phpenv_set_env() {
     export PHPENV_ROOT="/home/damon/.phpenv"
