@@ -133,11 +133,11 @@ php_info() {
 
 php_edit_ini() {
     if [ -f $HOME/.phpbrew/php/php-${PHP_VERSION}/etc/php.ini ]; then
-        ed $HOME/.phpbrew/php/php-${PHP_VERSION}/etc/php.ini
+        em $HOME/.phpbrew/php/php-${PHP_VERSION}/etc/php.ini
     fi
 
     if [ -f $HOME/.phpenv/versions/${PHP_VERSION}/etc/php.ini ]; then
-        ed $HOME/.phpenv/versions/${PHP_VERSION}/etc/php.ini
+        em $HOME/.phpenv/versions/${PHP_VERSION}/etc/php.ini
     fi
 }
 
