@@ -98,6 +98,9 @@ nodejs_install() {
         npm install -g npm
     fi
 
+    tip "npm update -g"
+    npm update -g
+    
     tip "install grunt-cli"
     npm install -g grunt-cli
 

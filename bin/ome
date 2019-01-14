@@ -319,7 +319,7 @@ ome_parse() {
     esac
     cd $oldir
 }
-export OME_VERSION="OME     2018.1221 copyleft 2018 damon-kwok"
+export OME_VERSION="OME     2019.0115 copyleft 2018 damon-kwok"
 #echo $@
 mkdir -p $OME_PREFIX/bin/
 mkdir -p $OME_REPO/
