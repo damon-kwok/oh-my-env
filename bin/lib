@@ -393,9 +393,7 @@ ome_gen_cmake_file() {
         # rm -rf ./compile_commands.json
         # ln -s build/compile_commands.json
     # fi
-    echo "proj:$proj_root/compile_commands.json  11:$disable_compile"
     if [ ! -f "$proj_root/compile_commands.json" ] && [ "$disable_compile" = "" ]; then
-        echo 111111111111
         ome_cmake_build $proj_root
     fi
 }
