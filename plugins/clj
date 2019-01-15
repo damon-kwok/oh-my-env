@@ -44,3 +44,15 @@ clj_exist_p() {
 clj_info() {
     ome_show "CLJ" "`ome_fetch_version lein | cut -d ' ' -f 1-2`"
 }
+
+clj_publish_settings() {
+    if [ ! -f $HOME/.lein/init.clj ]; then
+        read -p "please input your username with clojas:" username
+	    read -sp "please input your password with clojas:" password
+        echo ""
+        echo '(def settings' >> $HOME/.lein/init.clj
+        echo '{:deploy-repositories {"clojars-https" {:url "https://clojars.org/repo"' >> $HOME/.lein/init.clj
+        echo "                                         :username $username" >> $HOME/.lein/init.clj
+        echo "                                         :password $password}}})" >> $HOME/.lein/init.clj
+    fi
+}

@@ -148,3 +148,15 @@ if [ "$OME_OS" = "$OS_CYGWIN" ]; then
 fi
 
 # export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+
+npm_publish_settings() {
+    if [ ! -f $HOME/.npmrc2 ]; then
+        read -p "please input your email with npm:" email
+        read -p "please input your username with npm:" username
+	    read -sp "please input your password with npm:" password
+        local auth=`echo "$username:$password" | base64`
+        echo ""
+        echo "_auth=\"$auth\"" >> $HOME/.npmrc
+        echo "email=$email" >> $HOME/.npmrc
+    fi
+}

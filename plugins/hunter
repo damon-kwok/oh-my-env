@@ -1,0 +1,17 @@
+#!/usr/bin/env sh
+
+hunter_install() {
+    echo_error "'hunter_install' not implemented"
+}
+
+hunter_uninstall() {
+    echo_error "'hunter_uninstall' not implemented"
+}
+
+hunter_exist_p() {
+    echo_error "'hunter_exist_p' not implemented"
+}
+
+hunter_info() {
+    echo_error ""
+}

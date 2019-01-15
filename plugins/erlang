@@ -165,3 +165,7 @@ fi
 }
 
 kerl_set_env
+
+hex_pulish_settings() {
+    echo 111
+}
