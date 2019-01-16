@@ -161,5 +161,9 @@ if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
     export LANG=en_US.UTF-8
 fi
 
+if [ "$OME_OS" = "$OS_DEBIAN" ] || [ "$OME_OS" = "$OS_UBUNTU" ]; then
+    alias apt-dist-upgrade='f(){ sudo apt update && sudo apt dist-upgrade; unset -f f; }; f'
+fi
+
 # bugfix:emacs crash
 export XLIB_SKIP_ARGB_VISUALS=1
