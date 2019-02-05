@@ -469,7 +469,7 @@ cc_install_tools() {
             ;;
         $OS_MSYS2)
 	# autopoint 
-            pacman -S mingw-w64-x86_64-make mingw-w64-x86_64-ninja \
+            pacman -S make mingw-w64-x86_64-make mingw-w64-x86_64-ninja \
                    automake autogen autoconf mingw-w64-x86_64-ruby-pkg-config mingw-w64-x86_64-libtool intltool \
                    mingw-w64-x86_64-cmake mingw-w64-x86_64-ninja \
                    mingw-w64-x86_64-gcc mingw-w64-x86_64-nasm \
@@ -482,7 +482,7 @@ cc_install_tools() {
                 pacman -S texinfo doxygen fop asciidoc xmlto docbook2X mingw-w64-x86_64-imagemagick mingw-w64-x86_64-ghostscript
             fi
 	# libedit-devel libautotrace-devel libuuid-devel
-            pacman -S swig mingw-w64-x86_64-cppunit \
+            pacman -S mingw-w64-x86_64-swig mingw-w64-x86_64-cppunit \
                    mingw-w64-x86_64-openssl mingw-w64-x86_64-libgcrypt \
                    mingw-w64-x86_64-curl mingw-w64-x86_64-ncurses \
                    mingw-w64-x86_64-libxml2 mingw-w64-x86_64-libxslt mingw-w64-x86_64-expat mingw-w64-x86_64-libyaml \
