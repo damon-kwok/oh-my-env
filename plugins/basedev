@@ -143,8 +143,9 @@ basedev_install() {
             if [ $? -eq 1 ]; then
                 pacman -Syyu
             fi
+            # rlwrap 
             pacman -S git subversion wget curl \
-                   tar zip unzip rlwrap coreutils diffutils \
+                   tar zip unzip coreutils diffutils \
                    mingw-w64-x86_64-emacs mingw-w64-x86_64-ttf-dejavu
             ;;
         # Other

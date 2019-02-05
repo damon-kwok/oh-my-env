@@ -468,8 +468,9 @@ cc_install_tools() {
             # fi
             ;;
         $OS_MSYS2)
-            pacman -S make ninja \
-                   automake autogen autoconf autopoint pkg-config libtool intltool \
+	# autopoint 
+            pacman -S mingw-w64-x86_64-make mingw-w64-x86_64-ninja \
+                   automake autogen autoconf mingw-w64-x86_64-ruby-pkg-config mingw-w64-x86_64-libtool intltool \
                    mingw-w64-x86_64-cmake mingw-w64-x86_64-ninja \
                    mingw-w64-x86_64-gcc mingw-w64-x86_64-nasm \
                    mingw-w64-x86_64-python2 mingw-w64-x86_64-python2-pip \
@@ -478,18 +479,19 @@ cc_install_tools() {
 
             readp "install doc tools?"
             if [ $? -eq 1 ]; then
-                pacman -S texinfo doxygen fop asciidoc xmlto docbook2X imagemagick ghostscript
+                pacman -S texinfo doxygen fop asciidoc xmlto docbook2X mingw-w64-x86_64-imagemagick mingw-w64-x86_64-ghostscript
             fi
-            pacman -S swig cppunit \
-                   openssl-devel libcrypt-devel libmcrypt-devel \
-                   libcurl-devel libuuid-devel libncurses-devel \
-                   libxml2-devel libxslt-devel libexpat-devel libyaml-devel \
-                   libffi-devel libreadline-devel gettext-devel \
-                   libevent-devel libpcre-devel libpcre2-devel \
-                   libiconv-devel libedit-devel libautotrace-devel \
-                   bison-devel libicu-devel libtidy-devel \
-                   zlib-devel libzip-devel bzip2-devel liblz4-devel liblzma-devel \
-                   valgrind-devel libatomic_ops-devel re2c
+	# libedit-devel libautotrace-devel libuuid-devel
+            pacman -S swig mingw-w64-x86_64-cppunit \
+                   mingw-w64-x86_64-openssl mingw-w64-x86_64-libgcrypt \
+                   mingw-w64-x86_64-curl mingw-w64-x86_64-ncurses \
+                   mingw-w64-x86_64-libxml2 mingw-w64-x86_64-libxslt mingw-w64-x86_64-expat mingw-w64-x86_64-libyaml \
+                   mingw-w64-x86_64-libffi mingw-w64-x86_64-readline mingw-w64-x86_64-gettext  \
+                   mingw-w64-x86_64-libevent mingw-w64-x86_64-pcre mingw-w64-x86_64-pcre2  \
+                   mingw-w64-x86_64-iconv  \
+	  bison mingw-w64-x86_64-icu  mingw-w64-x86_64-tidy  \
+                   mingw-w64-x86_64-zlib mingw-w64-x86_64-libzip mingw-w64-x86_64-bzip2 mingw-w64-x86_64-lz4 mingw-w64-x86_64-xz  \
+                   mingw-w64-x86_64-libatomic_ops re2c
             ;;
         # Other
         $OS_UNKNOW) ;;
