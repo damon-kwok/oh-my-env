@@ -1,9 +1,7 @@
 #!/usr/bin/env sh
 
 sogou_arch_install() {
-    trizen -S qtwebkit-bin
-    trizen -S fcitx-im fcitx-configtool
-    trizen -S fcitx-sogoupinyin
+    trizen -S qtwebkit-bin fcitx-im fcitx-configtool fcitx-sogoupinyin
 
     if [ ! -e $HOME/.xprofile ]; then
         echo "export GTK_IM_MODULE=fcitx" >> $HOME/.xprofile
