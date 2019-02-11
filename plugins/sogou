@@ -1,8 +1,8 @@
 #!/usr/bin/env sh
 
 sogou_arch_install() {
-    sudo pacman -S qtwebkit-bin
-    sudo pacman -S fcitx-im fcitx-configtool
+    trizen -S qtwebkit-bin
+    trizen -S fcitx-im fcitx-configtool
     trizen -S fcitx-sogoupinyin
 
     if [ ! -e $HOME/.xprofile ]; then
