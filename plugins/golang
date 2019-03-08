@@ -18,7 +18,7 @@ gitlab_go_get() {
     go get -u gitlab.com/$1
 }
 
-export GOLANG_VERSION=1.11.4
+export GOLANG_VERSION=1.12
 
 golang_src_download_zip() {
     local zipkg="go${GOLANG_VERSION}.src.tar.gz"
