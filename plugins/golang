@@ -96,34 +96,35 @@ golang_install() {
             fi
         fi
 
-        tip "set GOROOT_BOOTSTRAP"
-        export GOROOT_BOOTSTRAP=$OME_REPO/go_bootstrap/go
-        unset GOROOT
-        unset GOROOT_FINAL
+        if [ ! -d $OME_REPO/go/ ]; then
+            tip "set GOROOT_BOOTSTRAP"
+            export GOROOT_BOOTSTRAP=$OME_REPO/go_bootstrap/go
+            unset GOROOT
+            unset GOROOT_FINAL
 
-        tip "compile golang-$GOLANG_VERSION"
-        # golang_src_download_git
-        golang_src_download_zip
-        cd $OME_REPO/go/src/
-        
-        if [ "$OME_OS" = "$OS_MSYS2" ] || [ "$OME_OS" = "$OS_CYGWIN" ]; then
-            chmod +x ./make.bat
-            ./make.bat
-        else
-            chmod +x ./*.bash
-            # ./all.bash
-            ./make.bash
+            tip "compile golang-$GOLANG_VERSION"
+            # golang_src_download_git
+            golang_src_download_zip
+            cd $OME_REPO/go/src/
+            
+            if [ "$OME_OS" = "$OS_MSYS2" ] || [ "$OME_OS" = "$OS_CYGWIN" ]; then
+                chmod +x ./make.bat
+                ./make.bat
+            else
+                chmod +x ./*.bash
+                # ./all.bash
+                ./make.bash
+            fi
+
+            # set golang env
+            #{
+            export CGO_ENABLED=1
+            export GOROOT=$OME_REPO/go
+            export GOPATH=$HOME/goprojects
+            export GOBIN=$GOPATH/bin
+            export PATH=$GOROOT/bin:$GOBIN:$PATH
+            #}
         fi
-
-        # set golang env
-        #{
-        export CGO_ENABLED=0
-        export GOROOT=$OME_REPO/go
-        export GOPATH=$HOME/goprojects
-        export GOBIN=$GOPATH/bin
-        export PATH=$GOROOT/bin:$GOBIN:$PATH
-        #}
-        
     fi
 
     # tip "install go language server (go-langserver)"
@@ -178,7 +179,7 @@ if [ "$OME_OS" = "$OS_CYGWIN" ]; then
     export GOBIN=$GOPATH/bin
     export PATH=$GOROOT/bin:$GOBIN:/bin:$PATH
 else
-    export CGO_ENABLED=0
+    export CGO_ENABLED=1
     export GOROOT=$OME_REPO/go
     export GOPATH=$HOME/goprojects
     export GOBIN=$GOPATH/bin
