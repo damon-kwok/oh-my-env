@@ -138,6 +138,9 @@ golang_install() {
     tip "install gocode"
     go get -u github.com/mdempsky/gocode
 
+    tip "install godef"
+    go get github.com/rogpeppe/godef
+
     tip "install dep"
     go get -u github.com/golang/dep/cmd/dep
 
