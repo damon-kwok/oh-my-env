@@ -40,7 +40,8 @@ rust_install() {
             chmod +x ./rustup-init.sh
             ./rustup-init.sh
         else
-            curl https://sh.rustup.rs -sSf | sh -s -- --default-toolchain nightly
+            # curl https://sh.rustup.rs -sSf | sh -s -- --default-toolchain nightly
+            curl https://sh.rustup.rs -sSf | sh -s -- --default-toolchain stable
         fi
 
         tip "rust set env"
@@ -52,23 +53,34 @@ rust_install() {
         rustup update
     fi
 
-    tip "rustup install nightly" 
-    rustup toolchain add nightly
-    
-    tip "rustup default nightly"
-    rustup default nightly
+    # tip "rustup install nightly" 
+    # rustup toolchain add nightly
+    # tip "rustup default nightly"
+    # rustup default nightly
 
+    tip "rustup install stable" 
+    rustup toolchain add stable    
+    tip "rustup default stable"
+    rustup default stable
+
+    # tip "rustup install beta" 
+    # rustup toolchain add beta    
+    # tip "rustup default beta"
+    # rustup default beta
+    
     tip "rustup component add rust-src"
     rustup component add rust-src
 
     tip "rust set env"
     rust_set_env
 
-    # tip "install rust language server: (RLS)"
+    tip "install rust language server: (RLS)"
     # rustup component add rls-preview rust-analysis rust-src
+    rustup component add rls rust-analysis rust-src
     
-    tip "install tool:racer"
-    cargo install --force racer
+    # tip "install tool:racer"
+    # cargo install --force racer
+
 
     tip "install tool:ripgrep"
     cargo install --force ripgrep
@@ -131,9 +143,12 @@ rust_install_cn() {
         rustup update
     else
         tip "install rust"
-        rustup install nightly
-        rustup default nightly
+        # rustup install nightly
+        # rustup default nightly
+        rustup install stable
     fi
+
+    rustup default stable
     
     # if [ "`command -v cargo`" = "" ]; then
         # curl https://mirrors.ustc.edu.cn/rust-static/rustup.sh -sSf | sh -s -- --channel=nightly
