@@ -23,7 +23,7 @@ link_init_el() {
 }
 
 oh_my_emacs_install() {
-    github_ssh_upgrade damon-kwok/oh-my-emacs $HOME/.oh-my-emacs
+    github_upgrade damon-kwok/oh-my-emacs $HOME/.oh-my-emacs
     link_init_el
 }
 
