@@ -41,8 +41,9 @@ export OME_ARCH="`uname -m`"
 # export OME_SHELL="`ps | grep $$ | awk '{print $4}'`"
 export OME_SHELL="`basename $SHELL`"
 
-case "`uname -o`" in
-    "GNU/Linux")
+# case "`uname -o`" in
+case "`uname`" in
+    "GNU/Linux" | "Linux")
         if [ "`command -v dnf`" != "" ]; then
             export OME_OS=$OS_FEDORA
         elif [ "`command -v yum`" != "" ]; then
