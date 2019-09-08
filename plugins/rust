@@ -53,11 +53,6 @@ rust_install() {
         rustup update
     fi
 
-    # tip "rustup install nightly" 
-    # rustup toolchain add nightly
-    # tip "rustup default nightly"
-    # rustup default nightly
-
     tip "rustup install stable" 
     rustup toolchain add stable    
     tip "rustup default stable"
@@ -67,20 +62,23 @@ rust_install() {
     # rustup toolchain add beta    
     # tip "rustup default beta"
     # rustup default beta
+
+    # tip "rustup install nightly" 
+    # rustup toolchain add nightly
+    # tip "rustup default nightly"
+    # rustup default nightly
     
-    tip "rustup component add rust-src"
-    rustup component add rust-src
+    # tip "rustup component add rust-src"
+    # rustup component add rust-src
+
+    tip "install rust language server: (RLS)"
+    rustup component add rls rust-analysis rust-src
 
     tip "rust set env"
     rust_set_env
-
-    tip "install rust language server: (RLS)"
-    # rustup component add rls-preview rust-analysis rust-src
-    rustup component add rls rust-analysis rust-src
     
     # tip "install tool:racer"
     # cargo install --force racer
-
 
     tip "install tool:ripgrep"
     cargo install --force ripgrep

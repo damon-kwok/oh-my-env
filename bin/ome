@@ -1,5 +1,26 @@
 #!/usr/bin/env bash
 
+
+if [ "`uname`" = "Darwin" ]; then
+    # FIX: "readlink: illegal option -- f"   https://blog.csdn.net/libing_zeng/article/details/82953038
+    export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
+    alias readlink=greadlink
+
+    # FIX: bashrc https://blog.csdn.net/liu510817387/article/details/8126719
+    if [ "$OME_OS" = "$OS_MACOS" ]; then
+        if [ ! -f $HOME/.bash_profile ]; then
+            echo 'if [ "${BASH-no}" != "no" ]; then' > $HOME/.bash_profile 
+            echo '    [ -r ~/.bashrc ] && . ~/.bashrc' >> $HOME/.bash_profile
+            echo 'fi' >> $HOME/.bash_profile
+        fi
+
+        if [ ! -f $HOME/.bashrc ]; then
+            echo "# bashrc" > $HOME/.bashrc
+        fi
+    fi
+    
+fi
+
 ################################################################################
 CURRENT_DIR=$(dirname $(readlink -f $0))
 . $CURRENT_DIR/../env
@@ -212,6 +233,7 @@ ome_help() {
     echo "init                           first run initialization"
     echo "install   [plugin_name]        install plugin"
     echo "uninstall [plugin_name]        uninstall plugin"
+    echo "plugin    [plugin name]        create/edit plugin"
     echo "list                           list all plugins"
     echo "update, pull                   self update"
     echo "commit, push                   commit your modify content"
@@ -280,6 +302,9 @@ ome_parse() {
             xdg-open "https://www.ruby-lang.org/en/downloads/"
             xdg-open "http://php.net/downloads.php"
             ;;
+        "plugin")
+            $EDITOR $HOME/.oh-my-env/plugins/$ARG1
+            ;;
         "test")
             # spin
             echo -n -e "\033[?25l"  #隐藏光标
@@ -320,7 +345,7 @@ ome_parse() {
     esac
     cd $oldir
 }
-export OME_VERSION="OME     2019.0908 copyleft 2019 damon-kwok"
+export OME_VERSION="OME     2019.0909 copyleft 2019 damon-kwok"
 #echo $@
 mkdir -p $OME_PREFIX/bin/
 mkdir -p $OME_REPO/
