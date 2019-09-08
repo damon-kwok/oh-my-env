@@ -162,22 +162,22 @@ ome_pull() {
     ome install oh_my_emacs
 
     tip "wrokspace upgrade"
-    gitlab_ssh_upgrade damon-kwok/workspace $HOME/workspace
+    gitlab_upgrade damon-kwok/workspace $HOME/workspace
     chmod +x $HOME/.oh-my-env/*
 
-    github_ssh_upgrade damon-kwok/damon-kwok.github.io $OME_PROJ/me/blog
+    github_upgrade damon-kwok/damon-kwok.github.io $OME_PROJ/me/blog
     
-    github_ssh_upgrade damon-kwok/awesome-package-manager $OME_PROJ/me/awesome-package-manager
-    github_ssh_upgrade damon-kwok/awesome-network-programming $OME_PROJ/me/awesome-network-programming
-    github_ssh_upgrade damon-kwok/awesome-web-scraping $OME_PROJ/me/awesome-web-scraping
-    github_ssh_upgrade damon-kwok/medusa $OME_PROJ/me/medusa
-    # github_ssh_upgrade damon-kwok/balisong $OME_PROJ/me/balisong
-    github_ssh_upgrade damon-kwok/data-bundle $OME_PROJ/me/data-bundle
-    github_ssh_upgrade damon-kwok/memrock $OME_PROJ/me/memrock
+    github_upgrade damon-kwok/awesome-package-manager $OME_PROJ/me/awesome-package-manager
+    github_upgrade damon-kwok/awesome-network-programming $OME_PROJ/me/awesome-network-programming
+    github_upgrade damon-kwok/awesome-web-scraping $OME_PROJ/me/awesome-web-scraping
+    github_upgrade damon-kwok/medusa $OME_PROJ/me/medusa
+    # github_upgrade damon-kwok/balisong $OME_PROJ/me/balisong
+    github_upgrade damon-kwok/data-bundle $OME_PROJ/me/data-bundle
+    github_upgrade damon-kwok/memrock $OME_PROJ/me/memrock
 
-    github_ssh_upgrade damon-kwok/cljs-example $OME_PROJ/me/cljs-example
+    github_upgrade damon-kwok/cljs-example $OME_PROJ/me/cljs-example
     
-    github_ssh_upgrade damon-kwok/libknife $OME_PROJ/me/libknife    
+    github_upgrade damon-kwok/libknife $OME_PROJ/me/libknife    
     # cd $OME_PROJ/c/libknife
     # mkdir -p build
     # cd build
@@ -186,17 +186,23 @@ ome_pull() {
 }
 
 ome_status() {
-    tip "workspace status"
-    cd $OME_WS
-    git status
+    if [ -d $OME_WS ]; then
+        tip "workspace status"
+        cd $OME_WS
+        git status
+    fi
 
-    tip "oh-mymacs status"
-    cd $HOME/.oh-my-emacs/
-    git status
+    if [ -d $HOME/.oh-my-emacs/ ]; then
+        tip "oh-mymacs status"
+        cd $HOME/.oh-my-env/
+        git status
+    fi
 
-    tip "oh-my-env status"
-    cd $HOME/.oh-my-env
-    git status
+    if [ -d $HOME/.oh-my-emacs/ ]; then
+        tip "oh-my-env status"
+        cd $HOME/.oh-my-env
+        git status
+    fi
 }
 
 ome_push() {
