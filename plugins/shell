@@ -18,10 +18,10 @@ shell_install() {
 
     #set .bashrc
 
-    ome_check_install "npm" "nodejs"
+    # ome_check_install "npm" "nodejs"
     
-    tip "install bash language server"
-    npm i -g bash-language-server
+    # tip "install bash language server"
+    # npm i -g bash-language-server
 }
 
 shell_uninstall() {
