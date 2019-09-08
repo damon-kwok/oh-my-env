@@ -23,7 +23,7 @@ run_emacs_nw() {
     emacs -nw --debug-init
 }
 
-delete_etc() {
+delete_elc() {
     cd $OME_ROOT/emacs-config/modules
     rm -rf *.elc
     cd $OME_ROOT
