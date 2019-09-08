@@ -193,7 +193,7 @@ ome_status() {
     fi
 
     if [ -d $HOME/.oh-my-emacs/ ]; then
-        tip "oh-mymacs status"
+        tip "oh-my-emacs status"
         cd $HOME/.oh-my-env/
         git status
     fi

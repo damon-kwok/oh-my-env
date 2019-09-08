@@ -258,7 +258,7 @@ ome_parse() {
             ;;
         "init")
             ome install basedev
-            ome install cc
+            # ome install cc
             ome_config
             ;;
         "install")

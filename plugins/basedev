@@ -88,7 +88,19 @@ basedev_install() {
         $OS_MAGEIA) ;;
         $OS_SLITAZ) ;;
         # Unix
-        $OS_MACOS) ;;
+        $OS_MACOS)
+            /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+            brew update
+            
+            brew install wget
+            brew install coreutils
+            
+            brew tap homebrew/cask-fonts
+            brew cask install font-bitstream-vera
+
+            brew tap railwaycat/emacsmacport
+            brew cask install emacs-mac
+        ;;
         $OS_AIX) ;;
         $OS_SOLARIS) ;;
         $OS_FREEBSD)
