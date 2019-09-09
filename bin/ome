@@ -107,7 +107,11 @@ ome_config() {
     # git config --global difftool.prompt false
 }
 
-ome_package_list() {
+echo_error() {
+    echo -e $(tput setaf 1)"$1"$(tput sgr0)
+}
+
+ome_package_list_1() {
     local olddir=`pwd`
     tip "package list"
     for plugin in $HOME/.oh-my-env/plugins/* ; do
@@ -116,9 +120,20 @@ ome_package_list() {
 
     cd $olddir
 }
-echo_error() {
-    echo -e $(tput setaf 1)"$1"$(tput sgr0)
+
+ome_package_list() {
+    local olddir=`pwd`
+    # tip "package list:"
+    # for plugin in $HOME/.oh-my-env/plugins/* ; do
+    # echo_success `basename $plugin`
+    # done
+
+    cd $HOME/.oh-my-env/plugins/
+    ls
+
+    cd $olddir
 }
+
 
 ome_package_info() {
     local olddir=`pwd`
@@ -131,7 +146,7 @@ ome_package_info() {
     # strload[2]="|"
     # strload[3]="/"
 
-    echo -n -e "\033[?25l"  #隐藏光标
+    # echo -n -e "\033[?25l"  #隐藏光标
     for plugin_file in $HOME/.oh-my-env/plugins/* ; do
         if [ "$plugin_file" != "$HOME/.oh-my-env/plugins/README.org" ]; then
             
@@ -149,22 +164,9 @@ ome_package_info() {
             # echo -n -e "\b\b"
         fi
     done
-    echo -n -e "\033[?25h"  #显示光标
-    echo -n -e "\b\c"
+    # echo -n -e "\033[?25h"  #显示光标
+    # echo -n -e "\b\c"
     echo -e $OME_SHOW
-    cd $olddir
-}
-
-ome_package_list() {
-    local olddir=`pwd`
-    # tip "package list:"
-    # for plugin in $HOME/.oh-my-env/plugins/* ; do
-    # echo_success `basename $plugin`
-    # done
-
-    cd $HOME/.oh-my-env/plugins/
-    ls
-
     cd $olddir
 }
 
