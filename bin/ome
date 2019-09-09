@@ -87,24 +87,24 @@ ome_config() {
     # tip "libtool"
     # libtool --finish $OME_PREFIX/lib
     
-    tip "git config"
-    git config --global core.editor "em"
-    git config --global core.autocrlf false
-    git config --global core.safecrlf false
-    git config --global core.safecrlf warn
+    # tip "git config"
+    # git config --global core.editor "em"
+    # git config --global core.autocrlf false
+    # git config --global core.safecrlf false
+    # git config --global core.safecrlf warn
     
-    git config --global user.email "563066990@qq.com"
-    git config --global user.name "damon-kwok"
+    # git config --global user.email "563066990@qq.com"
+    # git config --global user.name "damon-kwok"
     
-    git config --global color.ui true
+    # git config --global color.ui true
     
-    git config --global merge.tool emerge
-    git config --global mergetool.diffmerge.cmd "emerge \$LOCAL \$BASE \$REMOTE \$MERGED"
-    git config --global mergetool.keepBackup false
+    # git config --global merge.tool emerge
+    # git config --global mergetool.diffmerge.cmd "emerge \$LOCAL \$BASE \$REMOTE \$MERGED"
+    # git config --global mergetool.keepBackup false
 
-    git config --global diff.tool ediff
-    git config --global difftool.ediff.cmd "ediff \"\$LOCAL\" \"\$REMOTE\""
-    git config --global difftool.prompt false
+    # git config --global diff.tool ediff
+    # git config --global difftool.ediff.cmd "ediff \"\$LOCAL\" \"\$REMOTE\""
+    # git config --global difftool.prompt false
 }
 
 ome_package_list() {
@@ -120,34 +120,33 @@ echo_error() {
     echo -e $(tput setaf 1)"$1"$(tput sgr0)
 }
 
-strload=("-" "\\" "|" "/")
-# strload[0]="-"
-# strload[1]="\\"
-# strload[2]="|"
-# strload[3]="/"
-
-
 ome_package_info() {
     local olddir=`pwd`
     # tip "package list"
-    local index=0
+    # local index=0
+
+    # strload=("-" "\\" "|" "/")
+    # strload[0]="-"
+    # strload[1]="\\"
+    # strload[2]="|"
+    # strload[3]="/"
 
     echo -n -e "\033[?25l"  #隐藏光标
     for plugin_file in $HOME/.oh-my-env/plugins/* ; do
         if [ "$plugin_file" != "$HOME/.oh-my-env/plugins/README.org" ]; then
             
-            local idx=$((index%4))
-            echo -n -e "${strload[$idx]}"
+            # local idx=$((index%4))
+            # echo -n -e "${strload[$idx]}"
             # let index++
             # let index=$index+1
-            index=$((index+1))
+            # index=$((index+1))
             local PLUGIN=`basename $plugin_file`
             local EVAL="${PLUGIN}_info"
             # echo "$EVAL--------------:$plugin_file"
             . $plugin_file > $HOME/2.log
             eval "$EVAL>$HOME/1.log"
             # sleep 0.2
-            echo -n -e "\b\b"
+            # echo -n -e "\b\b"
         fi
     done
     echo -n -e "\033[?25h"  #显示光标
@@ -229,17 +228,17 @@ ome_help() {
     echo ""
     echo "Usage: ome [OPTION]..."
     echo "help                           display this help and exit"
+    echo "version                        output version information"
     echo "doctor                         ceheck ome config"
     echo ""
     echo "init                           initialization"
-    echo "config                         ome base config:git/gcc/clang"
+    #echo "config                         ome base config:git/gcc/clang"
     echo "install   [plugin_name]        install plugin"
     echo "uninstall [plugin_name]        uninstall plugin"
     echo "plugin    [plugin name]        create/edit plugin"
     echo "new [language] [project_name]  create project"
     echo "repl                           show REPL menu"
     echo "list                           list all plugins"
-    echo "show                           output version information"
     echo ""
     echo "update, pull                   self update"
     echo "commit, push                   commit your modify content"
@@ -254,9 +253,9 @@ ome_parse() {
     local ARG2=$3
     
     case "$OPT_TYPE" in
-        "config")
-            ome_config
-            ;;
+        # "config")
+            # ome_config
+            # ;;
         "init")
             ome install basedev
             # ome install cc
@@ -310,6 +309,11 @@ ome_parse() {
             ;;
         "test")
             # spin
+            strload=("-" "\\" "|" "/")
+            # strload[0]="-"
+            # strload[1]="\\"
+            # strload[2]="|"
+            # strload[3]="/"
             echo -n -e "\033[?25l"  #隐藏光标
             for i in `seq 100`
             do
