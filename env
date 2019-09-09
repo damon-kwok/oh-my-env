@@ -114,7 +114,7 @@ ome_show() {
         else
             export OME_SHOW="$OME_SHOW${item} "
         fi
-        let index++
+        let index=$index+1
     done
     export OME_SHOW="$OME_SHOW\n"
 }

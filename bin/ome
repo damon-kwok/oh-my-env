@@ -135,12 +135,12 @@ ome_package_info() {
     echo -n -e "\033[?25l"  #隐藏光标
     for plugin_file in $HOME/.oh-my-env/plugins/* ; do
         if [ "$plugin_file" != "$HOME/.oh-my-env/plugins/README.org" ]; then
-            # index=$((index+1))
             
             local idx=$((index%4))
             echo -n -e "${strload[$idx]}"
             # let index++
-            let index=$index+1
+            # let index=$index+1
+            index=$((index+1))
             local PLUGIN=`basename $plugin_file`
             local EVAL="${PLUGIN}_info"
             # echo "$EVAL--------------:$plugin_file"
