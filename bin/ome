@@ -139,7 +139,8 @@ ome_package_info() {
             
             local idx=$((index%4))
             echo -n -e "${strload[$idx]}"
-            let index++
+            # let index++
+            let index=$index+1
             local PLUGIN=`basename $plugin_file`
             local EVAL="${PLUGIN}_info"
             # echo "$EVAL--------------:$plugin_file"
