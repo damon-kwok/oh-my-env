@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 
 install_jdt_language_server() {
     local oldir=`pwd`

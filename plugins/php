@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 
 php_install_phpenv() {
     get_os_type
@@ -53,8 +53,7 @@ php_install_phpenv() {
     esac
 
     tip "phpenv-installer"
-    curl -L https://raw.githubusercontent.com/phpenv/phpenv-installer/master/bin/phpenv-installer \
-        | bash
+    curl -L https://raw.githubusercontent.com/phpenv/phpenv-installer/master/bin/phpenv-installer | sh
 
     tip "set phpenv env"
     phpenv_set_env

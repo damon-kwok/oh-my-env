@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 
 ome_app_wizard() {
     local oldir=`pwd`
@@ -116,7 +116,7 @@ ome_app_wizard() {
             cd $proj_root
             npm install shadow-cljs --save-dev
             npm install express --save
-            echo "#!/usr/bin/env bash" >> repl.sh
+            echo "#!/usr/bin/env sh" >> repl.sh
             echo "" >> repl.sh
             echo "npx shadow-cljs node-repl" >> repl.sh
             echo "# or" >> repl.sh

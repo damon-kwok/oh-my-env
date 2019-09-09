@@ -40,7 +40,8 @@ ruby_install_rvm() {
     esac
 
     if [ "`command -v rvm`" = "" ]; then
-        curl -sSL https://get.rvm.io | bash -s stable
+        # curl -sSL https://get.rvm.io | bash -s stable
+        curl -sSL https://get.rvm.io | sh -s stable
         curl -sSL https://rvm.io/mpapis.asc | gpg2 --import -
     fi
     
@@ -121,5 +122,6 @@ ruby_info() {
 
 rbenv_doctor() {
     tip "revenv-doctor"
-    curl -fsSL https://github.com/rbenv/rbenv-installer/raw/master/bin/rbenv-doctor | bash
+    # curl -fsSL https://github.com/rbenv/rbenv-installer/raw/master/bin/rbenv-doctor | bash
+    curl -fsSL https://github.com/rbenv/rbenv-installer/raw/master/bin/rbenv-doctor | sh
 }

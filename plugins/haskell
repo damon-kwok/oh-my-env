@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 
 if [ "$OME_OS" = "$OS_CYGWIN" ]; then
     # STACK_MAJOR_VERSION=1

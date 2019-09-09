@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 
 # . /opt/ros/kinetic/setup.bash
 . $HOME/.oh-my-env/env

@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 
 ask() {
     read -p $(tput setaf 5)"$1 "$(tput sgr0)
