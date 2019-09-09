@@ -3,7 +3,7 @@
 goto_define() {
     goto -r ome $HOME/.oh-my-emacs/
     goto -r ws $HOME/workspace/
-    goto -r plugins $HOME/workspace/bin/plugins/common/
+    goto -r plugins $HOME/.oh-my-env/plugins/
 }
 
 goto_install() {
@@ -29,5 +29,5 @@ goto_info() {
 if [ -d $OME_REPO/goto ]; then
     # export PATH=$OME_REPO/goto:$PATH
     . $OME_REPO/goto/goto.sh
-    goto_define
+    # goto_define
 fi
