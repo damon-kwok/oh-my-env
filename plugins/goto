@@ -49,7 +49,6 @@ goto_info() {
 }
 
 if [ -d $OME_REPO/goto ]; then
-    # export PATH=$OME_REPO/goto:$PATH
-    bash -s $OME_REPO/goto/goto.sh
+    . $OME_REPO/goto/goto.sh
     # goto_define
 fi
