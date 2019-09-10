@@ -50,6 +50,6 @@ goto_info() {
 
 if [ -d $OME_REPO/goto ]; then
     # export PATH=$OME_REPO/goto:$PATH
-    . $OME_REPO/goto/goto.sh
+    bash -s $OME_REPO/goto/goto.sh
     # goto_define
 fi

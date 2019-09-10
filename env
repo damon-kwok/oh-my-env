@@ -110,10 +110,12 @@ ome_show() {
     for item in $@; do
         if [ "$index" = "0" ]; then
             export OME_SHOW="${OME_SHOW}${item}\t"
+            # let index=$index+1
+            let index=1
         else
             export OME_SHOW="$OME_SHOW${item} "
         fi
-        let index=$index+1
+        # let index=$index+1
     done
     export OME_SHOW="$OME_SHOW\n"
 }
