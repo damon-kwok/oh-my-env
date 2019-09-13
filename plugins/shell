@@ -14,6 +14,8 @@ shell_install() {
 	    # git clone --depth=1 https://github.com/Bash-it/bash-it.git ~/.bash_it
 	    github_upgrade Bash-it/bash-it ~/.bash_it
 	    ~/.bash_it/install.sh
+        
+        ome_fix_dotfiles
     fi
 
     #set .bashrc

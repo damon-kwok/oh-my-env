@@ -4,7 +4,7 @@ function gen_app_desktop_file()
 {
     appname=$1
     exename=$2
-    cfgname=$HOME/$1.desktop
+    cfgname=$HOME/.local/share/applications/$1.desktop
     echo "$1.desktop"
     echo "[Desktop Entry]" > $cfgname
     echo "Type=Application" >> $cfgname
@@ -17,7 +17,7 @@ function gen_app_desktop_file()
     echo "Categories=$exename;" >> $cfgname
     echo "Name[en_US]=$exename" >> $cfgname
 
-    sudo mv -f $cfgname /usr/local/share/applications/
+    # sudo mv -f $cfgname /usr/local/share/applications/
 }
 
 function traverse_app_dir()

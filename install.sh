@@ -23,6 +23,7 @@ ome_write_env_to_dotfile() {
             echo "" >> $dotfile
             echo "# oh-my-env" >> $dotfile
             echo ". \$HOME/.oh-my-env/env" >> $dotfile
+            . $dotfile
         fi
     fi
 }

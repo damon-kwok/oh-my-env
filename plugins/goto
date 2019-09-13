@@ -1,6 +1,8 @@
 #!/usr/bin/env sh
 
 goto_define() {
+    . $OME_REPO/goto/goto.sh
+    
     goto -u ome
     goto -r ome $OME_ROOT
 
