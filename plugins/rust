@@ -32,7 +32,7 @@ rust_install() {
             cd $HOME/.cargo/
             rm -rf ./rustup-init.sh
             
-            tip" wget https://sh.rustup.rs"
+            tip "wget https://sh.rustup.rs"
             wget https://cdn.jsdelivr.net/gh/rust-lang-nursery/rustup.rs/rustup-init.sh
             perl -pi -e 's|"https://static.rust-lang.org/rustup/dist"|"https://mirrors.ustc.edu.cn/rust-static/rustup"|g' ./rustup-init.sh
             
