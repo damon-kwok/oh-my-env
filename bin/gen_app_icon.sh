@@ -1,10 +1,11 @@
 #!/usr/bin/env sh
 
-function gen_app_icon()
+function gen_app_desktop_file()
 {
     appname=$1
     exename=$2
     cfgname=$HOME/$1.desktop
+    echo "$1.desktop"
     echo "[Desktop Entry]" > $cfgname
     echo "Type=Application" >> $cfgname
     echo "Name=$exename" >> $cfgname
@@ -19,7 +20,7 @@ function gen_app_icon()
     sudo mv -f $cfgname /usr/local/share/applications/
 }
 
-function getexe()
+function traverse_app_dir()
 {
     appname=$2
     for element in `ls $1`
@@ -32,11 +33,11 @@ function getexe()
 	        if [ "$extname" = "png" ];then
                 exename="${filename}.sh"
                 if [ -f $exename ]; then
-                    echo "dir:$dir_or_file"
-                    echo "appname:$appname"
-		            echo "filename:`basename $filename`"
-		            echo "extname:$extname"
-                    gen_app_icon $appname `basename $filename`
+                    # echo "raw::$dir_or_file"
+                    # echo "appname:$appname"
+		            # echo "filename:`basename $filename`"
+		            # echo "extname:$extname"
+                    gen_app_desktop_file $appname `basename $filename`
                 fi
 
 	        fi
@@ -44,17 +45,17 @@ function getexe()
     done
 }
 
-function getapp(){
+function traverse_all_app(){
     for element in `ls $1`
     do  
         dir_or_file=$1"/"$element
         if [ -d $dir_or_file ]; then
 	        if [ -d $dir_or_file/bin ]; then
-		        getexe $dir_or_file/bin `basename $dir_or_file`
+		        traverse_app_dir $dir_or_file/bin `basename $dir_or_file`
 	        fi
         fi  
     done
 }
 
 root_dir="/home/damon/Applications"
-getapp $root_dir
+traverse_all_app $root_dir
