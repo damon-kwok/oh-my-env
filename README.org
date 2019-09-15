@@ -18,7 +18,7 @@
 *** Install
 #+BEGIN_SRC 
 # curl -L https://raw.githubusercontent.com/damon-kwok/oh-my-env/master/install.sh | bash
-curl -L https://git.io/JeLGL | sh
+curl -L https://git.io/JeLGL | sh -s install
 #+END_SRC
 *** Uninstall
 #+BEGIN_SRC shell
@@ -31,7 +31,8 @@ source $OME_ROOT/uninstall.sh
 or
 #+BEGIN_SRC shell
 # curl -L https://raw.githubusercontent.com/damon-kwok/oh-my-env/master/uninstall.sh | bash
-curl -L https://git.io/JeL0d | sh
+# curl -L https://git.io/JeL0d | sh
+curl -L https://git.io/JeLGL | sh -s uninstall
 #+END_SRC
 or
 #+BEGIN_SRC shell

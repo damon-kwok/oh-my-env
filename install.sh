@@ -19,7 +19,7 @@ ome_write_env_to_dotfile() {
     local dotfile=$1
     if [ -f $dotfile ]; then
         find_str "oh-my-env" $dotfile
-        if [ $? -eq 0 ]; then	
+        if [ $? -eq 0 ]; then
             echo "" >> $dotfile
             echo "# oh-my-env" >> $dotfile
             echo ". \$HOME/.oh-my-env/env" >> $dotfile
@@ -46,7 +46,7 @@ if [ "`uname`" = "Darwin" ]; then
     brew cask install emacs-mac		
 fi
 
-if [ "$#" == "1" ]; then
+if [ "$1" == "install" ]; then
 	echo "=======OME INSTALL MODE======="
 	if [ ! -f "$HOME/.oh-my-env/.git/index" ]; then
 	    git clone https://github.com/damon-kwok/oh-my-env $HOME/.oh-my-env --depth=1
@@ -63,4 +63,7 @@ if [ "$#" == "1" ]; then
 	. $HOME/.oh-my-env/env
 fi
 
-
+if [ "$1" == "uninstall" ]; then
+  rm -rf $HOME/.oh-my-env/
+  rm -rf $HOME/.ome_local/
+fi
