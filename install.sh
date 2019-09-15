@@ -47,7 +47,7 @@ if [ "`uname`" = "Darwin" ]; then
 fi
 
 if [ "$1" == "install" ]; then
-	echo "=======OME INSTALL MODE======="
+	echo "========OME INSTALL========"
 	if [ ! -f "$HOME/.oh-my-env/.git/index" ]; then
 	    git clone https://github.com/damon-kwok/oh-my-env $HOME/.oh-my-env --depth=1
 	else
@@ -64,6 +64,6 @@ if [ "$1" == "install" ]; then
 fi
 
 if [ "$1" == "uninstall" ]; then
-  rm -rf $HOME/.oh-my-env/
-  rm -rf $HOME/.ome_local/
+    rm -rf $HOME/.oh-my-env/
+    rm -rf $HOME/.ome_local/
 fi

@@ -90,28 +90,28 @@ blog_push() {
 
 ws_push() {
     if [ -d $OME_WS ]; then
-      local oldir=`pwd`
-      cd $OME_WS
-      git status
-      readp "==>push workspace?"
-   	  if [ $? -eq 1 ]; then
-        git_push
-      fi
-      cd $oldir
+        local oldir=`pwd`
+        cd $OME_WS
+        git status
+        readp "==>push workspace?"
+   	if [ $? -eq 1 ]; then
+            git_push
+        fi
+        cd $oldir
     fi
 }
 
 oh_my_emacs_push() {
-  if [ -d $OME_WS ]; then
-    local oldir=`pwd`
-    cd $HOME/.oh-my-emacs/
-    git status
-    readp "==>push oh-my-emacs?"
-    if [ $? -eq 1 ]; then
-        git_push
+    if [ -d $OME_WS ]; then
+        local oldir=`pwd`
+        cd $HOME/.oh-my-emacs/
+        git status
+        readp "==>push oh-my-emacs?"
+        if [ $? -eq 1 ]; then
+            git_push
+        fi
+        cd $oldir
     fi
-    cd $oldir
-  fi
 }
 
 oh_my_env_push() {

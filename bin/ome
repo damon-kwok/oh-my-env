@@ -240,8 +240,8 @@ ome_parse() {
     
     case "$OPT_TYPE" in
         # "config")
-            # ome_config
-            # ;;
+        # ome_config
+        # ;;
         "init")
             ome install basedev
             # ome install cc
@@ -293,34 +293,34 @@ ome_parse() {
         "plugin")
             $EDITOR $HOME/.oh-my-env/plugins/$ARG1
             ;;
-#        "test")
-#            # spin
-#            strload=("-" "\\" "|" "/")
-#            echo -n -e "\033[?25l"  #隐藏光标
-#            for i in `seq 100`
-#            do
-#                local idx=$(($i%4))
-#                # echo -e "$i"
-#                local vv=${strload[$idx]}
-#                echo -n -e "$vv"
-#                # sleep 0.05
-#                echo -n -e "\b"
-#            done
-#            echo -n -e "\b"
-#            echo -n -e "\033[?25h" #显示光标
-#
-#            # progress_bar
-#            i=0
-#            while [ $i -lt 50 ]
-#            do
-#                ((i++))
-#                local radio=$((100/1000))
-#                echo -ne "=>\033[s"
-#                echo -ne "\033[40;50H"$((i*100*2/100))%"\033[u\033[1D"
-#                sleep 0.05
-#            done
-#            echo ""
-#            ;;
+        #        "test")
+        #            # spin
+        #            strload=("-" "\\" "|" "/")
+        #            echo -n -e "\033[?25l"  #隐藏光标
+        #            for i in `seq 100`
+        #            do
+        #                local idx=$(($i%4))
+        #                # echo -e "$i"
+        #                local vv=${strload[$idx]}
+        #                echo -n -e "$vv"
+        #                # sleep 0.05
+        #                echo -n -e "\b"
+        #            done
+        #            echo -n -e "\b"
+        #            echo -n -e "\033[?25h" #显示光标
+        #
+        #            # progress_bar
+        #            i=0
+        #            while [ $i -lt 50 ]
+        #            do
+        #                ((i++))
+        #                local radio=$((100/1000))
+        #                echo -ne "=>\033[s"
+        #                echo -ne "\033[40;50H"$((i*100*2/100))%"\033[u\033[1D"
+        #                sleep 0.05
+        #            done
+        #            echo ""
+        #            ;;
         "version"|"show"|"--version"|"ver"|"v")
             echo "$OME_VERSION"
             ome_package_info
