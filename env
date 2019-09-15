@@ -202,3 +202,24 @@ export XLIB_SKIP_ARGB_VISUALS=1
 grep_str() {
     grep -n "$1" -r .
 }
+
+# FIX for macos
+if [ "`uname`" = "Darwin" ]; then
+    # FIX: "readlink: illegal option -- f"   https://blog.csdn.net/libing_zeng/article/details/82953038
+    export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
+    alias readlink=greadlink
+
+    # FIX: bashrc https://blog.csdn.net/liu510817387/article/details/8126719
+    if [ "$OME_OS" = "$OS_MACOS" ]; then
+        if [ ! -f $HOME/.bash_profile ]; then
+            echo 'if [ "${BASH-no}" != "no" ]; then' > $HOME/.bash_profile 
+            echo '    [ -r ~/.bashrc ] && . ~/.bashrc' >> $HOME/.bash_profile
+            echo 'fi' >> $HOME/.bash_profile
+        fi
+
+        if [ ! -f $HOME/.bashrc ]; then
+            echo "# bashrc" > $HOME/.bashrc
+        fi
+    fi
+    
+fi

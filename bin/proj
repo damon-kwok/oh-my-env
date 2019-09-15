@@ -90,13 +90,15 @@ blog_push() {
 
 ws_push() {
     local oldir=`pwd`
-    cd $OME_WS
-    git status
-    readp "==>push workspace?"
-    if [ $? -eq 1 ]; then
+    if [ -d $OME_WS ]; then
+      cd $OME_WS
+      git status
+      readp "==>push workspace?"
+   	  if [ $? -eq 1 ]; then
         git_push
+      fi
+      cd $oldir
     fi
-    cd $oldir
 }
 
 oh_my_emacs_push() {

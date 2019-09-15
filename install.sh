@@ -28,16 +28,39 @@ ome_write_env_to_dotfile() {
     fi
 }
 
-if [ ! -f "$HOME/.oh-my-env/.git/index" ]; then
-    git clone https://github.com/damon-kwok/oh-my-env $HOME/.oh-my-env --depth=1
-else
-    cd $HOME/.oh-my-env
-    git pull
+if [ "`uname`" = "Darwin" ]; then
+	echo "Install Homebrew"
+    /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+    brew update
+    
+	echo "Install wget & coreutils"        
+    brew install wget
+    brew install coreutils
+    
+	echo "Install font-bitstream-vera"        
+    brew tap homebrew/cask-fonts
+    brew cask install font-bitstream-vera
+
+	echo "Install Emacs"
+    brew tap railwaycat/emacsmacport
+    brew cask install emacs-mac		
 fi
 
-ome_write_env_to_dotfile $HOME/.profile 
-ome_write_env_to_dotfile $HOME/.shrc
-ome_write_env_to_dotfile $HOME/.bashrc
-ome_write_env_to_dotfile $HOME/.zshrc
+if [ "$#" == "1" ]; then
+	echo "=======OME INSTALL MODE======="
+	if [ ! -f "$HOME/.oh-my-env/.git/index" ]; then
+	    git clone https://github.com/damon-kwok/oh-my-env $HOME/.oh-my-env --depth=1
+	else
+	    cd $HOME/.oh-my-env
+	    git pull
+	fi
 
-. $HOME/.oh-my-env/env
+	ome_write_env_to_dotfile $HOME/.profile 
+	ome_write_env_to_dotfile $HOME/.shrc
+	ome_write_env_to_dotfile $HOME/.bashrc
+	ome_write_env_to_dotfile $HOME/.zshrc
+
+	. $HOME/.oh-my-env/env
+fi
+
+
