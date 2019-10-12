@@ -163,7 +163,7 @@ ome_pull() {
     ome install oh_my_emacs
 
     tip "wrokspace upgrade"
-    gitlab_upgrade damon-kwok/workspace $HOME/workspace
+    gitee_upgrade damon-kwok/workspace $HOME/workspace
     chmod +x $HOME/.oh-my-env/*
 
     github_upgrade damon-kwok/damon-kwok.github.io $OME_PROJ/me/blog

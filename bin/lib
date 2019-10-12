@@ -209,6 +209,18 @@ gitlab_ssh_upgrade() {
     git_ssh_upgrade $site $@
 }
 
+gitee_upgrade() {
+    local site="https://gitee.com"
+    git_upgrade $site $@
+}
+
+gitee_ssh_upgrade() {
+    local site="gitee.com"
+    git_ssh_upgrade $site $@
+}
+
+
+
 git_complete_upgrade() {
     git fetch --unshallow origin
 }
