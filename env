@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
 # OSlist: https://git-scm.com/download/linux
 # Linux
@@ -90,7 +90,7 @@ export OME_WS=$HOME/workspace
 export OME_BOOK=$HOME/book
 export OME_PROJ=$HOME/projects
 
-export PATH=$OME_WS/bin:$OME_BIN:$PATH
+export PATH=$OME_WS/bin:$OME_BIN:"$PATH"
 
 # Emacs
 #export ALTERNATE_EDITOR=""
@@ -111,7 +111,8 @@ ome_show() {
         if [ "$index" = "0" ]; then
             export OME_SHOW="${OME_SHOW}${item}\t"
             # let index=$index+1
-            let index=1
+            # let index=1
+	    index=1
         else
             export OME_SHOW="$OME_SHOW${item} "
         fi
@@ -138,7 +139,7 @@ done
 ################################################################################
 # User Settings
 # if [ -d /mingw64/bin2 ]; then
-# export PATH=/mingw64/bin:$PATH
+# export PATH=/mingw64/bin:"$PATH"
 # export MANPATH=/mingw64/share/man:$MANPATH
 # export INFOPATH=/mingw64/share/info:$INFOPATH
 # export C_INCLUDE_PATH=/mingw64/include:$C_INCLUDE_PATH
