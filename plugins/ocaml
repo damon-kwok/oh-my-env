@@ -1,46 +1,9 @@
 #!/usr/bin/env sh
 
 ocaml_install() {
-    get_os_type
-    case $OME_OS in
-        # Linux
-        # $OS_DEBIAN) ;;
-        # $OS_UBUNTU) ;;
-        $OS_DEBIAN|$OS_UBUNTU)
-            sudo apt install -y ocaml libcmdliner-ocaml-dev
-            ;;
-        # $OS_REDHAT) ;;
-        # $OS_FEDORA) ;;
-        $OS_REDHAT|$OS_FEDORA) ;;
-        $OS_ARCH) ;;
-        $OS_GENTOO) ;;
-        $OS_SUSE) ;;
-        $OS_SLACKWARE) ;;
-        $OS_NIXOS) ;;
-        $OS_VOID) ;;
-        $OS_ALPINE) ;;
-        $OS_MAGEIA) ;;
-        $OS_SLITAZ) ;;
-        $OS_GUIXSD) ;;
-        # Unix
-        $OS_MACOS) ;;
-        $OS_AIX) ;;
-        $OS_SOLARIS) ;;
-        $OS_FREEBSD)
-            sudo pkg install ocaml ocaml-opam gmake
-            ;;
-        $OS_OPENBSD) ;;
-        $OS_NETBSD) ;;
-        $OS_DFBSD) ;;
-        # Windows
-        $OS_CYGWIN) ;;
-        $OS_MSYS2) ;;
-        # Other
-        $OS_UNKNOW) ;;
-    esac
-
     tip "install opam"
-    if [ "$OME_OS" = "$OS_CYGWIN" ]; then
+    #if [ "$OME_OS" = "$OS_CYGWIN" ]; then
+    if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
         # https://fdopen.github.io/opam-repository-mingw/installation/
         if [ ! -f $HOME/Downloads/opam64.tar.xz ]; then
             cd $HOME/Downloads/
@@ -48,41 +11,50 @@ ocaml_install() {
         fi
 
         if [ ! -d $HOME/Downloads/opam64/ ]; then
-            tar -zxvf $HOME/Downloads/opam64.tar.xz
+            tar -xvf $HOME/Downloads/opam64.tar.xz -C $HOME/Downloads/
         fi
 
-        sh $HOME/Downloads/opam64/install.sh --prefix $OME_PREFIX
+        bash $HOME/Downloads/opam64/install.sh --prefix $OME_PREFIX
         tip "opam init"
-        opam init default "https://github.com/fdopen/opam-repository-mingw.git#opam2" -c "ocaml-variants.4.07.1+mingw64c" --disable-sandboxing --debug
+        opam init default "https://github.com/fdopen/opam-repository-mingw.git#opam2" -c "ocaml-variants.${OCAML_VERSION}+flambda+mingw64c" --disable-sandboxing --debug
 
         tip "opam update"
-        # opam update --debug
-        # opam switch list-available
+        opam update --debug
+        opam switch list-available
         
-        tip "opam install ocaml-variants.4.07.1+mingw64c"
-        opam switch create 4.07.1+flambda+mingw64c --empty && opam install ocaml-variants.4.07.1+flambda+mingw64c --debug
-        # opam install ocaml-variants.4.07.1+mingw64c --debug
-    else
-        
-        if [ "$OME_OS" != "$OS_FREEBSD" ]; then
-            # sh <(curl -sL https://raw.githubusercontent.com/ocaml/opam/master/shell/install.sh)
-            github_upgrade ocaml/opam $OME_REPO/opam
-            cd $OME_REPO/opam
-            ./configure --prefix=$OME_PREFIX
-            # make
-            make install
+        tip "opam install ocaml-variants.${OCAML_VERSION}+mingw64c"
+        opam switch install ${OCAML_VERSION}+flambda+mingw64c --debug
+        # opam switch create ${OCAML_VERSION}+flambda+mingw64c --empty && opam install ocaml-variants.${OCAML_VERSION}+flambda+mingw64c --debug
 
+        tip "opam update"
+        opam update --debug
+    else
+        if [ "$OME_OS" != "$OS_FREEBSD" ]; then
+            # method 1: install pre-build
+            sh <(curl -sL https://raw.githubusercontent.com/ocaml/opam/master/shell/install.sh)
+
+            # method 2: building
+            # github_upgrade ocaml/opam $OME_REPO/opam
+            # cd $OME_REPO/opam
+            # ./configure --prefix=$OME_PREFIX
+            # make install
         fi
         
         tip "opam init"
         opam init --debug
 
-        tip "opam switch install 4.07.1+flambda"
-        # opam switch install 4.07.1+flambda
-        opam switch create 4.07.1+flambda --empty && opam install ocaml-variants.4.07.1+flambda --debug
+        tip "opam update"
+        opam update --debug
+        opam switch list-available
         
+        tip "opam switch install ${OCAML_VERSION}+flambda"
+        opam switch install ${OCAML_VERSION}+flambda --debug
+        # opam switch 4.11.0+trunk+flambda --debug
     fi
 
+    eval $(opam env)
+    #eval `opam env`
+    
     # tip "install ohai"
     # opam pin add ohai git+https://github.com/jaredly/ohai
 
