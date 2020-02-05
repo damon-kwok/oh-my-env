@@ -13,14 +13,14 @@ install_groovy_language_server() {
 
 
 scala_install() {
-    ome_check_install "javac" "jvm"
+    ome_check_install "sdk" "jvm"
 
     #if ! command -v groovy >/dev/null 2>&1; then
     if [ "`command -v groovy`" = "" ]; then
         sdk install groovy
     fi
 
-    tip "install groovy language server"
+    # tip "install groovy language server"
     install_groovy_language_server
 }
 

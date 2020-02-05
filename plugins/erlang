@@ -155,7 +155,7 @@ erlang_info() {
     # ome_show "Erlang" "`ome_fetch_version rebar3`"
 }
 
-ERLANG_VERSION=22.2
+# ERLANG_VERSION=22.2
 
 erlenv_set_env() {
 if [ -d $HOME/.erlenv/ ]; then

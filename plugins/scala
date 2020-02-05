@@ -1,6 +1,7 @@
 #!/usr/bin/env sh
 
 install_scala_language_server() {
+    tip "install scala language server"
     cd $OME_PREFIX/bin/
     curl -L -o coursier https://git.io/coursier
     chmod +x ./coursier
@@ -21,7 +22,7 @@ install_scala_language_server() {
 
 
 scala_install() {
-    ome_check_install "javac" "jvm"
+    ome_check_install "sdk" "jvm"
 
     #if ! command -v scalac >/dev/null 2>&1; then
     if [ "`command -v scalac`" = "" ]; then

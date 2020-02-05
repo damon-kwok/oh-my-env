@@ -222,3 +222,16 @@ if [ "`uname`" = "Darwin" ]; then
     fi
     
 fi
+
+export CLJ_CLI_VERSION=1.10.1.507
+export ERLANG_VERSION=22.2
+export GOLANG_VERSION=1.13.7
+export PYTHON2_VERSION=2.7.17
+export PYTHON3_VERSION=3.8.1
+export RUBY_VERSION=2.7.0
+export PHP_VERSION=7.4.2 # export PHP_VERSION=5.6.39
+export NODEJS_VERSION=12.14.1
+
+# export NODEJS_MAJOR_VERSION=12
+# export NODEJS_MINOR_VERSION=14
+# export NODEJS_PATCH_VERSION=1

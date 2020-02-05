@@ -140,7 +140,7 @@ php_edit_ini() {
     fi
 }
 
-PHP_VERSION=7.4.2
+# PHP_VERSION=7.4.2
 # PHP_VERSION=5.6.39
 phpenv_set_env() {
     export PHPENV_ROOT="/home/damon/.phpenv"

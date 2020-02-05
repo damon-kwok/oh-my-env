@@ -1,16 +1,19 @@
 #!/usr/bin/env sh
 
 clj_install() {
-    ome_check_install "javac" "jvm"
-    
+    # ome_check_install "sdk" "jvm"
+
+    # https://www.clojure.org/guides/getting_started
+    # https://clojure.org/guides/deps_and_cli
     if [ "`command -v clojure`" = "" ]; then
-        tip "install Clojure Cli"
+        tip "install clojure cli"
         cd $HOME/Downloads/
-        rm -rf ./linux-install-1.10.0.403.sh
-        curl -O https://download.clojure.org/install/linux-install-1.10.0.403.sh
-        chmod +x linux-install-1.10.0.403.sh
+        CLI_FILE=linux-install-${CLJ_CLI_VERSION}.sh
+        rm -rf ./$CLI_FILE
+        curl -O https://download.clojure.org/install/$CLI_FILE
+        chmod +x ./$CLI_FILE
         mkdir -p $OME_PREFIX/lib/clojure/libexec/
-        ./linux-install-1.10.0.403.sh --prefix $OME_PREFIX
+        ./$CLI_FILE --prefix $OME_PREFIX
     fi
     
     if [ "`command -v lein`" = "" ]; then

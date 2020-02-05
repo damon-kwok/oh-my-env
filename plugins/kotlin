@@ -12,14 +12,14 @@ install_kotlin_language_server() {
 }
 
 kotlin_install() {
-    ome_check_install "javac" "jvm"
+    ome_check_install "sdk" "jvm"
 
     #if ! command -v kotlinc >/dev/null 2>&1; then
     if [ "`command -v kotlinc`" = "" ]; then
         sdk install kotlin
     fi
 
-    tip "install kotlin language server"
+    # tip "install kotlin language server"
     install_kotlin_language_server
 }
 

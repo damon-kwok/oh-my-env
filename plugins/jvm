@@ -86,7 +86,7 @@ jvm_install_sdkman() {
         # sdk install sbt
     # fi
 
-    tip "install java language server"
+    #tip "install java language server"
     install_java_language_server
 
     # tip "install kotlin language server"

@@ -107,7 +107,8 @@ ruby_uninstall() {
 ruby_exist_p() {
     echo_error "'ruby_exist_p' not implemented"
 }
-RUBY_VERSION=2.7.0
+
+# RUBY_VERSION=2.7.0
 
 rbenv_set_env() {
     export PATH=$HOME/.rbenv/bin:$HOME/.rbenv/shims:$PATH

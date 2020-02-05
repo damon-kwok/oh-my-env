@@ -70,17 +70,18 @@ nodejs_install() {
     local oldir=`pwd`
     if [ "$OME_OS" = "$OS_MSYS2" ]; then
         pacman -S mingw-w64-x86_64-nodejs
-    elif [ "$OME_OS" = "$OS_CYGWIN" ]; then
+    # elif [ "$OME_OS" = "$OS_CYGWIN" ]; then
+    elif [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
         # echo_warning "please download form: https://nodejs.org/en/download"
         # https://nodejs.org/dist
-        
-        
         if [ ! -d $OME_REPO/$NODEJS_VERSION ]; then
-            local zipkg=$NODEJS_VERSION.zip
+            local zipkg=$NODEJS_VERSION_ZIP
             mkdir -p ~/Downloads
             cd ~/Downloads/
             if [ ! -f $HOME/Downloads/$zipkg ]; then
-                wget https://nodejs.org/dist/latest-v${NODEJS_MAJOR_VERSION}.x/$zipkg
+                # https://nodejs.org/dist/v12.14.1/node-v12.14.1-darwin-x64.tar.gz
+                #wget https://nodejs.org/dist/latest-v${NODEJS_MAJOR_VERSION}.x/$zipkg
+                wget https://nodejs.org/dist/v${NODEJS_VERSION}/$zipkg
             fi
             if [ ! -d $OME_REPO/$NODEJS_VERSION ]; then
                 unzip ./$zipkg -d $OME_REPO
@@ -136,12 +137,30 @@ nodejs_info() {
     ome_show "Nodejs" "node `ome_fetch_version node` | npm `ome_fetch_version npm`"
 }
 
-if [ "$OME_OS" = "$OS_CYGWIN" ]; then
-    NODEJS_MAJOR_VERSION=12
-    NODEJS_MINOR_VERSION=14
-    NODEJS_PATCH_VERSION=1
+# if [ "$OME_OS" = "$OS_CYGWIN" ]; then
+if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
+    # NODEJS_MAJOR_VERSION=12
+    # NODEJS_MINOR_VERSION=14
+    # NODEJS_PATCH_VERSION=1
 
-    NODEJS_VERSION=node-v${NODEJS_MAJOR_VERSION}.${NODEJS_MINOR_VERSION}.${NODEJS_PATCH_VERSION}-win-x64
+    
+    
+    if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
+        NODEJS_VERSION_INFO=node-v${NODEJS_VERSION}-win-x64
+        NODEJS_VERSION_ZIP=${NODEJS_VERSION_INFO}.zip
+    elif [ "$OME_OS" = "$OS_MACOS" ]; then
+        NODEJS_VERSION_INFO=node-v${NODEJS_VERSION}-darwin-x64
+        NODEJS_VERSION_ZIP=${NODEJS_VERSION_INFO}.tar.gz
+    else
+        NODEJS_VERSION_INFO=node-v${NODEJS_VERSION}-linux-x64
+        NODEJS_VERSION_ZIP=${NODEJS_VERSION_INFO}.tar.xz
+    fi
+    # https://nodejs.org/dist/v12.14.1/node-v12.14.1-darwin-x64.tar.gz
+    # https://nodejs.org/dist/v12.14.1/node-v12.14.1-win-x86.zip
+    # https://nodejs.org/dist/v12.14.1/node-v12.14.1-win-x64.zip
+    # https://nodejs.org/dist/v12.14.1/node-v12.14.1-linux-x64.tar.xz
+    # https://nodejs.org/dist/v12.14.1/node-v12.14.1-linux-armv7l.tar.xz
+    # https://nodejs.org/dist/v12.14.1/node-v12.14.1-linux-arm64.tar.xz
 
     # tip "set env:$OME_REPO/$NODEJS_VERSION"
     export PATH=$OME_REPO/$NODEJS_VERSION:$PATH
