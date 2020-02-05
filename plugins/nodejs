@@ -79,17 +79,16 @@ nodejs_install_download() {
             wget https://nodejs.org/dist/v${NODEJS_VERSION}/$zipkg
         fi
         #if [ ! -d $OME_REPO/$NODEJS_VERSION_INFO ]; then
+        echo "unzip:$zipkg"
         if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
             unzip ./$zipkg -d $OME_REPO
         elif [ "$OME_OS" = "$OS_MACOS" ]; then
-            tar -zcvf ./$zipkg $OME_REPO
+            tar -zcvf ./$zipkg -C $OME_REPO
+            chmod +x $OME_REPO/$NODEJS_VERSION_INFO/bin/*
         else
-            tar -xvf ./$zipkg $OME_REPO
+            tar -xvf ./$zipkg -C $OME_REPO
+            chmod +x $OME_REPO/$NODEJS_VERSION_INFO/bin/*
         fi
-        cd $OME_REPO/$NODEJS_VERSION_INFO
-        chmod +x ./node
-        chmod +x ./npm
-        chmod +x ./npx
         # fi
     else
         echo "$NODEJS_VERSION_INFO is already installed!"
@@ -147,12 +146,15 @@ nodejs_info() {
 if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
     NODEJS_VERSION_INFO=node-v${NODEJS_VERSION}-win-x64
     NODEJS_VERSION_ZIP=${NODEJS_VERSION_INFO}.zip
+    export PATH="$OME_REPO/$NODEJS_VERSION_INFO:$PATH"
 elif [ "$OME_OS" = "$OS_MACOS" ]; then
     NODEJS_VERSION_INFO=node-v${NODEJS_VERSION}-darwin-x64
     NODEJS_VERSION_ZIP=${NODEJS_VERSION_INFO}.tar.gz
+    export PATH="$OME_REPO/$NODEJS_VERSION_INFO/bin:$PATH"
 else
     NODEJS_VERSION_INFO=node-v${NODEJS_VERSION}-linux-x64
     NODEJS_VERSION_ZIP=${NODEJS_VERSION_INFO}.tar.xz
+    export PATH="$OME_REPO/$NODEJS_VERSION_INFO/bin:$PATH"
 fi
 # https://nodejs.org/dist/v12.14.1/node-v12.14.1-darwin-x64.tar.gz
 # https://nodejs.org/dist/v12.14.1/node-v12.14.1-win-x86.zip
@@ -161,8 +163,6 @@ fi
 # https://nodejs.org/dist/v12.14.1/node-v12.14.1-linux-armv7l.tar.xz
 # https://nodejs.org/dist/v12.14.1/node-v12.14.1-linux-arm64.tar.xz
 
-# tip "set env:$OME_REPO/$NODEJS_VERSION"
-export PATH=$OME_REPO/$NODEJS_VERSION_INFO:$PATH
 #}
 # fi
 
