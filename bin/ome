@@ -137,12 +137,12 @@ ome_package_info() {
             local PLUGIN=`basename $plugin_file`
             local EVAL="${PLUGIN}_info"
             
-            # echo "$EVAL--------------:$plugin_file"
-            # . $plugin_file > $HOME/2.log
-            # eval "$EVAL>$HOME/1.log"
+            #echo "$EVAL--------------:$plugin_file"
+            . $plugin_file > $OME_NULL_DEV
+            eval "$EVAL > $OME_NULL_DEV"
             
-            . $plugin_file
-            eval "$EVAL"
+            #. $plugin_file
+            #eval "$EVAL"
             
             # sleep 0.2
             # echo -n -e "\b\b"
@@ -277,8 +277,8 @@ ome_parse() {
         "new")
             app_wizard $ARG1 $ARG2
             ;;
-        "look")
-            xdg-open "https://github.com/ruslo/hunter/releases"
+        "look"|"check")
+            xdg-open "https://github.com/cpp-pm/hunter/releases"
             xdg-open "https://github.com/emacs-lsp/lsp-mode#supported-languages"
             xdg-open "https://github.com/clojure/core.async"
             xdg-open "https://clojars.org/reagent"
@@ -321,7 +321,7 @@ ome_parse() {
         #            done
         #            echo ""
         #            ;;
-        "version"|"show"|"--version"|"ver"|"v")
+        "version"|"--version"|"ver"|"v")
             echo "$OME_VERSION"
             ome_package_info
             ;;
@@ -334,7 +334,7 @@ ome_parse() {
     esac
     cd $oldir
 }
-export OME_VERSION="OME     2019.0909 copyleft 2019 damon-kwok"
+export OME_VERSION="OME     2020.0205 copyleft 2020 damon-kwok"
 #echo $@
 mkdir -p $OME_PREFIX/bin/
 mkdir -p $OME_REPO/

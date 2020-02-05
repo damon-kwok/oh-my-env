@@ -69,7 +69,7 @@ case "`uname`" in
             export OME_OS=$OS_UNKNOW
         fi
         ;;
-    "Cygwin") export OME_OS=$OS_CYGWIN;;
+    "Cygwin"|"CYGWIN"|"CYGWIN_NT-10.0") export OME_OS=$OS_CYGWIN;;
     "Msys") export OME_OS=$OS_MSYS2;;
     "FreeBSD") export OME_OS=$OS_FREEBSD;;
     "Darwin") export OME_OS=$OS_MACOS;;
@@ -85,6 +85,7 @@ export OME_ROOT=$HOME/.oh-my-env
 export OME_BIN=$OME_ROOT/bin
 
 export OME_PREFIX=$HOME/.ome_local
+export OME_NULL_DEV=$HOME/.ome_local/null_dev.log
 export OME_REPO=$HOME/.ome_local/repo
 export OME_WS=$HOME/workspace
 export OME_BOOK=$HOME/book
@@ -106,17 +107,14 @@ export OME_EMACS_SNIPPET=$HOME/.oh-my-emacs/emacs-config/snippets
 ################################################################################
 export OME_SHOW=""
 ome_show() {
-    local index=0
+    index=0
     for item in $@; do
         if [ "$index" = "0" ]; then
             export OME_SHOW="${OME_SHOW}${item}\t"
-            # let index=$index+1
-            # let index=1
-	    index=1
+	        index=1
         else
             export OME_SHOW="$OME_SHOW${item} "
         fi
-        # let index=$index+1
     done
     export OME_SHOW="$OME_SHOW\n"
 }

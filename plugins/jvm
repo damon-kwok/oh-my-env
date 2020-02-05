@@ -1,8 +1,8 @@
 #!/usr/bin/env sh
 
-install_jdt_language_server() {
+install_java_language_server() {
     local oldir=`pwd`
-    tip "install eclipse language server"    
+    tip "install java language server(eclipse.jdt.ls)"
     local del_force=$1
     if [ "$del_force" = "1" ]; then
         rm -rf ~/Downloads/jdt-language-server-latest.tar.gz
@@ -20,52 +20,6 @@ install_jdt_language_server() {
         tar xf ~/Downloads/jdt-language-server-latest.tar.gz -C ~/.emacs.d/eclipse.jdt.ls/server/
     fi
     cd $oldir
-}
-
-install_kotlin_language_server() {
-    local oldir=`pwd`
-    tip "install_kotlin_language_server"
-    github_upgrade fwcd/KotlinLanguageServer $OME_REPO/KotlinLanguageServer
-
-    cd $OME_REPO/KotlinLanguageServer/
-    gradle build --stacktrace
-    
-    cd $oldir
-}
-
-install_groovy_language_server() {
-    local oldir=`pwd`
-    tip "install_groovy_language_server"
-    github_upgrade palantir/language-servers $OME_REPO/groovy-language-servers
-
-    cd $OME_REPO/groovy-language-servers/
-    gradle build --stacktrace
-    
-    cd $oldir
-}
-
-install_scala_language_server() {
-    cd $OME_PREFIX/bin/
-    curl -L -o coursier https://git.io/coursier
-    chmod +x ./coursier
-    
-    ./coursier bootstrap \
-               --java-opt -XX:+UseG1GC \
-               --java-opt -XX:+UseStringDeduplication  \
-               --java-opt -Xss4m \
-               --java-opt -Xms1G \
-               --java-opt -Xmx4G  \
-               --java-opt -Dmetals.client=lsp-emacs \
-               org.scalameta:metals_2.12:0.3.0 \
-               -r bintray:scalacenter/releases \
-               -r sonatype:releases \
-               -o metals-emacs -f
-    chmod +x ./metals-emacs
-}
-
-install_graalvm() {
-    github_upgrade oracle/graal $OME_REPO/graal
-    cd $OME_REPO/graal/
 }
 
 jvm_install_sdkman() {
@@ -105,17 +59,17 @@ jvm_install_sdkman() {
         sdk install java
     fi
     #if ! command -v kotlinc >/dev/null 2>&1; then
-    if [ "`command -v kotlinc`" = "" ]; then
-        sdk install kotlin
-    fi
+    # if [ "`command -v kotlinc`" = "" ]; then
+        # sdk install kotlin
+    # fi
     #if ! command -v scalac >/dev/null 2>&1; then
-    if [ "`command -v scalac`" = "" ]; then
-        sdk install scala
-    fi
+    # if [ "`command -v scalac`" = "" ]; then
+        # sdk install scala
+    # fi
     #if ! command -v groovy >/dev/null 2>&1; then
-    if [ "`command -v groovy`" = "" ]; then
-        sdk install groovy
-    fi
+    # if [ "`command -v groovy`" = "" ]; then
+        # sdk install groovy
+    # fi
 
     #if ! command -v mvn >/dev/null 2>&1; then
     if [ "`command -v mvn`" = "" ]; then
@@ -128,21 +82,21 @@ jvm_install_sdkman() {
     fi
 
     #if ! command -v sbt >/dev/null 2>&1; then
-    if [ "`command -v sbt`" = "" ]; then
-        sdk install sbt
-    fi
+    # if [ "`command -v sbt`" = "" ]; then
+        # sdk install sbt
+    # fi
 
     tip "install java language server"
-    install_jdt_language_server
+    install_java_language_server
 
-    tip "install kotlin language server"
-    install_kotlin_language_server
+    # tip "install kotlin language server"
+    # install_kotlin_language_server
 
-    tip "install groovy language server"
-    install_groovy_language_server
+    # tip "install groovy language server"
+    # install_groovy_language_server
 
-    tip "install scala language server"
-    install_scala_language_server
+    # tip "install scala language server"
+    # install_scala_language_server
 }
 
 jvm_install_download() {

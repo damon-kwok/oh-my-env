@@ -192,8 +192,8 @@ python_info() {
     fi
 }
 
-PYTHON2_VERSION=2.7.16
-PYTHON3_VERSION=3.7.2
+PYTHON2_VERSION=2.7.17
+PYTHON3_VERSION=3.8.1
 pyenv_set_env() {
     export PYENV_ROOT="$HOME/.pyenv"
     export PATH="$PYENV_ROOT/bin:$PATH"

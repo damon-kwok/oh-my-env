@@ -103,13 +103,13 @@ ome_app_wizard() {
             cd $proj_root
             $EDITOR "project.clj"
             ;;
-        "5"|"fulcro")
+        "4"|"fulcro")
             ome_check_install "lein" "clj"
             lein new fulcro $proj_name
             cd $proj_root
             $EDITOR "project.clj"
             ;;
-        "4"|"clojurescript"|"cljs")
+        "5"|"clojurescript"|"cljs"|"shadow-cljs")
             ome_check_install "npm" "nodejs"
             npx create-cljs-project $proj_name
             mkdir -p $proj_root/src/main/{server,client}

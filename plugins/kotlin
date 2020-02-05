@@ -1,0 +1,36 @@
+#!/usr/bin/env sh
+
+install_kotlin_language_server() {
+    local oldir=`pwd`
+    tip "install_kotlin_language_server"
+    github_upgrade fwcd/KotlinLanguageServer $OME_REPO/KotlinLanguageServer
+
+    cd $OME_REPO/KotlinLanguageServer/
+    gradle build --stacktrace
+    
+    cd $oldir
+}
+
+kotlin_install() {
+    ome_check_install "javac" "jvm"
+
+    #if ! command -v kotlinc >/dev/null 2>&1; then
+    if [ "`command -v kotlinc`" = "" ]; then
+        sdk install kotlin
+    fi
+
+    tip "install kotlin language server"
+    install_kotlin_language_server
+}
+
+kotlin_uninstall() {
+    echo_error "'kotlin_uninstall' not implemented"
+}
+
+kotlin_exist_p() {
+    echo_error "'kotlin_exist_p' not implemented"
+}
+
+kotlin_info() {
+    echo_error ""
+}

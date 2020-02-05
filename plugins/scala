@@ -1,0 +1,50 @@
+#!/usr/bin/env sh
+
+install_scala_language_server() {
+    cd $OME_PREFIX/bin/
+    curl -L -o coursier https://git.io/coursier
+    chmod +x ./coursier
+    
+    ./coursier bootstrap \
+               --java-opt -XX:+UseG1GC \
+               --java-opt -XX:+UseStringDeduplication  \
+               --java-opt -Xss4m \
+               --java-opt -Xms1G \
+               --java-opt -Xmx4G  \
+               --java-opt -Dmetals.client=lsp-emacs \
+               org.scalameta:metals_2.12:0.3.0 \
+               -r bintray:scalacenter/releases \
+               -r sonatype:releases \
+               -o metals-emacs -f
+    chmod +x ./metals-emacs
+}
+
+
+scala_install() {
+    ome_check_install "javac" "jvm"
+
+    #if ! command -v scalac >/dev/null 2>&1; then
+    if [ "`command -v scalac`" = "" ]; then
+        sdk install scala
+    fi
+
+    #if ! command -v sbt >/dev/null 2>&1; then
+    if [ "`command -v sbt`" = "" ]; then
+        sdk install sbt
+    fi
+    
+    tip "install scala language server"
+    install_scala_language_server
+}
+
+scala_uninstall() {
+    echo_error "'scala_uninstall' not implemented"
+}
+
+scala_exist_p() {
+    echo_error "'scala_exist_p' not implemented"
+}
+
+scala_info() {
+    echo_error ""
+}

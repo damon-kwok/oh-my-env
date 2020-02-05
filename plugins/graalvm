@@ -1,0 +1,19 @@
+#!/usr/bin/env sh
+
+graalvm_install() {
+    echo_error "'graalvm_install' not implemented"
+    github_upgrade oracle/graal $OME_REPO/graal
+    cd $OME_REPO/graal/
+}
+
+graalvm_uninstall() {
+    echo_error "'graalvm_uninstall' not implemented"
+}
+
+graalvm_exist_p() {
+    echo_error "'graalvm_exist_p' not implemented"
+}
+
+graalvm_info() {
+    echo_error ""
+}

@@ -138,13 +138,19 @@ basedev_install() {
         $OS_CYGWIN)
             readp "upgrade apt-cyg tools?"
             if [ $? -eq 1 ]; then
-                rm -rf /usr/bin/apt-cyg
-                cd /usr/bin/
-                wget https://raw.githubusercontent.com/kou1okada/apt-cyg/master/apt-cyg
-                perl -pi -e 's|http://ftp.jaist.ac.jp/pub/cygwin|http://mirrors.163.com/cygwin|g' /usr/bin/apt-cyg
-                cp -rf /usr/bin/apt-cyg /usr/bin/apt
-                chmod +x /usr/bin/apt-cyg
-                chmod +x /usr/bin/apt
+                # 1. wget
+                # rm -rf /usr/bin/apt-cyg
+                # cd /usr/bin/
+                # wget https://raw.githubusercontent.com/kou1okada/apt-cyg/master/apt-cyg
+                # perl -pi -e 's|http://ftp.jaist.ac.jp/pub/cygwin|http://mirrors.163.com/cygwin|g' /usr/bin/apt-cyg
+                # cp -rf /usr/bin/apt-cyg /usr/bin/apt
+                # chmod +x /usr/bin/apt-cyg
+                # chmod +x /usr/bin/apt
+                # 2. git
+                cd $OME_PREFIX
+                git clone https://github.com/kou1okada/apt-cyg.git
+                ln -s "$(realpath apt-cyg/apt-cyg)" /usr/local/bin/
+                cp /usr/local/bin/apt-cyg /usr/local/bin/apt
             fi
             apt install git subversion wget curl \
                 tar zip unzip rlwrap coreutils diffutils \
