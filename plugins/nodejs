@@ -79,7 +79,13 @@ nodejs_install_download() {
             wget https://nodejs.org/dist/v${NODEJS_VERSION}/$zipkg
         fi
         #if [ ! -d $OME_REPO/$NODEJS_VERSION_INFO ]; then
-        unzip ./$zipkg -d $OME_REPO
+        if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
+            unzip ./$zipkg -d $OME_REPO
+        elif [ "$OME_OS" = "$OS_MACOS" ]; then
+            tar -zcvf ./$zipkg $OME_REPO
+        else
+            tar -xvf ./$zipkg $OME_REPO
+        fi
         cd $OME_REPO/$NODEJS_VERSION_INFO
         chmod +x ./node
         chmod +x ./npm
