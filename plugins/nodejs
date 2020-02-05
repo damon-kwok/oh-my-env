@@ -110,16 +110,22 @@ nodejs_install() {
 
     # tip "npm update -g"
     # npm update -g
-    
-    tip "install grunt-cli"
-    npm install -g grunt-cli
 
-    tip "install gulp"
-    npm install -g gulp
+    if [ "`command -v grunt`" = "" ]; then
+        tip "install grunt-cli"
+        npm install -g grunt-cli
+    fi
 
-    tip "install yarn"
-    # curl -o- -L https://yarnpkg.com/install.sh | bash
-    npm install -g yarn
+    if [ "`command -v gulp`" = "" ]; then
+        tip "install gulp"
+        npm install -g gulp
+    fi
+
+    if [ "`command -v yarn`" = "" ]; then
+        tip "install yarn"
+        # curl -o- -L https://yarnpkg.com/install.sh | bash
+        npm install -g yarn
+    fi
 
     cd $oldir
 }
@@ -130,33 +136,29 @@ nodejs_info() {
 }
 
 # if [ "$OME_OS" = "$OS_CYGWIN" ]; then
+#if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
+#{
 if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
-    # NODEJS_MAJOR_VERSION=12
-    # NODEJS_MINOR_VERSION=14
-    # NODEJS_PATCH_VERSION=1
-
-    
-    
-    if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
-        NODEJS_VERSION_INFO=node-v${NODEJS_VERSION}-win-x64
-        NODEJS_VERSION_ZIP=${NODEJS_VERSION_INFO}.zip
-    elif [ "$OME_OS" = "$OS_MACOS" ]; then
-        NODEJS_VERSION_INFO=node-v${NODEJS_VERSION}-darwin-x64
-        NODEJS_VERSION_ZIP=${NODEJS_VERSION_INFO}.tar.gz
-    else
-        NODEJS_VERSION_INFO=node-v${NODEJS_VERSION}-linux-x64
-        NODEJS_VERSION_ZIP=${NODEJS_VERSION_INFO}.tar.xz
-    fi
-    # https://nodejs.org/dist/v12.14.1/node-v12.14.1-darwin-x64.tar.gz
-    # https://nodejs.org/dist/v12.14.1/node-v12.14.1-win-x86.zip
-    # https://nodejs.org/dist/v12.14.1/node-v12.14.1-win-x64.zip
-    # https://nodejs.org/dist/v12.14.1/node-v12.14.1-linux-x64.tar.xz
-    # https://nodejs.org/dist/v12.14.1/node-v12.14.1-linux-armv7l.tar.xz
-    # https://nodejs.org/dist/v12.14.1/node-v12.14.1-linux-arm64.tar.xz
-
-    # tip "set env:$OME_REPO/$NODEJS_VERSION"
-    export PATH=$OME_REPO/$NODEJS_VERSION_INFO:$PATH
+    NODEJS_VERSION_INFO=node-v${NODEJS_VERSION}-win-x64
+    NODEJS_VERSION_ZIP=${NODEJS_VERSION_INFO}.zip
+elif [ "$OME_OS" = "$OS_MACOS" ]; then
+    NODEJS_VERSION_INFO=node-v${NODEJS_VERSION}-darwin-x64
+    NODEJS_VERSION_ZIP=${NODEJS_VERSION_INFO}.tar.gz
+else
+    NODEJS_VERSION_INFO=node-v${NODEJS_VERSION}-linux-x64
+    NODEJS_VERSION_ZIP=${NODEJS_VERSION_INFO}.tar.xz
 fi
+# https://nodejs.org/dist/v12.14.1/node-v12.14.1-darwin-x64.tar.gz
+# https://nodejs.org/dist/v12.14.1/node-v12.14.1-win-x86.zip
+# https://nodejs.org/dist/v12.14.1/node-v12.14.1-win-x64.zip
+# https://nodejs.org/dist/v12.14.1/node-v12.14.1-linux-x64.tar.xz
+# https://nodejs.org/dist/v12.14.1/node-v12.14.1-linux-armv7l.tar.xz
+# https://nodejs.org/dist/v12.14.1/node-v12.14.1-linux-arm64.tar.xz
+
+# tip "set env:$OME_REPO/$NODEJS_VERSION"
+export PATH=$OME_REPO/$NODEJS_VERSION_INFO:$PATH
+#}
+# fi
 
 # export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 
