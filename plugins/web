@@ -1,0 +1,31 @@
+#!/usr/bin/env sh
+
+web_install() {
+    ome_check_install "npm" "nodejs"
+    
+    tip "install js/ts language server"
+    npm i -g javascript-typescript-langserver
+    # npm i -g flow-language-server
+    # npm i -g typescript-language-server
+
+    tip "install css language server"
+    npm install -g vscode-css-languageserver-bin
+
+    tip "install html language server"
+    npm install -g vscode-html-languageserver-bin
+
+    tip "install vue language server"
+    npm install -g vue-language-server
+}
+
+web_uninstall() {
+    echo_error "'web_uninstall' not implemented"
+}
+
+web_exist_p() {
+    echo_error "'web_exist_p' not implemented"
+}
+
+web_info() {
+    echo_error ""
+}

@@ -66,38 +66,47 @@ nodejs_install_nvm() {
     nvm use --lts=dubnium
 }
 
+nodejs_install_download() {
+    # echo_warning "please download form: https://nodejs.org/en/download"
+    # https://nodejs.org/dist
+    if [ ! -d $OME_REPO/$NODEJS_VERSION_INFO ]; then
+        local zipkg=$NODEJS_VERSION_ZIP
+        mkdir -p ~/Downloads
+        cd ~/Downloads/
+        if [ ! -f $HOME/Downloads/$zipkg ]; then
+            # https://nodejs.org/dist/v12.14.1/node-v12.14.1-darwin-x64.tar.gz
+            #wget https://nodejs.org/dist/latest-v${NODEJS_MAJOR_VERSION}.x/$zipkg
+            wget https://nodejs.org/dist/v${NODEJS_VERSION}/$zipkg
+        fi
+        #if [ ! -d $OME_REPO/$NODEJS_VERSION_INFO ]; then
+        unzip ./$zipkg -d $OME_REPO
+        cd $OME_REPO/$NODEJS_VERSION_INFO
+        chmod +x ./node
+        chmod +x ./npm
+        chmod +x ./npx
+        # fi
+    else
+        echo "$NODEJS_VERSION_INFO is already installed!"
+    fi
+}
+
 nodejs_install() {
     local oldir=`pwd`
-    if [ "$OME_OS" = "$OS_MSYS2" ]; then
-        pacman -S mingw-w64-x86_64-nodejs
+    
+    # if [ "$OME_OS" = "$OS_MSYS2" ]; then
+        # pacman -S mingw-w64-x86_64-nodejs
     # elif [ "$OME_OS" = "$OS_CYGWIN" ]; then
-    elif [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
-        # echo_warning "please download form: https://nodejs.org/en/download"
-        # https://nodejs.org/dist
-        if [ ! -d $OME_REPO/$NODEJS_VERSION ]; then
-            local zipkg=$NODEJS_VERSION_ZIP
-            mkdir -p ~/Downloads
-            cd ~/Downloads/
-            if [ ! -f $HOME/Downloads/$zipkg ]; then
-                # https://nodejs.org/dist/v12.14.1/node-v12.14.1-darwin-x64.tar.gz
-                #wget https://nodejs.org/dist/latest-v${NODEJS_MAJOR_VERSION}.x/$zipkg
-                wget https://nodejs.org/dist/v${NODEJS_VERSION}/$zipkg
-            fi
-            if [ ! -d $OME_REPO/$NODEJS_VERSION ]; then
-                unzip ./$zipkg -d $OME_REPO
-                cd $OME_REPO/$NODEJS_VERSION
-                chmod +x ./*
-            fi
-        fi
-    else
-        # nodejs_install_n
-        nodejs_install_nvm
-    fi
+        # nodejs_install_download
+    # else
+        # nodejs_install_nvm # nodejs_install_n
+    # fi
 
-    if [ "$OME_OS" != "$OS_CYGWIN" ]; then
-        tip "update npm"
-        npm install -g npm
-    fi
+    nodejs_install_download
+
+    # if [ "$OME_OS" != "$OS_CYGWIN" ]; then
+        # tip "update npm"
+        # npm install -g npm
+    # fi
 
     # tip "npm update -g"
     # npm update -g
@@ -107,23 +116,6 @@ nodejs_install() {
 
     tip "install gulp"
     npm install -g gulp
-
-    tip "install js/ts language server"
-    npm i -g javascript-typescript-langserver
-    # npm i -g flow-language-server
-    # npm i -g typescript-language-server
-
-    tip "install css language server"
-    npm install -g vscode-css-languageserver-bin
-
-    tip "install html language server"
-    npm install -g vscode-html-languageserver-bin
-
-    tip "install vue language server"
-    npm install -g vue-language-server
-
-    tip "install bash language server"
-    npm i -g bash-language-server
 
     tip "install yarn"
     # curl -o- -L https://yarnpkg.com/install.sh | bash
@@ -163,7 +155,7 @@ if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
     # https://nodejs.org/dist/v12.14.1/node-v12.14.1-linux-arm64.tar.xz
 
     # tip "set env:$OME_REPO/$NODEJS_VERSION"
-    export PATH=$OME_REPO/$NODEJS_VERSION:$PATH
+    export PATH=$OME_REPO/$NODEJS_VERSION_INFO:$PATH
 fi
 
 # export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"

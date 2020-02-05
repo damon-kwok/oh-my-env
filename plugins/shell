@@ -1,6 +1,10 @@
 #!/usr/bin/env sh
 
 shell_install() {
+    ome_check_install "npm" "nodejs"
+    tip "install bash language server"
+    npm i -g bash-language-server
+    
     # tip "install oh-my-zsh"
     # sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 
