@@ -49,12 +49,12 @@ config_offlineimap() {
     fi
 
     # install python
-    ome_check_install "pip2" "python"
+    ome_check_install "pip3" "python"
     
     tip "install offlineiamp"
-	pip2 install --user -U six
-    pip2 install --user -U pysqlite
-    pip2 install --user -U offlineimap	
+	pip3 install --user -U six
+    pip3 install --user -U pysqlite
+    pip3 install --user -U offlineimap	
 
     # sync email
     offlineimap

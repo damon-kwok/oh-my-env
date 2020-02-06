@@ -304,7 +304,7 @@ cc_install_tools() {
                  valgrind libatomic-ops-dev re2c
 
             # language dev
-            sudo apt install -y libperl-dev libpython-dev libpython3-dev php-dev \
+            sudo apt install -y libperl-dev python3-dev php-dev \
                  ruby-dev tcl-dev
             
             # AutoTrace
