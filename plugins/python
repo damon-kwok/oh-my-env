@@ -8,9 +8,8 @@ python_install_pyenv() {
     pyenv_set_env
 
     tip "install python"
-    pyenv install $PYTHON2_VERSION
     pyenv install $PYTHON3_VERSION
-    pyenv global $PYTHON2_VERSION $PYTHON3_VERSION
+    pyenv global $PYTHON3_VERSION
 
     tip "pyenv whence rackup"
     pyenv whence rackup
@@ -27,17 +26,17 @@ python_install_bin() {
         # $OS_DEBIAN) ;;
         # $OS_UBUNTU) ;;
         $OS_DEBIAN|$OS_UBUNTU)
-            sudo apt install python2 python3
+            sudo apt install python3
             ;;
         # $OS_REDHAT) ;;
         # $OS_FEDORA) ;;
         $OS_REDHAT|$OS_FEDORA)
-            sudo yum install python2 python3;;
+            sudo yum install python3;;
         $OS_ARCH)
-            sudo pacman -S python2 python3
+            sudo pacman -S python3
             ;;
         $OS_GENTOO)
-            emerge python2 python3
+            emerge python3
             ;;
         $OS_SUSE) ;;
         $OS_SLACKWARE) ;;
@@ -49,24 +48,24 @@ python_install_bin() {
         $OS_GUIXSD) ;;
         # Unix
         $OS_MACOS)
-            brew install python2 python3
+            brew install python3
             ;;
         $OS_AIX) ;;
         $OS_SOLARIS) ;;
         $OS_FREEBSD)
-            sudo pkg install python27 python37
+            sudo pkg install python38
             ;;
         $OS_OPENBSD)
-            sudo pkg install python27 python37 #py27-sqlite3 sqlite3
+            sudo pkg install python38 #py27-sqlite3 sqlite3
             ;;
         $OS_NETBSD) ;;
         $OS_DFBSD) ;;
         # Windows
         $OS_CYGWIN)
-            pacman -S python2 python3
+            apt install python3
             ;;
         $OS_MSYS2)
-            apt install python2 python3
+            pacman -S python3
             ;;
         # Other
         $OS_UNKNOW) ;;
@@ -79,16 +78,6 @@ python_install() {
     python_install_bin
     # python_install_pyenv
 
-    # if ! command -v pip2 >/dev/null 2>&1; then
-    if [ "`command -v pip2`" = "" ]; then
-        tip "install pip2"
-        cd $HOME/Downloads/
-        if [ ! -f get-pip.py ]; then
-            curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
-        fi
-        python2 get-pip.py --user
-    fi
-
     # if ! command -v pip3 >/dev/null 2>&1; then
     if [ "`command -v pip3`" = "" ]; then
         tip "install pip3"
@@ -99,17 +88,10 @@ python_install() {
         python3 get-pip.py --user
     fi
 
-    tip "check pip2 pip3"
-    which pip2
-    pip2 --version
+    tip "check pip3"
     which pip3
     pip3 --version
     
-    tip "pip2 upgrade"
-    pip2 install --user -U pip
-    pip2 install --user -U setuptools
-    pip2 --version
-
     tip "pip3 upgrade"
     pip3 install --user -U pip
     pip3 install --user -U setuptools
@@ -126,12 +108,12 @@ python_install() {
 
     tip "install python language server"
     # pip3 install --user -U python-language-server
-    pip install --user -U 'python-language-server[all]'
+    pip3 install --user -U 'python-language-server[all]'
 
     tip "install build tools:gyp"
     github_upgrade chromium/gyp $OME_REPO/gyp
     cd $OME_REPO/gyp/
-    pip2 install --user -U .
+    pip3 install --user -U .
 
     tip "install build tools:waf"
     git_upgrade "https://gitlab.com" ita1024/waf $OME_REPO/waf
@@ -140,13 +122,13 @@ python_install() {
     cp -rf ./waf $OME_PREFIX/bin/
 
     tip "install build tools:scons"
-    pip2 install --user -U virtualenv
+    pip3 install --user -U virtualenv
     git_upgrade "https://github.com" SCons/scons $OME_REPO/scons
     cd $OME_REPO/scons/
-    python2 bootstrap.py build/scons
+    python3 bootstrap.py build/scons
     if [ -d $OME_REPO/scons/build/scons/ ]; then
         cd $OME_REPO/scons/build/scons/
-        pip2 install --user -U .
+        pip3 install --user -U .
     else
         echo_error "gen project file failed!"
     fi
@@ -158,16 +140,14 @@ python_install() {
     pip3 install --user -U pygments
     pip3 install --user -U sphinx
     pip3 install --user -U docutils
-    pip2 install --user -U wsgiref
+    # pip3 install --user -U wsgiref
 
     tip "install McCabe complexity checker"
-    pip2 install --user -U mccabe
     pip3 install --user -U mccabe
     cd $oldir
 }
 
 python_uninstall() {
-    sudo python2 -m pip uninstall -y pip setuptools
     sudo python3 -m pip uninstall -y pip setuptools
 }
 
