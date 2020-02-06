@@ -53,7 +53,8 @@ config_offlineimap() {
     
     tip "install offlineiamp"
 	pip3 install --user -U six
-    pip3 install --user -U pysqlite
+    pip3 install --user -U pysqlite3
+    pip3 install --user -U rfc6555
     pip3 install --user -U offlineimap	
 
     # sync email

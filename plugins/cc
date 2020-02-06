@@ -473,9 +473,9 @@ cc_install_tools() {
                    automake autogen autoconf mingw-w64-x86_64-pkg-config mingw-w64-x86_64-libtool intltool \
                    mingw-w64-x86_64-cmake mingw-w64-x86_64-ninja \
                    mingw-w64-x86_64-gcc mingw-w64-x86_64-nasm \
-                   mingw-w64-x86_64-python2 mingw-w64-x86_64-python2-pip \
                    mingw-w64-x86_64-python3 mingw-w64-x86_64-python3-pip \
                    mingw-w64-x86_64-emacs mingw-w64-x86_64-ttf-dejavu
+                   #mingw-w64-x86_64-python2 mingw-w64-x86_64-python2-pip
 
             readp "install doc tools?"
             if [ $? -eq 1 ]; then
