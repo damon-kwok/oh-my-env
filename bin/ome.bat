@@ -18,7 +18,7 @@ REM GNU General Public License for more details.
 REM
 REM You should have received a copy of the GNU General Public License
 REM along with this program.  If not, see <http:REMwww.gnu.org/licenses/>.
-REM					 
+REM
 REM Code:
 REM
 REM export LANG="en_US.UTF-8"
@@ -71,8 +71,8 @@ set PATH=%MSYS32_HOME%;%MSYS64_HOME%;%MSYS32_BIN%;%MSYS64_BIN%;%MINGW32_BIN%;%MI
 
 rem %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 rem TexLive
-set TEXLIVE_BIN=C:\texlive\2017\bin\win32;D:\texlive\2017\bin\win32;E:\texlive\2017\bin\win32;
-set PATH=%TEXLIVE_BIN%;%PATH%
+rem set TEXLIVE_BIN=C:\texlive\2017\bin\win32;D:\texlive\2017\bin\win32;E:\texlive\2017\bin\win32;
+rem set PATH=%TEXLIVE_BIN%;%PATH%
 
 rem %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 rem MsBuild
@@ -81,10 +81,10 @@ rem set MSBUILD_BIN=%MSBUILD_HOME%\Bin
 
 rem %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 rem ocaml
-set OCAML_HOME=%APP_HOME%\opam64
-set OCAML_BIN=%OCAML_HOME%\bin
-set OCAMLLIB=%OCAML_HOME%\lib
-set PATH=%OCAML_BIN%;%PATH%
+rem set OCAML_HOME=%APP_HOME%\opam64
+rem set OCAML_BIN=%OCAML_HOME%\bin
+rem set OCAMLLIB=%OCAML_HOME%\lib
+rem set PATH=%OCAML_BIN%;%PATH%
 
 rem %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 rem Haskell-Stack
@@ -96,25 +96,25 @@ rem set PATH=%STACK_BIN%;%PATH%
 
 rem %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 rem omnisharp
-set OMNISHARP_HOME=%APP_HOME%\omnisharp-server
-set OMNISHARP_BIN=%OMNISHARP_HOME%\bin
-set PATH=%OMNISHARP_BIN%;%PATH%
+rem set OMNISHARP_HOME=%APP_HOME%\omnisharp-server
+rem set OMNISHARP_BIN=%OMNISHARP_HOME%\bin
+rem set PATH=%OMNISHARP_BIN%;%PATH%
 
 rem %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 rem cmake
-set CMAKE_HOME=%APP_HOME%\cmake
-set CMAKE_BIN=%CMAKE_HOME%\bin
-set PATH=%CMAKE_BIN%;%PATH%
+rem set CMAKE_HOME=%APP_HOME%\cmake
+rem set CMAKE_BIN=%CMAKE_HOME%\bin
+rem set PATH=%CMAKE_BIN%;%PATH%
 
 rem %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 rem protobuf-net
-set PROTOBUF_BIN=%APP_HOME%\protobuf
-set PATH=%PROTOBUF_BIN%;%PATH%
+rem set PROTOBUF_BIN=%APP_HOME%\protobuf
+rem set PATH=%PROTOBUF_BIN%;%PATH%
 
 rem %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 rem irony-server
-set IRONY_BIN=%APP_HOME%\irony-server\bin
-set PATH=%APP_HOME%\gcc-6-win64\bin;c:\LLVM\bin;%IRONY_BIN%;%PATH%
+rem set IRONY_BIN=%APP_HOME%\irony-server\bin
+rem set PATH=%APP_HOME%\gcc-6-win64\bin;c:\LLVM\bin;%IRONY_BIN%;%PATH%
 
 rem %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 rem set LLVM_HOME=%APP_HOME%\LLVM
@@ -128,13 +128,13 @@ rem set PATH=%MSBUILD_BIN%;%PATH%
 rem set PATH=%LLVM_BIN%;%CLANG_BIN%;%PATH%
 rem %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-set JAVA_VERSION=144
-set JAVA_HOME2="C:\Program Files"\Java\jdk1.8.0_%VERSION%
-set JAVA_HOME=C:\PROGRA~1\Java\jdk1.8.0_%VERSION%
-set JAVA_BIN=%JAVA_HOME%\bin
+rem set JAVA_VERSION=144
+rem set JAVA_HOME2="C:\Program Files"\Java\jdk1.8.0_%VERSION%
+rem set JAVA_HOME=C:\PROGRA~1\Java\jdk1.8.0_%VERSION%
+rem set JAVA_BIN=%JAVA_HOME%\bin
 rem set LEIN_JAVA_CMD=%JAVA_BIN%\java.exe
-set CLASSPATH=.;%JAVA_HOME%\lib\dt.jar;%JAVA_HOME%\lib\tools.jar;
-set PATH=%JAVA_BIN%;%LEIN_JAVA_CMD%;%PATH%
+rem set CLASSPATH=.;%JAVA_HOME%\lib\dt.jar;%JAVA_HOME%\lib\tools.jar;
+rem set PATH=%JAVA_BIN%;%LEIN_JAVA_CMD%;%PATH%
 rem %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 rem sh ome

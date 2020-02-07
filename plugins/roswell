@@ -12,14 +12,14 @@ roswell_install() {
             unzip ./$zipkg -d $OME_REPO
             cd $OME_REPO/$roswell
             chmod +x ./ros
-            export PATH=$OME_REPO/roswell:$PATH
+            export PATH="$OME_REPO/roswell:$PATH"
         fi
     else
         # sudo apt-get -y install git build-essential automake libcurl4-openssl-dev;
         github_upgrade roswell/roswell $OME_REPO/roswell
         cd $OME_REPO/roswell/
         echo "sh bootstrap"
-        sh bootstrap
+        bash bootstrap
         echo "./configure --prefix=$OME_PREFIX"
         ./configure --prefix=$OME_PREFIX
         echo "make install"
