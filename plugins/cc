@@ -249,7 +249,7 @@ cc_install_clang_bin() {
         $OS_DFBSD) ;;
         # Windows
         $OS_CYGWIN)
-            apt install libc++-devel libc++abi-devel
+            apt install clang libclang-devel git-clang-format libc++-devel libc++abi-devel
             ;;
         $OS_MSYS2)
             pacman -S mingw-w64-x86_64-llvm \
