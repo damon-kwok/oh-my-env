@@ -206,7 +206,8 @@ ome_repl() {
 
 ome_doctor() {
     title "ome doctor"
-    tip "check PATH"
+	. $OME_ROOT/install.sh install
+	ome install oh_my_emacs
 }
 
 ome_help() {
@@ -247,6 +248,8 @@ ome_parse() {
             # ome install cc
             ome_config
             ;;
+		"doctor"|"fix")
+			ome_doctor;;
         "install")
             ome_eval "install" $ARG1
             ;;
@@ -335,7 +338,7 @@ ome_parse() {
     esac
     cd $oldir
 }
-export OME_VERSION="OME     2020.0205 copyleft 2020 damon-kwok"
+export OME_VERSION="OME     2020.0219 copyleft 2020 damon-kwok"
 #echo $@
 mkdir -p $OME_PREFIX/bin/
 mkdir -p $OME_REPO/

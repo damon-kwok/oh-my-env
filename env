@@ -69,7 +69,7 @@ case "`uname`" in
             export OME_OS=$OS_UNKNOW
         fi
         ;;
-    "Cygwin"|"CYGWIN"|"CYGWIN_NT-10.0") export OME_OS=$OS_CYGWIN;;
+    "Cygwin"|"CYGWIN"|"CYGWIN_NT-10.0"|"CYGWIN_NT-6.1") export OME_OS=$OS_CYGWIN;;
     "Msys") export OME_OS=$OS_MSYS2;;
     "FreeBSD") export OME_OS=$OS_FREEBSD;;
     "Darwin") export OME_OS=$OS_MACOS;;
@@ -225,7 +225,7 @@ fi
 
 export CLJ_CLI_VERSION=1.10.1.507
 export ERLANG_VERSION=22.2
-export GOLANG_VERSION=1.13.7
+export GOLANG_VERSION=1.14rc1 #1.13.7
 export PYTHON2_VERSION=2.7.17
 export PYTHON3_VERSION=3.8.1
 export RUBY_VERSION=2.7.0
