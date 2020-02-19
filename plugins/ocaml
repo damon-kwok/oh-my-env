@@ -64,8 +64,8 @@ ocaml_install() {
     tip "install dune"
     opam install dune
 
-    tip "install OASIS"
-    opam install oasis
+    # tip "install OASIS"
+    # opam install oasis
     
     tip "install merlin"
     opam install merlin

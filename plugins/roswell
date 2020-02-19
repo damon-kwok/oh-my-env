@@ -27,9 +27,9 @@ roswell_install() {
     fi
 
     tip "ros setup"
-    # ros install sbcl
-    ros use sbcl/system
-    ros setup
+    ros install sbcl-bin $SBCL_VERSION
+    #ros use sbcl/system
+    #ros setup
 
     tip "install clack"
     ros install clack

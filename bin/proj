@@ -201,7 +201,7 @@ ome_status() {
 
     if [ -d $HOME/.oh-my-env/ ]; then
         tip "oh-my-env status"
-        cd $HOME/.oh-my-env
+        cd $HOME/.oh-my-env/
         git status
     fi
 }
