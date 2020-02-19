@@ -160,7 +160,9 @@ ome_pull() {
 
     ome_fix_dotfiles
     
-    ome install oh_my_emacs
+    #ome install oh_my_emacs
+	github_upgrade damon-kwok/oh-my-emacs $HOME/.oh-my-emacs
+	gitee_upgrade damon-kwok/emacs.d $HOME/.emacs.d
 
     tip "wrokspace upgrade"
     gitee_upgrade damon-kwok/workspace $HOME/workspace

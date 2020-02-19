@@ -150,11 +150,18 @@ basedev_install() {
                 # cp -rf /usr/bin/apt-cyg /usr/bin/apt
                 # chmod +x /usr/bin/apt-cyg
                 # chmod +x /usr/bin/apt
-                # 2. git
-                cd $OME_PREFIX
-                git clone https://github.com/kou1okada/apt-cyg.git
-                ln -s "$(realpath apt-cyg/apt-cyg)" /usr/local/bin/
-                cp /usr/local/bin/apt-cyg /usr/local/bin/apt
+				
+                # 2. git 1:
+                # cd $OME_PREFIX
+                # git clone https://github.com/kou1okada/apt-cyg.git
+                # ln -s "$(realpath apt-cyg/apt-cyg)" /usr/local/bin/
+                # cp /usr/local/bin/apt-cyg /usr/local/bin/apt
+				
+				# 3. git 2:
+				github_upgrade kou1okada/apt-cyg $OME_PREFIX/apt-cyg
+				if [ ! -f "/usr/local/bin/apt-cyg" ]; then
+					ln -s $OME_PREFIX/apt-cyg/apt-cyg /usr/local/bin/
+				fi
             fi
             apt install git subversion wget curl \
                 tar zip unzip rlwrap coreutils diffutils \

@@ -59,7 +59,7 @@ if [ "$1" == "install" ]; then
 	ome_write_env_to_dotfile $HOME/.shrc
 	ome_write_env_to_dotfile $HOME/.bashrc
 	ome_write_env_to_dotfile $HOME/.zshrc
-
+	
 	. $HOME/.oh-my-env/env
 fi
 

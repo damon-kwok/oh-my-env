@@ -31,8 +31,10 @@ ocaml_install() {
     else
         if [ "$OME_OS" != "$OS_FREEBSD" ]; then
             # method 1: install pre-build
-            sh <(curl -sL https://raw.githubusercontent.com/ocaml/opam/master/shell/install.sh)
-
+			# http://opam.ocaml.org/doc/Install.html
+			# sh <(curl -sL https://raw.githubusercontent.com/ocaml/opam/master/shell/install.sh)
+            curl -sL https://raw.githubusercontent.com/ocaml/opam/master/shell/install.sh
+			
             # method 2: building
             # github_upgrade ocaml/opam $OME_REPO/opam
             # cd $OME_REPO/opam

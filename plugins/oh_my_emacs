@@ -24,6 +24,7 @@ link_init_el() {
 
 oh_my_emacs_install() {
     github_upgrade damon-kwok/oh-my-emacs $HOME/.oh-my-emacs
+	gitee_upgrade damon-kwok/emacs.d $HOME/.emacs.d
     link_init_el
 }
 
