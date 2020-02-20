@@ -24,7 +24,7 @@
         :mirrors {
             "central" {
                 :name "aliyun"
-                :url "http://maven.aliyun.com/nexus/content/groups/public"
+                :url "https://maven.aliyun.com/nexus/content/groups/public"
             }
             "clojars" {
                 :name "cnnic"

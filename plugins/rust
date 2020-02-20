@@ -16,6 +16,7 @@ rust_install() {
     if [ ! -f $HOME/.cargo/config ]; then
         mkdir -p $HOME/.cargo
         echo "[source.crates-io]" >> $HOME/.cargo/config
+        echo 'registry = "https://github.com/rust-lang/crates.io-index"' >> $HOME/.cargo/config
         echo "replace-with = 'ustc'" >> $HOME/.cargo/config
         echo "" >> $HOME/.cargo/config
         echo "[source.ustc]" >> $HOME/.cargo/config
@@ -79,9 +80,11 @@ rust_install() {
     
     # tip "install tool:racer"
     # cargo install --force racer
+    # cargo install racer
 
     tip "install tool:ripgrep"
-    cargo install --force ripgrep
+    # cargo install --force ripgrep
+    cargo install ripgrep
     cd $oldir
 }
 
