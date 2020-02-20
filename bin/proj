@@ -164,6 +164,10 @@ ome_pull() {
     #ome install oh_my_emacs
 	github_upgrade damon-kwok/oh-my-emacs $HOME/.oh-my-emacs
 	gitee_upgrade damon-kwok/emacs.d $HOME/.emacs.d
+    rm -rf /usr/bin/em.bat
+    rm -rf /usr/bin/em-nw.bat
+    cp $OME_ROOT/bin/em.bat /usr/bin/
+    cp $OME_ROOT/bin/em-nw.bat /usr/bin/
     
     tip "wrokspace upgrade"
     gitee_upgrade damon-kwok/workspace $HOME/workspace

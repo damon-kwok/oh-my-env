@@ -250,7 +250,7 @@ ome_parse() {
             ;;
 		"doctor"|"fix")
 			ome_doctor;;
-        "install")
+        "install"|"i")
             ome_eval "install" $ARG1
             ;;
         "uninstall")
@@ -347,7 +347,7 @@ ome_parse() {
     esac
     cd $oldir
 }
-export OME_VERSION="OME     2020.0219 copyleft 2020 damon-kwok"
+export OME_VERSION="OME-2020.0220 copyleft 2020 damon-kwok"
 #echo $@
 mkdir -p $OME_PREFIX/bin/
 mkdir -p $OME_REPO/

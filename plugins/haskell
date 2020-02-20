@@ -45,22 +45,27 @@ haskell_install_download() {
 }
 
 haskell_install_bin() {
+    # https://docs.haskellstack.org/en/stable/install_and_upgrade/#installupgrade
     get_os_type
     case $OME_OS in
         # Linux
         # $OS_DEBIAN) ;;
         # $OS_UBUNTU) ;;
-        $OS_DEBIAN|$OS_UBUNTU) ;;
+        $OS_DEBIAN|$OS_UBUNTU) sudo apt install haskell-stack;;
         # $OS_REDHAT) ;;
         # $OS_FEDORA) ;;
-        $OS_REDHAT|$OS_FEDORA) sudo yum install stack;;
+        $OS_REDHAT|$OS_FEDORA)
+            sudo dnf copr enable petersen/stack
+            # sudo yum install stack
+            ;;
         $OS_ARCH) sudo pacman -S statck;;
         $OS_GENTOO) ;;
         $OS_SUSE)
             # openSUSE Leap
             sudo zypper ar http://download.opensuse.org/repositories/devel:/languages:/haskell/openSUSE_Leap_42.1/devel:languages:haskell.repo
             # SUSE Linux Enterprise 12
-            sudo zypper ar http://download.opensuse.org/repositories/devel:/languages:/haskell/SLE_12/devel:languages:haskell.repo
+            # sudo zypper ar http://download.opensuse.org/repositories/devel:/languages:/haskell/SLE_12/devel:languages:haskell.repo
+            sudo zypper in stack
             ;;
         $OS_SLACKWARE) ;;
         $OS_NIXOS) ;;

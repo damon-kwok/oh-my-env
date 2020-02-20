@@ -3,7 +3,27 @@
 nim_install() {
     tip "install nim"
     #if ! command -v nimble >/dev/null 2>&1; then
-	if [ "`command -v nimble`" = "" ]; then
+    if [ "$OME_OS" = "$OS_CYGWIN" ]; then
+        # || [ "$OME_OS" = "$OS_MSYS2" ]; then
+        local pkgver=nim-${NIM_VERSION}_x64
+        local zipkg=$pkgver.zip
+        
+        if [ ! -d $OME_REPO/$pkgver ]; then
+            mkdir -p ~/Downloads
+            cd ~/Downloads/
+            
+            if [ ! -f $HOME/Downloads/$zipkg ]; then
+                # wget https://nodejs.org/dist/latest-v${STACK_MAJOR_VERSION}.x/$zipkg
+                wget -c https://nim-lang.org/download/$zipkg
+            fi
+            
+            # if [ ! -d $OME_REPO/$pkgver ]; then
+            unzip ./$zipkg -d $OME_REPO/nim
+            cd $OME_REPO/nim/
+            chmod +x ./*
+            # fi
+        fi
+	elif [ "`command -v nimble`" = "" ]; then
         # if test nimble = "" ; then
         curl https://nim-lang.org/choosenim/init.sh -sSf | sh
     fi
