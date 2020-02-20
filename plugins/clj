@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 clj_install() {
-    # ome_check_install "sdk" "jvm"
+    ome_check_install "java" "jvm"
 
     # https://www.clojure.org/guides/getting_started
     # https://clojure.org/guides/deps_and_cli
@@ -15,7 +15,13 @@ clj_install() {
         mkdir -p $OME_PREFIX/lib/clojure/libexec/
         ./$CLI_FILE --prefix $OME_PREFIX
     fi
-    
+
+    if [ ! -f $HOME/.lein/self-installs/leiningen-2.9.1-standalone.jar ]; then
+        # unzip $HOME/.emacs.d/files/leiningen-2.9.1-standalone.zip -d $HOME/.lein/self-installs/
+        cp $HOME/.emacs.d/files/leiningen-2.9.1-standalone.zip -d $HOME/.lein/self-installs/
+        mv $HOME/.lein/self-installs/leiningen-2.9.1-standalone.zip $HOME/.lein/self-installs/leiningen-2.9.1-standalone.jar
+    fi
+
     if [ "`command -v lein`" = "" ]; then
         tip "install leiningen"
         cd $OME_PREFIX/bin/

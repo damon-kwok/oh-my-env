@@ -165,7 +165,7 @@ basedev_install() {
             fi
             apt install git subversion wget curl \
                 tar zip unzip rlwrap coreutils diffutils \
-                xdg-utils emacs-w32
+                xdg-utils emacs-w32 chere
             ;;
         $OS_MSYS2)
             readp "update system?"

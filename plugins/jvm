@@ -56,34 +56,34 @@ jvm_install_sdkman() {
 
     #if ! command -v javac >/dev/null 2>&1; then
     if [ "`command -v javac`" = "" ]; then
-        sdk install java
+        sdk install java $JAVA_VERSION
     fi
     #if ! command -v kotlinc >/dev/null 2>&1; then
     # if [ "`command -v kotlinc`" = "" ]; then
-        # sdk install kotlin
+        # sdk install kotlin $KOTLIN_VERSION
     # fi
     #if ! command -v scalac >/dev/null 2>&1; then
     # if [ "`command -v scalac`" = "" ]; then
-        # sdk install scala
+        # sdk install scala $SCALA_VERSION
     # fi
     #if ! command -v groovy >/dev/null 2>&1; then
     # if [ "`command -v groovy`" = "" ]; then
-        # sdk install groovy
+        # sdk install groovy $GROOVY_VERSION
     # fi
 
     #if ! command -v mvn >/dev/null 2>&1; then
     if [ "`command -v mvn`" = "" ]; then
-        sdk install maven
+        sdk install maven $MAVEN_VERSION
     fi
 
     #if ! command -v gradle >/dev/null 2>&1; then
     if [ "`command -v gradle`" = "" ]; then
-        sdk install gradle
+        sdk install gradle $GRADLE_VERSION
     fi
 
     #if ! command -v sbt >/dev/null 2>&1; then
     # if [ "`command -v sbt`" = "" ]; then
-        # sdk install sbt
+        # sdk install sbt $SBT_VERSION
     # fi
 
     #tip "install java language server"

@@ -17,7 +17,7 @@ scala_install() {
 
     #if ! command -v groovy >/dev/null 2>&1; then
     if [ "`command -v groovy`" = "" ]; then
-        sdk install groovy
+        sdk install groovy $GROOVY_VERSION
     fi
 
     # tip "install groovy language server"

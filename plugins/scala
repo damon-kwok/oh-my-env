@@ -26,12 +26,12 @@ scala_install() {
 
     #if ! command -v scalac >/dev/null 2>&1; then
     if [ "`command -v scalac`" = "" ]; then
-        sdk install scala
+        sdk install scala $SCALA_VERSION
     fi
 
     #if ! command -v sbt >/dev/null 2>&1; then
     if [ "`command -v sbt`" = "" ]; then
-        sdk install sbt
+        sdk install sbt $SBT_VERSION
     fi
     
     tip "install scala language server"

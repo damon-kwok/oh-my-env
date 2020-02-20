@@ -46,9 +46,10 @@ golang_install() {
             mkdir -p ~/Downloads
             cd ~/Downloads/
             if [ ! -f $HOME/Downloads/$zipkg ]; then
+                rm -rf $OME_REPO/go/
                 wget https://dl.google.com/go/$zipkg
             fi
-            unzip ./zipkg -d $OME_REPO
+            unzip ./$zipkg -d $OME_REPO
         fi
         cd $OME_REPO/go/bin/
         chmod +x ./*
@@ -130,16 +131,19 @@ golang_install() {
     # tip "install go language server (go-langserver)"
     # go get -u github.com/sourcegraph/go-langserver
 
-    tip "install go language server (bingo)"
-    github_upgrade saibing/bingo $OME_REPO/bingo
-    cd $OME_REPO/bingo/
-    GO111MODULE=on go install
-
+    # tip "install go language server (bingo)"
+    # github_upgrade saibing/bingo $OME_REPO/bingo
+    # cd $OME_REPO/bingo/
+    # GO111MODULE=on go install
+    
+    tip "install go language server (gopls)"
+    go get -u golang.org/x/tools/gopls@latest
+    
     tip "install gocode"
     go get -u github.com/mdempsky/gocode
 
     tip "install godef"
-    go get github.com/rogpeppe/godef
+    go get -u github.com/rogpeppe/godef
 
     tip "install dep"
     go get -u github.com/golang/dep/cmd/dep
@@ -189,6 +193,9 @@ else
     export PATH=$GOROOT/bin:$GOBIN:$PATH
 fi
 
+export GO111MODULE=on
+
 # If you live in China and may not be able to download golang.org/x/dependency
 # module, please set GOPROXY as follow:
-export GOPROXY=https://athens.azurefd.net/
+# export GOPROXY=https://athens.azurefd.net/
+export GOPROXY=https://goproxy.io

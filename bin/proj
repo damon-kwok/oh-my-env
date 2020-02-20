@@ -157,17 +157,19 @@ ome_pull() {
     tip "ome upgrade"
     cd $OME_ROOT
     git pull
-
+    chmod +x $OME_ROOT/bin/*
+    
     ome_fix_dotfiles
     
     #ome install oh_my_emacs
 	github_upgrade damon-kwok/oh-my-emacs $HOME/.oh-my-emacs
 	gitee_upgrade damon-kwok/emacs.d $HOME/.emacs.d
-
+    
     tip "wrokspace upgrade"
     gitee_upgrade damon-kwok/workspace $HOME/workspace
-    chmod +x $HOME/.oh-my-env/*
+}
 
+ome_pull_proj() {
     github_upgrade damon-kwok/damon-kwok.github.io $OME_PROJ/me/blog
     
     github_upgrade damon-kwok/awesome-package-manager $OME_PROJ/me/awesome-package-manager
@@ -188,6 +190,11 @@ ome_pull() {
     # make
 }
 
+ome_def_ws() {
+    local repo=$1
+    echo 'tip "wrokspace upgrade"' > $HOME/.ome_workspace
+    echo 'gitee_upgrade ${repo} $HOME/workspace'
+}
 ome_status() {
     if [ -d $OME_WS ]; then
         tip "workspace status"

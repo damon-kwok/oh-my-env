@@ -16,7 +16,7 @@ kotlin_install() {
 
     #if ! command -v kotlinc >/dev/null 2>&1; then
     if [ "`command -v kotlinc`" = "" ]; then
-        sdk install kotlin
+        sdk install kotlin $KOTLIN_VERSION
     fi
 
     # tip "install kotlin language server"
