@@ -1,11 +1,13 @@
 #!/usr/bin/env sh
 # TERM=xterm-256color emacsclient -t $@
 
-if [ -n "$DISPLAY" ]; then
-  TERM=xterm-256color emacsclient --tty --create-frame --no-wait --alternate-editor='emacs -nw' $@
-else
-  TERM=xterm-256color emacsclient --tty --create-frame --no-wait --alternate-editor='emacs -nw' $@
-fi
+# if [ -n "$DISPLAY" ]; then
+#   TERM=xterm-256color emacsclient --tty --create-frame --no-wait --alternate-editor='emacs -nw' $@
+# else
+#   TERM=xterm-256color emacsclient --tty --create-frame --no-wait --alternate-editor='emacs -nw' $@
+# fi
 
 #TERM=xterm-256color emacsclient --tty --create-frame --no-wait --alternate-editor='emacs -nw' $@
 
+# msys2
+TERM=xterm-256color emacsclient --no-wait --server-file=/tmp/emacs1000/server-nw --alternate-editor="emacs -Q -nw" $@

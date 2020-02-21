@@ -9,4 +9,5 @@ rem for /F %%i in ('D:\\cygwin64\\bin\\cygpath.exe %1%') do ( set result=%%i)
 rem for /f "delims=" %%t in ('D:\\cygwin64\\bin\\cygpath.exe %1%') do set result=%%t
 echo "open: %result%"
 
-D:\\cygwin64\\bin\\emacsclient-w32.exe --no-wait --socket-name="D:\\cygwin64\\tmp\\emacs1000\\server-nw" --alternate-editor="D:\\cygwin64\\bin\\emacs-w32.exe -Q -nw" "%result%"
+rem D:\\cygwin64\\bin\\emacsclient-w32.exe --no-wait --socket-name="D:\\cygwin64\\tmp\\emacs1000\\server" --alternate-editor="D:\\cygwin64\\bin\\emacs-w32.exe -Q" "%result%"
+D:\\cygwin64\\bin\\emacsclient-w32.exe --no-wait --server-file="D:\\cygwin64\\tmp\\emacs1000\\server" --alternate-editor="D:\\cygwin64\\bin\\emacs-w32.exe -Q" "%result%"

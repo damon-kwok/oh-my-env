@@ -103,13 +103,8 @@ ome_pull_proj() {
 }
 
 ome_push_proj() {
-    # local oldir=`pwd`
-    # cd $HOME/.oh-my-emacs/
-    # git push
-    
-    # cd $HOME/workspace
-    # git_push
-    
+    local oldir=`pwd`
+    #################################
     cd $OME_PROJ/me/blog
     git_push
 
@@ -127,6 +122,7 @@ ome_push_proj() {
     
     cd $OME_PROJ/me/libknife
     git_push
+    #################################
     cd $oldir
 }
 
