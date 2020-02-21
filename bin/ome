@@ -206,6 +206,7 @@ ome_repl() {
 
 ome_doctor() {
     title "ome doctor"
+    # ome_fix_dotfiles
 	. $OME_ROOT/install.sh install
 	ome install oh_my_emacs
 }

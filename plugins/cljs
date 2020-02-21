@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 cljs_install() {
-    ome_check_install "clojure" "clj"
+    # ome_check_install "clojure" "clj"
     ome_check_install "npm" "nodejs"
 
     # tip "install lumo-cljs"

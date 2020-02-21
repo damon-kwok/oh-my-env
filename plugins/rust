@@ -113,7 +113,7 @@ rust_set_env() {
     if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
         if [ -d "$USERPROFILE/.cargo/bin" ]; then
             export PATH="$USERPROFILE/.cargo/bin:$PATH"
-            export RUST_SRC_PATH="$(rustc --print sysroot)/lib/rustlib/src/rust/src"
+            export RUST_SRC_PATH="$($USERPROFILE/.cargo/bin/rustc --print sysroot)/lib/rustlib/src/rust/src"
         fi
     else
         if [ -f $HOME/.cargo/env ]; then

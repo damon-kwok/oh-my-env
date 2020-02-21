@@ -81,6 +81,55 @@ book_upgrade() {
 
 }
 
+ome_pull_proj() {
+    github_upgrade damon-kwok/damon-kwok.github.io $OME_PROJ/me/blog
+    
+    github_upgrade damon-kwok/awesome-package-manager $OME_PROJ/me/awesome-package-manager
+    github_upgrade damon-kwok/awesome-network-programming $OME_PROJ/me/awesome-network-programming
+    github_upgrade damon-kwok/awesome-web-scraping $OME_PROJ/me/awesome-web-scraping
+    github_upgrade damon-kwok/medusa $OME_PROJ/me/medusa
+    # github_upgrade damon-kwok/balisong $OME_PROJ/me/balisong
+    github_upgrade damon-kwok/data-bundle $OME_PROJ/me/data-bundle
+    github_upgrade damon-kwok/memrock $OME_PROJ/me/memrock
+
+    github_upgrade damon-kwok/cljs-example $OME_PROJ/me/cljs-example
+    
+    github_upgrade damon-kwok/libknife $OME_PROJ/me/libknife    
+    # cd $OME_PROJ/c/libknife
+    # mkdir -p build
+    # cd build
+    # cmake ..
+    # make
+}
+
+ome_push_proj() {
+    # local oldir=`pwd`
+    # cd $HOME/.oh-my-emacs/
+    # git push
+    
+    # cd $HOME/workspace
+    # git_push
+    
+    cd $OME_PROJ/me/blog
+    git_push
+
+    cd $OME_PROJ/me/awesome-package-manager
+    git_push
+
+    cd $OME_PROJ/me/awesome-network-programming
+    git_push
+
+    cd $OME_PROJ/me/awesome-web-scraping
+    git_push
+    
+    cd $OME_PROJ/me/medusa
+    git_push
+    
+    cd $OME_PROJ/me/libknife
+    git_push
+    cd $oldir
+}
+
 blog_push() {
     local oldir=`pwd`
     cd $OME_PROJ/me/blog
@@ -125,73 +174,32 @@ oh_my_env_push() {
     cd $oldir
 }
 
-ome_commit() {
-    local oldir=`pwd`
-    cd $HOME/.oh-my-emacs/
-    git push
-    
-    cd $OME_PROJ/me/blog
-    git_push
-    
-    cd $HOME/workspace
-    git_push
-
-    cd $OME_PROJ/me/awesome-package-manager
-    git_push
-
-    cd $OME_PROJ/me/awesome-network-programming
-    git_push
-
-    cd $OME_PROJ/me/awesome-web-scraping
-    git_push
-    
-    cd $OME_PROJ/me/medusa
-    git_push
-    
-    cd $OME_PROJ/me/libknife
-    git_push
-    cd $oldir
-}
-
 ome_pull() {
     tip "ome upgrade"
     cd $OME_ROOT
     git pull
     chmod +x $OME_ROOT/bin/*
     
-    ome_fix_dotfiles
-    
-    #ome install oh_my_emacs
-	github_upgrade damon-kwok/oh-my-emacs $HOME/.oh-my-emacs
-	gitee_upgrade damon-kwok/emacs.d $HOME/.emacs.d
     rm -rf /usr/bin/em.bat
     rm -rf /usr/bin/em-nw.bat
     cp $OME_ROOT/bin/em.bat /usr/bin/
     cp $OME_ROOT/bin/em-nw.bat /usr/bin/
     
+    ome_fix_dotfiles
+    
+    #ome install oh_my_emacs
+	github_upgrade damon-kwok/oh-my-emacs $HOME/.oh-my-emacs
+    
+	gitee_upgrade damon-kwok/emacs.d $HOME/.emacs.d
+    chmod +x $HOME/.emacs.d/on-hook.sh
+    $HOME/.emacs.d/on-hook.sh pull
+    
+    # caches
+    # cp -u $HOME/.emacs.d/files/download/* $HOME/Downloads/
+    # cp -u $HOME/.emacs.d/files/local_bin/* $OME_PREFIX/bin/
+    
     tip "wrokspace upgrade"
     gitee_upgrade damon-kwok/workspace $HOME/workspace
-}
-
-ome_pull_proj() {
-    github_upgrade damon-kwok/damon-kwok.github.io $OME_PROJ/me/blog
-    
-    github_upgrade damon-kwok/awesome-package-manager $OME_PROJ/me/awesome-package-manager
-    github_upgrade damon-kwok/awesome-network-programming $OME_PROJ/me/awesome-network-programming
-    github_upgrade damon-kwok/awesome-web-scraping $OME_PROJ/me/awesome-web-scraping
-    github_upgrade damon-kwok/medusa $OME_PROJ/me/medusa
-    # github_upgrade damon-kwok/balisong $OME_PROJ/me/balisong
-    github_upgrade damon-kwok/data-bundle $OME_PROJ/me/data-bundle
-    github_upgrade damon-kwok/memrock $OME_PROJ/me/memrock
-
-    github_upgrade damon-kwok/cljs-example $OME_PROJ/me/cljs-example
-    
-    github_upgrade damon-kwok/libknife $OME_PROJ/me/libknife    
-    # cd $OME_PROJ/c/libknife
-    # mkdir -p build
-    # cd build
-    # cmake ..
-    # make
 }
 
 ome_def_ws() {
@@ -223,4 +231,21 @@ ome_push() {
     ws_push
     oh_my_emacs_push
     oh_my_env_push
+    emacsd_push
 }
+
+emacsd_push() {
+    if [ -d $HOME/.emacs.d/ ]; then
+        local oldir=`pwd`
+        cd $HOME/.emacs.d/
+        git status
+        readp "==>push .emacs.d/?"
+        if [ $? -eq 1 ]; then
+            chmod +x $HOME/.emacs.d/on-hook.sh
+            $HOME/.emacs.d/on-hook.sh push
+            git_push
+        fi
+        cd $oldir
+    fi
+}
+

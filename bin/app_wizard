@@ -88,13 +88,19 @@ ome_app_wizard() {
             mkdir -p src
             $EDITOR "src/main.cpp"
             ;;
-        "2"|"clojure"|"clj"|"luminus")
+        "luminus")
             ome_check_install "lein" "clj"
             lein new luminus $proj_name +reagent +swagger +h2
             cd $proj_root
             # local aa='[clj-commons/secretary "1.2.4"]'
             # local bb='[org.flatland/ordered "1.5.7"] [clj-commons/secretary "1.2.4"]'
             # sed -i 's#$aa#$bb#g' project.clj
+            $EDITOR "project.clj"
+            ;;
+        "2"|"clojure"|"clj"|"pedestal")
+            ome_check_install "lein" "clj"
+            lein new pedestal-service $proj_name +reagent +swagger +h2
+            cd $proj_root
             $EDITOR "project.clj"
             ;;
         "3"|"hoplon")

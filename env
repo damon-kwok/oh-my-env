@@ -70,7 +70,7 @@ case "`uname`" in
         fi
         ;;
     "Cygwin"|"CYGWIN"|"CYGWIN_NT-10.0"|"CYGWIN_NT-6.1") export OME_OS=$OS_CYGWIN;;
-    "Msys") export OME_OS=$OS_MSYS2;;
+    "Msys"|"MINGW64_NT-6.1-7601") export OME_OS=$OS_MSYS2;;
     "FreeBSD") export OME_OS=$OS_FREEBSD;;
     "Darwin") export OME_OS=$OS_MACOS;;
     *) export OME_OS=$OS_UNKNOW;;

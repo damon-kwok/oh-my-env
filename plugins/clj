@@ -5,21 +5,27 @@ clj_install() {
 
     # https://www.clojure.org/guides/getting_started
     # https://clojure.org/guides/deps_and_cli
+    tip "install clojure cli"
     if [ "`command -v clojure`" = "" ]; then
-        tip "install clojure cli"
         cd $HOME/Downloads/
         CLI_FILE=linux-install-${CLJ_CLI_VERSION}.sh
-        rm -rf ./$CLI_FILE
-        curl -O https://download.clojure.org/install/$CLI_FILE
+        zipkg=clojure-tools-${CLJ_CLI_VERSION}.tar.gz
+        if [ ! -f "$HOME/Downloads/$CLI_FILE" ]; then
+            # rm -rf ./$CLI_FILE
+            curl -O https://download.clojure.org/install/$CLI_FILE
+            replace_str "curl -O" "# curl -O" $HOME/Downloads/$CLI_FILE "0"
+        fi
+
         chmod +x ./$CLI_FILE
         mkdir -p $OME_PREFIX/lib/clojure/libexec/
         ./$CLI_FILE --prefix $OME_PREFIX
     fi
 
+    tip "install leiningen"
+    mkdir -p $HOME/.lein/self-installs/
     if [ ! -f $HOME/.lein/self-installs/leiningen-2.9.1-standalone.jar ]; then
-        # unzip $HOME/.emacs.d/files/leiningen-2.9.1-standalone.zip -d $HOME/.lein/self-installs/
-        cp $HOME/.emacs.d/files/leiningen-2.9.1-standalone.zip -d $HOME/.lein/self-installs/
-        mv $HOME/.lein/self-installs/leiningen-2.9.1-standalone.zip $HOME/.lein/self-installs/leiningen-2.9.1-standalone.jar
+        echo "use cache:"
+        cp -u $HOME/.emacs.d/files/leiningen-2.9.1-standalone.jar $HOME/.lein/self-installs/
     fi
 
     if [ "`command -v lein`" = "" ]; then
@@ -30,16 +36,18 @@ clj_install() {
         chmod +x ./lein
         lein --version
     else
-        lein upgrade
+        lein --version
+        # lein upgrade
     fi
 
-    if [ "`command -v boot`" = "" ]; then
-        tip "install boot"
-        cd $OME_PREFIX/bin/
-        curl -fsSLo boot https://github.com/boot-clj/boot-bin/releases/download/latest/boot.sh
-        chmod +x ./boot
-        boot --version
-    fi
+    # tip "install boot" #obslote
+    # if [ "`command -v boot`" = "" ]; then
+        # tip "install boot"
+        # cd $OME_PREFIX/bin/
+        # curl -fsSLo boot https://github.com/boot-clj/boot-bin/releases/download/latest/boot.sh
+        # chmod +x ./boot
+        # boot --version
+    # fi
 }
 
 clj_uninstall() {
