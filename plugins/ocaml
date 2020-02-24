@@ -2,8 +2,11 @@
 
 ocaml_install() {
     tip "install opam"
-    #if [ "$OME_OS" = "$OS_CYGWIN" ]; then
-    if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
+    if [ "$OME_OS" = "$OS_MSYS2" ]; then
+        echo_error "'ocaml' does not support msys2"
+        return
+    fi
+    if [ "$OME_OS" = "$OS_CYGWIN" ]; then
         # https://fdopen.github.io/opam-repository-mingw/installation/
         if [ ! -f $HOME/Downloads/opam64.tar.xz ]; then
             cd $HOME/Downloads/
@@ -34,7 +37,7 @@ ocaml_install() {
 			# http://opam.ocaml.org/doc/Install.html
 			# sh <(curl -sL https://raw.githubusercontent.com/ocaml/opam/master/shell/install.sh)
             curl -sL https://raw.githubusercontent.com/ocaml/opam/master/shell/install.sh
-			
+            
             # method 2: building
             # github_upgrade ocaml/opam $OME_REPO/opam
             # cd $OME_REPO/opam

@@ -176,23 +176,10 @@ ome_pull() {
     git pull
     chmod +x $OME_ROOT/bin/*
     
-    rm -rf /usr/bin/em.bat
-    rm -rf /usr/bin/em-nw.bat
-    cp $OME_ROOT/bin/em.bat /usr/bin/
-    cp $OME_ROOT/bin/em-nw.bat /usr/bin/
-    
     ome_fix_dotfiles
     
     #ome install oh_my_emacs
-	github_upgrade damon-kwok/oh-my-emacs $HOME/.oh-my-emacs
-    
-	gitee_upgrade damon-kwok/emacs.d $HOME/.emacs.d
-    chmod +x $HOME/.emacs.d/on-hook.sh
-    $HOME/.emacs.d/on-hook.sh pull
-    
-    # caches
-    # cp -u $HOME/.emacs.d/files/download/* $HOME/Downloads/
-    # cp -u $HOME/.emacs.d/files/local_bin/* $OME_PREFIX/bin/
+    oh_my_emacs_install
     
     tip "wrokspace upgrade"
     gitee_upgrade damon-kwok/workspace $HOME/workspace

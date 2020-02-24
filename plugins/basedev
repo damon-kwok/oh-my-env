@@ -93,17 +93,21 @@ basedev_install() {
         $OS_SLITAZ) ;;
         # Unix
         $OS_MACOS)
+	        echo "Install Homebrew"
             /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
             brew update
             
+	        echo "Install wget & coreutils"        
             brew install wget
             brew install coreutils
             
+	        echo "Install font-bitstream-vera"        
             brew tap homebrew/cask-fonts
             brew cask install font-bitstream-vera
 
+	        echo "Install Emacs"
             brew tap railwaycat/emacsmacport
-            brew cask install emacs-mac
+            brew cask install emacs-mac		
         ;;
         $OS_AIX) ;;
         $OS_SOLARIS) ;;

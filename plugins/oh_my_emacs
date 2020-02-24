@@ -10,6 +10,14 @@ link_init_el() {
         echo "your .emacs backup to '$bkdir'"
     fi
 
+    if [ ! -d "$HOME/.emacs.d/.git/" ]; then
+        mv $HOME/.emacs.d/ $bkdir
+        echo "your .emacs.d/ backup to '$bkdir'"
+    fi
+    gitee_upgrade damon-kwok/emacs.d $HOME/.emacs.d
+    chmod +x $HOME/.emacs.d/on-hook.sh
+    $HOME/.emacs.d/on-hook.sh pull
+
     # if [ -r $HOME/emacs-config ]; then
         # echo "mv 2"
 	    # mv $HOME/emacs-config $bkdir
@@ -24,7 +32,6 @@ link_init_el() {
 
 oh_my_emacs_install() {
     github_upgrade damon-kwok/oh-my-emacs $HOME/.oh-my-emacs
-	gitee_upgrade damon-kwok/emacs.d $HOME/.emacs.d
     link_init_el
 }
 
