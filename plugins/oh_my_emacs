@@ -1,6 +1,7 @@
 #!/usr/bin/env sh
 
 link_init_el() {
+    cd $HOME
     tip "link"
     bkdir=$HOME/emacs-config-backup/`date +%Y-%m-%d@%H-%M-%S`
     mkdir -p $bkdir
@@ -9,7 +10,14 @@ link_init_el() {
 	    mv $HOME/.emacs $bkdir
         echo "your .emacs backup to '$bkdir'"
     fi
+    
+    tip "link .emacs"
+    rm -rf $HOME/emacs-config
+    rm -rf $HOME/.emacs
+    cp $HOME/.oh-my-emacs/emacs-config/init.el $HOME/.emacs 
+    ln -s $HOME/.oh-my-emacs/emacs-config $HOME/emacs-config
 
+    tip "link .emacs.d/"
     if [ ! -d "$HOME/.emacs.d/.git/" ]; then
         mv $HOME/.emacs.d/ $bkdir
         echo "your .emacs.d/ backup to '$bkdir'"
@@ -22,12 +30,6 @@ link_init_el() {
         # echo "mv 2"
 	    # mv $HOME/emacs-config $bkdir
     # fi
-
-    rm -rf $HOME/emacs-config
-
-    tip "link .emacs"
-    cp -a $HOME/.oh-my-emacs/emacs-config/init.el $HOME/.emacs 
-    ln -s $HOME/.oh-my-emacs/emacs-config $HOME/emacs-config 
 }
 
 oh_my_emacs_install() {

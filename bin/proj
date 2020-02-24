@@ -171,6 +171,7 @@ oh_my_env_push() {
 }
 
 ome_pull() {
+    local oldir=`pwd`
     tip "ome upgrade"
     cd $OME_ROOT
     git pull
@@ -178,11 +179,12 @@ ome_pull() {
     
     ome_fix_dotfiles
     
-    #ome install oh_my_emacs
-    oh_my_emacs_install
+    # tip "oh_my_emacs upgrade"
+    ome install oh_my_emacs
     
     tip "wrokspace upgrade"
     gitee_upgrade damon-kwok/workspace $HOME/workspace
+    cd $oldir
 }
 
 ome_def_ws() {
