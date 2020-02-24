@@ -271,7 +271,7 @@ ome_app_wizard() {
             ome_check_install "pipenv" "python"
             mkdir -p $proj_root
             cd $proj_root
-            pipenv --three
+            pipenv --three install
             $EDITOR "Pipfile"
             ;;
         "24"|"poetry")

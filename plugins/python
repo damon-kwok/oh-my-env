@@ -65,7 +65,7 @@ python_install_bin() {
             apt install python3
             ;;
         $OS_MSYS2)
-            pacman -S python3
+            pacman -S mingw-w64-x86_64-python
             ;;
         # Other
         $OS_UNKNOW) ;;
@@ -78,6 +78,16 @@ python_install() {
     python_install_bin
     # python_install_pyenv
 
+    tip "set pip mirror"
+    if [ ! -f $HOME/.pip/pip.conf ]; then
+        mkdir -p $HOME/.pip/
+        echo "[global]" >> $HOME/.pip/pip.conf
+        echo "index-url = http://mirrors.aliyun.com/pypi/simple/" >> $HOME/.pip/pip.conf
+        echo "" >> $HOME/.pip/pip.conf
+        echo "[install]" >> $HOME/.pip/pip.conf
+        echo "trusted-host=mirrors.aliyun.com" >> $HOME/.pip/pip.conf
+    fi
+    
     # if ! command -v pip3 >/dev/null 2>&1; then
     if [ "`command -v pip3`" = "" ]; then
         tip "install pip3"
@@ -86,34 +96,42 @@ python_install() {
             curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
         fi
         python3 get-pip.py --user
+        # curl https://bootstrap.pypa.io/get-pip.py | python3
+    else
+        # pip3 install --user -U pip
+        pip3 install --upgrade pip -i http://mirrors.aliyun.com/pypi/simple/ --trusted-host mirrors.aliyun.com
     fi
 
     tip "check pip3"
     which pip3
     pip3 --version
     
-    tip "pip3 upgrade"
-    pip3 install --user -U pip
-    pip3 install --user -U setuptools
-    pip3 --version
+    # tip "pip3 version"
+    # pip3 --version
 
+    tip "install setuptools"
+    pip3 install --user -U setuptools -i http://mirrors.aliyun.com/pypi/simple/ --trusted-host mirrors.aliyun.com
+
+    tip "install virtualenv"
+    pip3 install --user -U virtualenv -i http://mirrors.aliyun.com/pypi/simple/ --trusted-host mirrors.aliyun.com
+    
     tip "install pipenv"
-    pip3 install --user -U pipenv
+    pip3 install --user -U pipenv -i http://mirrors.aliyun.com/pypi/simple/ --trusted-host mirrors.aliyun.com
 
     tip "install poetry"
-    pip3 install --user poetry
+    pip3 install --user poetry -i http://mirrors.aliyun.com/pypi/simple/ --trusted-host mirrors.aliyun.com
 
     tip "install hatch"
-    pip3 install --user hatch
+    pip3 install --user hatch -i http://mirrors.aliyun.com/pypi/simple/ --trusted-host mirrors.aliyun.com
 
     tip "install python language server"
     # pip3 install --user -U python-language-server
-    pip3 install --user -U 'python-language-server[all]'
+    pip3 install --user -U 'python-language-server[all]' -i http://mirrors.aliyun.com/pypi/simple/ --trusted-host mirrors.aliyun.com
     
     tip "install build tools:gyp"
     github_upgrade chromium/gyp $OME_REPO/gyp
     cd $OME_REPO/gyp/
-    pip3 install --user -U .
+    pip3 install --user -U . -i http://mirrors.aliyun.com/pypi/simple/ --trusted-host mirrors.aliyun.com
 
     tip "install build tools:waf"
     git_upgrade "https://gitlab.com" ita1024/waf $OME_REPO/waf
@@ -122,28 +140,27 @@ python_install() {
     cp -rf ./waf $OME_PREFIX/bin/
 
     tip "install build tools:scons"
-    pip3 install --user -U virtualenv
     git_upgrade "https://github.com" SCons/scons $OME_REPO/scons
     cd $OME_REPO/scons/
     python3 bootstrap.py build/scons
     if [ -d $OME_REPO/scons/build/scons/ ]; then
         cd $OME_REPO/scons/build/scons/
-        pip3 install --user -U .
+        pip3 install --user -U . -i http://mirrors.aliyun.com/pypi/simple/ --trusted-host mirrors.aliyun.com
     else
-        echo_error "gen project file failed!"
+        echo_error "gen scons failed!"
     fi
 
-    # pip2.7 install ipython jupyter rope jedi flake8 importmagic autopep8 yapf
+    # pip install ipython jupyter rope jedi flake8 importmagic autopep8 yapf
     tip "install ebook build tool"
-    pip3 install --user -U jinja2
-    pip3 install --user -U markupsafe
-    pip3 install --user -U pygments
-    pip3 install --user -U sphinx
-    pip3 install --user -U docutils
-    # pip3 install --user -U wsgiref
+    pip3 install --user -U jinja2 -i http://mirrors.aliyun.com/pypi/simple/ --trusted-host mirrors.aliyun.com
+    pip3 install --user -U markupsafe -i http://mirrors.aliyun.com/pypi/simple/ --trusted-host mirrors.aliyun.com
+    pip3 install --user -U pygments -i http://mirrors.aliyun.com/pypi/simple/ --trusted-host mirrors.aliyun.com
+    pip3 install --user -U sphinx -i http://mirrors.aliyun.com/pypi/simple/ --trusted-host mirrors.aliyun.com
+    pip3 install --user -U docutils -i http://mirrors.aliyun.com/pypi/simple/ --trusted-host mirrors.aliyun.com
+    # pip3 install --user -U wsgiref -i http://mirrors.aliyun.com/pypi/simple/ --trusted-host mirrors.aliyun.com
 
     tip "install McCabe complexity checker"
-    pip3 install --user -U mccabe
+    pip3 install --user -U mccabe -i http://mirrors.aliyun.com/pypi/simple/ --trusted-host mirrors.aliyun.com
     cd $oldir
 }
 

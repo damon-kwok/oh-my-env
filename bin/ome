@@ -335,7 +335,7 @@ ome_parse() {
         #            done
         #            echo ""
         #            ;;
-        "version"|"--version"|"ver"|"v")
+        "version"|"--version"|"-v"|"-ver"|"ver"|"v")
             echo "$OME_VERSION"
             ome_package_info
             ;;

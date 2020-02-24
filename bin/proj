@@ -210,6 +210,12 @@ ome_status() {
         cd $HOME/.oh-my-env/
         git status
     fi
+
+    if [ -d $HOME/.emacs.d/ ]; then
+        tip ".emacs.d/ status"
+        cd $HOME/.emacs.d/
+        git status
+    fi
 }
 
 ome_push() {
