@@ -271,8 +271,21 @@ ome_app_wizard() {
             ome_check_install "pipenv" "python"
             mkdir -p $proj_root
             cd $proj_root
-            pipenv --three install
-            $EDITOR "Pipfile"
+            # pipenv --three install
+            
+            echo '#!/usr/bin/env python3' >> ${proj_name}.py
+            echo '# -*- coding: utf-8 -*-' >> ${proj_name}.py
+            echo '' >> ${proj_name}.py
+            echo 'import os' >> ${proj_name}.py
+            echo '' >> ${proj_name}.py
+            echo 'def main():' >> ${proj_name}.py
+            echo "    print('Hello World!')" >> ${proj_name}.py
+            echo '' >> ${proj_name}.py
+            echo 'if __name__ == "__main__":' >> ${proj_name}.py
+            echo '    main()' >> ${proj_name}.py
+            chmod +x ./${proj_name}.py
+            # $EDITOR "Pipfile"
+            $EDITOR ${proj_name}.py
             ;;
         "24"|"poetry")
             ome_check_install "poetry" "python"
