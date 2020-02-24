@@ -65,7 +65,7 @@ python_install_bin() {
             apt install python3
             ;;
         $OS_MSYS2)
-            pacman -S mingw-w64-x86_64-python
+            pacman -S mingw-w64-x86_64-python mingw-w64-x86_64-python-pip
             ;;
         # Other
         $OS_UNKNOW) ;;
@@ -86,8 +86,12 @@ python_install() {
         echo "" >> $HOME/.pip/pip.conf
         echo "[install]" >> $HOME/.pip/pip.conf
         echo "trusted-host=mirrors.aliyun.com" >> $HOME/.pip/pip.conf
+        echo "install-option=--prefix=~/.local" >> $HOME/.pip/pip.conf
     fi
-    
+
+    # if [ "$OME_OS" = "$OS_MSYS2" ]; then
+        # export PATH="$USERPROFILE/.local/bin:$PATH"
+    # fi
     # if ! command -v pip3 >/dev/null 2>&1; then
     if [ "`command -v pip3`" = "" ]; then
         tip "install pip3"
@@ -95,7 +99,8 @@ python_install() {
         if [ ! -f get-pip.py ]; then
             curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
         fi
-        python3 get-pip.py --user
+        # python3 get-pip.py --user
+        python3 get-pip.py --prefix=$OME_PREFIX
         # curl https://bootstrap.pypa.io/get-pip.py | python3
     else
         # pip3 install --user -U pip
@@ -110,28 +115,28 @@ python_install() {
     # pip3 --version
 
     tip "install setuptools"
-    pip3 install --user -U setuptools -i http://mirrors.aliyun.com/pypi/simple/ --trusted-host mirrors.aliyun.com
+    pip3 install --prefix=$OME_PREFIX -U setuptools -i http://mirrors.aliyun.com/pypi/simple/ --trusted-host mirrors.aliyun.com
 
     tip "install virtualenv"
-    pip3 install --user -U virtualenv -i http://mirrors.aliyun.com/pypi/simple/ --trusted-host mirrors.aliyun.com
+    pip3 install --prefix=$OME_PREFIX -U virtualenv -i http://mirrors.aliyun.com/pypi/simple/ --trusted-host mirrors.aliyun.com
     
     tip "install pipenv"
-    pip3 install --user -U pipenv -i http://mirrors.aliyun.com/pypi/simple/ --trusted-host mirrors.aliyun.com
+    pip3 install --prefix=$OME_PREFIX -U pipenv -i http://mirrors.aliyun.com/pypi/simple/ --trusted-host mirrors.aliyun.com
 
     tip "install poetry"
-    pip3 install --user poetry -i http://mirrors.aliyun.com/pypi/simple/ --trusted-host mirrors.aliyun.com
+    pip3 install --prefix=$OME_PREFIX poetry -i http://mirrors.aliyun.com/pypi/simple/ --trusted-host mirrors.aliyun.com
 
     tip "install hatch"
-    pip3 install --user hatch -i http://mirrors.aliyun.com/pypi/simple/ --trusted-host mirrors.aliyun.com
+    pip3 install --prefix=$OME_PREFIX hatch -i http://mirrors.aliyun.com/pypi/simple/ --trusted-host mirrors.aliyun.com
 
     tip "install python language server"
-    # pip3 install --user -U python-language-server
-    pip3 install --user -U 'python-language-server[all]' -i http://mirrors.aliyun.com/pypi/simple/ --trusted-host mirrors.aliyun.com
+    # pip3 install --prefix=$OME_PREFIX -U python-language-server
+    pip3 install --prefix=$OME_PREFIX -U 'python-language-server[all]' -i http://mirrors.aliyun.com/pypi/simple/ --trusted-host mirrors.aliyun.com
     
     tip "install build tools:gyp"
     github_upgrade chromium/gyp $OME_REPO/gyp
     cd $OME_REPO/gyp/
-    pip3 install --user -U . -i http://mirrors.aliyun.com/pypi/simple/ --trusted-host mirrors.aliyun.com
+    pip3 install --prefix=$OME_PREFIX -U . -i http://mirrors.aliyun.com/pypi/simple/ --trusted-host mirrors.aliyun.com
 
     tip "install build tools:waf"
     git_upgrade "https://gitlab.com" ita1024/waf $OME_REPO/waf
@@ -145,22 +150,22 @@ python_install() {
     python3 bootstrap.py build/scons
     if [ -d $OME_REPO/scons/build/scons/ ]; then
         cd $OME_REPO/scons/build/scons/
-        pip3 install --user -U . -i http://mirrors.aliyun.com/pypi/simple/ --trusted-host mirrors.aliyun.com
+        pip3 install --prefix=$OME_PREFIX -U . -i http://mirrors.aliyun.com/pypi/simple/ --trusted-host mirrors.aliyun.com
     else
         echo_error "gen scons failed!"
     fi
 
     # pip install ipython jupyter rope jedi flake8 importmagic autopep8 yapf
     tip "install ebook build tool"
-    pip3 install --user -U jinja2 -i http://mirrors.aliyun.com/pypi/simple/ --trusted-host mirrors.aliyun.com
-    pip3 install --user -U markupsafe -i http://mirrors.aliyun.com/pypi/simple/ --trusted-host mirrors.aliyun.com
-    pip3 install --user -U pygments -i http://mirrors.aliyun.com/pypi/simple/ --trusted-host mirrors.aliyun.com
-    pip3 install --user -U sphinx -i http://mirrors.aliyun.com/pypi/simple/ --trusted-host mirrors.aliyun.com
-    pip3 install --user -U docutils -i http://mirrors.aliyun.com/pypi/simple/ --trusted-host mirrors.aliyun.com
-    # pip3 install --user -U wsgiref -i http://mirrors.aliyun.com/pypi/simple/ --trusted-host mirrors.aliyun.com
+    pip3 install --prefix=$OME_PREFIX -U jinja2 -i http://mirrors.aliyun.com/pypi/simple/ --trusted-host mirrors.aliyun.com
+    pip3 install --prefix=$OME_PREFIX -U markupsafe -i http://mirrors.aliyun.com/pypi/simple/ --trusted-host mirrors.aliyun.com
+    pip3 install --prefix=$OME_PREFIX -U pygments -i http://mirrors.aliyun.com/pypi/simple/ --trusted-host mirrors.aliyun.com
+    pip3 install --prefix=$OME_PREFIX -U sphinx -i http://mirrors.aliyun.com/pypi/simple/ --trusted-host mirrors.aliyun.com
+    pip3 install --prefix=$OME_PREFIX -U docutils -i http://mirrors.aliyun.com/pypi/simple/ --trusted-host mirrors.aliyun.com
+    # pip3 install --prefix=$OME_PREFIX -U wsgiref -i http://mirrors.aliyun.com/pypi/simple/ --trusted-host mirrors.aliyun.com
 
     tip "install McCabe complexity checker"
-    pip3 install --user -U mccabe -i http://mirrors.aliyun.com/pypi/simple/ --trusted-host mirrors.aliyun.com
+    pip3 install --prefix=$OME_PREFIX -U mccabe -i http://mirrors.aliyun.com/pypi/simple/ --trusted-host mirrors.aliyun.com
     cd $oldir
 }
 
@@ -195,6 +200,9 @@ pyenv_set_env() {
     export PYENV_ROOT="$HOME/.pyenv"
     export PATH="$PYENV_ROOT/bin:$PATH"
 
+    # if [ "$OME_OS" = "$OS_MSYS2" ]; then
+        # export PATH="$USERPROFILE/.local/bin:$PATH"
+    # fi
     if command -v pyenv 1>/dev/null 2>&1; then
         eval "$(pyenv init -)"
     fi
