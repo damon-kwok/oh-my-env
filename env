@@ -29,6 +29,7 @@ export OS_TRUEOS="TrueOS"
 export OS_CYGWIN="Cygwin"
 export OS_MSYS2="Msys2"
 # Other
+export OS_ANDROID="Android"
 export OS_UNKNOW="Unknow"
 
 # PKG-list: Yum APT SUSE AUR
@@ -42,9 +43,11 @@ export OME_ARCH="`uname -m`"
 export OME_SHELL="`basename $SHELL`"
 
 # case "`uname -o`" in
-case "`uname`" in
+case "`uname -s`" in
     "GNU/Linux" | "Linux")
-        if [ "`command -v dnf`" != "" ]; then
+        if [ "$(uname -o)" = Android ]; then
+            export OME_OS=$OS_ANDROID
+        elif [ "`command -v dnf`" != "" ]; then
             export OME_OS=$OS_FEDORA
         elif [ "`command -v yum`" != "" ]; then
             export OME_OS=$OS_REDHAT
@@ -69,10 +72,12 @@ case "`uname`" in
             export OME_OS=$OS_UNKNOW
         fi
         ;;
-    "Cygwin"|"CYGWIN"|"CYGWIN_NT-10.0"|"CYGWIN_NT-6.1") export OME_OS=$OS_CYGWIN;;
-    "Msys"|"MINGW64_NT-6.1-7601") export OME_OS=$OS_MSYS2;;
-    "FreeBSD") export OME_OS=$OS_FREEBSD;;
-    "Darwin") export OME_OS=$OS_MACOS;;
+    CYGWIN*) export OME_OS=$OS_CYGWIN;;
+    MINGW* | MSYS*) export OME_OS=$OS_MSYS2;;
+    FreeBSD) export OME_OS=$OS_FREEBSD;;
+    DragonFly) export OME_OS=$OS_DFBSD;;
+    NetBSD) export OME_OS=$OS_NETBSD;;
+    Darwin) export OME_OS=$OS_MACOS;;
     *) export OME_OS=$OS_UNKNOW;;
 esac
 

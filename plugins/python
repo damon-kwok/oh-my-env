@@ -156,16 +156,16 @@ python_install() {
     python3 ./waf-light configure build
     cp -rf ./waf $OME_PREFIX/bin/
 
-    tip "install build tools:scons"
-    git_upgrade "https://github.com" SCons/scons $OME_REPO/scons
-    cd $OME_REPO/scons/
-    python3 bootstrap.py build/scons
-    if [ -d $OME_REPO/scons/build/scons/ ]; then
-        cd $OME_REPO/scons/build/scons/
-        pip3 install --prefix $OME_PREFIX -U .
-    else
-        echo_error "gen scons failed!"
-    fi
+    # tip "install build tools:scons"
+    # git_upgrade "https://github.com" SCons/scons $OME_REPO/scons
+    # cd $OME_REPO/scons/
+    # python3 bootstrap.py build/scons
+    # if [ -d $OME_REPO/scons/build/scons/ ]; then
+        # cd $OME_REPO/scons/build/scons/
+        # pip3 install --prefix $OME_PREFIX -U .
+    # else
+        # echo_error "gen scons failed!"
+    # fi
 
     # pip install ipython jupyter rope jedi flake8 importmagic autopep8 yapf
     tip "install ebook build tool"
