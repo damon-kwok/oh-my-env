@@ -1,0 +1,40 @@
+#!/usr/bin/env sh
+
+vs2019_install() {
+    if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
+        cd $HOME/Downloads/
+        # rm -rf ./vs_Community.exe*
+        local url1="https://download.visualstudio.microsoft.com/download/pr/"
+        local url2="378e5eb4-c1d7-4c05-8f5f-55678a94e7f4/a81be4cb9a23a455de46790900701213962a0d63ea937ecf1941f846b580c8a5/vs_Community.exe"
+        local url="${url1}${url2}"
+        echo "url:$url"
+        if [ ! -f $HOME/Downloads/vs_Community.exe ]; then
+            wget $url
+        fi
+        ./vs_Community \
+            --layout "d:\vs2019-offline" \
+            --add Microsoft.VisualStudio.Workload.ManagedDesktop \
+            --add Microsoft.VisualStudio.Workload.CoreEditor \
+            --add Microsoft.VisualStudio.Workload.NativeDesktop \
+            --add Microsoft.VisualStudio.Workload.NetCoreTools \
+            --add Microsoft.VisualStudio.Workload.Universal \
+            --add Microsoft.VisualStudio.Workload.VisualStudioExtension \
+            --add Component.GitHub.VisualStudio \
+            --lang zh-CN en-US
+    else
+        echo_error "mu does not support $OME_OS"
+    fi
+
+}
+
+vs2019_uninstall() {
+    echo_error "'vs2019_uninstall' not implemented"
+}
+
+vs2019_exist_p() {
+    echo_error "'vs2019_exist_p' not implemented"
+}
+
+vs2019_info() {
+    echo_error ""
+}

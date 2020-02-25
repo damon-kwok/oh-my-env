@@ -108,6 +108,15 @@ nodejs_install() {
 
     nodejs_install_download
 
+
+    tip "use cnpm source"
+    # npm config set registry https://registry.npmjs.org/   #raw source
+    npm config set registry https://registry.npm.taobao.org #aliyun source
+    npm config get registry
+
+    # cnpm
+    npm install -g cnpm --registry=https://registry.npm.taobao.org
+    
     # if [ "$OME_OS" != "$OS_CYGWIN" ]; then
         # tip "update npm"
         # npm install -g npm
@@ -116,6 +125,12 @@ nodejs_install() {
     # tip "npm update -g"
     # npm update -g
 
+
+    if [ "`command -v ncu`" = "" ]; then
+        tip "install npm-check-updates"
+        npm install -g npm-check-updates
+    fi
+    
     if [ "`command -v grunt`" = "" ]; then
         tip "install grunt-cli"
         npm install -g grunt-cli

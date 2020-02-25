@@ -210,6 +210,21 @@ ome_app_wizard() {
             cd $proj_root
             $EDITOR "src/${proj_name}.nim"
             ;;
+        "17"|"nodejs"|"npm")
+            ome_check_install "npm" "nodejs"
+            mkdir -p $proj_root
+            cd $proj_root
+            cp -r $OME_WS/projects/nodejs/https_server/* .
+            # rm -rf ./*.json
+            # npm init -y
+            # npm install express --save
+            # npm install express-session --save
+            # npm install mysql --save
+            ncu --packageFile package.json
+            ncu -u
+            npm install
+            $EDITOR "package.json"
+            ;;
         "17"|"nodejs-grunt"|"grunt")
             ome_check_install "npm" "nodejs"
             mkdir -p $proj_root

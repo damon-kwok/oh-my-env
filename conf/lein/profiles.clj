@@ -20,18 +20,22 @@
 ;;
 ;; Code:
 {
-    :user {
-        :mirrors {
-            "central" {
-                :name "aliyun"
-                :url "https://maven.aliyun.com/nexus/content/groups/public"
-            }
-            "clojars" {
-                :name "cnnic"
-                :url "https://mirrors.cnnic.cn/clojars/"
-            }
-        }
-    }
+	:user {
+		:local-repo "~/.m2"
+		;;:repositories  {"local" {:url "file://~/.m2" :releases {:checksum :ignore}}}
+		:mirrors {
+			"central" {
+				:name "aliyun"
+				:url "https://maven.aliyun.com/nexus/content/groups/public"
+				:repo-manager true
+			}
+			"clojars" {
+				:name "cnnic"
+				:url "https://mirrors.cnnic.cn/clojars/"
+				:repo-manager true
+			}
+		}
+	}
 }
 ;;
 ;; profiles ends here
