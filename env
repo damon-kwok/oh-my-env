@@ -125,18 +125,12 @@ ome_show() {
     export OME_SHOW="$OME_SHOW\n"
 }
 
-# echo_kv "OME" "OS:$OME_OS | Arch:$OME_ARCH | Shell:$OME_SHELL | PREFIX:$OME_PREFIX"
-# echo_kv "VCS" "`git --version | head -n 1` | `svn --version | head -n 1`"
-# echo_kv "Perl" "`perl -V | head -n 1 | cut -c 15-57`"
-ome_show "SYSTEM" "OS:$OME_OS | Arch:$OME_ARCH | Shell:$OME_SHELL | EDITOR:$EDITOR"
-ome_show "PREFIX" "\"$OME_PREFIX\""
-ome_show "VCS" "`ome_fetch_version git` | `ome_fetch_version svn`"
-
 ################################################################################
 # load plugins
 for plugin in $HOME/.oh-my-env/plugins/* ; do
-    if [ "$plugin" != "$HOME/.oh-my-env/plugins/README.org" ]; then
+    if [ ! -d "$plugin" ] && [ "$plugin" != "$HOME/.oh-my-env/plugins/README.org" ]; then
         # echo "name: $plugin"
+        # time `. "$plugin"`
         . "$plugin"
     fi
 done
@@ -184,64 +178,45 @@ fi
 # editor
 readonly EDITOR=em
 
-# git config
-git config --global core.editor $EDITOR
-git config --global core.autocrlf false
-git config --global core.safecrlf false
-git config --global core.safecrlf warn
-
-git config --global user.email "damon-kwok@outlook.com"
-git config --global user.name "damon-kwok"
-git config --global credential.helper 'cache –timeout=36000'
-
-git config --global color.ui true
-
-git config --global merge.tool emerge
-git config --global mergetool.diffmerge.cmd "emerge \$LOCAL \$BASE \$REMOTE \$MERGED"
-git config --global mergetool.keepBackup false
-
-git config --global diff.tool ediff
-git config --global difftool.ediff.cmd "ediff \"\$LOCAL\" \"\$REMOTE\""
-git config --global difftool.prompt false
-
 # bugfix:emacs crash
 export XLIB_SKIP_ARGB_VISUALS=1
 
-grep_str() {
-    grep -n "$1" -r .
-}
+# grep_str() {
+    # grep -n "$1" -r .
+# }
 
 # FIX for macos
-if [ "`uname`" = "Darwin" ]; then
+if [ "$OME_OS" = "$OS_MACOS" ]; then
     # FIX: "readlink: illegal option -- f"   https://blog.csdn.net/libing_zeng/article/details/82953038
     export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
     alias readlink=greadlink
 
     # FIX: bashrc https://blog.csdn.net/liu510817387/article/details/8126719
-    if [ "$OME_OS" = "$OS_MACOS" ]; then
-        if [ ! -f $HOME/.bash_profile ]; then
-            echo 'if [ "${BASH-no}" != "no" ]; then' > $HOME/.bash_profile 
-            echo '    [ -r ~/.bashrc ] && . ~/.bashrc' >> $HOME/.bash_profile
-            echo 'fi' >> $HOME/.bash_profile
-        fi
-
-        if [ ! -f $HOME/.bashrc ]; then
-            echo "# bashrc" > $HOME/.bashrc
-        fi
+    if [ ! -f $HOME/.bash_profile ]; then
+        echo 'if [ "${BASH-no}" != "no" ]; then' > $HOME/.bash_profile 
+        echo '    [ -r ~/.bashrc ] && . ~/.bashrc' >> $HOME/.bash_profile
+        echo 'fi' >> $HOME/.bash_profile
     fi
-    
+
+    if [ ! -f $HOME/.bashrc ]; then
+        echo "# bashrc" > $HOME/.bashrc
+    fi
 fi
 
-readonly CLJ_CLI_VERSION=1.10.1.507
-readonly ERLANG_VERSION=22.2
-readonly GOLANG_VERSION=1.14rc1 #1.13.7
+
 readonly JAVA_VERSION=11.0.6.hs-adpt
+readonly JBANG_VERSION=0.17.0
+readonly ANY_VERSION=1.10.1
 readonly MAVEN_VERSION=3.6.3
-readonly GRADLE_VERSION=6.2
+readonly GRADLE_VERSION=6.2.1
 readonly KOTLIN_VERSION=1.3.61
 readonly SCALA_VERSION=2.13.1
 readonly SBT_VERSION=1.3.8
 readonly GROOVY_VERSION=3.0.1
+readonly CLOJURE_VERSION=1.10.1.507
+
+readonly ERLANG_VERSION=22.2
+readonly GOLANG_VERSION=1.14rc1 #1.13.7
 readonly STACK_VERSION=2.1.3
 readonly PYTHON2_VERSION=2.7.17
 readonly PYTHON3_VERSION=3.8.1
@@ -255,8 +230,3 @@ if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
 else
     readonly SBCL_VERSION=2.0.1
 fi
-
-# readonly NODEJS_MAJOR_VERSION=12
-# readonly NODEJS_MINOR_VERSION=14
-# readonly NODEJS_PATCH_VERSION=1
-# readonly MAVEN_OPTS="-Duser.home=`cygpath -w $HOME`"

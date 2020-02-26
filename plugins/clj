@@ -8,8 +8,8 @@ clj_install() {
     tip "install clojure cli"
     if [ "`command -v clojure`" = "" ]; then
         cd $HOME/Downloads/
-        CLI_FILE=linux-install-${CLJ_CLI_VERSION}.sh
-        zipkg=clojure-tools-${CLJ_CLI_VERSION}.tar.gz
+        CLI_FILE=linux-install-${CLOJURE_VERSION}.sh
+        zipkg=clojure-tools-${CLOJURE_VERSION}.tar.gz
         if [ ! -f "$HOME/Downloads/$CLI_FILE" ]; then
             # rm -rf ./$CLI_FILE
             curl -O https://download.clojure.org/install/$CLI_FILE

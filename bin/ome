@@ -47,45 +47,6 @@ link_init_el() {
     ln -s $OME_ROOT/emacs-config $HOME/emacs-config 
 }
 
-new_project() {
-    local lang=$1
-    if [ "$lang" = ""]; then
-        echo "123"
-    fi
-}
-
-ome_config() {
-    title "ome config"
-    
-    # tip "ldconfig"
-    # if [ ! -f "/etc/ld.so.conf.d/`whoami`.conf" ]; then
-    # sudo sh -c 'echo "$OME_PREFIX/lib" >> /etc/ld.so.conf.d/`whoami`.conf'
-    # sudo ldconfig
-    # fi
-
-    # tip "libtool"
-    # libtool --finish $OME_PREFIX/lib
-    
-    # tip "git config"
-    # git config --global core.editor "em"
-    # git config --global core.autocrlf false
-    # git config --global core.safecrlf false
-    # git config --global core.safecrlf warn
-    
-    # git config --global user.email "563066990@qq.com"
-    # git config --global user.name "damon-kwok"
-    
-    # git config --global color.ui true
-    
-    # git config --global merge.tool emerge
-    # git config --global mergetool.diffmerge.cmd "emerge \$LOCAL \$BASE \$REMOTE \$MERGED"
-    # git config --global mergetool.keepBackup false
-
-    # git config --global diff.tool ediff
-    # git config --global difftool.ediff.cmd "ediff \"\$LOCAL\" \"\$REMOTE\""
-    # git config --global difftool.prompt false
-}
-
 echo_error() {
     echo -e $(tput setaf 1)"$1"$(tput sgr0)
 }
@@ -126,6 +87,12 @@ ome_package_info() {
     # strload[3]="/"
 
     # echo -n -e "\033[?25l"  #隐藏光标
+    # echo_kv "OME" "OS:$OME_OS | Arch:$OME_ARCH | Shell:$OME_SHELL | PREFIX:$OME_PREFIX"
+    # echo_kv "VCS" "`git --version | head -n 1` | `svn --version | head -n 1`"
+    # echo_kv "Perl" "`perl -V | head -n 1 | cut -c 15-57`"
+    ome_show "SYSTEM" "OS:$OME_OS | Arch:$OME_ARCH | Shell:$OME_SHELL | EDITOR:$EDITOR"
+    ome_show "PREFIX" "$OME_PREFIX"
+    ome_show "VCS" "`ome_fetch_version git` | `ome_fetch_version svn`"
     for plugin_file in $HOME/.oh-my-env/plugins/* ; do
         if [ "$plugin_file" != "$HOME/.oh-my-env/plugins/README.org" ]; then
             
@@ -183,6 +150,10 @@ ome_eval() {
     fi
 }
 
+ome_plugin_install() {
+    ome_eval "install" "$1"
+}
+
 ome_repl() {
     echo ""
     tip "what do you need?"
@@ -204,11 +175,52 @@ ome_repl() {
     esac
 }
 
+ome_config() {
+    title "ome config"
+    
+    # tip "ldconfig"
+    # if [ ! -f "/etc/ld.so.conf.d/`whoami`.conf" ]; then
+    # sudo sh -c 'echo "$OME_PREFIX/lib" >> /etc/ld.so.conf.d/`whoami`.conf'
+    # sudo ldconfig
+    # fi
+
+    # tip "libtool"
+    # libtool --finish $OME_PREFIX/lib
+    
+    tip "git config"
+    git config --global core.editor $EDITOR
+    git config --global core.autocrlf false
+    git config --global core.safecrlf false
+    git config --global core.safecrlf warn
+
+    git config --global user.email "damon-kwok@outlook.com"
+    git config --global user.name "damon-kwok"
+    git config --global credential.helper 'cache –timeout=36000'
+
+    git config --global color.ui true
+
+    git config --global merge.tool emerge
+    git config --global mergetool.diffmerge.cmd "emerge \$LOCAL \$BASE \$REMOTE \$MERGED"
+    git config --global mergetool.keepBackup false
+
+    git config --global diff.tool ediff
+    git config --global difftool.ediff.cmd "ediff \"\$LOCAL\" \"\$REMOTE\""
+    git config --global difftool.prompt false
+}
+
+ome_init() {
+    ome install init
+    ome_config
+    ome_plugin_install "neofetch"
+    ome_plugin_install "goto"
+}
+
 ome_doctor() {
     title "ome doctor"
     # ome_fix_dotfiles
 	. $OME_ROOT/install.sh install
-	ome install oh_my_emacs
+	ome_plugin_install oh_my_emacs
+    ome_init
 }
 
 ome_help() {
@@ -245,9 +257,7 @@ ome_parse() {
         # ome_config
         # ;;
         "init")
-            ome install init
-            # ome install cc
-            ome_config
+            ome_init
             ;;
 		"doctor"|"fix")
 			ome_doctor;;
