@@ -9,6 +9,9 @@ goto_define() {
     goto -u emacs
     goto -r emacs $OME_EMACS
 
+    goto -u emacs.d
+    goto -r emacs.d $HOME/.emacs.d/
+
     goto -u prefix
     goto -r prefix $OME_PREFIX
 
@@ -28,6 +31,10 @@ goto_define() {
     goto -u proj
     goto -r proj $OME_PROJ
 
+    goto -u hello
+    goto -r hello $OME_WS/hello
+
+    goto -l
 }
 
 goto_install() {

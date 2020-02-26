@@ -10,7 +10,7 @@ roswell_install() {
                 wget "https://ci.appveyor.com/api/projects/snmsts/roswell-en89n/artifacts/Roswell-x86_64.zip?branch=master&job=Environment%3A%20MSYS2_ARCH%3Dx86_64,%20MSYS2_BITS%3D64,%20MSYSTEM%3DMINGW64,%20METHOD%3Dcross" -O Roswell-x86_64.zip
             fi
             unzip ./$zipkg -d $OME_REPO
-            cd $OME_REPO/$roswell
+            cd $OME_REPO/roswell
             chmod +x ./ros
             export PATH="$OME_REPO/roswell:$PATH"
         fi
@@ -27,12 +27,12 @@ roswell_install() {
     fi
 
     tip "ros setup"
-    ros install sbcl-bin $SBCL_VERSION
+    ros install sbcl-bin/$SBCL_VERSION
     #ros use sbcl/system
     #ros setup
 
-    tip "install clack"
-    ros install clack
+    # tip "install clack"
+    # ros install clack
 }
 
 roswell_uninstall() {

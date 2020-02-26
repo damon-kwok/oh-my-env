@@ -31,7 +31,8 @@
 			}
 			"clojars" {
 				:name "cnnic"
-				:url "https://mirrors.cnnic.cn/clojars/"
+				;;:url "https://mirrors.cnnic.cn/clojars/"
+				:url "https://mirrors.tuna.tsinghua.edu.cn/clojars"
 				:repo-manager true
 			}
 		}
