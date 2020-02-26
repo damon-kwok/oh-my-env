@@ -2,35 +2,35 @@
 
 # OSlist: https://git-scm.com/download/linux
 # Linux
-export OS_DEBIAN="Debian"
-export OS_UBUNTU="Ubuntu"
-export OS_REDHAT="RedHat" # Red Hat Enterprise Linux, Oracle Linux, CentOS, Scientific Linux, et al.
-export OS_FEDORA="Fedora"
-export OS_ARCH="ArchLinux"
-export OS_GENTOO="Gentoo"
-export OS_SUSE="openSUSE"
-export OS_SLACKWARE="Slackware"
-export OS_NIXOS="NixOS"
-export OS_ALPINE="Alpine" # musl libc| busybox https://www.linuxprobe.com/alpine-linux-released.html
-export OS_VOID="VoidLinux"
-export OS_MAGEIA="Mageia" # Mandriva Linux
-export OS_SLITAZ="Slitaz" # busybox
-export OS_GUIXSD="GuixSD"
+readonly OS_DEBIAN="Debian"
+readonly OS_UBUNTU="Ubuntu"
+readonly OS_REDHAT="RedHat" # Red Hat Enterprise Linux, Oracle Linux, CentOS, Scientific Linux, et al.
+readonly OS_FEDORA="Fedora"
+readonly OS_ARCH="ArchLinux"
+readonly OS_GENTOO="Gentoo"
+readonly OS_SUSE="openSUSE"
+readonly OS_SLACKWARE="Slackware"
+readonly OS_NIXOS="NixOS"
+readonly OS_ALPINE="Alpine" # musl libc| busybox https://www.linuxprobe.com/alpine-linux-released.html
+readonly OS_VOID="VoidLinux"
+readonly OS_MAGEIA="Mageia" # Mandriva Linux
+readonly OS_SLITAZ="Slitaz" # busybox
+readonly OS_GUIXSD="GuixSD"
 # Unix
-export OS_MACOS="macOS"
-export OS_AIX="AIX"
-export OS_SOLARIS="Solaris" #OpenCSW illumos(kernel):OpenIndiana SmartOS DogeOS
-export OS_FREEBSD="FreeBSD"
-export OS_OPENBSD="OpenBSD"
-export OS_NETBSD="NetBSD"
-export OS_DFBSD="DragonflyBSD"
-export OS_TRUEOS="TrueOS"
+readonly OS_MACOS="macOS"
+readonly OS_AIX="AIX"
+readonly OS_SOLARIS="Solaris" #OpenCSW illumos(kernel):OpenIndiana SmartOS DogeOS
+readonly OS_FREEBSD="FreeBSD"
+readonly OS_OPENBSD="OpenBSD"
+readonly OS_NETBSD="NetBSD"
+readonly OS_DFBSD="DragonflyBSD"
+readonly OS_TRUEOS="TrueOS"
 # Windows
-export OS_CYGWIN="Cygwin"
-export OS_MSYS2="Msys2"
+readonly OS_CYGWIN="Cygwin"
+readonly OS_MSYS2="Msys2"
 # Other
-export OS_ANDROID="Android"
-export OS_UNKNOW="Unknow"
+readonly OS_ANDROID="Android"
+readonly OS_UNKNOW="Unknow"
 
 # PKG-list: Yum APT SUSE AUR
 
@@ -38,71 +38,71 @@ export OS_UNKNOW="Unknow"
 #https://github.com/llvm-mirror/llvm/blob/a1cdcbb384fcf1a0332b3d8b7a9240e5c3ca5a14/docs/GettingStarted.rst#local-llvm-configuration
 # AArch64, AMDGPU, ARM, BPF, CppBackend, Hexagon, Mips, MSP430, NVPTX, PowerPC, Sparc, SystemZ X86, XCore
 
-export OME_ARCH="`uname -m`"
-# export OME_SHELL="`ps | grep $$ | awk '{print $4}'`"
-export OME_SHELL="`basename $SHELL`"
+readonly OME_ARCH="`uname -m`"
+# readonly OME_SHELL="`ps | grep $$ | awk '{print $4}'`"
+readonly OME_SHELL="`basename $SHELL`"
 
 # case "`uname -o`" in
 case "`uname -s`" in
     "GNU/Linux" | "Linux")
         if [ "$(uname -o)" = Android ]; then
-            export OME_OS=$OS_ANDROID
+            readonly OME_OS=$OS_ANDROID
         elif [ "`command -v dnf`" != "" ]; then
-            export OME_OS=$OS_FEDORA
+            readonly OME_OS=$OS_FEDORA
         elif [ "`command -v yum`" != "" ]; then
-            export OME_OS=$OS_REDHAT
+            readonly OME_OS=$OS_REDHAT
         elif [ "`command -v zypper`" != "" ]; then
-            export OME_OS=$OS_SUSE
+            readonly OME_OS=$OS_SUSE
         elif [ "`command -v nix`" != "" ]; then
-            export OME_OS=$OS_NIXOS
+            readonly OME_OS=$OS_NIXOS
         elif [ "`command -v guix`" != "" ]; then
-            export OME_OS=$OS_GUIXSD
+            readonly OME_OS=$OS_GUIXSD
         elif [ "lsb_release" != "" ]; then
             case "`lsb_release -is`" in
                 "Debian")
-                    export OME_OS=$OS_DEBIAN;;
+                    readonly OME_OS=$OS_DEBIAN;;
                 "Ubuntu"|"elementary"|"LinuxMint")
-                    export OME_OS="$OS_UBUNTU";;
+                    readonly OME_OS="$OS_UBUNTU";;
                 "ManjaroLinux"|"Arch")
-                    export OME_OS=$OS_ARCH;;
+                    readonly OME_OS=$OS_ARCH;;
                 *)
-                    export OME_OS="`lsb_release -is`";;
+                    readonly OME_OS="`lsb_release -is`";;
             esac
         else
-            export OME_OS=$OS_UNKNOW
+            readonly OME_OS=$OS_UNKNOW
         fi
         ;;
-    CYGWIN*) export OME_OS=$OS_CYGWIN;;
-    MINGW* | MSYS*) export OME_OS=$OS_MSYS2;;
-    FreeBSD) export OME_OS=$OS_FREEBSD;;
-    DragonFly) export OME_OS=$OS_DFBSD;;
-    NetBSD) export OME_OS=$OS_NETBSD;;
-    Darwin) export OME_OS=$OS_MACOS;;
-    *) export OME_OS=$OS_UNKNOW;;
+    CYGWIN*) readonly OME_OS=$OS_CYGWIN;;
+    MINGW* | MSYS*) readonly OME_OS=$OS_MSYS2;;
+    FreeBSD) readonly OME_OS=$OS_FREEBSD;;
+    DragonFly) readonly OME_OS=$OS_DFBSD;;
+    NetBSD) readonly OME_OS=$OS_NETBSD;;
+    Darwin) readonly OME_OS=$OS_MACOS;;
+    *) readonly OME_OS=$OS_UNKNOW;;
 esac
 
 ################################################################################
 
 # Oh-My-Emacs
-# export OME_BIN=$(dirname $(readlink -f $0))
-# export OME_ROOT=$OME_BIN/..
-export OME_ROOT=$HOME/.oh-my-env
-export OME_BIN=$OME_ROOT/bin
+# readonly OME_BIN=$(dirname $(readlink -f $0))
+# readonly OME_ROOT=$OME_BIN/..
+readonly OME_ROOT=$HOME/.oh-my-env
+readonly OME_BIN=$OME_ROOT/bin
 
-export OME_PREFIX=$HOME/.ome_local
-export OME_NULL_DEV=$HOME/.ome_local/null_dev.log
-export OME_REPO=$HOME/.ome_local/repo
-export OME_WS=$HOME/workspace
-export OME_BOOK=$HOME/book
-export OME_PROJ=$HOME/projects
+readonly OME_PREFIX=$HOME/.ome_local
+readonly OME_NULL_DEV=$HOME/.ome_local/null_dev.log
+readonly OME_REPO=$HOME/.ome_local/repo
+readonly OME_WS=$HOME/workspace
+readonly OME_BOOK=$HOME/book
+readonly OME_PROJ=$HOME/projects
 
 export PATH=$OME_WS/bin:$OME_BIN:"$PATH"
 
 # Emacs
-#export ALTERNATE_EDITOR=""
-export OME_EMACS=$HOME/.oh-my-emacs
-export OME_EMACS_MODULE=$HOME/.oh-my-emacs/emacs-config/modules
-export OME_EMACS_SNIPPET=$HOME/.oh-my-emacs/emacs-config/snippets
+#readonly ALTERNATE_EDITOR=""
+readonly OME_EMACS=$HOME/.oh-my-emacs
+readonly OME_EMACS_MODULE=$HOME/.oh-my-emacs/emacs-config/modules
+readonly OME_EMACS_SNIPPET=$HOME/.oh-my-emacs/emacs-config/snippets
 
 # lib
 . $HOME/.oh-my-env/bin/lib
@@ -110,6 +110,7 @@ export OME_EMACS_SNIPPET=$HOME/.oh-my-emacs/emacs-config/snippets
 . $HOME/.oh-my-env/bin/proj
 
 ################################################################################
+# declare -x OME_SHOW=""
 export OME_SHOW=""
 ome_show() {
     index=0
@@ -181,7 +182,7 @@ if [ "$OME_OS" = "$OS_DEBIAN" ] || [ "$OME_OS" = "$OS_UBUNTU" ]; then
 fi
 
 # editor
-export EDITOR=em
+readonly EDITOR=em
 
 # git config
 git config --global core.editor $EDITOR
@@ -191,6 +192,7 @@ git config --global core.safecrlf warn
 
 git config --global user.email "damon-kwok@outlook.com"
 git config --global user.name "damon-kwok"
+git config --global credential.helper 'cache –timeout=36000'
 
 git config --global color.ui true
 
@@ -230,31 +232,31 @@ if [ "`uname`" = "Darwin" ]; then
     
 fi
 
-export CLJ_CLI_VERSION=1.10.1.507
-export ERLANG_VERSION=22.2
-export GOLANG_VERSION=1.14rc1 #1.13.7
-export JAVA_VERSION=11.0.6.hs-adpt
-export MAVEN_VERSION=3.6.3
-export GRADLE_VERSION=6.2
-export KOTLIN_VERSION=1.3.61
-export SCALA_VERSION=2.13.1
-export SBT_VERSION=1.3.8
-export GROOVY_VERSION=3.0.1
-export STACK_VERSION=2.1.3
-export PYTHON2_VERSION=2.7.17
-export PYTHON3_VERSION=3.8.1
-export RUBY_VERSION=2.7.0
-export PHP_VERSION=7.4.2 # export PHP_VERSION=5.6.39
-export NIM_VERSION=1.0.6
-export NODEJS_VERSION=12.14.1
-export OCAML_VERSION=4.09.0
+readonly CLJ_CLI_VERSION=1.10.1.507
+readonly ERLANG_VERSION=22.2
+readonly GOLANG_VERSION=1.14rc1 #1.13.7
+readonly JAVA_VERSION=11.0.6.hs-adpt
+readonly MAVEN_VERSION=3.6.3
+readonly GRADLE_VERSION=6.2
+readonly KOTLIN_VERSION=1.3.61
+readonly SCALA_VERSION=2.13.1
+readonly SBT_VERSION=1.3.8
+readonly GROOVY_VERSION=3.0.1
+readonly STACK_VERSION=2.1.3
+readonly PYTHON2_VERSION=2.7.17
+readonly PYTHON3_VERSION=3.8.1
+readonly RUBY_VERSION=2.7.0
+readonly PHP_VERSION=7.4.2 # readonly PHP_VERSION=5.6.39
+readonly NIM_VERSION=1.0.6
+readonly NODEJS_VERSION=12.14.1
+readonly OCAML_VERSION=4.09.0
 if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
-    export SBCL_VERSION=2.0.0
+    readonly SBCL_VERSION=2.0.0
 else
-    export SBCL_VERSION=2.0.1
+    readonly SBCL_VERSION=2.0.1
 fi
 
-# export NODEJS_MAJOR_VERSION=12
-# export NODEJS_MINOR_VERSION=14
-# export NODEJS_PATCH_VERSION=1
-# export MAVEN_OPTS="-Duser.home=`cygpath -w $HOME`"
+# readonly NODEJS_MAJOR_VERSION=12
+# readonly NODEJS_MINOR_VERSION=14
+# readonly NODEJS_PATCH_VERSION=1
+# readonly MAVEN_OPTS="-Duser.home=`cygpath -w $HOME`"

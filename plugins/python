@@ -191,18 +191,18 @@ python_exist_p() {
 
 python_info() {
     if [ "`command -v python2`" != "" ]; then
-        PYTHON2_VERSION="`python2 --version 2>&1 | cut -c 8-`"
+        PY2VER="`python2 --version 2>&1 | cut -c 8-`"
     else
-        PYTHON2_VERSION="!miss!"
+        PY2VER="!miss!"
     fi
 
     if [ "`command -v python3`" != "" ]; then
-        PYTHON3_VERSION="`python3 --version | cut -c 8-`"
+        PY3VER="`python3 --version | cut -c 8-`"
     else
-        PYTHON3_VERSION="!miss!"
+        PY3VER="!miss!"
     fi
     if [ "`command -v python2`" != "" ] || [ "`command -v python3`" != "" ]; then
-        ome_show "Python" "py2:$PYTHON2_VERSION | py3:$PYTHON3_VERSION"
+        ome_show "Python" "py2:$PY2VER | py3:$PY3VER"
     fi
 }
 
