@@ -126,15 +126,6 @@ ome_show() {
 }
 
 ################################################################################
-# load plugins
-for plugin in $HOME/.oh-my-env/plugins/* ; do
-    if [ ! -d "$plugin" ] && [ "$plugin" != "$HOME/.oh-my-env/plugins/README.org" ]; then
-        # echo "name: $plugin"
-        # time `. "$plugin"`
-        . "$plugin"
-    fi
-done
-################################################################################
 # User Settings
 # if [ -d /mingw64/bin2 ]; then
 # export PATH=/mingw64/bin:"$PATH"
@@ -178,6 +169,8 @@ fi
 # editor
 readonly EDITOR=em
 
+################################################################################
+# FIX
 # bugfix:emacs crash
 export XLIB_SKIP_ARGB_VISUALS=1
 
@@ -202,7 +195,6 @@ if [ "$OME_OS" = "$OS_MACOS" ]; then
         echo "# bashrc" > $HOME/.bashrc
     fi
 fi
-
 
 readonly JAVA_VERSION=11.0.6.hs-adpt
 readonly JBANG_VERSION=0.17.0
@@ -230,3 +222,13 @@ if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
 else
     readonly SBCL_VERSION=2.0.1
 fi
+
+################################################################################
+# load plugins
+for plugin in $HOME/.oh-my-env/plugins/* ; do
+    if [ ! -d "$plugin" ] && [ "$plugin" != "$HOME/.oh-my-env/plugins/README.org" ]; then
+        # echo "name: $plugin"
+        # time `. "$plugin"`
+        . "$plugin"
+    fi
+done

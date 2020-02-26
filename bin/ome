@@ -156,19 +156,27 @@ ome_plugin_install() {
 ome_repl() {
     echo ""
     tip "what do you need?"
-    echo "    1) clojure"
-    echo "    2) haskell"
-    echo "    3) elixir"
-    echo "    4) erlang"
+    echo "    1) Clojure"
+    echo "    2) Haskell"
+    echo "    3) Elixir"
+    echo "    4) Erlang"
+    echo "    5) Java"
+    echo "    6) CommonLisp"
+    echo "    7) Nodejs"
+    echo "    8) Python"
     echo "    -------------------------"
     echo "    q) exit"
 
     read -p "please enter your choice:" item
     case $item in
-        1) echo abort with "^C | ^D | (exit) | (quit)" && lein repl;;
-        2) echo abort with "^D :quit" && stack repl;;
-        3) echo abort with "^C" && iex;;
-        4) echo abort with "^C | ^G | q()." && erl;;
+        1) echo abort with "C-d | (exit) | (quit)" && lein repl;;
+        2) echo abort with "C-d | :quit" && stack repl;;
+        3) echo abort with "C-c" && iex;;
+        4) echo abort with "C-c | C-g | q()." && erl;;
+        5) echo abort with "C-d" && jshell;;
+        6) echo abort with "(exit)" && ros run;;
+        7) echo abort with "C-d" && node;;
+        8) echo abort with "quit() | C-z ret" && python3;;
         q|Q) exit;;
         *) ome_repl;;
     esac

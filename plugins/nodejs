@@ -69,7 +69,7 @@ nodejs_install_nvm() {
 nodejs_install_download() {
     # echo_warning "please download form: https://nodejs.org/en/download"
     # https://nodejs.org/dist
-    if [ ! -d $OME_REPO/$NODEJS_VERSION_INFO ]; then
+    if [ ! -d $OME_REPO/$NODEJS_VERINFO ]; then
         local zipkg=$NODEJS_VERSION_ZIP
         mkdir -p ~/Downloads
         cd ~/Downloads/
@@ -78,20 +78,20 @@ nodejs_install_download() {
             #wget https://nodejs.org/dist/latest-v${NODEJS_MAJOR_VERSION}.x/$zipkg
             wget https://nodejs.org/dist/v${NODEJS_VERSION}/$zipkg
         fi
-        #if [ ! -d $OME_REPO/$NODEJS_VERSION_INFO ]; then
+        #if [ ! -d $OME_REPO/$NODEJS_VERINFO ]; then
         echo "unzip:$zipkg"
         if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
             unzip ./$zipkg -d $OME_REPO
         elif [ "$OME_OS" = "$OS_MACOS" ]; then
             tar -zcvf ./$zipkg -C $OME_REPO
-            chmod +x $OME_REPO/$NODEJS_VERSION_INFO/bin/*
+            chmod +x $OME_REPO/$NODEJS_VERINFO/bin/*
         else
             tar -xvf ./$zipkg -C $OME_REPO
-            chmod +x $OME_REPO/$NODEJS_VERSION_INFO/bin/*
+            chmod +x $OME_REPO/$NODEJS_VERINFO/bin/*
         fi
         # fi
     else
-        echo "$NODEJS_VERSION_INFO is already installed!"
+        echo "$NODEJS_VERINFO is already installed!"
     fi
 }
 
@@ -159,17 +159,17 @@ nodejs_info() {
 #if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
 #{
 if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
-    NODEJS_VERSION_INFO=node-v${NODEJS_VERSION}-win-x64
-    NODEJS_VERSION_ZIP=${NODEJS_VERSION_INFO}.zip
-    export PATH="$OME_REPO/$NODEJS_VERSION_INFO:$PATH"
+    readonly NODEJS_VERINFO=node-v${NODEJS_VERSION}-win-x64
+    NODEJS_VERSION_ZIP=${NODEJS_VERINFO}.zip
+    export PATH="$OME_REPO/$NODEJS_VERINFO":"$PATH"
 elif [ "$OME_OS" = "$OS_MACOS" ]; then
-    NODEJS_VERSION_INFO=node-v${NODEJS_VERSION}-darwin-x64
-    NODEJS_VERSION_ZIP=${NODEJS_VERSION_INFO}.tar.gz
-    export PATH="$OME_REPO/$NODEJS_VERSION_INFO/bin:$PATH"
+    readonly NODEJS_VERINFO=node-v${NODEJS_VERSION}-darwin-x64
+    NODEJS_VERSION_ZIP=${NODEJS_VERINFO}.tar.gz
+    export PATH="$OME_REPO/$NODEJS_VERINFO/bin":"$PATH"
 else
-    NODEJS_VERSION_INFO=node-v${NODEJS_VERSION}-linux-x64
-    NODEJS_VERSION_ZIP=${NODEJS_VERSION_INFO}.tar.xz
-    export PATH="$OME_REPO/$NODEJS_VERSION_INFO/bin:$PATH"
+    readonly NODEJS_VERINFO=node-v${NODEJS_VERSION}-linux-x64
+    NODEJS_VERSION_ZIP=${NODEJS_VERINFO}.tar.xz
+    export PATH="$OME_REPO/$NODEJS_VERINFO/bin":"$PATH"
 fi
 # https://nodejs.org/dist/v12.14.1/node-v12.14.1-darwin-x64.tar.gz
 # https://nodejs.org/dist/v12.14.1/node-v12.14.1-win-x86.zip
