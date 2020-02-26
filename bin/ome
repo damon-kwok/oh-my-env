@@ -240,9 +240,16 @@ ome_pull() {
 }
 
 ome_push() {
+    tip "workspace"
     ws_push
+
+    tip "oh-my-emacs"
     oh_my_emacs_push
+
+    tip "oh-my-env"
     oh_my_env_push
+
+    tip "~/.emacs.d/"
     emacsd_push
 }
 
