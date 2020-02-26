@@ -232,7 +232,7 @@ ome_pull() {
     ome_fix_dotfiles
     
     # tip "oh_my_emacs upgrade"
-    ome install oh_my_emacs
+    ome_install oh_my_emacs
     
     tip "wrokspace upgrade"
     gitee_upgrade damon-kwok/workspace $HOME/workspace
