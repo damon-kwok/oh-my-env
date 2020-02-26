@@ -74,7 +74,6 @@ ome_package_list() {
     cd $olddir
 }
 
-
 ome_package_info() {
     local olddir=`pwd`
     # tip "package list"
@@ -221,6 +220,56 @@ ome_doctor() {
 	. $OME_ROOT/install.sh install
 	ome_plugin_install oh_my_emacs
     ome_init
+}
+
+ome_pull() {
+    local oldir=`pwd`
+    tip "ome upgrade"
+    cd $OME_ROOT
+    git pull
+    chmod +x $OME_ROOT/bin/*
+    
+    ome_fix_dotfiles
+    
+    # tip "oh_my_emacs upgrade"
+    ome install oh_my_emacs
+    
+    tip "wrokspace upgrade"
+    gitee_upgrade damon-kwok/workspace $HOME/workspace
+    cd $oldir
+}
+
+ome_push() {
+    ws_push
+    oh_my_emacs_push
+    oh_my_env_push
+    emacsd_push
+}
+
+ome_status() {
+    if [ -d $OME_WS ]; then
+        tip "workspace status"
+        cd $OME_WS
+        git status
+    fi
+
+    if [ -d $HOME/.oh-my-emacs/ ]; then
+        tip "oh-my-emacs status"
+        cd $HOME/.oh-my-emacs/
+        git status
+    fi
+
+    if [ -d $HOME/.oh-my-env/ ]; then
+        tip "oh-my-env status"
+        cd $HOME/.oh-my-env/
+        git status
+    fi
+
+    if [ -d $HOME/.emacs.d/ ]; then
+        tip ".emacs.d/ status"
+        cd $HOME/.emacs.d/
+        git status
+    fi
 }
 
 ome_help() {

@@ -29,7 +29,7 @@ project_upgrade() {
     github_upgrade nodejs/http2 $OME_PROJ/cpp/http2
     github_upgrade facebook/folly $OME_PROJ/cpp/folly
     github_upgrade pocoproject/poco $OME_PROJ/cpp/poco
-    github_upgrade 01org/tbb $OME_PROJ/cpp/tbb
+    github_upgrade intel/tbb $OME_PROJ/cpp/tbb
     github_upgrade Tencent/rapidjson $OME_PROJ/cpp/rapidjson
 
     github_upgrade emweb/wt $OME_PROJ/cpp/wt
@@ -81,51 +81,6 @@ book_upgrade() {
 
 }
 
-ome_pull_proj() {
-    github_upgrade damon-kwok/damon-kwok.github.io $OME_PROJ/me/blog
-    
-    github_upgrade damon-kwok/awesome-package-manager $OME_PROJ/me/awesome-package-manager
-    github_upgrade damon-kwok/awesome-network-programming $OME_PROJ/me/awesome-network-programming
-    github_upgrade damon-kwok/awesome-web-scraping $OME_PROJ/me/awesome-web-scraping
-    github_upgrade damon-kwok/medusa $OME_PROJ/me/medusa
-    # github_upgrade damon-kwok/balisong $OME_PROJ/me/balisong
-    github_upgrade damon-kwok/data-bundle $OME_PROJ/me/data-bundle
-    github_upgrade damon-kwok/memrock $OME_PROJ/me/memrock
-
-    github_upgrade damon-kwok/cljs-example $OME_PROJ/me/cljs-example
-    
-    github_upgrade damon-kwok/libknife $OME_PROJ/me/libknife    
-    # cd $OME_PROJ/c/libknife
-    # mkdir -p build
-    # cd build
-    # cmake ..
-    # make
-}
-
-ome_push_proj() {
-    local oldir=`pwd`
-    #################################
-    cd $OME_PROJ/me/blog
-    git_push
-
-    cd $OME_PROJ/me/awesome-package-manager
-    git_push
-
-    cd $OME_PROJ/me/awesome-network-programming
-    git_push
-
-    cd $OME_PROJ/me/awesome-web-scraping
-    git_push
-    
-    cd $OME_PROJ/me/medusa
-    git_push
-    
-    cd $OME_PROJ/me/libknife
-    git_push
-    #################################
-    cd $oldir
-}
-
 blog_push() {
     local oldir=`pwd`
     cd $OME_PROJ/me/blog
@@ -170,59 +125,49 @@ oh_my_env_push() {
     cd $oldir
 }
 
-ome_pull() {
+ome_pull_proj() {
+    github_upgrade damon-kwok/damon-kwok.github.io $OME_PROJ/me/blog
+    
+    github_upgrade damon-kwok/awesome-package-manager $OME_PROJ/me/awesome-package-manager
+    github_upgrade damon-kwok/awesome-network-programming $OME_PROJ/me/awesome-network-programming
+    github_upgrade damon-kwok/awesome-web-scraping $OME_PROJ/me/awesome-web-scraping
+    github_upgrade damon-kwok/medusa $OME_PROJ/me/medusa
+    # github_upgrade damon-kwok/balisong $OME_PROJ/me/balisong
+    github_upgrade damon-kwok/data-bundle $OME_PROJ/me/data-bundle
+    github_upgrade damon-kwok/memrock $OME_PROJ/me/memrock
+
+    github_upgrade damon-kwok/cljs-example $OME_PROJ/me/cljs-example
+    
+    github_upgrade damon-kwok/libknife $OME_PROJ/me/libknife    
+    # cd $OME_PROJ/c/libknife
+    # mkdir -p build
+    # cd build
+    # cmake ..
+    # make
+}
+
+ome_push_proj() {
     local oldir=`pwd`
-    tip "ome upgrade"
-    cd $OME_ROOT
-    git pull
-    chmod +x $OME_ROOT/bin/*
+    #################################
+    cd $OME_PROJ/me/blog
+    git_push
+
+    cd $OME_PROJ/me/awesome-package-manager
+    git_push
+
+    cd $OME_PROJ/me/awesome-network-programming
+    git_push
+
+    cd $OME_PROJ/me/awesome-web-scraping
+    git_push
     
-    ome_fix_dotfiles
+    cd $OME_PROJ/me/medusa
+    git_push
     
-    # tip "oh_my_emacs upgrade"
-    ome install oh_my_emacs
-    
-    tip "wrokspace upgrade"
-    gitee_upgrade damon-kwok/workspace $HOME/workspace
+    cd $OME_PROJ/me/libknife
+    git_push
+    #################################
     cd $oldir
-}
-
-ome_def_ws() {
-    local repo=$1
-    echo 'tip "wrokspace upgrade"' > $HOME/.ome_workspace
-    echo 'gitee_upgrade ${repo} $HOME/workspace'
-}
-ome_status() {
-    if [ -d $OME_WS ]; then
-        tip "workspace status"
-        cd $OME_WS
-        git status
-    fi
-
-    if [ -d $HOME/.oh-my-emacs/ ]; then
-        tip "oh-my-emacs status"
-        cd $HOME/.oh-my-emacs/
-        git status
-    fi
-
-    if [ -d $HOME/.oh-my-env/ ]; then
-        tip "oh-my-env status"
-        cd $HOME/.oh-my-env/
-        git status
-    fi
-
-    if [ -d $HOME/.emacs.d/ ]; then
-        tip ".emacs.d/ status"
-        cd $HOME/.emacs.d/
-        git status
-    fi
-}
-
-ome_push() {
-    ws_push
-    oh_my_emacs_push
-    oh_my_env_push
-    emacsd_push
 }
 
 emacsd_push() {

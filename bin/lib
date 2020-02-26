@@ -746,6 +746,12 @@ ome_dev_path() {
     cd $oldir
 }
 
+ome_def_ws() {
+    local repo=$1
+    echo 'tip "wrokspace upgrade"' > $HOME/.ome_workspace
+    echo 'gitee_upgrade ${repo} $HOME/workspace'
+}
+
 gen_clang_format() {
     local oldir=`pwd`
     if [ ! -e ./.clang-format ]; then
