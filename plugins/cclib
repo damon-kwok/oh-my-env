@@ -1,0 +1,274 @@
+#!/usr/bin/env sh
+
+cclib_install_tools() {
+    get_os_type
+    case $OME_OS in
+        # Linux
+        # $OS_DEBIAN) ;;
+        # $OS_UBUNTU) ;;
+        $OS_DEBIAN|$OS_UBUNTU)
+            #libcrypt-dev #libpcre-dev #libiconv-dev libautotrace-dev
+            #bzip2-dev
+            sudo apt install -y swig libcppunit-dev\
+                 libssl-dev \
+                 libmcrypt-dev libgcrypt-dev libscrypt-dev libxcrypt-dev \
+                 libcurl4-gnutls-dev libcurl4-openssl-dev uuid-dev libncurses-dev \
+                 libxml2-dev libxslt-dev libexpat-dev libyaml-dev \
+                 libffi-dev libreadline-dev gettext \
+                 libevent-dev libpcre2-dev \
+                 libedit-dev libtrace-dev \
+                 libbison-dev libicu-dev libtidy-dev \
+                 zlibc libzip-dev liblz4-dev liblzma-dev \
+                 valgrind libatomic-ops-dev re2c
+            
+            # AutoTrace
+            readp "install AutoTrace?"
+            if [ $? -eq 1 ]; then
+                # language dev
+                # sudo apt install -y libperl-dev python3-dev php-dev ruby-dev tcl-dev
+                
+                sudo apt install -y libmagickcore-dev libpstoedit-dev libgif-dev
+                github_upgrade libming/libming $OME_REPO/libming
+                cd $OME_REPO/libming/
+                ./autogen.sh
+                ./configure --prefix=$OME_PREFIX
+                # --enable-cpp \
+                    # --enable-python \
+                    # --enable-perl \
+                    # --enable-php
+                # --enable-tcl
+                # make test
+                make install
+                
+                github_upgrade autotrace/autotrace $OME_REPO/autotrace
+                cd $OME_REPO/autotrace/
+                ./autogen.sh
+                ./configure --prefix=$OME_PREFIX
+                make
+            fi
+            ;;
+        # $OS_REDHAT) ;;
+        # $OS_FEDORA) ;;
+        $OS_REDHAT|$OS_FEDORA)
+            sudo yum install redhat-rpm-config \
+                 swig cppunit \
+                 openssl-devel libxcrypt-devel libmcrypt-devel \
+                 libcurl-devel libuuid-devel ncurses-devel \
+                 libxml2-devel libxslt-devel expat-devel libyaml-devel \
+                 libffi-devel readline-devel gettext-devel \
+                 libevent-devel pcre-devel pcre2-devel \
+                 libticonv-devel libedit-devel autotrace-devel \
+                 bison-devel libicu-devel libtidy-devel \
+                 zlib-devel libzip-devel bzip2-devel liblz4-devel liblzma-devel \
+                 valgrind-devel libatomic_ops-devel re2c
+            ;;
+        $OS_ARCH)
+            yaourt -S swig cppunit \
+                   openssl libgcrypt libmcrypt \
+                   curl libutil-linux ncurses \
+                   libxml2 libxslt expat libyaml \
+                   libffi readline gettext \
+                   libevent pcre pcre2 \
+                   libiconv libedit potrace \
+                   bison icu tidy \
+                   zlib libzip bzip2 lz4 xz \
+                   valgrind libatomic_ops re2c
+            ;;
+        $OS_GENTOO) ;;
+        $OS_SUSE)
+            # sudo zypper refresh
+            # sudo zypper update
+            # zypper info -t pattern devel_basis
+            sudo zypper install swig cppunit \
+                 libgcrypt libmcrypt-devel \
+                 curl ossp-uuid ncurses \
+                 libxml2 libxslt expat libyaml \
+                 libffi readline gettext \
+                 libevent pcre pcre2 \
+                 libticonv libedit autotrace \
+                 bison icu tidy-devel \
+                 fpc-zlib libzip bzip2 liblz4 lzma\
+                 valgrind-devel libatomic_ops re2c
+            ;;
+        $OS_SLACKWARE) ;;
+        $OS_NIXOS) ;;
+        $OS_VOID) ;;
+        $OS_ALPINE) ;;
+        $OS_MAGEIA) ;;
+        $OS_SLITAZ) ;;
+        $OS_GUIXSD) ;;
+        # Unix
+        $OS_MACOS)
+            brew install swig30 cppunit \
+                 libgcrypt libmcrypt \
+                 curl ossp-uuid ncurses \
+                 libxml2 libxslt expat libyaml \
+                 libffi readline gettext \
+                 libevent pcre pcre2 \
+                 libticonv libedit autotrace \
+                 bison icu tidy-devel \
+                 fpc-zlib libzip bzip2 liblz4 lzma\
+                 valgrind-devel libatomic_ops re2c
+            ;;
+        $OS_AIX) ;;
+        $OS_SOLARIS) ;;
+        $OS_FREEBSD)
+            sudo pkg install swig30 cppunit \
+                 libgcrypt libmcrypt \
+                 curl ossp-uuid ncurses \
+                 libxml2 libxslt expat libyaml \
+                 libffi readline gettext \
+                 libevent pcre pcre2 \
+                 libticonv libedit autotrace \
+                 bison icu tidy-devel \
+                 fpc-zlib libzip bzip2 liblz4 lzma\
+                 valgrind-devel libatomic_ops re2c
+            ;;
+        $OS_OPENBSD) ;;
+        $OS_NETBSD) ;;
+        $OS_DFBSD) ;;
+        # Windows
+        $OS_CYGWIN)
+            apt install swig cppunit \
+                openssl-devel libcrypt-devel \
+                libcurl-devel libuuid-devel libncurses-devel \
+                libxml2-devel libxslt-devel libexpat-devel libyaml-devel \
+                libffi-devel libreadline-devel gettext-devel \
+                libevent-devel libpcre-devel libpcre2-devel \
+                libiconv-devel libedit-devel libautotrace-devel \
+                bison libicu-devel libtidy-devel \
+                zlib-devel libzip-devel bzip2 liblz4-devel liblzma-devel \
+                libatomic_ops-devel
+
+            # readp "install re2c?"
+            # if [ $? -eq 1 ]; then
+            github_upgrade skvadrik/re2c $OME_REPO/re2c
+            # sf_upgrade re2c/code-git $OME_REPO/re2c
+
+            cd $OME_REPO/re2c/re2c/
+            ./autogen.sh
+            ./configure --prefix=$OME_PREFIX
+            make install
+            # fi
+            ;;
+        $OS_MSYS2)
+	        # libedit-devel libautotrace-devel libuuid-devel
+            pacman -S mingw-w64-x86_64-swig mingw-w64-x86_64-cppunit \
+                   mingw-w64-x86_64-openssl mingw-w64-x86_64-libgcrypt \
+                   mingw-w64-x86_64-curl mingw-w64-x86_64-ncurses \
+                   mingw-w64-x86_64-libxml2 mingw-w64-x86_64-libxslt mingw-w64-x86_64-expat mingw-w64-x86_64-libyaml \
+                   mingw-w64-x86_64-libffi mingw-w64-x86_64-readline mingw-w64-x86_64-gettext  \
+                   mingw-w64-x86_64-libevent mingw-w64-x86_64-pcre mingw-w64-x86_64-pcre2  \
+                   mingw-w64-x86_64-iconv  \
+	               bison mingw-w64-x86_64-icu  mingw-w64-x86_64-tidy  \
+                   mingw-w64-x86_64-zlib mingw-w64-x86_64-libzip mingw-w64-x86_64-bzip2 mingw-w64-x86_64-lz4 mingw-w64-x86_64-xz  \
+                   mingw-w64-x86_64-libatomic_ops re2c
+            ;;
+        # Other
+        $OS_UNKNOW) ;;
+    esac
+}
+
+cclib_install() {
+    # gcc clang make m4 automake libtool pkg-config"
+    
+    # libdn2 libuv libason-devel
+    # 
+    # libgmime glibc
+    # libiconv
+    # sed awk grep tar zip unzip 7zip flex gawke bison bc mt
+    # guile rush tramp libc scm screen
+
+    cclib_install_tools
+    
+    readp "install C library?"
+    if [ $? -eq 1 ]; then
+        cclib_install_c_library   
+    fi
+
+    readp "install C++ library?"
+    if [ $? -eq 1 ]; then
+        cclib_install_cpp_library   
+    fi
+}
+
+cclib_uninstall() {
+    echo_error "'cclib_uninstall' not implemented"
+}
+
+cclib_exist_p() {
+    echo_error "'cclib_exist_p' not implemented"
+}
+
+# if [ "$OME_OS" == "$OS_MSYS2" ]; then
+#     # MAKE_TYPE="MSYS Makefiles"
+#     OME_MAKE="Ninja"
+# else
+#     OME_MAKE="Ninja"
+#     MAKE_PROG="make"
+# fi
+
+cclib_info() {
+    echo_error ""
+}
+
+cclib_install_c_library() {
+    readp "install libuv?"
+    if [ $? -eq 1 ]; then
+        github_upgrade libuv/libuv $OME_REPO/libuv
+        
+        # mkdir -p $OME_PROJ/c/libuv/build
+        # cd $OME_PROJ/c/libuv/build/
+        # cmake .. -G "$OME_MAKE" \
+            # -DCMAKE_INSTALL_PREFIX=$OME_PREFIX
+        # cmake --build . --use-stderr --config Release --target install -- -j4
+        cd $OME_REPO/libuv/
+        chmod +x ./autogen.sh
+        ./autogen.sh
+        ./configure --prefix=$OME_PREFIX
+        make
+        make check
+        make install
+    fi
+}
+
+cclib_install_cpp_library() {
+    cclib_install_cxx_library gflags/gflags $OME_REPO/gflags 11
+    cclib_install_cxx_library google/snappy $OME_REPO/snappy 11
+    cclib_install_cxx_library google/double-conversion $OME_REPO/double-conversion 11
+    cclib_install_cxx_library google/glog $OME_REPO/glog 11
+    
+    cclib_install_cxx_library pocoproject/poco $OME_REPO/poco 14
+    cclib_install_cxx_library facebook/folly $OME_REPO/folly 14
+    
+    readp "install boost?"
+    if [ $? -eq 1 ]; then
+        github_upgrade boostorg/boost $OME_REPO/boost 1 develop
+        cd $OME_REPO/boost/
+        # git checkout develop # or whatever branch you want to use
+        ./bootstrap.sh
+        ./b2 headers
+        ./b2 install --prefix=$OME_PREFIX
+    fi
+
+}
+
+cclib_install_cxx_library() {
+    local lib=$1
+    local dir=$2
+    local std=$3
+    readp "install $lib(c++$std)?"
+    if [ $? -eq 1 ]; then
+        github_upgrade $lib $dir
+
+        mkdir -p $dir/build
+        cd $dir/build/
+
+        cmake .. -G "$OME_MAKE" \
+              -DCMAKE_INSTALL_PREFIX=$OME_PREFIX \
+              -DCMAKE_EXPORT_COMPILE_COMMANDS=1 \
+              -DCMAKE_CXX_STANDARD=$std
+        cmake --build . --use-stderr --config Release --target install
+    fi
+}
+
