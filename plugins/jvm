@@ -28,7 +28,10 @@ jvm_install_sdkman() {
     if [ "`command -v sdk`" = "" ]; then
         curl -s "https://get.sdkman.io" | sh
         . $HOME/.sdkman/bin/sdkman-init.sh
+        sdk update
     fi
+
+    # write config
     find_str "SDKMAN_DIR" ~/.bashrc
     if [ $? -eq 0 ]; then
         echo "" >> ~/.bashrc
@@ -47,16 +50,21 @@ jvm_install_sdkman() {
              >> ~/.shrc
     fi
 
-    tip "sdkman self update"
-    sdk selfupdate
-    tip "sdkman update"
-    sdk update
-    tip "sdkman upgrade"
-    sdk upgrade
-
     readp "use china mirror?"
     if [ $? -eq 1 ]; then
         gitee_upgrade_bigrepo damon-kwok/sdkman-caches $HOME/.sdkman/archives/   
+    fi
+
+    readp "sdk upgrade?"
+    if [ $? -eq 1 ]; then
+        tip "sdkman update"
+        sdk update
+        
+        tip "sdkman self update"
+        sdk selfupdate
+        
+        tip "sdkman upgrade"
+        sdk upgrade      
     fi
 
     #if ! command -v javac >/dev/null 2>&1; then
