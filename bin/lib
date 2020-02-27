@@ -47,12 +47,14 @@ echo_kv() {
 title() {
     echo -e $(tput setaf 14)"=================================================================="\
 	     $(tput sgr0)
-    echo -e $(tput setaf 14)"= $1:"$(tput sgr0)
+    echo -e $(tput setaf 14)"||\t\t $1:"$(tput sgr0)
+    echo -e $(tput setaf 14)"=================================================================="\
+         $(tput sgr0)
 }
 
 tip() {
     echo -e $(tput setaf 10)"--------------------------------"$(tput sgr0)
-    echo -e $(tput setaf 10)"-- $1:"$(tput sgr0)
+    echo -e $(tput setaf 10)"| $1"$(tput sgr0)
 }
 
 get_os_type() {

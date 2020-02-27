@@ -224,50 +224,25 @@ ome_init() {
 
 ome_doctor() {
     title "ome doctor"
-    # ome_fix_dotfiles
 	. $OME_ROOT/install.sh install
-	ome_plugin_install oh_my_emacs
-    ome_init
+    # ome_fix_dotfiles
+	# ome_plugin_install oh_my_emacs
+    # ome_init
 }
 
-ome_pull() {
-    local oldir=`pwd`
-    tip "ome upgrade"
-    cd $OME_ROOT
-    git pull
-    chmod +x $OME_ROOT/bin/*
-    
-    ome_fix_dotfiles
-    
-    # tip "oh_my_emacs upgrade"
-    ome_install oh_my_emacs
-    
-    tip "wrokspace upgrade"
-    gitee_upgrade damon-kwok/workspace $HOME/workspace
-
-    tip "cache upgrade"
-    chmod +x $OME_ROOT/bin/git-hook
-    gitee_upgrade damon-kwok/other-caches $HOME/Downloads/
-    git-hook $HOME/Downloads/ pull
-    
-    gitee_upgrade damon-kwok/sdkman-caches $HOME/.sdkman/archives/
-    git-hook $HOME/.sdkman/archives/ $HOME/Downloads/ pull
-    
-    gitee_upgrade damon-kwok/other-caches $HOME/Downloads/
-    if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
-        gitee_upgrade damon-kwok/roswell-caches $USERPROFILE/.roswell/archives/
-        git-hook $USERPROFILE/.roswell/archives/  pull
-    else
-        gitee_upgrade damon-kwok/roswell-caches $HOME/.roswell/archives/
-        git-hook $HOME/.roswell/archives/ pull
-    fi
-    cd $oldir
-}
-
-ome_push_repo() {
-    local repo=$1
-    tip "$repo"
+gitee_upgrade_bigrepo() {
+    local project=$1
+    local repo=`cygpath $2`
     if [ -d $repo ]; then
+        tip "$repo"
+        gitee_upgrade $project $repo
+        git-hook $repo pull
+    fi
+}
+gitee_push_bigrepo() {
+    local repo=`cygpath $1`
+    if [ -d $repo ]; then
+        tip "$repo"
         local oldir=`pwd`
         cd $repo
         git status
@@ -280,6 +255,33 @@ ome_push_repo() {
     fi
 }
 
+ome_pull() {
+    local oldir=`pwd`
+    tip "ome upgrade"
+    github_upgrade damon-kwok/oh-my-env $OME_ROOT
+    chmod +x $OME_ROOT/bin/*
+    
+    # ome_fix_dotfiles
+    
+    tip "oh_my_emacs upgrade"
+    github_upgrade damon-kwok/oh-my-emacs $HOME/.oh-my-emacs
+
+    tip "cache upgrade"
+    chmod +x $OME_ROOT/bin/git-hook
+    gitee_upgrade_bigrepo damon-kwok/other-caches $HOME/Downloads/
+    gitee_upgrade_bigrepo damon-kwok/sdkman-caches $HOME/.sdkman/archives/
+    if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
+        gitee_upgrade_bigrepo damon-kwok/roswell-caches $USERPROFILE/.roswell/archives/
+    else
+        gitee_upgrade_bigrepo damon-kwok/roswell-caches $HOME/.roswell/archives/
+    fi
+
+    tip "wrokspace upgrade"
+    gitee_upgrade damon-kwok/workspace $HOME/workspace
+    
+    cd $oldir
+}
+
 ome_push() {
     tip "oh-my-env"
     oh_my_env_push
@@ -290,42 +292,70 @@ ome_push() {
     tip "~/.emacs.d/"
     emacsd_push
 
-    tip "workspace"
-    ws_push
-
     tip "cache"
-    ome_push_repo $HOME/Downloads/
-    ome_push_repo $HOME/.sdkman/archives/
+    gitee_push_bigrepo $HOME/Downloads/
+    gitee_push_bigrepo $HOME/.sdkman/archives/
 
     if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
-        ome_push_repo $USERPROFILE/.roswell/archives/
+        gitee_push_bigrepo $USERPROFILE/.roswell/archives/
     else
-        ome_push_repo $HOME/.roswell/archives/
+        gitee_push_bigrepo $HOME/.roswell/archives/
     fi
+
+    tip "workspace"
+    ws_push
 }
 
 ome_status() {
-    if [ -d $OME_WS ]; then
-        tip "workspace status"
-        cd $OME_WS
-        git status
-    fi
-
-    if [ -d $HOME/.oh-my-emacs/ ]; then
-        tip "oh-my-emacs status"
-        cd $HOME/.oh-my-emacs/
-        git status
-    fi
-
+    # env
     if [ -d $HOME/.oh-my-env/ ]; then
         tip "oh-my-env status"
         cd $HOME/.oh-my-env/
         git status
     fi
 
+    # emacs
+    if [ -d $HOME/.oh-my-emacs/ ]; then
+        tip "oh-my-emacs status"
+        cd $HOME/.oh-my-emacs/
+        git status
+    fi
+
+    # cache
     if [ -d $HOME/.emacs.d/ ]; then
         tip ".emacs.d/ status"
         cd $HOME/.emacs.d/
+        git status
+    fi
+
+    if [ -d $HOME/Downloads/ ]; then
+        tip ".emacs.d/ status"
+        cd $HOME/Downloads/
+        git status
+    fi
+
+    if [ -d $HOME/.sdkman/archives/ ]; then
+        tip ".emacs.d/ status"
+        cd $HOME/.sdkman/archives/
+        git status
+    fi
+
+    local dir=""
+    if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
+        dir=$USERPROFILE/.roswell/archives/
+    else
+        dir=gitee_push_bigrepo $HOME/.roswell/archives/
+    fi
+    if [ -d $dir ]; then
+        tip "$dir status"
+        cd $HOME/.emacs.d/
+        git status
+    fi
+
+    # worksapce
+    if [ -d $OME_WS ]; then
+        tip "workspace status"
+        cd $OME_WS
         git status
     fi
 }
