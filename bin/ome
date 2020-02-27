@@ -244,21 +244,62 @@ ome_pull() {
     
     tip "wrokspace upgrade"
     gitee_upgrade damon-kwok/workspace $HOME/workspace
+
+    tip "cache upgrade:"
+    chmod +x $OME_ROOT/bin/git-hook
+    gitee_upgrade damon-kwok/other-caches $HOME/Downloads/
+    git-hook $HOME/Downloads/ pull
+    
+    gitee_upgrade damon-kwok/sdkman-caches $HOME/.sdkman/archives/
+    git-hook $HOME/.sdkman/archives/ $HOME/Downloads/ pull
+    
+    gitee_upgrade damon-kwok/other-caches $HOME/Downloads/
+    if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
+        gitee_upgrade damon-kwok/roswell-caches $USERPROFILE/.roswell/archives/
+        git-hook $USERPROFILE/.roswell/archives/  pull
+    else
+        gitee_upgrade damon-kwok/roswell-caches $HOME/.roswell/archives/
+        git-hook $HOME/.roswell/archives/ pull
+    fi
     cd $oldir
 }
 
+ome_push_repo() {
+    local repodir=$1
+    if [ -d $repodir ]; then
+        local oldir=`pwd`
+        cd $repodir
+        git status
+        readp "==>push $repodir?"
+        if [ $? -eq 1 ]; then
+            git-hook push
+            git_push
+        fi
+        cd $oldir
+    fi
+}
+
 ome_push() {
-    tip "workspace"
-    ws_push
+    # tip "workspace"
+    # ws_push
 
-    tip "oh-my-emacs"
-    oh_my_emacs_push
+    # tip "oh-my-emacs"
+    # oh_my_emacs_push
 
-    tip "oh-my-env"
-    oh_my_env_push
+    # tip "oh-my-env"
+    # oh_my_env_push
 
-    tip "~/.emacs.d/"
-    emacsd_push
+    # tip "~/.emacs.d/"
+    # emacsd_push
+
+    ome_push_repo $HOME/Downloads/
+    ome_push_repo $HOME/.sdkman/archives/
+
+    if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
+        ome_push_repo $USERPROFILE/.roswell/archives/
+    else
+        ome_push_repo $HOME/.roswell/archives/
+    fi
 }
 
 ome_status() {

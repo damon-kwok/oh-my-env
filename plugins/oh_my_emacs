@@ -20,6 +20,8 @@ link_init_el() {
         mv $HOME/.emacs.d/ $bkdir
         echo "your .emacs.d/ backup to '$bkdir'"
     fi
+
+    tip ".emacs.d/"
     gitee_upgrade damon-kwok/emacs.d $HOME/.emacs.d
     chmod +x $HOME/.emacs.d/on-hook.sh
     $HOME/.emacs.d/on-hook.sh pull
