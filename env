@@ -89,9 +89,11 @@ esac
 readonly OME_ROOT=$HOME/.oh-my-env
 readonly OME_BIN=$OME_ROOT/bin
 
-readonly OME_PREFIX=$HOME/.ome_local
 readonly OME_NULL_DEV=$HOME/.ome_local/null_dev.log
-readonly OME_REPO=$HOME/.ome_local/repo
+readonly OME_PREFIX=$HOME/.ome_local
+readonly OME_CACHE=$OME_PREFIX/caches
+readonly OME_REPO=$OME_PREFIX/repo
+
 readonly OME_WS=$HOME/workspace
 readonly OME_BOOK=$HOME/book
 readonly OME_PROJ=$HOME/projects

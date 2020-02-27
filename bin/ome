@@ -149,7 +149,7 @@ ome_eval() {
     fi
 }
 
-ome_plugin_install() {
+ome_install() {
     ome_eval "install" "$1"
 }
 
