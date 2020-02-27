@@ -54,6 +54,11 @@ jvm_install_sdkman() {
     tip "sdkman upgrade"
     sdk upgrade
 
+    readp "use china mirror?"
+    if [ $? -eq 1 ]; then
+        gitee_upgrade_bigrepo damon-kwok/sdkman-caches $HOME/.sdkman/archives/   
+    fi
+
     #if ! command -v javac >/dev/null 2>&1; then
     if [ "`command -v javac`" = "" ]; then
         sdk install java $JAVA_VERSION

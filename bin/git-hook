@@ -38,6 +38,7 @@ function split_all_files(){
                 echo_kv "$file" "$size"
                 # git rm "$file"
                 echo "${file}" >> $DIR_ROOT/.gitignore
+                echo "!defs/${file}" >> $DIR_ROOT/.gitignore
                 split_file "$file"
             fi
             
@@ -78,11 +79,11 @@ if [ ! "$1" == "" ]; then
     mkdir -p $DIR_MERGE
     mkdir -p $DIR_DEFS
 
-    if [ "$1" == "push" ]; then
-        get reset
+    if [ "$2" == "push" ]; then
+        git reset
         echo "" > $DIR_ROOT/.gitignore
         split_all_files $DIR_ROOT
-    elif [ "$1" == "pull" ]; then
+    elif [ "$2" == "pull" ]; then
         merge_all_files $DIR_DEFS
     fi
 fi

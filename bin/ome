@@ -156,16 +156,35 @@ ome_install() {
 ome_repl() {
     echo ""
     tip "what do you need?"
-    echo "    1) Clojure"
-    echo "    2) Haskell"
-    echo "    3) Elixir"
-    echo "    4) Erlang"
-    echo "    5) Java"
-    echo "    6) CommonLisp"
-    echo "    7) Nodejs"
-    echo "    8) Python"
+    if [ ! "`command -v lein`" == "" ]; then
+        echo "    1) Clojure"
+    fi
+    if [ ! "`command -v stack`" == "" ]; then
+        echo "    2) Haskell"
+    fi
+    if [ ! "`command -v iex`" == "" ]; then
+        echo "    3) Elixir"
+    fi
+    if [ ! "`command -v erl`" == "" ]; then
+        echo "    4) Erlang"
+    fi
+    if [ ! "`command -v jshell`" == "" ]; then
+        echo "    5) Java"
+    fi
+    if [ ! "`command -v ros`" == "" ]; then
+        echo "    6) CommonLisp"
+    fi
+    if [ ! "`command -v node`" == "" ]; then
+        echo "    7) Nodejs"
+    fi
+    if [ ! "`command -v python3`" == "" ]; then
+        echo "    8) Python"
+    fi
+    if [ ! "`command -v lumo`" == "" ]; then
+        echo "    9) ClojureScript"
+    fi
     echo "    -------------------------"
-    echo "    q) exit"
+    echo "    q | C-c) exit"
 
     read -p "please enter your choice:" item
     case $item in
@@ -177,6 +196,7 @@ ome_repl() {
         6) echo abort with "(exit)" && ros run;;
         7) echo abort with "C-d" && node;;
         8) echo abort with "quit() | C-z ret" && python3;;
+        9) echo abort with "C-d | (exit) | (quit)" && lumo;;
         q|Q) exit;;
         *) ome_repl;;
     esac

@@ -176,11 +176,13 @@ init_install() {
                 xdg-utils emacs-w32 chere
             ;;
         $OS_MSYS2)
+            cp -f $OME_ROOT/conf/msys2/* /etc/pacman.d/
             readp "update system?"
             if [ $? -eq 1 ]; then
                 pacman -Syyu
             fi
             # pacman -Sy pacman-mirrors
+            
             pacman -S git subversion wget curl \
                    tar zip unzip rlwrap coreutils diffutils \
                    mingw-w64-x86_64-emacs #mingw-w64-x86_64-ttf-dejavu

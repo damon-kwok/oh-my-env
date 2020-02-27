@@ -26,7 +26,16 @@ roswell_install() {
         make install
     fi
 
-    tip "ros setup"
+    readp "use china mirror?"
+    if [ $? -eq 1 ]; then
+        if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
+            gitee_upgrade_bigrepo damon-kwok/roswell-caches $USERPROFILE/.roswell/archives/
+        else
+            gitee_upgrade_bigrepo damon-kwok/roswell-caches $HOME/.roswell/archives/
+        fi     
+    fi
+    
+    tip "lisp install"
     ros install sbcl-bin/$SBCL_VERSION
     #ros use sbcl/system
     #ros setup
