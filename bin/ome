@@ -202,7 +202,7 @@ ome_config() {
 
     git config --global user.email "damon-kwok@outlook.com"
     git config --global user.name "damon-kwok"
-    git config --global credential.helper 'cache –timeout=36000'
+    git config --global credential.helper 'cache --timeout=36000'
 
     git config --global color.ui true
 
@@ -216,10 +216,10 @@ ome_config() {
 }
 
 ome_init() {
-    ome install init
-    ome_config
-    ome_plugin_install "neofetch"
-    ome_plugin_install "goto"
+	ome_config
+    ome_install init
+	ome_install "neofetch"
+    ome_install "goto"
 }
 
 ome_doctor() {
