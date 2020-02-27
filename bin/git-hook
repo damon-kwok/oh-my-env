@@ -8,20 +8,19 @@
 # else
 # echo "222"
 # fi
-
-mkdir -p $DIR_PARTS
-mkdir -p $DIR_MERGE
-mkdir -p $DIR_DEFS
+echo_kv() {
+    echo -e $(tput setaf 14)"$1\t"$(tput sgr0) $(tput setaf 10)"$2"$(tput sgr0)
+}
 
 split_file() {
     local file="$1"
     if [ ! -f "$DIR_DEFS/$file" ] ; then
-        echo "split:$file"
+        echo "split==> $file"
         touch $DIR_DEFS/$file
         # echo "split -b 52428800 -d $1/$file $DIR_PARTS/${file}_"
         split -b 52428800 -d $DIR_ROOT/$file $DIR_PARTS/${file}_
     else
-        echo "skip:$file"
+        echo "skip==> $file"
     fi
 }
 
@@ -33,10 +32,10 @@ function split_all_files(){
             # split_all_files $1"/"$file  
         else
             echo ""
-            echo "check:$DIR_ROOT/$file"
+            # echo "check=> $DIR_ROOT/$file"
             size=`ls -l "$DIR_ROOT/$file" 2>&1 | head -n 1 | cut -d ' ' -f 5`
-            echo "file:$file size:$size"
             if [ $size -gt 52428800 ]; then
+                echo_kv "$file" "$size"
                 # git rm "$file"
                 echo "${file}" >> $DIR_ROOT/.gitignore
                 split_file "$file"
@@ -54,11 +53,11 @@ function merge_all_files(){
             merge_all_files $1"/"$file  
         else
             if [ ! -f "$DIR_MERGE/${file}" ]; then
-                echo "merge:$file"
+                echo "merge==> $file"
                 # echo "cat $DIR_PARTS/${file}_* > $DIR_MERGE/${file}"
                 cat $DIR_PARTS/${file}_* > $DIR_MERGE/${file}
             else
-                echo "skip:$file"
+                echo "skip==> $file"
             fi
         fi  
     done  
@@ -75,9 +74,13 @@ if [ ! "$1" == "" ]; then
     DIR_PARTS="$DIR_ROOT/parts"
     DIR_MERGE="$DIR_ROOT"
 
+    mkdir -p $DIR_PARTS
+    mkdir -p $DIR_MERGE
+    mkdir -p $DIR_DEFS
+
     if [ "$1" == "push" ]; then
         get reset
-        echo "" > ./.gitignore
+        echo "" > $DIR_ROOT/.gitignore
         split_all_files $DIR_ROOT
     elif [ "$1" == "pull" ]; then
         merge_all_files $DIR_DEFS

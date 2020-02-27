@@ -23,8 +23,8 @@ link_init_el() {
 
     tip ".emacs.d/"
     gitee_upgrade damon-kwok/emacs.d $HOME/.emacs.d
-    chmod +x $HOME/.emacs.d/on-hook.sh
-    $HOME/.emacs.d/on-hook.sh pull
+    # chmod +x $HOME/.emacs.d/on-hook.sh
+    # $HOME/.emacs.d/on-hook.sh pull
 }
 
 oh_my_emacs_install() {

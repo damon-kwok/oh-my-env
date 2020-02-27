@@ -177,8 +177,8 @@ emacsd_push() {
         git status
         readp "==>push .emacs.d/?"
         if [ $? -eq 1 ]; then
-            chmod +x $HOME/.emacs.d/on-hook.sh
-            $HOME/.emacs.d/on-hook.sh push
+            # chmod +x $HOME/.emacs.d/on-hook.sh
+            # $HOME/.emacs.d/on-hook.sh push
             git_push
         fi
         cd $oldir

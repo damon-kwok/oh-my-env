@@ -245,7 +245,7 @@ ome_pull() {
     tip "wrokspace upgrade"
     gitee_upgrade damon-kwok/workspace $HOME/workspace
 
-    tip "cache upgrade:"
+    tip "cache upgrade"
     chmod +x $OME_ROOT/bin/git-hook
     gitee_upgrade damon-kwok/other-caches $HOME/Downloads/
     git-hook $HOME/Downloads/ pull
@@ -265,12 +265,13 @@ ome_pull() {
 }
 
 ome_push_repo() {
-    local repodir=$1
-    if [ -d $repodir ]; then
+    local repo=$1
+    tip "$repo"
+    if [ -d $repo ]; then
         local oldir=`pwd`
-        cd $repodir
+        cd $repo
         git status
-        readp "==>push $repodir?"
+        readp "==>push $repo?"
         if [ $? -eq 1 ]; then
             git-hook push
             git_push
@@ -280,18 +281,19 @@ ome_push_repo() {
 }
 
 ome_push() {
-    # tip "workspace"
-    # ws_push
+    tip "oh-my-env"
+    oh_my_env_push
 
-    # tip "oh-my-emacs"
-    # oh_my_emacs_push
+    tip "oh-my-emacs"
+    oh_my_emacs_push
 
-    # tip "oh-my-env"
-    # oh_my_env_push
+    tip "~/.emacs.d/"
+    emacsd_push
 
-    # tip "~/.emacs.d/"
-    # emacsd_push
+    tip "workspace"
+    ws_push
 
+    tip "cache"
     ome_push_repo $HOME/Downloads/
     ome_push_repo $HOME/.sdkman/archives/
 
