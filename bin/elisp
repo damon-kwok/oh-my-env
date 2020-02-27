@@ -1,6 +1,5 @@
 #!/usr/bin/env sh
 
-emacs -Q --script $@
-
-
-
+emacs -Q --script -f main $@
+# echo "$0"
+# emacs -batch -l "$0" -f main -- "$@"

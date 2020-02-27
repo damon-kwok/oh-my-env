@@ -156,6 +156,7 @@ ome_install() {
 ome_repl() {
     echo ""
     tip "what do you need?"
+    echo "    e) ELisp"
     if [ ! "`command -v lein`" == "" ]; then
         echo "    1) Clojure"
     fi
@@ -188,6 +189,7 @@ ome_repl() {
 
     read -p "please enter your choice:" item
     case $item in
+        e) echo abort with "C-d | (exit) | (quit)" && emacs -Q -nw --eval "(ielm)";;
         1) echo abort with "C-d | (exit) | (quit)" && lein repl;;
         2) echo abort with "C-d | :quit" && stack repl;;
         3) echo abort with "C-c" && iex;;
