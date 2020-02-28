@@ -1,5 +1,8 @@
 #!/usr/bin/env sh
 
+CURRENT_DIR=$(dirname $(readlink -f $0))
+. $CURRENT_DIR/../env
+
 ome_app_wizard() {
     local oldir=`pwd`
     local proj_lang=$1
@@ -371,5 +374,4 @@ ome_app_wizard() {
 
     cd $oldir
 }
-. $OME_ROOT/env
 ome_app_wizard $@

@@ -1,4 +1,6 @@
 #!/usr/bin/env sh
 
-. $HOME/.oh-my-env/env
+CURRENT_DIR=$(dirname $(readlink -f $0))
+. $CURRENT_DIR/../env
+
 ome_cmake_build $@
