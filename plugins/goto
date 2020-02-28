@@ -2,7 +2,8 @@
 
 goto_define() {
     . $OME_REPO/goto/goto.sh
-    
+
+    tip "setting goto dir"
     goto -u ome
     goto -r ome $OME_ROOT
 

@@ -181,8 +181,11 @@ ome_repl() {
     if [ ! "`command -v python3`" == "" ]; then
         echo "    8) Python"
     fi
+    if [ ! "`command -v clj`" == "" ]; then
+        echo "    c) Clojure"
+    fi
     if [ ! "`command -v lumo`" == "" ]; then
-        echo "    9) ClojureScript"
+        echo "    s) ClojureScript"
     fi
     echo "    -------------------------"
     echo "    q | C-c) exit"
@@ -198,6 +201,7 @@ ome_repl() {
         6) echo abort with "(exit)" && ros run;;
         7) echo abort with "C-d" && node;;
         8) echo abort with "quit() | C-z ret" && python3;;
+        9) echo abort with "C-c" && clj;;
         9) echo abort with "C-d | (exit) | (quit)" && lumo;;
         q|Q) exit;;
         *) ome_repl;;
@@ -240,7 +244,7 @@ ome_config() {
 ome_init() {
 	ome_config
     ome_install init
-	ome_install "neofetch"
+	# ome_install "neofetch"
     ome_install "goto"
 }
 

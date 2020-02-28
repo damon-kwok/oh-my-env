@@ -17,7 +17,11 @@ rust_install() {
     export RUSTUP_UPDATE_ROOT=https://mirrors.ustc.edu.cn/rust-static/rustup
     export RUSTUP_HOME=$HOME/.rustup
     export CARGO_HOME=$HOME/.cargo
-    
+
+    readp "cargo: use china mirror?"
+    if [ $? -eq 1 ]; then
+        echo "yes"   
+    fi
     tip "set cargo mirror"
     if [ ! -f $HOME/.cargo/config ]; then
         mkdir -p $HOME/.cargo

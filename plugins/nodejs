@@ -99,27 +99,29 @@ nodejs_install() {
     local oldir=`pwd`
     
     # if [ "$OME_OS" = "$OS_MSYS2" ]; then
-        # pacman -S mingw-w64-x86_64-nodejs
+    # pacman -S mingw-w64-x86_64-nodejs
     # elif [ "$OME_OS" = "$OS_CYGWIN" ]; then
-        # nodejs_install_download
+    # nodejs_install_download
     # else
-        # nodejs_install_nvm # nodejs_install_n
+    # nodejs_install_nvm # nodejs_install_n
     # fi
 
     nodejs_install_download
 
+    readp "npm: use china mirror?"
+    if [ $? -eq 1 ]; then
+        tip "use cnpm source"
+        # npm config set registry https://registry.npmjs.org/   #raw source
+        npm config set registry https://registry.npm.taobao.org #aliyun source
+        npm config get registry
 
-    tip "use cnpm source"
-    # npm config set registry https://registry.npmjs.org/   #raw source
-    npm config set registry https://registry.npm.taobao.org #aliyun source
-    npm config get registry
+        # cnpm
+        npm install -g cnpm --registry=https://registry.npm.taobao.org
+    fi
 
-    # cnpm
-    npm install -g cnpm --registry=https://registry.npm.taobao.org
-    
     # if [ "$OME_OS" != "$OS_CYGWIN" ]; then
-        # tip "update npm"
-        # npm install -g npm
+    # tip "update npm"
+    # npm install -g npm
     # fi
 
     # tip "npm update -g"

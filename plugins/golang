@@ -182,13 +182,13 @@ golang_info() {
 if [ "$OME_OS" = "$OS_CYGWIN" ]; then
     export CGO_ENABLED=0
     export GOROOT=`cygpath -w $OME_REPO/go`
-    export GOPATH=`cygpath -w $HOME/goprojects`
+    export GOPATH=`cygpath -w $OME_PREFIX/goprojects`
     export GOBIN=$GOPATH/bin
     export PATH=$GOROOT/bin:$GOBIN:/bin:$PATH
 else
     export CGO_ENABLED=1
     export GOROOT=$OME_REPO/go
-    export GOPATH=$HOME/goprojects
+    export GOPATH=$OME_PREFIX/goprojects
     export GOBIN=$GOPATH/bin
     export PATH=$GOROOT/bin:$GOBIN:$PATH
 fi

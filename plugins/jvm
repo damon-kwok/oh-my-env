@@ -50,7 +50,7 @@ jvm_install_sdkman() {
              >> ~/.shrc
     fi
 
-    readp "use china mirror?"
+    readp "sdkman: use china mirror?"
     if [ $? -eq 1 ]; then
         gitee_upgrade_bigrepo damon-kwok/sdkman-caches $HOME/.sdkman/archives/   
     fi
@@ -87,6 +87,10 @@ jvm_install_sdkman() {
     #if ! command -v mvn >/dev/null 2>&1; then
     if [ "`command -v mvn`" = "" ]; then
         sdk install maven $MAVEN_VERSION
+    fi
+    readp "maven: use china morrir?"
+    if [ $? -eq 1 ]; then
+        cp -f $OME_ROOT/conf/maven/settings.xml $HOME/.sdkman/candidates/maven/current/conf/
     fi
 
     #if ! command -v gradle >/dev/null 2>&1; then

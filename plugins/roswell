@@ -26,7 +26,7 @@ roswell_install() {
         make install
     fi
 
-    readp "use china mirror?"
+    readp "roswell: use china mirror?"
     if [ $? -eq 1 ]; then
         if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
             gitee_upgrade_bigrepo damon-kwok/roswell-caches $USERPROFILE/.roswell/archives/

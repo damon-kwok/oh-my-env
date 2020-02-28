@@ -65,7 +65,10 @@ init_install() {
             # if [ -n "$1" ]; then
             if [ $? -eq 1 ]; then
                 # sudo pacman-mirrors -g
-                sudo pacman-mirrors -c China
+                readp "pacman: use china mirror?"
+                if [ $? -eq 1 ]; then
+                    sudo pacman-mirrors -c China
+                fi
                 sudo pacman -Syyu
                 sudo pacman -S yaourt
             fi
@@ -103,7 +106,7 @@ init_install() {
             # brew install wget
             # brew install coreutils
             brew install git subversion wget curl \
-                    tar zip unzip rlwrap coreutils diffutils
+                 tar zip unzip rlwrap coreutils diffutils
             
 	        echo "Install font-bitstream-vera"
             brew tap homebrew/cask-fonts
@@ -112,7 +115,7 @@ init_install() {
 	        echo "Install Emacs"
             brew tap railwaycat/emacsmacport
             brew cask install emacs-mac
-        ;;
+            ;;
         $OS_AIX) ;;
         $OS_SOLARIS) ;;
         $OS_FREEBSD)
@@ -176,7 +179,10 @@ init_install() {
                 xdg-utils emacs-w32 chere
             ;;
         $OS_MSYS2)
-            cp -f $OME_ROOT/conf/msys2/* /etc/pacman.d/
+            readp "msys2: use china morrir?"
+            if [ $? -eq 1 ]; then
+                cp -f $OME_ROOT/conf/msys2/* /etc/pacman.d/
+            fi
             readp "update system?"
             if [ $? -eq 1 ]; then
                 pacman -Syyu

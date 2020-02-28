@@ -14,6 +14,7 @@ clj_install() {
             # rm -rf ./$CLI_FILE
             curl -O https://download.clojure.org/install/$CLI_FILE
             replace_str "curl -O" "# curl -O" $HOME/Downloads/$CLI_FILE "0"
+            replace_str "rm -rf clojure-tools-" "# rm -rf clojure-tools-" $HOME/Downloads/$CLI_FILE "0"
         fi
 
         chmod +x ./$CLI_FILE
@@ -38,6 +39,11 @@ clj_install() {
     else
         lein --version
         # lein upgrade
+    fi
+
+    readp "lein: use china morrir?"
+    if [ $? -eq 1 ]; then
+        cp -f $OME_ROOT/conf/lein/profiles.clj $HOME/.lein
     fi
 
     # tip "install boot"
