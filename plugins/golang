@@ -142,23 +142,23 @@ golang_install() {
     tip "install gocode"
     go get -u github.com/mdempsky/gocode
 
-    tip "install godef"
-    go get -u github.com/rogpeppe/godef
+    # tip "install godef"
+    # go get -u github.com/rogpeppe/godef
 
-    tip "install dep"
-    go get -u github.com/golang/dep/cmd/dep
+    # tip "install dep"
+    # go get -u github.com/golang/dep/cmd/dep
 
-    tip "install gom"
-    go get -u github.com/mattn/gom
+    # tip "install gom"
+    # go get -u github.com/mattn/gom
 
-    tip "install vgo"
-    go get -u github.com/golang/vgo
+    # tip "install vgo"
+    # go get -u github.com/golang/vgo
     
     # tip "install golang/tool"
     # go get -u github.com/golang/tools/cmd/godoc
 
-    tip "install machinery"
-    go get -u github.com/RichardKnop/machinery/v1
+    # tip "install machinery"
+    # go get -u github.com/RichardKnop/machinery/v1
 }
 
 golang_uninstall() {

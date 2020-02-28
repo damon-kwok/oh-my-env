@@ -254,7 +254,12 @@ ome_doctor() {
 
 gitee_upgrade_bigrepo() {
     local project=$1
-    local repo=`cygpath $2`
+    if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
+        local repo=`cygpath $2`
+    else
+        local repo="$2"
+    fi
+    
     if [ -d $repo ]; then
         tip "$repo"
         gitee_upgrade $project $repo
@@ -262,7 +267,11 @@ gitee_upgrade_bigrepo() {
     fi
 }
 gitee_push_bigrepo() {
-    local repo=`cygpath $1`
+    if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
+        local repo=`cygpath $1`
+    else
+        local repo="$1"
+    fi
     if [ -d $repo ]; then
         tip "$repo"
         local oldir=`pwd`
@@ -282,6 +291,11 @@ ome_pull() {
     tip "ome upgrade"
     github_upgrade damon-kwok/oh-my-env $OME_ROOT
     chmod +x $OME_ROOT/bin/*
+    if [ "$OME_OS" = "$OS_MSYS2" ]; then
+        cp -f $OME_ROOT/desktop-extensions/msys2/* /usr/bin/
+    elif [ "$OME_OS" = "$OS_CYGWIN" ]; then
+        cp -f $OME_ROOT/desktop-extensions/cygwin/* /usr/bin/
+    fi
     
     # ome_fix_dotfiles
     

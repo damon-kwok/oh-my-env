@@ -40,13 +40,14 @@ clj_install() {
         # lein upgrade
     fi
 
-    # tip "install boot" #obslote
+    # tip "install boot"
     # if [ "`command -v boot`" = "" ]; then
-        # tip "install boot"
-        # cd $OME_PREFIX/bin/
-        # curl -fsSLo boot https://github.com/boot-clj/boot-bin/releases/download/latest/boot.sh
-        # chmod +x ./boot
-        # boot --version
+    #     tip "install boot"
+    #     # sudo bash -c "cd /usr/local/bin && curl -fsSLo boot https://github.com/boot-clj/boot-bin/releases/download/latest/boot.sh && chmod 755 boot"
+    #     cd $OME_PREFIX/bin/
+    #     curl -fsSLo boot https://github.com/boot-clj/boot-bin/releases/download/latest/boot.sh
+    #     chmod +x ./boot
+    #     boot --version
     # fi
 }
 
