@@ -79,10 +79,10 @@ libgmime3_install() {
 }
 
 mu4e_install() {
-    if [ "$OME_OS" = "$OS_MSYS2" ]; then
-        echo_error "mu does not support msys2"
-        return
-    fi
+    # if [ "$OME_OS" = "$OS_MSYS2" ]; then
+        # echo_error "mu does not support msys2"
+        # return
+    # fi
     # tip "install mu4e-release"
     # github_upgrade damon-kwok/resources $OME_ROOT/resources
     # if [ ! -d $HOME/.emacs.d/libs/mu ]; then

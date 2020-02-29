@@ -302,9 +302,9 @@ ome_pull() {
     fi
     
     # ome_fix_dotfiles
-    
     tip "oh_my_emacs upgrade"
     github_upgrade damon-kwok/oh-my-emacs $HOME/.oh-my-emacs
+    gitee_upgrade damon-kwok/emacs.d $HOME/.emacs.d
 
     tip "cache upgrade"
     chmod +x $OME_ROOT/bin/git-hook
