@@ -283,7 +283,7 @@ gitee_push_bigrepo() {
         git status
         readp "==>push $repo?"
         if [ $? -eq 1 ]; then
-            git-hook push
+            git-hook "$repo"
             git_push
         fi
         cd $oldir
