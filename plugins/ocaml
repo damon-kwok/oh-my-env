@@ -2,11 +2,12 @@
 
 ocaml_install() {
     tip "install opam"
-    if [ "$OME_OS" = "$OS_MSYS2" ]; then
-        echo_error "'ocaml' does not support msys2"
-        return
-    fi
-    if [ "$OME_OS" = "$OS_CYGWIN" ]; then
+    # if [ "$OME_OS" = "$OS_MSYS2" ]; then
+        # echo_error "'ocaml' does not support msys2"
+        # return
+    # fi
+    if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
+    # if [ "$OME_OS" = "$OS_CYGWIN" ]; then
         # https://fdopen.github.io/opam-repository-mingw/installation/
         if [ ! -f $HOME/Downloads/opam64.tar.xz ]; then
             cd $HOME/Downloads/
@@ -26,7 +27,9 @@ ocaml_install() {
         opam switch list-available
         
         tip "opam install ocaml-variants.${OCAML_VERSION}+mingw64c"
-        opam switch install ${OCAML_VERSION}+flambda+mingw64c --debug
+        # opam switch install ${OCAML_VERSION}+flambda+mingw64c --debug
+        opam switch install ${OCAML_VERSION}+msvc64c --debug
+        #other
         # opam switch create ${OCAML_VERSION}+flambda+mingw64c --empty && opam install ocaml-variants.${OCAML_VERSION}+flambda+mingw64c --debug
 
         tip "opam update"
@@ -63,31 +66,37 @@ ocaml_install() {
     # tip "install ohai"
     # opam pin add ohai git+https://github.com/jaredly/ohai
 
-    tip "install ocamlbuild"
-    opam pin add ocamlbuild --kind=git "https://github.com/ocaml/ocamlbuild.git#master"
+    # tip "install ocamlbuild"
+    # opam pin add ocamlbuild --kind=git "https://github.com/ocaml/ocamlbuild.git#master"
 
-    tip "install dune"
-    opam install dune
+    # tip "install dune"
+    # opam install dune
 
-    # tip "install OASIS"
+    # tip "install OASIS" #obsolete
     # opam install oasis
     
-    tip "install merlin"
-    opam install merlin
-    opam user-setup install
-    
-    ome_check_install "npm" "nodejs"
-    
-    tip "install ReasonML"
-    npm install -g yauzl
-    npm install -g bsb-native
-    npm install -g bs-platform
+    # tip "install merlin"
+    # opam install merlin
+    # opam user-setup install
 
-    tip "install reason project package manager: esy"
-    npm install -g esy
+    tip "install core_kernel"
+    opam install core_kernel
+    
+    # readp "install ReasonML?"
+    # if [ $? -eq 1 ]; then
+        # ome_check_install "npm" "nodejs"
+        
+        # tip "install ReasonML"
+        # npm install -g yauzl
+        # npm install -g bsb-native
+        # npm install -g bs-platform
 
-    tip "install ocaml language server"
-    npm install -g ocaml-language-server
+        # tip "install reason project package manager: esy"
+        # npm install -g esy
+
+        # tip "install ocaml language server"
+        # npm install -g ocaml-language-server
+    # fi
 }
 
 ocaml_uninstall() {
