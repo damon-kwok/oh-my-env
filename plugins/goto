@@ -35,6 +35,9 @@ goto_define() {
     goto -u hello
     goto -r hello $OME_WS/hello
 
+    goto -u pkgs
+    goto -r pkgs $HOME/.emacs.d/pkgs/
+
     goto -l
 }
 
