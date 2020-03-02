@@ -49,7 +49,7 @@ basedev_install_tools() {
         $OS_AIX) ;;
         $OS_SOLARIS) ;;
         $OS_FREEBSD)
-            sudo pkg install gcc clang-devel gmake ninja cmake \
+            sudo pkg install gcc gmake ninja cmake \
                  automake autogen autoconf pkgconf libtool intltool
             ;;
         $OS_OPENBSD) ;;
