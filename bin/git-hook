@@ -24,7 +24,7 @@ split_file() {
     fi
 }
 
-function split_all_files(){  
+split_all_files() {  
     for file in ` ls $1 `  
     do  
         if [ -d $1"/"$file ]; then
@@ -46,7 +46,7 @@ function split_all_files(){
     done
 }
 
-function merge_all_files(){  
+merge_all_files() {  
     for file in ` ls $1 `  
     do  
         if [ -d $1"/"$file ]   
