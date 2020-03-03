@@ -82,6 +82,10 @@ if [ ! "$1" == "" ]; then
     if [ "$2" == "push" ]; then
         git reset
         echo "" > $DIR_ROOT/.gitignore
+        echo "*/" >> $DIR_ROOT/.gitignore
+        echo "!defs/" >> $DIR_ROOT/.gitignore
+        echo "!parts/" >> $DIR_ROOT/.gitignore
+        echo "" >> $DIR_ROOT/.gitignore
         split_all_files $DIR_ROOT
     elif [ "$2" == "pull" ]; then
         merge_all_files $DIR_DEFS
