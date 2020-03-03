@@ -181,6 +181,9 @@ ome_repl() {
     if [ ! "`command -v python3`" == "" ]; then
         echo "    8) Python"
     fi
+    if [ ! "`command -v ocaml`" == "" ]; then
+        echo "    9) ocaml"
+    fi
     if [ ! "`command -v clj`" == "" ]; then
         echo "    c) Clojure"
     fi
@@ -192,17 +195,18 @@ ome_repl() {
 
     read -p "please enter your choice:" item
     case $item in
-        e) echo abort with "C-d | (exit) | (quit)" && emacs -Q -nw --eval "(ielm)";;
-        1) echo abort with "C-d | (exit) | (quit)" && lein repl;;
-        2) echo abort with "C-d | :quit" && stack repl;;
-        3) echo abort with "C-c" && iex;;
-        4) echo abort with "C-c | C-g | q()." && erl;;
-        5) echo abort with "C-d" && jshell;;
-        6) echo abort with "(exit)" && ros run;;
-        7) echo abort with "C-d" && node;;
-        8) echo abort with "quit() | C-z ret" && python3;;
-        9) echo abort with "C-c" && clj;;
-        9) echo abort with "C-d | (exit) | (quit)" && lumo;;
+        e) echo abort elisp repl with "C-d | (exit) | (quit)" && emacs -Q -nw --eval "(ielm)";;
+        1) echo abort lein repl with "C-d | (exit) | (quit)" && lein repl;;
+        2) echo abort stack repl with "C-d | :quit" && stack repl;;
+        3) echo abort elixir repl with "C-c" && iex;;
+        4) echo abort erlang repl with "C-c | C-g | q()." && erl;;
+        5) echo abort java repl with "C-d" && jshell;;
+        6) echo abort cl repl with "(exit)" && ros run;;
+        7) echo abort node repl with "C-d" && node;;
+        8) echo abort python repl with "quit() | C-z ret" && python3;;
+        8) echo abort ocaml repl with "C-c" && ocaml;;
+        c) echo abort clj repl with "C-c" && clj;;
+        s) echo abort cljs repl with "C-d | (exit) | (quit)" && lumo;;
         q|Q) exit;;
         *) ome_repl;;
     esac

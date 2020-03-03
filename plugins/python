@@ -56,7 +56,7 @@ python_install_bin() {
             sudo pkg install python38
             ;;
         $OS_OPENBSD)
-            sudo pkg install python38 #py27-sqlite3 sqlite3
+            sudo pkg install python38
             ;;
         $OS_NETBSD) ;;
         $OS_DFBSD) ;;

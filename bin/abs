@@ -1,0 +1,19 @@
+#!/usr/bin/env sh
+
+CURRENT_DIR=$(dirname $(readlink -f $0))
+. $CURRENT_DIR/../env
+
+pkgname=$1
+
+github_upgrade msys2/MSYS2-packages $OME_PREFIX/MSYS2-packages
+
+github_upgrade msys2-unofficial/MSYS2-packages $OME_PREFIX/MSYS2-packages-unofficial
+
+if [ -d $OME_PREFIX/MSYS2-packages/$pkgname ]; then
+    cd $OME_PREFIX/MSYS2-packages/$pkgname
+    makepkg -sf
+elif [ -d $OME_PREFIX/MSYS2-packages-unofficial/$pkgname ]; then
+    cd $OME_PREFIX/MSYS2-packages-unofficial/$pkgname
+    makepkg -sf
+fi
+

@@ -1,23 +1,23 @@
 #!/usr/bin/env sh
 
 ask() {
-    read -p $(tput setaf 5)"$1 "$(tput sgr0)
+    read -p $(tput setaf 2)"$1 "$(tput sgr0)
 }
 warning_ask() {
     read -p $(tput setaf 3)"$1 "$(tput sgr0)
 }
 
 echo_success() {
-    echo -e $(tput setaf 10)"$1"$(tput sgr0) #2
+    echo -e $(tput setaf 2)"$1"$(tput sgr0) #2
 }
 echo_warning() {
-    echo -e $(tput setaf 11)"$1"$(tput sgr0) #3 dark yellow
+    echo -e $(tput setaf 3)"$1"$(tput sgr0) #3 dark yellow
 }
 echo_error() {
     echo -e $(tput setaf 1)"$1"$(tput sgr0)
 }
 echo_tip() {
-    echo -e $(tput setaf 14)"$1"$(tput sgr0) #6
+    echo -e $(tput setaf 6)"$1"$(tput sgr0) #6
 }
 echo_debug() {
     echo -e $(tput setaf 8)"$1"$(tput sgr0)
@@ -41,20 +41,24 @@ readp() {
 }
 
 echo_kv() {
-    echo -e $(tput setaf 14)"$1\t"$(tput sgr0) $(tput setaf 10)"$2"$(tput sgr0)
+    echo -e $(tput setaf 6)"$1\t"$(tput sgr0) $(tput setaf 2)"$2"$(tput sgr0)
 }
 
 title() {
-    echo -e $(tput setaf 14)"\n================================================================================"\
+    # echo -e $(tput setaf 14)"\n================================================================================"\
+    echo -e $(tput setaf 6)"\n<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>"\
 	     $(tput sgr0)
-    echo -e $(tput setaf 14)"||\t\t $1:"$(tput sgr0)
-    echo -e $(tput setaf 14)"================================================================================"\
+    echo -e $(tput setaf 6)"<>\t\t $(tput setaf 4)$1:"$(tput sgr0)
+    echo -e $(tput setaf 6)"<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>"\
          $(tput sgr0)
 }
 
 tip() {
-    echo -e $(tput setaf 10)"\n------------------------------------------------------------"$(tput sgr0)
-    echo -e $(tput setaf 10)"| $1"$(tput sgr0)
+    # echo -e $(tput setaf 10)"\n------------------------------------------------------------"$(tput sgr0)
+    # echo -e $(tput setaf 10)"| $1"$(tput sgr0)
+    # echo -e "$(tput setaf 6)\n<><><> $1 $(tput sgr0)"
+    cowsay "$(tput setaf 6)$1$(tput sgr0)"
+
 }
 
 get_os_type() {
@@ -720,8 +724,14 @@ ome_check_install() {
     local cmd=$1
     local app=${2:-$1}
 
-    if [ "`command -v $cmd`" == "" ]; then
-        ome install $app
+    if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
+        if [ ! "`cygcheck $cmd | head -n 1 | cut -d ' ' -f 1`" == "Found:" ]; then
+            ome install $app
+        fi
+    else
+        if [ "`command -v $cmd`" == "" ]; then
+            ome install $app
+        fi
     fi
 }
 
