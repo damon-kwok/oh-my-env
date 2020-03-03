@@ -56,9 +56,8 @@ title() {
 tip() {
     # echo -e $(tput setaf 10)"\n------------------------------------------------------------"$(tput sgr0)
     # echo -e $(tput setaf 10)"| $1"$(tput sgr0)
-    # echo -e "$(tput setaf 6)\n<><><> $1 $(tput sgr0)"
-    cowsay "$(tput setaf 6)$1$(tput sgr0)"
-
+    echo -e "$(tput setaf 6)\n<><><> $1 >$(tput sgr0)"
+    # cowsay "$(tput setaf 6)$1$(tput sgr0)"
 }
 
 get_os_type() {

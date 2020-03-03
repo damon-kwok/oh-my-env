@@ -373,13 +373,13 @@ ome_status() {
     fi
 
     if [ -d $HOME/Downloads/ ]; then
-        tip ".emacs.d/ status"
+        tip "~/Downloads/ status"
         cd $HOME/Downloads/
         git status
     fi
 
     if [ -d $HOME/.sdkman/archives/ ]; then
-        tip ".emacs.d/ status"
+        tip ".sdkman/archives/ status"
         cd $HOME/.sdkman/archives/
         git status
     fi
@@ -391,7 +391,7 @@ ome_status() {
         dir=gitee_push_bigrepo $HOME/.roswell/archives/
     fi
     if [ -d $dir ]; then
-        tip "$dir status"
+        tip ".roswell/archives/ status"
         cd $HOME/.emacs.d/
         git status
     fi
