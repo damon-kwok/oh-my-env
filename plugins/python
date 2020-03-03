@@ -31,7 +31,7 @@ python_install_bin() {
         # $OS_REDHAT) ;;
         # $OS_FEDORA) ;;
         $OS_REDHAT|$OS_FEDORA)
-            sudo yum install python3;;
+            sudo yum install -y python3 python3-devel;;
         $OS_ARCH)
             sudo pacman -S python3
             ;;

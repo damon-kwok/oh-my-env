@@ -52,11 +52,22 @@ init_install() {
         # $OS_REDHAT) ;;
         # $OS_FEDORA) ;;
         $OS_REDHAT|$OS_FEDORA)
+            # RHEL 8 or compatible like CentOS
+            sudo dnf install -y --nogpgcheck https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
+            sudo dnf install -y --nogpgcheck https://download1.rpmfusion.org/free/el/rpmfusion-free-release-8.noarch.rpm
+            sudo dnf install -y --nogpgcheck https://download1.rpmfusion.org/nonfree/el/rpmfusion-nonfree-release-8.noarch.rpm
+
+            # CentOS 8 required additional step
+            sudo dnf config-manager --enable PowerTools
+
+            # RHEL 8 required additional step
+            sudo subscription-manager repos --enable "codeready-builder-for-rhel-8-*-rpms"
+            
             readp "update system?"
             if [ $? -eq 1 ]; then
                 sudo yum -y update
             fi
-            sudo yum groupinstall "Development Tools"
+            # sudo yum groupinstall -y "Development Tools"
             sudo yum install -y git subversion wget curl \
                  tar zip unzip rlwrap coreutils diffutils
             ;;

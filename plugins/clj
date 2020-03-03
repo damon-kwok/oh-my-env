@@ -24,9 +24,9 @@ clj_install() {
 
     tip "install leiningen"
     mkdir -p $HOME/.lein/self-installs/
-    if [ ! -f $HOME/.lein/self-installs/leiningen-2.9.1-standalone.jar ]; then
-        echo "use cache:"
-        cp -u $HOME/.emacs.d/files/leiningen-2.9.1-standalone.jar $HOME/.lein/self-installs/
+    if [ -f $HOME/Downloads/leiningen-${LEIN_VERSION}-standalone.jar ]; then
+        echo "leiningen use cache:"
+        cp -u $HOME/Downloads/leiningen-${LEIN_VERSION}-standalone.jar $HOME/.lein/self-installs/
     fi
 
     if [ "`command -v lein`" = "" ]; then

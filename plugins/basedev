@@ -15,7 +15,7 @@ basedev_install_tools() {
         # $OS_REDHAT) ;;
         # $OS_FEDORA) ;;
         $OS_REDHAT|$OS_FEDORA)
-            sudo yum groupinstall "Development Tools"
+            sudo yum groupinstall -y "Development Tools"
             sudo yum install -y gcc gcc-c++ make ninja-build cmake \
                  automake autogen autoconf autopoint pkg-config libtool intltool
             ;;

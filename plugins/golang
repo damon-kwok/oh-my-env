@@ -198,5 +198,5 @@ export GO111MODULE=on
 # If you live in China and may not be able to download golang.org/x/dependency
 # module, please set GOPROXY as follow:
 # export GOPROXY=https://athens.azurefd.net/
-# export GOPROXY=https://goproxy.io
-export GOPROXY=https://mirrors.aliyun.com/goproxy/
+export GOPROXY=https://goproxy.io
+# export GOPROXY=https://mirrors.aliyun.com/goproxy/
