@@ -438,9 +438,9 @@ ome_parse() {
     local ARG2=$3
     
     case "$OPT_TYPE" in
-        # "config")
-        # ome_config
-        # ;;
+        "config")
+            ome_config
+        ;;
         "init")
             ome_init
             ;;

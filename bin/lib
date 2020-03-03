@@ -224,8 +224,6 @@ gitee_ssh_upgrade() {
     git_ssh_upgrade $site $@
 }
 
-
-
 git_complete_upgrade() {
     git fetch --unshallow origin
 }
@@ -685,12 +683,13 @@ ome_fetch_version() {
 
 ome_write_env_to_dotfile() {
     local dotfile=$1
+    touch $dotfile
     if [ -f $dotfile ]; then
         find_str ".oh-my-env/env" $dotfile
         if [ $? -eq 0 ]; then	
             echo "" >> $dotfile
             echo "# oh-my-emacs" >> $dotfile
-            echo ". \$HOME/.oh-my-env/env" >> $dotfile
+            echo '. \$HOME/.oh-my-env/env' >> $dotfile
         fi
     fi
 }

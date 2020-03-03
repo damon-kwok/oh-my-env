@@ -36,18 +36,24 @@ jvm_install_sdkman() {
     if [ $? -eq 0 ]; then
         echo "" >> ~/.bashrc
         echo "#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!" >> ~/.bashrc
-        echo "export SDKMAN_DIR=\"\$HOME/.sdkman\"" >> ~/.bashrc
-        echo "[[ -s \"\$HOME/.sdkman/bin/sdkman-init.sh\" ]] && . \"\$HOME/.sdkman/bin/sdkman-init.sh\"" \
-             >> ~/.bashrc
+        echo 'export SDKMAN_DIR=\$HOME/.sdkman\' >> ~/.bashrc
+        echo '[[ -s \$HOME/.sdkman/bin/sdkman-init.sh ]] && . \$HOME/.sdkman/bin/sdkman-init.sh' >> ~/.bashrc
+    fi
+
+    find_str "SDKMAN_DIR" ~/.zshrc
+    if [ $? -eq 0 ]; then
+        echo "" >> ~/.zshrc
+        echo "#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!" >> ~/.zshrc
+        echo 'export SDKMAN_DIR=\$HOME/.sdkman\' >> ~/.zshrc
+        echo '[[ -s \$HOME/.sdkman/bin/sdkman-init.sh ]] && . \$HOME/.sdkman/bin/sdkman-init.sh' >> ~/.zshrc
     fi
 
     find_str "SDKMAN_DIR" ~/.shrc
     if [ $? -eq 0 ]; then
         echo "" >> ~/.shrc
         echo "#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!" >> ~/.shrc
-        echo "export SDKMAN_DIR=\"\$HOME/.sdkman\"" >> ~/.shrc
-        echo "[[ -s \"\$HOME/.sdkman/bin/sdkman-init.sh\" ]] && . \"\$HOME/.sdkman/bin/sdkman-init.sh\"" \
-             >> ~/.shrc
+        echo 'export SDKMAN_DIR=\$HOME/.sdkman\' >> ~/.shrc
+        echo '[[ -s \$HOME/.sdkman/bin/sdkman-init.sh ]] && . \$HOME/.sdkman/bin/sdkman-init.sh' >> ~/.shrc
     fi
 
     readp "sdkman: use china mirror?"
