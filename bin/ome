@@ -312,7 +312,7 @@ ome_pull() {
     # echo_kv "GIT PULL" "~/.emacs.d/"
     gitee_upgrade damon-kwok/emacs.d $HOME/.emacs.d/
 
-    tip "cache upgrade"
+    # tip "cache upgrade"
     chmod +x $OME_ROOT/bin/git-hook
     gitee_upgrade_bigrepo damon-kwok/other-caches $HOME/Downloads/
     gitee_upgrade_bigrepo damon-kwok/sdkman-caches $HOME/.sdkman/archives/
@@ -338,17 +338,18 @@ ome_push() {
     echo_kv "git push" "~/.emacs.d/"
     emacsd_push
 
-    echo_kv "git push" "cache"
-    gitee_push_bigrepo $HOME/Downloads/
-    gitee_push_bigrepo $HOME/.sdkman/archives/
+    readp "push cache?"
+    if [ $? -eq 1 ]; then
+        gitee_push_bigrepo $HOME/Downloads/
+        gitee_push_bigrepo $HOME/.sdkman/archives/
 
-    if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
-        gitee_push_bigrepo $USERPROFILE/.roswell/archives/
-    else
-        gitee_push_bigrepo $HOME/.roswell/archives/
+        if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
+            gitee_push_bigrepo $USERPROFILE/.roswell/archives/
+        else
+            gitee_push_bigrepo $HOME/.roswell/archives/
+        fi
     fi
-
-    echo_kv "git push" "workspace"
+    echo_kv "git push" "~/workspace/"
     ws_push
 }
 
