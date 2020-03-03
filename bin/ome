@@ -329,10 +329,10 @@ ome_pull() {
 }
 
 ome_push() {
-    echo_kv "git push" "oh-my-env"
+    echo_kv "git push" "~/oh-my-env/"
     oh_my_env_push
 
-    echo_kv "git push" "oh-my-emacs"
+    echo_kv "git push" "~/.oh-my-emacs/"
     oh_my_emacs_push
 
     echo_kv "git push" "~/.emacs.d/"
