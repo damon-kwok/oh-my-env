@@ -35,11 +35,11 @@ ocaml_install() {
         tip "opam update"
         opam update --debug
     else
-        if [ "$OME_OS" != "$OS_FREEBSD" ]; then
+        if [ ! "$OME_OS" = "$OS_FREEBSD" ]; then
             # method 1: install pre-build
 			# http://opam.ocaml.org/doc/Install.html
 			# sh <(curl -sL https://raw.githubusercontent.com/ocaml/opam/master/shell/install.sh)
-            curl -sL https://raw.githubusercontent.com/ocaml/opam/master/shell/install.sh
+            curl -sL https://raw.githubusercontent.com/ocaml/opam/master/shell/install.sh | sh
             
             # method 2: building
             # github_upgrade ocaml/opam $OME_REPO/opam
@@ -79,8 +79,13 @@ ocaml_install() {
     # opam install merlin
     # opam user-setup install
 
-    tip "install core_kernel"
-    opam install core_kernel
+    if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
+        tip "install core_kernel"
+        opam install core_kernel
+    else
+        tip "install core"
+        opam install core
+    fi
     
     # readp "install ReasonML?"
     # if [ $? -eq 1 ]; then
