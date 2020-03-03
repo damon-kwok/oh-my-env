@@ -146,12 +146,12 @@ jvm_install_download() {
         $OS_GUIXSD) ;;
         # Unix
         $OS_MACOS)
-            brew install openjdk8
+            brew install openjdk13
             ;;
         $OS_AIX) ;;
         $OS_SOLARIS) ;;
         $OS_FREEBSD)
-            sudo pkg install openjdk8
+            sudo pkg install openjdk13
             ;;
         $OS_OPENBSD) ;;
         $OS_NETBSD) ;;
@@ -165,11 +165,13 @@ jvm_install_download() {
 }
 
 jvm_install() {
-    if [ "$OME_OS" = "$OS_FREEBSD" ]; then
-        jvm_install_download
-    else
-        jvm_install_sdkman
-    fi
+    jvm_install_sdkman
+    
+    # if [ "$OME_OS" = "$OS_FREEBSD" ]; then
+        # jvm_install_download
+    # else
+        # jvm_install_sdkman
+    # fi
 }
 
 jvm_uninstall() {

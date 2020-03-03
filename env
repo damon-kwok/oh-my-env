@@ -220,9 +220,9 @@ readonly NIM_VERSION=1.0.6
 readonly NODEJS_VERSION=12.14.1
 readonly OCAML_VERSION=4.10.0
 if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
-    readonly SBCL_VERSION=2.0.0
+    readonly SBCL_VERSION=2.0.2
 else
-    readonly SBCL_VERSION=2.0.1
+    readonly SBCL_VERSION=2.0.2
 fi
 
 ################################################################################

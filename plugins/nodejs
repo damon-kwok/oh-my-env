@@ -105,8 +105,11 @@ nodejs_install() {
     # else
     # nodejs_install_nvm # nodejs_install_n
     # fi
-
-    nodejs_install_download
+    if [ "$OME_OS" = "$OS_FREEBSD" ]; then
+        sudo pkg install node12 npm-node12
+    else
+        nodejs_install_download
+    fi
 
     readp "npm: use china mirror?"
     if [ $? -eq 1 ]; then
@@ -168,7 +171,11 @@ elif [ "$OME_OS" = "$OS_MACOS" ]; then
     export NODEJS_VERINFO=node-v${NODEJS_VERSION}-darwin-x64
     NODEJS_VERSION_ZIP=${NODEJS_VERINFO}.tar.gz
     export PATH="$OME_REPO/$NODEJS_VERINFO/bin":"$PATH"
+<<<<<<< HEAD
 else
+=======
+elif [ ! "$OME_OS" = "$FREEBSD" ]; then
+>>>>>>> 694f7f9a7762a5f89f7459eb3afbfefb1fb935ee
     export NODEJS_VERINFO=node-v${NODEJS_VERSION}-linux-x64
     NODEJS_VERSION_ZIP=${NODEJS_VERINFO}.tar.xz
     export PATH="$OME_REPO/$NODEJS_VERINFO/bin":"$PATH"

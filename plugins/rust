@@ -49,7 +49,7 @@ rust_install() {
             
             tip "rustup-init"
             chmod +x ./rustup-init.sh
-            ./rustup-init.sh
+            sh ./rustup-init.sh
         else
             # curl https://sh.rustup.rs -sSf | sh -s -- --default-toolchain nightly
             curl https://sh.rustup.rs -sSf | sh -s -- --default-toolchain stable
