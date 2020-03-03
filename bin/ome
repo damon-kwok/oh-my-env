@@ -269,7 +269,7 @@ gitee_upgrade_bigrepo() {
     fi
     
     if [ -d $repo ]; then
-        tip "$repo"
+        # echo_kv "GIT PULL" "$repo"
         gitee_upgrade $project $repo
         git-hook $repo pull
     fi
@@ -281,13 +281,13 @@ gitee_push_bigrepo() {
         local repo="$1"
     fi
     if [ -d $repo ]; then
-        tip "$repo"
+        echo_kv "git push" "$repo"
         local oldir=`pwd`
         cd $repo
         git status
         readp "==>push $repo?"
         if [ $? -eq 1 ]; then
-            git-hook "$repo"
+            git-hook "$repo" push
             git_push
         fi
         cd $oldir
@@ -296,19 +296,21 @@ gitee_push_bigrepo() {
 
 ome_pull() {
     local oldir=`pwd`
-    tip "ome upgrade"
+    # echo_kv "GIT PULL" "~/.oh-my_env/"
     github_upgrade damon-kwok/oh-my-env $OME_ROOT
     chmod +x $OME_ROOT/bin/*
     if [ "$OME_OS" = "$OS_MSYS2" ]; then
-        cp -f $OME_ROOT/desktop-extensions/msys2/* /usr/bin/
+        cp -f $OME_ROOT/desktop-extensions/msys2/*.bat /usr/bin/
     elif [ "$OME_OS" = "$OS_CYGWIN" ]; then
-        cp -f $OME_ROOT/desktop-extensions/cygwin/* /usr/bin/
+        cp -f $OME_ROOT/desktop-extensions/cygwin/*.bat /usr/bin/
     fi
     
     # ome_fix_dotfiles
-    tip "oh_my_emacs upgrade"
-    github_upgrade damon-kwok/oh-my-emacs $HOME/.oh-my-emacs
-    gitee_upgrade damon-kwok/emacs.d $HOME/.emacs.d
+    # echo_kv "GIT PULL" "~/.oh_my_emacs/"
+    github_upgrade damon-kwok/oh-my-emacs $HOME/.oh-my-emacs/
+
+    # echo_kv "GIT PULL" "~/.emacs.d/"
+    gitee_upgrade damon-kwok/emacs.d $HOME/.emacs.d/
 
     tip "cache upgrade"
     chmod +x $OME_ROOT/bin/git-hook
@@ -320,23 +322,23 @@ ome_pull() {
         gitee_upgrade_bigrepo damon-kwok/roswell-caches $HOME/.roswell/archives/
     fi
 
-    tip "wrokspace upgrade"
-    gitee_upgrade damon-kwok/workspace $HOME/workspace
+    # echo_kv "GIT PULL" "~/wrokspace/"
+    gitee_upgrade damon-kwok/workspace $HOME/workspace/
     
     cd $oldir
 }
 
 ome_push() {
-    tip "oh-my-env"
+    echo_kv "git push" "oh-my-env"
     oh_my_env_push
 
-    tip "oh-my-emacs"
+    echo_kv "git push" "oh-my-emacs"
     oh_my_emacs_push
 
-    tip "~/.emacs.d/"
+    echo_kv "git push" "~/.emacs.d/"
     emacsd_push
 
-    tip "cache"
+    echo_kv "git push" "cache"
     gitee_push_bigrepo $HOME/Downloads/
     gitee_push_bigrepo $HOME/.sdkman/archives/
 
@@ -346,40 +348,40 @@ ome_push() {
         gitee_push_bigrepo $HOME/.roswell/archives/
     fi
 
-    tip "workspace"
+    echo_kv "git push" "workspace"
     ws_push
 }
 
 ome_status() {
     # env
     if [ -d $HOME/.oh-my-env/ ]; then
-        tip "oh-my-env status"
+        echo_kv "git status" ".oh-my-env/"
         cd $HOME/.oh-my-env/
         git status
     fi
 
     # emacs
     if [ -d $HOME/.oh-my-emacs/ ]; then
-        tip "oh-my-emacs status"
+        echo_kv "git status" ".oh-my-emacs/"
         cd $HOME/.oh-my-emacs/
         git status
     fi
 
     # cache
     if [ -d $HOME/.emacs.d/ ]; then
-        tip ".emacs.d/ status"
+        echo_kv "git status" ".emacs.d/"
         cd $HOME/.emacs.d/
         git status
     fi
 
     if [ -d $HOME/Downloads/ ]; then
-        tip "~/Downloads/ status"
+        echo_kv "git status" "~/Downloads/"
         cd $HOME/Downloads/
         git status
     fi
 
     if [ -d $HOME/.sdkman/archives/ ]; then
-        tip ".sdkman/archives/ status"
+        echo_kv "git status" ".sdkman/archives/"
         cd $HOME/.sdkman/archives/
         git status
     fi
@@ -391,14 +393,14 @@ ome_status() {
         dir=gitee_push_bigrepo $HOME/.roswell/archives/
     fi
     if [ -d $dir ]; then
-        tip ".roswell/archives/ status"
+        echo_kv "git status" ".roswell/archives/"
         cd $HOME/.emacs.d/
         git status
     fi
 
     # worksapce
     if [ -d $OME_WS ]; then
-        tip "workspace status"
+        echo_kv "git status" "~/workspace/"
         cd $OME_WS
         git status
     fi
