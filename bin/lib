@@ -41,14 +41,18 @@ readp() {
 }
 
 echo_kv() {
-    echo -e $(tput setaf 2)"$1\t"$(tput sgr0) $(tput setaf 3)"$2"$(tput sgr0)
+    if [ "$#" == "3" ]; then
+        echo -e $(tput setaf 2)"$1\t"$(tput sgr0) $(tput setaf 2)"$2"$(tput sgr0) $(tput setaf 3)"$3"$(tput sgr0)
+    else
+        echo -e $(tput setaf 2)"$1\t"$(tput sgr0) $(tput setaf 3)"$2"$(tput sgr0)
+    fi
 }
 
 title() {
     # echo -e $(tput setaf 14)"\n================================================================================"\
     echo -e $(tput setaf 6)"\n<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>"\
 	     $(tput sgr0)
-    echo -e $(tput setaf 6)"<>\t\t\t\t $(tput setaf 4)$1:"$(tput sgr0)
+    echo -e $(tput setaf 6)"<>\t\t\t\t"$(tput sgr0)"$1"
     echo -e $(tput setaf 6)"<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>"\
          $(tput sgr0)
 }
@@ -56,7 +60,7 @@ title() {
 tip() {
     # echo -e $(tput setaf 10)"\n------------------------------------------------------------"$(tput sgr0)
     # echo -e $(tput setaf 10)"| $1"$(tput sgr0)
-    echo -e "$(tput setaf 6)\n<><><> $1 >$(tput sgr0)"
+    echo -e "$(tput setaf 6)\n<><><> "$(tput sgr0)"$1"$(tput setaf 6)" >"$(tput sgr0)
     # cowsay "$(tput setaf 6)$1$(tput sgr0)"
 }
 
@@ -113,14 +117,14 @@ git_upgrade() {
     fi
 
     if [ ! -d $dir ] || [ ! -e "$dir/.git/index" ]; then
-	    echo_kv "clone" "$project ($dir)"
+	    echo_kv "clone" "[$project]" "$dir"
         echo_success "git clone $url $dir --single-branch --depth=1 $branch"
 	    git clone $url $dir --single-branch --depth=1 $branch
         # elif [ "`ls -A $DIRECTORY`" = "" ]; then
         # echo "$DIRECTORY is indeed empty"
     else
 	    cd $dir
-	    echo_kv "git pull" "$project ($dir)"
+	    echo_kv "git pull" "[$project]" "$dir"
         # if [ -n "$5" ]; then
         # git checkout -b $5 origin/$5
         # fi

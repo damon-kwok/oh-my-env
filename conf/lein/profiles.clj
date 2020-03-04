@@ -21,8 +21,8 @@
 ;; Code:
 {
 	:user {
-		:local-repo "~/.m2"
-		;;:repositories  {"local" {:url "file://~/.m2" :releases {:checksum :ignore}}}
+		:local-repo #=(str #=(java.lang.System/getenv "HOME")"/.lein/.m2")
+		;;:repositories  {"local" {:url #=(str #=(java.lang.System/getenv "HOME")"/.lein/.m2") :releases {:checksum :ignore}}}
 		:mirrors {
 			"central" {
 				:name "aliyun"

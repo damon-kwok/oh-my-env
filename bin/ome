@@ -104,8 +104,8 @@ ome_package_info() {
             local EVAL="${PLUGIN}_info"
             
             #echo "$EVAL--------------:$plugin_file"
-            . $plugin_file > $OME_NULL_DEV
-            eval "$EVAL > $OME_NULL_DEV"
+            . $plugin_file > /dev/null
+            eval "$EVAL > /dev/null"
             
             #. $plugin_file
             #eval "$EVAL"
@@ -439,6 +439,7 @@ ome_parse() {
     local OPT_TYPE=$1
     local ARG1=$2
     local ARG2=$3
+    local ARGV=`echo $@ | cut -d ' ' -f 2-`
     
     case "$OPT_TYPE" in
         "config")
@@ -450,7 +451,9 @@ ome_parse() {
 		"doctor"|"fix")
 			ome_doctor;;
         "install"|"i")
-            ome_eval "install" $ARG1
+            for ARG in $ARGV; do
+                ome_eval "install" $ARG
+            done
             ;;
         "uninstall")
             if [ "$ARG1" = "self" ]; then

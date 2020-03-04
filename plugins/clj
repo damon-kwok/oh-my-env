@@ -6,7 +6,12 @@ clj_install() {
     # https://www.clojure.org/guides/getting_started
     # https://clojure.org/guides/deps_and_cli
     tip "install clojure cli"
-    if [ "`command -v clojure`" = "" ]; then
+    mkdir -p $OME_PREFIX/clojure/libexec/
+    if [ -f $HOME/Downloads/clojure-tools-${CLOJURE_VERSION}.tar.gz ]; then
+        # echo "clojure use cache:"
+        cp -u $HOME/Downloads/clojure-tools-${CLOJURE_VERSION}.tar.gz $OME_PREFIX/clojure/libexec/
+    fi
+    if [ "`command -v clojure`" = "" ] && [ -f $OME_PREFIX/clojure/libexec/clojure-tools-${CLOJURE_VERSION}.tar.gz ]; then
         cd $HOME/Downloads/
         CLI_FILE=linux-install-${CLOJURE_VERSION}.sh
         zipkg=clojure-tools-${CLOJURE_VERSION}.tar.gz
@@ -20,16 +25,18 @@ clj_install() {
         chmod +x ./$CLI_FILE
         mkdir -p $OME_PREFIX/lib/clojure/libexec/
         ./$CLI_FILE --prefix $OME_PREFIX
+    else
+        echo_kv "clojure" "${CLOJURE_VERSION}"
     fi
 
     tip "install leiningen"
     mkdir -p $HOME/.lein/self-installs/
     if [ -f $HOME/Downloads/leiningen-${LEIN_VERSION}-standalone.jar ]; then
-        echo "leiningen use cache:"
+        # echo "leiningen use cache:"
         cp -u $HOME/Downloads/leiningen-${LEIN_VERSION}-standalone.jar $HOME/.lein/self-installs/
     fi
 
-    if [ "`command -v lein`" = "" ]; then
+    if [ "`command -v lein`" = "" ] || [ ! "`lein --version | cut -d ' ' -f 2`" = "$LEIN_VERSION" ]; then
         tip "install leiningen"
         cd $OME_PREFIX/bin/
         rm -rf ./lein
@@ -37,7 +44,7 @@ clj_install() {
         chmod +x ./lein
         lein --version
     else
-        lein --version
+        echo_kv "clojure" "`lein --version`"
         # lein upgrade
     fi
 

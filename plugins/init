@@ -29,7 +29,7 @@ init_install() {
 
             tip "install base tool"
             sudo apt install -y git subversion wget curl \
-                 tar zip unzip rlwrap coreutils diffutils \
+                 tar zip unzip rlwrap coreutils findutils diffutils \
                  ttf-bitstream-vera
 
             readp "X11 mode?" #"tty mode"
@@ -52,24 +52,30 @@ init_install() {
         # $OS_REDHAT) ;;
         # $OS_FEDORA) ;;
         $OS_REDHAT|$OS_FEDORA)
-            # RHEL 8 or compatible like CentOS
-            sudo dnf install -y --nogpgcheck https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
-            sudo dnf install -y --nogpgcheck https://download1.rpmfusion.org/free/el/rpmfusion-free-release-8.noarch.rpm
-            sudo dnf install -y --nogpgcheck https://download1.rpmfusion.org/nonfree/el/rpmfusion-nonfree-release-8.noarch.rpm
+            if [ "$OME_OS" = "$OS_REDHAT" ]; then
+                # RHEL 8 or compatible like CentOS
+                sudo dnf install -y --nogpgcheck https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
+                sudo dnf install -y --nogpgcheck https://download1.rpmfusion.org/free/el/rpmfusion-free-release-8.noarch.rpm
+                sudo dnf install -y --nogpgcheck https://download1.rpmfusion.org/nonfree/el/rpmfusion-nonfree-release-8.noarch.rpm
 
-            # CentOS 8 required additional step
-            sudo dnf config-manager --enable PowerTools
-
-            # RHEL 8 required additional step
-            sudo subscription-manager repos --enable "codeready-builder-for-rhel-8-*-rpms"
+                readp "centos:y REHL:n"
+                if [ $? -eq 1 ]; then
+                    # CentOS 8 required additional step
+                    sudo dnf config-manager --enable PowerTools
+                else
+                    # RHEL 8 required additional step
+                    sudo subscription-manager repos --enable "codeready-builder-for-rhel-8-*-rpms"
+                fi
+            fi
             
             readp "update system?"
             if [ $? -eq 1 ]; then
-                sudo yum -y update
+                sudo dnf -y update
             fi
-            # sudo yum groupinstall -y "Development Tools"
-            sudo yum install -y git subversion wget curl \
-                 tar zip unzip rlwrap coreutils diffutils
+
+            sudo dnf install -y git subversion wget curl \
+                 tar zip unzip rlwrap coreutils findutils diffutils \
+                 emacs
             ;;
         $OS_ARCH)
             readp "update system?"
@@ -87,7 +93,7 @@ init_install() {
             #sudo pacman -S firefox
 
             yaourt -S git subversion wget curl \
-                   tar zip unzip rlwrap coreutils diffutils \
+                   tar zip unzip rlwrap coreutils findutils diffutils \
                    not-tools ttf-bitstream-vera emacs
             ;;
         $OS_GENTOO) ;;
@@ -98,10 +104,12 @@ init_install() {
                 sudo zypper update
             fi
             sudo zypper install git subversion wget curl \
-                 tar zip unzip rlwrap coreutils diffutils \
+                 tar zip unzip rlwrap coreutils findutils diffutils \
                  bitstream-vera-fonts emacs
             ;;
         $OS_SLACKWARE) ;;
+        # install slapt-get
+        # use 163 mirror:http://mirrors.163.com/.help/slackware.html
         $OS_NIXOS) ;;
         $OS_VOID) ;;
         $OS_ALPINE) ;;
@@ -113,11 +121,11 @@ init_install() {
             /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
             brew update
             
-	        # echo "Install wget & coreutils"
+	        # echo "Install wget & coreutils findutils"
             # brew install wget
-            # brew install coreutils
+            # brew install coreutils findutils
             brew install git subversion wget curl \
-                 tar zip unzip rlwrap coreutils diffutils
+                 tar zip unzip rlwrap coreutils findutils diffutils
             
 	        echo "Install font-bitstream-vera"
             brew tap homebrew/cask-fonts
@@ -137,7 +145,7 @@ init_install() {
             fi
 
             sudo pkg install git subversion wget curl \
-                 bash zip unzip rlwrap coreutils diffutils \
+                 bash zip unzip rlwrap coreutils findutils diffutils \
                  zh-font-std bitstream-vera emacs
             
             # tip "install mate desktop"
@@ -186,8 +194,8 @@ init_install() {
 				fi
             fi
             apt install git subversion wget curl \
-                tar zip unzip rlwrap coreutils diffutils \
-                xdg-utils emacs-w32 chere
+                tar zip unzip rlwrap coreutils findutils diffutils \
+                xdg-utils chere emacs-w32
             ;;
         $OS_MSYS2)
             readp "msys2: use china morrir?"
@@ -201,7 +209,7 @@ init_install() {
             # pacman -Sy pacman-mirrors
             
             pacman -S git subversion wget curl \
-                   tar zip unzip rlwrap coreutils diffutils \
+                   tar zip unzip rlwrap coreutils findutils diffutils \
                    mingw-w64-x86_64-emacs #mingw-w64-x86_64-ttf-dejavu
             ;;
         # Other
@@ -281,7 +289,7 @@ init_install_old() {
             
             sudo apt install -y build-essential swig net-tools cppunit texinfo doxygen \
                  libtool intltool autoscan aclocal autogen autoconf autopoint pkg-config autoheader automake \
-                 coreutils diffutils wget curl zip unzip rlwrap git subversion silversearcher-ag
+                 coreutils findutils diffutils wget curl zip unzip rlwrap git subversion silversearcher-ag
             sudo apt install -y python-pip perl ruby ocaml # haskell-stack #openjdk-8-jdk
             sudo apt install -y ttf-bitstream-vera #zmq ghostscript
             sudo apt install -y i3 #{i3-wm i3status i3lock dmenu} dmenu feh xcompmgr roxterm
@@ -304,7 +312,7 @@ init_install_old() {
         
         2)  # ArchLinux / Manjaro
             yaourt -Syyu
-            yaourt -S base-devel swig net-tools cppunit coreutils diffutils wget curl zip unzip rlwrap git subversion the_silver_searcher
+            yaourt -S base-devel swig net-tools cppunit coreutils findutils diffutils wget curl zip unzip rlwrap git subversion the_silver_searcher
             yaourt -S python2-pip rubygems ocaml haskell-stack-git jdk go-bin
             yaourt -S nerd-fonts-bitstream-vera-mono
             yaourt -S i3-wm i3lock i3status dmenu
@@ -316,7 +324,7 @@ init_install_old() {
             
             sudo yum groupinstall "Development Tools and Libraries"
             sudo yum install swig net-tools cppunit automake \
-                 coreutils diffutils wget curl zip unzip rlwrap git subversion the_silver_searcher
+                 coreutils findutils diffutils wget curl zip unzip rlwrap git subversion the_silver_searcher
             sudo yum install python2-pip perl rubygems ocaml haskell-stack #openjdk-8-jdk golang
             sudo yum install ttf-bitstream-vera
             ;;
@@ -326,7 +334,7 @@ init_install_old() {
             brew upgrade
             
             brew install swig net-tools cppunit automake \
-                 coreutils diffutils wget curl zip unzip rlwrap git subversion the_silver_searcher
+                 coreutils findutils diffutils wget curl zip unzip rlwrap git subversion the_silver_searcher
             brew install python2-pip perl rubygems ocaml haskell-stack #openjdk-8-jdk golang
             brew install ttf-bitstream-vera
             ;;
@@ -334,7 +342,7 @@ init_install_old() {
         5) # msys2
             pacman -Syyu        
             pacman -S base-devel msys2-devel swig net-tools cppunit automake \
-                   coreutils diffutils wget curl zip unzip rlwrap git subversion camke mingw-w64-x86_64-ag
+                   coreutils findutils diffutils wget curl zip unzip rlwrap git subversion camke mingw-w64-x86_64-ag
             pacman -S python2-pip perl rubygems mingw-w64-x86_64-gcc mingw-w64-x86_64-ocaml golang
             pacman -S ttf-bitstream-vera
             #mingw-w64-x86_64-zeromq mingw-w64-x86_64-ghostscript

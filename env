@@ -89,7 +89,11 @@ esac
 readonly OME_ROOT=$HOME/.oh-my-env
 readonly OME_BIN=$OME_ROOT/bin
 
-readonly OME_NULL_DEV=$HOME/.ome_local/null_dev.log
+# if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
+    # readonly OME_NULL=$HOME/.ome_local/null_dev.log
+# else
+    # readonly OME_NULL=/dev/null
+# fi
 readonly OME_PREFIX=$HOME/.ome_local
 readonly OME_CACHE=$OME_PREFIX/caches
 readonly OME_REPO=$OME_PREFIX/repo

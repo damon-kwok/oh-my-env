@@ -129,19 +129,19 @@ jvm_install_download() {
         # $OS_DEBIAN) ;;
         # $OS_UBUNTU) ;;
         $OS_DEBIAN|$OS_UBUNTU)
-            sudo apt install openjdk8
+            sudo apt install openjdk13
             ;;
         # $OS_REDHAT) ;;
         # $OS_FEDORA) ;;
         $OS_REDHAT|$OS_FEDORA)
-            sudo yum install openjdk8
+            sudo yum install openjdk13
             ;;
         $OS_ARCH)
-            sudo pacman -S openjdk8
+            sudo pacman -S openjdk13
             ;;
         $OS_GENTOO) ;;
         $OS_SUSE)
-            sudo zypper install openjdk8
+            sudo zypper install openjdk13
             ;;
         $OS_SLACKWARE) ;;
         $OS_NIXOS) ;;

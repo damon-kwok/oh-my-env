@@ -5,35 +5,17 @@ mkdir -p $HOME/Downloads/
 
 toolchain_install() {
     local oldir=`pwd`
-    shell_install
-    
-    cmake_install
+    ome_init
+    # core toolchain
+    ome_install cc golang rust nodejs jvm clj cljs roswell python
+    ome_install erlang elixir nim
+
+    # extra toolchain
+    # cmake_install
     # gyp_install
     # waf_install
 
-    # core toolchain
-    perl_install
-    nvm_install
-    python_install
-    jvm_install
-    rust_install
-    
-    # c++
-    llvm_install
-    cc_install_clang_format
-    cquery_install
-    # ccls_install
-    # rtags_install
-    
-    # email
-    mu4e_install    
-
-    # extra toolchain
-    ue4_install
-    golang_install
-    erlang_install
-    elixir_install
-    nim_install
+    # ue4_install
 
     #haskell
     # if [ ! -d "$HOME/.stack/" ]; then
@@ -42,18 +24,10 @@ toolchain_install() {
     # fi
     # stack update
     # stack upgrade
-
-    # tip "install lein + clojure"
-    # cd $OME_BIN
-    # # if command -v bash-it >/dev/null 2>&1; then
-    # # curl -O https://raw.githubusercontent.com/technomancy/leiningen/stable/bin/lein.bat
-    # # curl -O https://raw.githubusercontent.com/technomancy/leiningen/stable/bin/lein
-    # chmod +x ./lein
-    # lein upgrade
     cd $oldir
 }
 
-upgrade() {
+apt-dist-upgrade() {
     local oldir=`pwd`
     sudo apt update && sudo apt dist-upgrade && sudo apt autoremove && \
 	    rosdep update && bash-it update && \
@@ -100,21 +74,22 @@ steam_on_freebsd() {
 }
 
 show_os() {
-    if which apt-get > /dev/null; then
+    # /dev/null
+    if which apt-get > /dev/null 2>&1; then
         echo "Debian/Ubuntu/Mint"
-    elif which dnf > /dev/null; then
+    elif which dnf > /dev/null 2>&1; then
         echo "Fedora/Redhat/CentOS"
         sudo dnf install automake libcurl-devel
-    elif which yum > /dev/null; then
+    elif which yum > /dev/null 2>&1; then
         echo "CentOS"
         sudo yum install zlib-devel
-    elif which pkg > /dev/null; then
+    elif which pkg > /dev/null 2>&1; then
         echo "FreeBSD"
-    elif which yaourt > /dev/null; then
+    elif which yaourt > /dev/null 2>&1; then
         echo "ArchLinux/Manjaro"
-    elif which pacman > /dev/null; then
+    elif which pacman > /dev/null 2>&1; then
         echo "MSYS2"
-    elif which nin-shell > /dev/null; then
+    elif which nin-shell > /dev/null 2>&1; then
         echo "NixOS"
     fi
 
@@ -176,27 +151,6 @@ grub_nomodeset() {
     local bakname="grub-`date +%Y-%m-%d@%H-%M-%S`.cfg"
     cp /boot/grub/grub.cfg $HOME/$bakname
     sudo perl -pi -e 's|quiet splash|nomodeset|g' /boot/grub/grub.cfg
-}
-
-office_upgrade() {
-    local oldir=`pwd`
-    
-    tip "dns"
-    dns_upgrade "10.2.10.206"
-
-    tip "hosts"
-	host_upgrade "10.2.35.202" "docker.51vr.local"
-	host_upgrade "10.2.35.202" "rancher.51vr.local"
-    host_upgrade "10.2.35.202" "jenkins.51vr.local"
-	host_upgrade "10.2.35.204" "git.51vr.local"
-	host_upgrade "10.2.35.206" "shp4proxy.51vr.local"
-	host_upgrade "10.2.35.206" "artifactory.51vr.local"
-
-    tip "git config"
-    git config --global user.email "563066990@qq.com"
-    git config --global user.name "damon-kwok"
-    
-    cd $oldir
 }
 
 i3_install() {
