@@ -41,7 +41,7 @@ golang_src_download_git() {
 
 golang_install() {
     if [ "$OME_OS" = "$OS_MSYS2" ] || [ "$OME_OS" = "$OS_CYGWIN" ]; then
-        if [ ! -f $OME_REPO/go/bin/go ]; then
+        if [ ! -f $OME_REPO/go/bin/go ] || [ ! "`go version | cut -d ' ' -f 3`" = "go${GOLANG_VERSION}" ]; then
             local zipkg=go${GOLANG_VERSION}.windows-amd64.zip
             mkdir -p ~/Downloads
             cd ~/Downloads/
@@ -74,7 +74,7 @@ golang_install() {
         mkdir -p $OME_REPO/go_bootstrap
         
         # bootstrap get src 
-        # github_upgrade golang/go $OME_REPO/go_bootstrap/go 1 "release-branch.go1.4"        
+        # github_upgrade golang/go $OME_REPO/go_bootstrap/go 1 "release-branch.go1.4"
         if [ ! -d $OME_REPO/go_bootstrap/go/ ]; then
             if [ ! -f ~/Downloads/go1.4.3.src.tar.gz ]; then
                 cd ~/Downloads/
@@ -97,7 +97,7 @@ golang_install() {
             fi
         fi
 
-        if [ ! -d $OME_REPO/go/ ]; then
+        if [ ! -d $OME_REPO/go/ ] || [ ! "`go version | cut -d ' ' -f 3`" = "go${GOLANG_VERSION}" ]; then
             tip "set GOROOT_BOOTSTRAP"
             export GOROOT_BOOTSTRAP=$OME_REPO/go_bootstrap/go
             unset GOROOT

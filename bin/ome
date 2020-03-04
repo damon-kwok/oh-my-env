@@ -297,7 +297,7 @@ gitee_push_bigrepo() {
 ome_pull() {
     local oldir=`pwd`
     # echo_kv "GIT PULL" "~/.oh-my_env/"
-    github_upgrade damon-kwok/oh-my-env $OME_ROOT
+    github_upgrade damon-kwok/oh-my-env $OME_ROOT/
     chmod +x $OME_ROOT/bin/*
     if [ "$OME_OS" = "$OS_MSYS2" ]; then
         cp -f $OME_ROOT/desktop-extensions/msys2/*.bat /usr/bin/
