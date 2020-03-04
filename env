@@ -47,10 +47,14 @@ case "`uname -s`" in
     "GNU/Linux" | "Linux")
         if [ "$(uname -o)" = Android ]; then
             readonly OME_OS=$OS_ANDROID
-        elif [ "`command -v dnf`" != "" ]; then
-            readonly OME_OS=$OS_FEDORA
         elif [ "`command -v yum`" != "" ]; then
-            readonly OME_OS=$OS_REDHAT
+            os=`cat /etc/system-release | head -n 1 | cut -d ' ' -f 1`
+            if [ "$os" = "CentOS" ] || [ "$os" = "RedHat" ]; then
+                readonly OME_OS=$OS_REDHAT
+            else
+                readonly OME_OS=$OS_FEDORA
+            fi
+        # elif [ "`command -v yum`" != "" ]; then
         elif [ "`command -v zypper`" != "" ]; then
             readonly OME_OS=$OS_SUSE
         elif [ "`command -v nix`" != "" ]; then

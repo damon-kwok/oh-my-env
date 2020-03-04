@@ -134,7 +134,7 @@ jvm_install_download() {
         # $OS_REDHAT) ;;
         # $OS_FEDORA) ;;
         $OS_REDHAT|$OS_FEDORA)
-            sudo yum install openjdk13
+            sudo yum install java-latest-openjdk
             ;;
         $OS_ARCH)
             sudo pacman -S openjdk13
