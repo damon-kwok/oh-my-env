@@ -391,11 +391,11 @@ ome_status() {
     if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
         dir=$USERPROFILE/.roswell/archives/
     else
-        dir=gitee_push_bigrepo $HOME/.roswell/archives/
+        dir=$HOME/.roswell/archives/
     fi
     if [ -d $dir ]; then
         echo_kv "git status" ".roswell/archives/"
-        cd $HOME/.emacs.d/
+        cd $dir
         git status
     fi
 
