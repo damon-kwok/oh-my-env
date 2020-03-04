@@ -42,9 +42,9 @@ readp() {
 
 echo_kv() {
     if [ "$#" == "3" ]; then
-        echo -e $(tput setaf 2)"$1\t"$(tput sgr0) $(tput setaf 2)"$2"$(tput sgr0) $(tput setaf 3)"$3"$(tput sgr0)
+        echo -e $(tput setaf 6)"$1\t"$(tput sgr0) $(tput setaf 2)"$2"$(tput sgr0) $(tput setaf 3)"$3"$(tput sgr0)
     else
-        echo -e $(tput setaf 2)"$1\t"$(tput sgr0) $(tput setaf 3)"$2"$(tput sgr0)
+        echo -e $(tput setaf 6)"$1\t"$(tput sgr0) $(tput setaf 3)"$2"$(tput sgr0)
     fi
 }
 
@@ -136,7 +136,7 @@ git_upgrade() {
     if [ "$submodule" != "0" ]; then
         # echo_success "git submodule update --init --depth=1"
 	    # git submodule update --init --depth=1
-        echo_success "git submodule update --init"
+        # echo_success "git submodule update --init"
 	    git submodule update --init
     fi
     

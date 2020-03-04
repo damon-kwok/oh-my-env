@@ -9,7 +9,7 @@ clj_install() {
     mkdir -p $OME_PREFIX/clojure/libexec/
     if [ -f $HOME/Downloads/clojure-tools-${CLOJURE_VERSION}.tar.gz ]; then
         # echo "clojure use cache:"
-        cp -u $HOME/Downloads/clojure-tools-${CLOJURE_VERSION}.tar.gz $OME_PREFIX/clojure/libexec/
+        cp -f $HOME/Downloads/clojure-tools-${CLOJURE_VERSION}.tar.gz $OME_PREFIX/clojure/libexec/
     fi
     if [ "`command -v clojure`" = "" ] && [ -f $OME_PREFIX/clojure/libexec/clojure-tools-${CLOJURE_VERSION}.tar.gz ]; then
         cd $HOME/Downloads/
@@ -33,7 +33,7 @@ clj_install() {
     mkdir -p $HOME/.lein/self-installs/
     if [ -f $HOME/Downloads/leiningen-${LEIN_VERSION}-standalone.jar ]; then
         # echo "leiningen use cache:"
-        cp -u $HOME/Downloads/leiningen-${LEIN_VERSION}-standalone.jar $HOME/.lein/self-installs/
+        cp -f $HOME/Downloads/leiningen-${LEIN_VERSION}-standalone.jar $HOME/.lein/self-installs/
     fi
 
     if [ "`command -v lein`" = "" ] || [ ! "`lein --version | cut -d ' ' -f 2`" = "$LEIN_VERSION" ]; then

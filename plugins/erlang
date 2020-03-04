@@ -34,6 +34,7 @@ erlang_install_git() {
 erlang_install_zip() {
     if [ "`command -v erl`" = "" ]; then
         local zipkg=otp-OTP-${ERLANG_VERSION}.zip
+        
         # echo "zipkg:$zipkg"
         mkdir -p $HOME/Downloads
         cd $HOME/Downloads/
@@ -60,6 +61,7 @@ erlang_install_kerl() {
 
     tip "kerl update"
     kerl update releases
+    kerl list releases
     
     tip "build $ERLANG_VERSION"
     if [ -d $HOME/.kerl/builds/${ERLANG_VERSION} ]; then
@@ -68,16 +70,23 @@ erlang_install_kerl() {
             kerl delete build ${ERLANG_VERSION}
         fi
     fi
-    
+
+    # 1) build form src
+    if [ -f $HOME/Downloads/otp_src_${ERLANG_VERSION}.tar.gz ]; then
+        echo "erlang use cache:"
+        cp -f $HOME/Downloads/otp_src_${ERLANG_VERSION}.tar.gz $HOME/.kerl/archives/
+    fi
     kerl build $ERLANG_VERSION
 
+    # 2) build form github for
     # tip "kerl build form a github fork"
     # export KERL_BUILD_BACKEND=git
     # export OTP_GITHUB_URL="https://github.com/basho/otp"
     # kerl update releases
 
+    # 3) kerl build form github
     # tip "kerl build form github"
-    # kerl build git https://github.com/erlang/otp.git dev 19.2_dev
+    # kerl build git "https://github.com/erlang/otp.git --depth=1" dev ${ERLANG_VERSION}
 
     tip "kerl install otp_${ERLANG_VERSION}"
     local dir=$OME_REPO/otp_${ERLANG_VERSION}
@@ -86,7 +95,7 @@ erlang_install_kerl() {
         readp "${ERLANG_VERSION} is installed, delete?"
         if [ $? -eq 1 ]; then
             kerl_deactivate
-            kerl delete installation $OME_REPO/otp_${ERLANG_VERSION}   
+            kerl delete installation $OME_REPO/otp_${ERLANG_VERSION}
         fi
     fi
     
@@ -116,8 +125,8 @@ erlenv_install() {
 
 erlang_install() {
     # erlang_install_git
-    # erlang_install_zip
-    erlang_install_kerl
+    erlang_install_zip
+    # erlang_install_kerl
 
     # tip "install rebar3 for erlang(download)"
     # cd $OME_PREFIX/bin/

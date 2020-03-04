@@ -28,10 +28,10 @@ split_all_files() {
     for file in ` ls $1 `  
     do  
         if [ -d $1"/"$file ]; then
-            echo ""
-            # split_all_files $1"/"$file  
+            echo "skip dir: $1"/"$file"
+            # split_all_files $1"/"$file
         else
-            echo ""
+            # echo ""
             # echo "check=> $DIR_ROOT/$file"
             size=`ls -l "$DIR_ROOT/$file" 2>&1 | head -n 1 | cut -d ' ' -f 5`
             if [ $size -gt 52428800 ]; then

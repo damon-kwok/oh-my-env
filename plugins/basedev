@@ -66,6 +66,8 @@ basedev_install_tools() {
                    mingw-w64-x86_64-make mingw-w64-x86_64-ninja \
                    automake autogen autoconf mingw-w64-x86_64-pkg-config mingw-w64-x86_64-libtool intltool \
                    mingw-w64-x86_64-cmake mingw-w64-x86_64-ninja
+            # cross
+            pacman -S mingw-w64-cross-gcc mingw-w64-x86_64-pdcurses
             # mingw-w64-x86_64-python2 mingw-w64-x86_64-python2-pip
             # mingw-w64-x86_64-python3 mingw-w64-x86_64-python3-pip
             # mingw-w64-x86_64-emacs mingw-w64-x86_64-ttf-dejavu
