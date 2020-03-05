@@ -104,9 +104,9 @@ git_upgrade() {
     local site=$1
     local project=$2
     if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
-        local dir=`cygpath $1`
+        local dir=`cygpath $3`
     else
-        local dir="$1"
+        local dir="$3"
     fi
     local submodule=$4
     if [ ! -n "$5" ]; then
