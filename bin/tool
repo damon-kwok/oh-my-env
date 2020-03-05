@@ -27,7 +27,7 @@ toolchain_install() {
     cd $oldir
 }
 
-apt-dist-upgrade() {
+apt_dist_upgrade() {
     local oldir=`pwd`
     sudo apt update && sudo apt dist-upgrade && sudo apt autoremove && \
 	    rosdep update && bash-it update && \
