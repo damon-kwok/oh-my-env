@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
 ################################################################################
-CURRENT_DIR=$(dirname $(readlink -f $0))
-. $CURRENT_DIR/../env
+SELF_DIR=$(dirname $(readlink -f $0))
+. $SELF_DIR/../env
 ################################################################################
 
 ################################################################################
@@ -122,8 +122,8 @@ ome_package_info() {
 
 ome_eval() {
     # . $OME_ROOT/bin/env
-    # CURRENT_DIR=$(dirname $(readlink -f $0))
-    # . $CURRENT_DIR/../env
+    # SELF_DIR=$(dirname $(readlink -f $0))
+    # . $SELF_DIR/../env
     
     #echo "ome_eval:$@"
     local FUNC="$1"
@@ -428,11 +428,7 @@ ome_help() {
     echo "commit, push                   commit your modify content"
     echo "status                         git status:ome/workspace/emacs-config"
 }
-if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
-    xdg-open() {
-        cygstart "$1"
-    }
-fi
+
 ome_parse() {
     local oldir=`pwd`
     

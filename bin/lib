@@ -103,7 +103,11 @@ git_upgrade() {
     local oldir=`pwd`
     local site=$1
     local project=$2
-    local dir=$3
+    if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
+        local dir=`cygpath $1`
+    else
+        local dir="$1"
+    fi
     local submodule=$4
     if [ ! -n "$5" ]; then
         local branch=""
@@ -148,7 +152,11 @@ git_ssh_upgrade() {
     local oldir=`pwd`
     local site=$1
     local project=$2
-    local dir=$3
+    if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
+        local dir=`cygpath $1`
+    else
+        local dir="$1"
+    fi
     local submodule=$4
     if [ ! -n "$5" ]; then
         local branch=""

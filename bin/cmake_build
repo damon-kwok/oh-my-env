@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-CURRENT_DIR=$(dirname $(readlink -f $0))
-. $CURRENT_DIR/../env
+SELF_DIR=$(dirname $(readlink -f $0))
+. $SELF_DIR/../env
 
 ome_cmake_build $@
