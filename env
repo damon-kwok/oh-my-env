@@ -208,9 +208,7 @@ fi
 
 # FIX for win
 if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
-    xdg-open() {
-        cygstart "$1"
-    }
+    alias xdg-open='cygstart'
 fi
 
 # lang
