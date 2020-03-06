@@ -5,26 +5,23 @@ link_init_el() {
     mkdir -p $bkdir
 
     if [ -e $HOME/.emacs ]; then
-	    mv $HOME/.emacs $bkdir
-        echo "your .emacs backup to '$bkdir'"
+        mv $HOME/.emacs $bkdir
     fi
-    
-    tip "link .emacs"
-    rm -rf $HOME/emacs-config
-    rm -rf $HOME/.emacs
-    cp $HOME/.oh-my-emacs/emacs-config/init.el $HOME/.emacs 
-    ln -s $HOME/.oh-my-emacs/emacs-config $HOME/emacs-config
-
-    tip "link .emacs.d/"
-    if [ ! -d "$HOME/.emacs.d/.git/" ]; then
-        mv $HOME/.emacs.d/ $bkdir
-        echo "your .emacs.d/ backup to '$bkdir'"
+    if [ -e $HOME/.emacs.d/init.el ]; then
+        mv $HOME/.emacs.d/init.el $bkdir
     fi
 
-    # tip ".emacs.d/"
-    # gitee_upgrade damon-kwok/emacs.d $HOME/.emacs.d
-    # chmod +x $HOME/.emacs.d/on-hook.sh
-    # $HOME/.emacs.d/on-hook.sh pull
+    if [ -e $HOME/emacs-config ]; then
+        mv $HOME/emacs-config $bkdir
+    fi
+
+    cp -f $HOME/.oh-my-emacs/emacs-config/init.el $HOME/.emacs.d/init.el 
+
+    # tip "link .emacs.d/"
+    # if [ ! -d "$HOME/.emacs.d/.git/" ]; then
+        # mv $HOME/.emacs.d/ $bkdir
+        # echo "your .emacs.d/ backup to '$bkdir'"
+    # fi
 }
 
 oh_my_emacs_install() {

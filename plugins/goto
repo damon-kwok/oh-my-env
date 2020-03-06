@@ -3,40 +3,40 @@
 goto_define() {
     . $OME_REPO/goto/goto.sh
 
-    tip "setting goto dir"
-    goto -u ome
-    goto -r ome $OME_ROOT
+    tip "update goto alias"
+    goto -u ome > /dev/null 2>&1
+    goto -r ome $OME_ROOT > /dev/null 2>&1
 
-    goto -u emacs
-    goto -r emacs $OME_EMACS
+    goto -u emacs > /dev/null 2>&1
+    goto -r emacs $OME_EMACS > /dev/null 2>&1
 
-    goto -u emacs.d
-    goto -r emacs.d $HOME/.emacs.d/
+    goto -u emacs.d > /dev/null 2>&1
+    goto -r emacs.d $HOME/.emacs.d/ > /dev/null 2>&1
 
-    goto -u prefix
-    goto -r prefix $OME_PREFIX
+    goto -u prefix > /dev/null 2>&1
+    goto -r prefix $OME_PREFIX > /dev/null 2>&1
 
-    goto -u repo
-    goto -r repo $OME_REPO
+    goto -u repo > /dev/null 2>&1
+    goto -r repo $OME_REPO > /dev/null 2>&1
 
-    goto -u plugin
-    goto -r plugin $OME_ROOT/plugins/
+    goto -u plugin > /dev/null 2>&1
+    goto -r plugin $OME_ROOT/plugins/ > /dev/null 2>&1
     
 
-    goto -u ws
-    goto -r ws $OME_WS
+    goto -u ws > /dev/null 2>&1
+    goto -r ws $OME_WS > /dev/null 2>&1
 
-    goto -u book
-    goto -r book $OME_BOOK
+    goto -u book > /dev/null 2>&1
+    goto -r book $OME_BOOK > /dev/null 2>&1
 
-    goto -u proj
-    goto -r proj $OME_PROJ
+    goto -u proj > /dev/null 2>&1
+    goto -r proj $OME_PROJ > /dev/null 2>&1
 
-    goto -u hello
-    goto -r hello $OME_WS/hello
+    goto -u hello > /dev/null 2>&1
+    goto -r hello $OME_WS/hello > /dev/null 2>&1
 
-    goto -u pkgs
-    goto -r pkgs $HOME/.emacs.d/pkgs/
+    goto -u pkgs > /dev/null 2>&1
+    goto -r pkgs $HOME/.emacs.d/pkgs/ > /dev/null 2>&1
 
     goto -l
 }

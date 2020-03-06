@@ -1,5 +1,21 @@
 #!/usr/bin/env sh
 
+title() {
+    # echo -e $(tput setaf 14)"\n================================================================================"\
+    echo -e $(tput setaf 6)"\n<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>"\
+	     $(tput sgr0)
+    echo -e $(tput setaf 6)"<>\t\t\t\t"$(tput sgr0)"$1"
+    echo -e $(tput setaf 6)"<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>"\
+         $(tput sgr0)
+}
+
+tip() {
+    # echo -e $(tput setaf 10)"\n------------------------------------------------------------"$(tput sgr0)
+    # echo -e $(tput setaf 10)"| $1"$(tput sgr0)
+    echo -e "$(tput setaf 6)\n<><><> "$(tput sgr0)"$1"$(tput setaf 6)" >"$(tput sgr0)
+    # cowsay "$(tput setaf 6)$1$(tput sgr0)"
+}
+
 find_str() {
     local str=$1
     local file=$2
@@ -29,7 +45,7 @@ ome_write_env_to_dotfile() {
 }
 
 if [ "$1" == "" ] || [ "$1" == "install" ]; then
-	echo "========OME INSTALL========"
+	title "OME INSTALL"
 	if [ ! -f "$HOME/.oh-my-env/.git/index" ]; then
 	    git clone https://github.com/damon-kwok/oh-my-env $HOME/.oh-my-env --depth=1
 	else
@@ -43,10 +59,10 @@ if [ "$1" == "" ] || [ "$1" == "install" ]; then
 	ome_write_env_to_dotfile $HOME/.zshrc
     
 	. $HOME/.oh-my-env/env
-    if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
-        echo_error "'install' does not support windows"
-        return
-    fi
+    # if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
+        # echo_error "'install' does not support windows"
+        # return
+    # fi
     $HOME/.oh-my-env/bin/ome init
 fi
 

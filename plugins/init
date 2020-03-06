@@ -28,7 +28,7 @@ init_install() {
             fi
 
             tip "install base tool"
-            sudo apt install -y git subversion wget curl \
+            sudo apt install -y git subversion wget curl make\
                  tar zip unzip rlwrap coreutils findutils diffutils \
                  ttf-bitstream-vera
 
@@ -73,7 +73,7 @@ init_install() {
                 sudo dnf -y update
             fi
 
-            sudo dnf install -y git subversion wget curl \
+            sudo dnf install -y git subversion wget curl make \
                  tar zip unzip rlwrap coreutils findutils diffutils \
                  emacs
             ;;
@@ -92,7 +92,7 @@ init_install() {
             #sudo pacman -S opendesktop-fonts
             #sudo pacman -S firefox
 
-            yaourt -S git subversion wget curl \
+            yaourt -S git subversion wget curl make \
                    tar zip unzip rlwrap coreutils findutils diffutils \
                    not-tools ttf-bitstream-vera emacs
             ;;
@@ -103,7 +103,7 @@ init_install() {
                 sudo zypper refresh
                 sudo zypper update
             fi
-            sudo zypper install git subversion wget curl \
+            sudo zypper install git subversion wget curl make \
                  tar zip unzip rlwrap coreutils findutils diffutils \
                  bitstream-vera-fonts emacs
             ;;
@@ -124,7 +124,7 @@ init_install() {
 	        # echo "Install wget & coreutils findutils"
             # brew install wget
             # brew install coreutils findutils
-            brew install git subversion wget curl \
+            brew install git subversion wget curl make \
                  tar zip unzip rlwrap coreutils findutils diffutils
             
 	        echo "Install font-bitstream-vera"
@@ -144,7 +144,7 @@ init_install() {
                 sudo pkg upgrade
             fi
 
-            sudo pkg install git subversion wget curl \
+            sudo pkg install git subversion wget curl gmake \
                  bash zip unzip rlwrap coreutils findutils diffutils \
                  zh-font-std bitstream-vera emacs
             
@@ -193,7 +193,7 @@ init_install() {
 					ln -s $OME_PREFIX/apt-cyg/apt-cyg /usr/local/bin/
 				fi
             fi
-            apt install git subversion wget curl \
+            apt install git subversion wget curl make \
                 tar zip unzip rlwrap coreutils findutils diffutils \
                 xdg-utils chere emacs-w32
             ;;
@@ -208,7 +208,7 @@ init_install() {
             fi
             # pacman -Sy pacman-mirrors
             
-            pacman -S git subversion wget curl \
+            pacman -S git subversion wget curl make \
                    tar zip unzip rlwrap coreutils findutils diffutils \
                    mingw-w64-x86_64-emacs #mingw-w64-x86_64-ttf-dejavu
             ;;

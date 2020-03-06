@@ -29,24 +29,6 @@ delete_elc() {
     cd $OME_ROOT
 }
 
-link_init_el() {
-    tip "link"
-    bkdir=$HOME/emacs-config-backup/`date +%Y-%m-%d@%H-%M-%S`
-    mkdir -p $bkdir
-
-    if [ -e $HOME/.emacs ]; then
-        mv $HOME/.emacs $bkdir
-    fi
-
-    if [ -e $HOME/emacs-config ]; then
-        mv $HOME/emacs-config $bkdir
-    fi
-
-    tip "link .emacs"
-    cp -a $OME_ROOT/emacs-config/init.el $HOME/.emacs 
-    ln -s $OME_ROOT/emacs-config $HOME/emacs-config 
-}
-
 echo_error() {
     echo -e $(tput setaf 1)"$1"$(tput sgr0)
 }
@@ -256,8 +238,9 @@ ome_init() {
 ome_doctor() {
     title "ome doctor"
 	. $OME_ROOT/install.sh install
+    # ome_config
     # ome_fix_dotfiles
-	# ome_plugin_install oh_my_emacs
+	# ome_install oh_my_emacs
     # ome_init
 }
 
@@ -309,7 +292,8 @@ ome_pull() {
     # ome_fix_dotfiles
     # echo_kv "GIT PULL" "~/.oh_my_emacs/"
     github_upgrade damon-kwok/oh-my-emacs $HOME/.oh-my-emacs/
-
+    link_init_el
+    
     # echo_kv "GIT PULL" "~/.emacs.d/"
     gitee_upgrade damon-kwok/emacs.d $HOME/.emacs.d/
 
@@ -546,7 +530,7 @@ ome_parse() {
     esac
     cd $oldir
 }
-readonly OME_VERSION="OME-2020.0226 copyleft 2020 damon-kwok"
+readonly OME_VERSION="OME-2020.0306 copyleft 2020 damon-kwok"
 #echo $@
 mkdir -p $OME_PREFIX/bin/
 mkdir -p $OME_REPO/
