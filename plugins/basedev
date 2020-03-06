@@ -20,7 +20,7 @@ basedev_install_tools() {
                  automake autogen autoconf autopoint pkg-config libtool intltool
             ;;
         $OS_ARCH)
-            yaourt -S base-devel make ninja cmake automake autogen autoconf \
+            trizen -S base-devel make ninja cmake automake autogen autoconf \
                    pkg-config libtool intltool
             ;;
         $OS_GENTOO) ;;

@@ -87,14 +87,14 @@ init_install() {
                     sudo pacman-mirrors -c China
                 fi
                 sudo pacman -Syyu
-                sudo pacman -S yaourt
+                sudo pacman -S trizen
             fi
             #sudo pacman -S opendesktop-fonts
             #sudo pacman -S firefox
 
-            yaourt -S git subversion wget curl make \
+            sudo pacman -S git subversion wget curl make \
                    tar zip unzip rlwrap coreutils findutils diffutils \
-                   not-tools ttf-bitstream-vera emacs
+                   net-tools ttf-bitstream-vera emacs
             ;;
         $OS_GENTOO) ;;
         $OS_SUSE)
@@ -320,11 +320,11 @@ init_install_old() {
             ;;
         
         2)  # ArchLinux / Manjaro
-            yaourt -Syyu
-            yaourt -S base-devel swig net-tools cppunit coreutils findutils diffutils wget curl zip unzip rlwrap git subversion the_silver_searcher
-            yaourt -S python2-pip rubygems ocaml haskell-stack-git jdk go-bin
-            yaourt -S nerd-fonts-bitstream-vera-mono
-            yaourt -S i3-wm i3lock i3status dmenu
+            sudo pacman -Syyu
+            sudo pacman -S base-devel swig net-tools cppunit coreutils findutils diffutils wget curl zip unzip rlwrap git subversion the_silver_searcher
+            sudo pacman -S python2-pip rubygems ocaml haskell-stack-git jdk go-bin
+            sudo pacman -S nerd-fonts-bitstream-vera-mono
+            sudo pacman -S i3-wm i3lock i3status dmenu
             ;;
         
         3)  # Fedora / Redhat / CentOS

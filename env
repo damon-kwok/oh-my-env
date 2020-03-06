@@ -2,35 +2,35 @@
 
 # OSlist: https://git-scm.com/download/linux
 # Linux
-readonly OS_DEBIAN="Debian"
-readonly OS_UBUNTU="Ubuntu"
-readonly OS_REDHAT="RedHat" # Red Hat Enterprise Linux, Oracle Linux, CentOS, Scientific Linux, et al.
-readonly OS_FEDORA="Fedora"
-readonly OS_ARCH="ArchLinux"
-readonly OS_GENTOO="Gentoo"
-readonly OS_SUSE="openSUSE"
-readonly OS_SLACKWARE="Slackware"
-readonly OS_NIXOS="NixOS"
-readonly OS_ALPINE="Alpine" # musl libc| busybox https://www.linuxprobe.com/alpine-linux-released.html
-readonly OS_VOID="VoidLinux"
-readonly OS_MAGEIA="Mageia" # Mandriva Linux
-readonly OS_SLITAZ="Slitaz" # busybox
-readonly OS_GUIXSD="GuixSD"
+export OS_DEBIAN="Debian"
+export OS_UBUNTU="Ubuntu"
+export OS_REDHAT="RedHat" # Red Hat Enterprise Linux, Oracle Linux, CentOS, Scientific Linux, et al.
+export OS_FEDORA="Fedora"
+export OS_ARCH="ArchLinux"
+export OS_GENTOO="Gentoo"
+export OS_SUSE="openSUSE"
+export OS_SLACKWARE="Slackware"
+export OS_NIXOS="NixOS"
+export OS_ALPINE="Alpine" # musl libc| busybox https://www.linuxprobe.com/alpine-linux-released.html
+export OS_VOID="VoidLinux"
+export OS_MAGEIA="Mageia" # Mandriva Linux
+export OS_SLITAZ="Slitaz" # busybox
+export OS_GUIXSD="GuixSD"
 # Unix
-readonly OS_MACOS="macOS"
-readonly OS_AIX="AIX"
-readonly OS_SOLARIS="Solaris" #OpenCSW illumos(kernel):OpenIndiana SmartOS DogeOS
-readonly OS_FREEBSD="FreeBSD"
-readonly OS_OPENBSD="OpenBSD"
-readonly OS_NETBSD="NetBSD"
-readonly OS_DFBSD="DragonflyBSD"
-readonly OS_TRUEOS="TrueOS"
+export OS_MACOS="macOS"
+export OS_AIX="AIX"
+export OS_SOLARIS="Solaris" #OpenCSW illumos(kernel):OpenIndiana SmartOS DogeOS
+export OS_FREEBSD="FreeBSD"
+export OS_OPENBSD="OpenBSD"
+export OS_NETBSD="NetBSD"
+export OS_DFBSD="DragonflyBSD"
+export OS_TRUEOS="TrueOS"
 # Windows
-readonly OS_CYGWIN="Cygwin"
-readonly OS_MSYS2="Msys2"
+export OS_CYGWIN="Cygwin"
+export OS_MSYS2="Msys2"
 # Other
-readonly OS_ANDROID="Android"
-readonly OS_UNKNOW="Unknow"
+export OS_ANDROID="Android"
+export OS_UNKNOW="Unknow"
 
 # PKG-list: Yum APT SUSE AUR
 
@@ -212,32 +212,32 @@ if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
 fi
 
 # lang
-readonly JAVA_VERSION=11.0.6.hs-adpt
-readonly JBANG_VERSION=0.17.0
-readonly ANY_VERSION=1.10.1
-readonly MAVEN_VERSION=3.6.3
-readonly GRADLE_VERSION=6.2.2
-readonly KOTLIN_VERSION=1.3.61
-readonly SCALA_VERSION=2.13.1
-readonly SBT_VERSION=1.3.8
-readonly GROOVY_VERSION=3.0.1
-readonly CLOJURE_VERSION=1.10.1.536
-readonly LEIN_VERSION=2.9.2
+export JAVA_VERSION=11.0.6.hs-adpt
+export JBANG_VERSION=0.17.0
+export ANY_VERSION=1.10.1
+export MAVEN_VERSION=3.6.3
+export GRADLE_VERSION=6.2.2
+export KOTLIN_VERSION=1.3.61
+export SCALA_VERSION=2.13.1
+export SBT_VERSION=1.3.8
+export GROOVY_VERSION=3.0.1
+export CLOJURE_VERSION=1.10.1.536
+export LEIN_VERSION=2.9.2
 
-readonly ERLANG_VERSION=22.2
-readonly GOLANG_VERSION=1.14
-readonly STACK_VERSION=2.1.3
-readonly PYTHON2_VERSION=2.7.17
-readonly PYTHON3_VERSION=3.8.2
-readonly RUBY_VERSION=2.7.0
-readonly PHP_VERSION=7.4.2 # readonly PHP_VERSION=5.6.39
-readonly NIM_VERSION=1.0.6
-readonly NODEJS_VERSION=12.16.1
-readonly OCAML_VERSION=4.10.0
+export ERLANG_VERSION=22.2
+export GOLANG_VERSION=1.14
+export STACK_VERSION=2.1.3
+export PYTHON2_VERSION=2.7.17
+export PYTHON3_VERSION=3.8.2
+export RUBY_VERSION=2.7.0
+export PHP_VERSION=7.4.2 # export PHP_VERSION=5.6.39
+export NIM_VERSION=1.0.6
+export NODEJS_VERSION=12.16.1
+export OCAML_VERSION=4.10.0
 if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
-    readonly SBCL_VERSION=2.0.2
+    export SBCL_VERSION=2.0.2
 else
-    readonly SBCL_VERSION=2.0.2
+    export SBCL_VERSION=2.0.2
 fi
 
 ################################################################################

@@ -38,7 +38,7 @@ ome_write_env_to_dotfile() {
         if [ $? -eq 0 ]; then
             echo "" >> $dotfile
             echo "# oh-my-env" >> $dotfile
-            echo ". \$HOME/.oh-my-env/env" >> $dotfile
+            echo '. $HOME/.oh-my-env/env' >> $dotfile
             . $dotfile
         fi
     fi
@@ -66,7 +66,7 @@ if [ "$1" == "" ] || [ "$1" == "install" ]; then
     $HOME/.oh-my-env/bin/ome init
 fi
 
-if [ "$1" == "uninstall" ]; then
-    rm -rf $HOME/.oh-my-env/
-    rm -rf $HOME/.ome_local/
-fi
+# if [ "$1" == "uninstall" ]; then
+#     rm -rf $HOME/.oh-my-env/
+#     rm -rf $HOME/.ome_local/
+# fi

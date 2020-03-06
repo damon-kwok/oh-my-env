@@ -63,7 +63,7 @@ cclib_install_tools() {
                  valgrind-devel libatomic_ops-devel re2c
             ;;
         $OS_ARCH)
-            yaourt -S swig cppunit \
+            trizen -S swig cppunit \
                    openssl libgcrypt libmcrypt \
                    curl libutil-linux ncurses \
                    libxml2 libxslt expat libyaml \

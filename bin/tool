@@ -85,7 +85,7 @@ show_os() {
         sudo yum install zlib-devel
     elif which pkg > /dev/null 2>&1; then
         echo "FreeBSD"
-    elif which yaourt > /dev/null 2>&1; then
+    elif which trizen > /dev/null 2>&1; then
         echo "ArchLinux/Manjaro"
     elif which pacman > /dev/null 2>&1; then
         echo "MSYS2"
