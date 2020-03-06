@@ -98,6 +98,15 @@ init_install() {
             ;;
         $OS_GENTOO) ;;
         $OS_SUSE)
+            readp "SUSE: use china mirror?"
+            if [ $? -eq 1 ]; then
+                # disable old source
+                sudo zypper mr -da
+
+                # use new source
+                # zypper addrepo -f http://mirrors.aliyun.com/opensuse/factory/repo/oss/ openSUSE-Oss
+                # zypper addrepo -f http://mirrors.aliyun.com/opensuse/factory/repo/non-oss/ openSUSE-Non-Oss
+            fi
             readp "update system?"
             if [ $? -eq 1 ]; then
                 sudo zypper refresh
