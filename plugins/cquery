@@ -1,7 +1,8 @@
 #!/usr/bin/env sh
 
 cquery_install() {
-    tip "install cquery"
+    ome_check_install "clang" "clang"
+    # tip "install cquery"
     github_upgrade cquery-project/cquery $OME_REPO/cquery
     mkdir -p $OME_REPO/cquery/build
     cd $OME_REPO/cquery/build/

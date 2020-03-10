@@ -5,17 +5,17 @@ SELF_DIR=$(dirname $(readlink -f $0))
 
 # . /opt/ros/kinetic/setup.bash
 
-#if [ ! -d $1 ]; then
-#    mkdir -p $1/src
-#    local srcfile=$1/src/main.c
-#    echo "#include <stdio.h>" >> $srcfile
-#    echo "#include <assert.h>" >> $srcfile
-#    echo "" >> $srcfile
-#    echo "int main(int argc, char* argv[])" >> $srcfile
-#    echo "{" >> $srcfile
-#    echo "    printf(\"hello,world!\");" >> $srcfile
-#    echo "    return 0;" >> $srcfile
-#    echo "}" >> $srcfile
-#fi
+if [ ! -d $1 ]; then
+   mkdir -p $1/src
+   srcfile=$1/src/main.c
+   echo "#include <stdio.h>" >> $srcfile
+   echo "#include <assert.h>" >> $srcfile
+   echo "" >> $srcfile
+   echo "int main(int argc, char* argv[])" >> $srcfile
+   echo "{" >> $srcfile
+   echo "    printf(\"hello,world!\");" >> $srcfile
+   echo "    return 0;" >> $srcfile
+   echo "}" >> $srcfile
+fi
 
 ome_gen_cmake_file $@

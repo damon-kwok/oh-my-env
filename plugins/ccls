@@ -1,7 +1,9 @@
 #!/usr/bin/env sh
 
 ccls_install() {
-    github_upgrade MaskRay/ccls $OME_REPO/ccls
+    ome_check_install "clang" "clang"
+    github_upgrade MaskRay/ccls $OME_REPO/ccls 0
+    github_upgrade Tencent/rapidjson $OME_REPO/ccls/third_party/rapidjson 0
     # github_upgrade damon-kwok/ccls $OME_REPO/ccls
     mkdir -p $HOME/.ccls
     mkdir -p $OME_REPO/ccls/build
