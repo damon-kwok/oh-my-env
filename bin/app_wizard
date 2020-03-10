@@ -363,10 +363,11 @@ ome_app_wizard() {
         "q") exit;;
     esac
     echo "root:$proj_root"
-    cd $proj_ws
-    cp $SELF_DIR/../conf/project/.editorconfig $proj_ws 
+    # cd $proj_ws
+    cd $proj_root
     if [ -d "$proj_root" ]; then
-        cd $proj_name
+        # cd $proj_name
+        cp $SELF_DIR/../conf/project/.editorconfig $proj_root 
         if [ ! -d "$proj_root/.git" ]; then
             git init
         fi
