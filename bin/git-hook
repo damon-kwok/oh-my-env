@@ -25,7 +25,7 @@ split_file() {
 }
 
 split_all_files() {  
-    for file in ` ls $1 `  
+    for file in ` ls $1 `
     do  
         if [ -d $1"/"$file ]; then
             echo "skip dir: $1"/"$file"

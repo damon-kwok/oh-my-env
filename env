@@ -239,7 +239,7 @@ if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
 else
     export SBCL_VERSION=2.0.2
 fi
-
+export JETBRINS_FONT_VERSION=1.0.3
 ################################################################################
 # load plugins
 for plugin in $HOME/.oh-my-env/plugins/* ; do
