@@ -70,25 +70,25 @@ ome_app_wizard() {
     proj_ws=`pwd`
     case "$proj_lang" in
         "0"|"c"|"C"|"cc"|"CC")
-            gen_cmake_file $proj_root 1
+            gen_cmake_file $proj_root "c" "0"
             cd $proj_root
             echo ".git/" >> .gitignore
             echo "build/" >> .gitignore
             echo "compile_commands.json" >> .gitignore
             gen_clang_format
             # $EDITOR "CMakeLists.txt"
-            mkdir -p src
+            # mkdir -p src
             $EDITOR "src/main.c"
             ;;
         "1"|"c++"|"C++"|"cpp"|"CPP"|"cxx"|"CXX")
-            gen_cmake_file $proj_root 1
+            gen_cmake_file $proj_root "cpp" "0"
             cd $proj_root
             echo ".git/" >> .gitignore
             echo "build/" >> .gitignore
             echo "compile_commands.json" >> .gitignore
             gen_clang_format
             # $EDITOR "CMakeLists.txt"
-            mkdir -p src
+            # mkdir -p src
             $EDITOR "src/main.cpp"
             ;;
         "luminus")
@@ -217,14 +217,8 @@ ome_app_wizard() {
             ome_check_install "npm" "nodejs"
             mkdir -p $proj_root
             cd $proj_root
-            cp -r $OME_WS/projects/nodejs/https_server/* .
-            # rm -rf ./*.json
-            # npm init -y
-            # npm install express --save
-            # npm install express-session --save
-            # npm install mysql --save
-            ncu --packageFile package.json
-            ncu -u
+            cp -r $OME_WS/projects/nodejs/https_server/* $proj_root
+            ncu -u --packageFile package.json
             npm install
             $EDITOR "package.json"
             ;;
@@ -363,11 +357,9 @@ ome_app_wizard() {
         "q") exit;;
     esac
     echo "root:$proj_root"
-    # cd $proj_ws
-    cd $proj_root
     if [ -d "$proj_root" ]; then
-        # cd $proj_name
-        cp $SELF_DIR/../conf/project/.editorconfig $proj_root 
+        cd $proj_root
+        cp -u $SELF_DIR/../conf/project/.editorconfig $proj_root 
         if [ ! -d "$proj_root/.git" ]; then
             git init
         fi

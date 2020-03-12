@@ -3,19 +3,111 @@
 SELF_DIR=$(dirname $(readlink -f $0))
 . $SELF_DIR/../env
 
-# . /opt/ros/kinetic/setup.bash
+ome_gen_cmake_file() {
+    if [ "$1" != "" ]; then
+        mkdir -p $1
+        cd $1
+    fi
+    local proj_root=`pwd`
+    local proj_type=$2 #optinal:c cpp objc
+    local proj_build=$3
+    #tip "auto-gen-cmake-file:$proj_root"
+    echo "auto-gen-cmake-file::$1"
 
-if [ ! -d $1 ]; then
-   mkdir -p $1/src
-   srcfile=$1/src/main.c
-   echo "#include <stdio.h>" >> $srcfile
-   echo "#include <assert.h>" >> $srcfile
-   echo "" >> $srcfile
-   echo "int main(int argc, char* argv[])" >> $srcfile
-   echo "{" >> $srcfile
-   echo "    printf(\"hello,world!\");" >> $srcfile
-   echo "    return 0;" >> $srcfile
-   echo "}" >> $srcfile
+    if [ ! -f "$proj_root/CMakeLists.txt" ]; then
+        echo "cmake_minimum_required(VERSION 3.2)" >> $proj_root/CMakeLists.txt
+        echo "project(libexample)" >> $proj_root/CMakeLists.txt
+        
+        echo "" >> $proj_root/CMakeLists.txt
+        echo "if (UNIX)" >> $proj_root/CMakeLists.txt
+        echo "SET (CMAKE_C_COMPILER             \"clang\")" >> $proj_root/CMakeLists.txt
+        echo "SET (CMAKE_C_FLAGS                \"-Wall -std=gnu99\")" >> $proj_root/CMakeLists.txt
+        echo "SET (CMAKE_C_FLAGS_DEBUG          \"-g\")" >> $proj_root/CMakeLists.txt
+        echo "SET (CMAKE_C_FLAGS_MINSIZEREL     \"-Os -DNDEBUG\")" >> $proj_root/CMakeLists.txt
+        echo "SET (CMAKE_C_FLAGS_RELEASE        \"-O4 -DNDEBUG\")" >> $proj_root/CMakeLists.txt
+        echo "SET (CMAKE_C_FLAGS_RELWITHDEBINFO \"-O2 -g\")" >> $proj_root/CMakeLists.txt
+        
+        echo "" >> $proj_root/CMakeLists.txt
+        echo "SET (CMAKE_CXX_COMPILER             \"clang++\")" >> $proj_root/CMakeLists.txt
+        echo "SET (CMAKE_CXX_FLAGS                \"-Wall -std=gnu++17\")" >> $proj_root/CMakeLists.txt
+        echo "SET (CMAKE_CXX_FLAGS_DEBUG          \"-g\")" >> $proj_root/CMakeLists.txt
+        echo "SET (CMAKE_CXX_FLAGS_MINSIZEREL     \"-Os -DNDEBUG\")" >> $proj_root/CMakeLists.txt
+        echo "SET (CMAKE_CXX_FLAGS_RELEASE        \"-O4 -DNDEBUG\")" >> $proj_root/CMakeLists.txt
+        echo "SET (CMAKE_CXX_FLAGS_RELWITHDEBINFO \"-O2 -g\")" >> $proj_root/CMakeLists.txt
+        
+        echo "" >> $proj_root/CMakeLists.txt
+        echo "SET (CMAKE_AR      \"llvm-ar\")" >> $proj_root/CMakeLists.txt
+        echo "SET (CMAKE_LINKER  \"lld\")" >> $proj_root/CMakeLists.txt
+        echo "SET (CMAKE_NM      \"llvm-nm\")" >> $proj_root/CMakeLists.txt
+        echo "SET (CMAKE_OBJDUMP \"llvm-objdump\")" >> $proj_root/CMakeLists.txt
+        echo "SET (CMAKE_RANLIB  \"llvm-ranlib\")" >> $proj_root/CMakeLists.txt
+        
+        echo "" >> $proj_root/CMakeLists.txt
+        echo "# set(CMAKE_CXX_FLAGS \"\${CMAKE_CXX_FLAGS} -stdlib=libc++\")" >> $proj_root/CMakeLists.txt
+        # -I/usr/include/libcxxabi
+        echo "# set(CMAKE_LINKER_FLAGS \"\${CMAKE_LINKER_FLAGS} -stdlib=libc++ -lc++abi\")" >> $proj_root/CMakeLists.txt
+        echo "endif(UNIX)" >> $proj_root/CMakeLists.txt
+        
+        echo "" >> $proj_root/CMakeLists.txt
+        echo "set(ROOT \${CMAKE_CURRENT_LIST_DIR})" >> $proj_root/CMakeLists.txt
+
+        echo "" >> $proj_root/CMakeLists.txt
+        echo "file(GLOB_RECURSE hdrs *.h *.hh *.hpp *.hxx *.ipp)" >> $proj_root/CMakeLists.txt
+        echo "file(GLOB_RECURSE srcs \${ROOT}/src/*.c \${ROOT}/src/*.cc \${ROOT}/src/*.cxx \${ROOT}/src/*.ixx \${ROOT}/src/*.cpp \${ROOT}/src/*.m \${ROOT}/src/*.mm)" >> $proj_root/CMakeLists.txt
+
+        echo "" >> $proj_root/CMakeLists.txt
+        echo "# add_library(pro_a STATIC \${srcs})" >> $proj_root/CMakeLists.txt
+        echo "# add_library(pro SHARED \${srcs})" >> $proj_root/CMakeLists.txt
+        echo "# message(STATUS \${srcs})" >> $proj_root/CMakeLists.txt
+        
+        echo "" >> $proj_root/CMakeLists.txt
+        echo "add_executable(main \${srcs} \${hdrs})" >> $proj_root/CMakeLists.txt
+        echo "target_link_libraries(main)" >> $proj_root/CMakeLists.txt
+    fi
+
+    # if [ ! -f "$proj_root/compile_commands.json" ]; then
+        # mkdir -p $proj_root/build
+        # cd $proj_root/build/
+        # cmake .. -DCMAKE_EXPORT_COMPILE_COMMANDS=YES
+        # cd ..
+        # rm -rf ./compile_commands.json
+        # ln -s build/compile_commands.json
+    # fi
+
+    if [ ! -f "$proj_root/compile_commands.json" ] && [ "$proj_build" = "1" ]; then
+        # ome_cmake_build $proj_root
+        cmake_build $proj_root
+    fi
+}
+
+proj_root=$1
+proj_type=$2
+proj_build=$3
+# if [ ! -d "$proj_root" ]; then
+mkdir -p "$proj_root/src/"
+if [ "$proj_type" = "c" ]; then
+    srcfile=$proj_root/src/main.c
+    echo "#include <stdio.h>" >> $srcfile
+    echo "#include <assert.h>" >> $srcfile
+    echo "" >> $srcfile
+    echo "int main(int argc, char* argv[])" >> $srcfile
+    echo "{" >> $srcfile
+    echo "    printf(\"hello,world!\");" >> $srcfile
+    echo "    return 0;" >> $srcfile
+    echo "}" >> $srcfile
+elif [ "$proj_type" = "cpp" ]; then
+    srcfile=$proj_root/src/main.cpp
+    echo "#include <iostream>" >> $srcfile
+    echo "#include <assert.h>" >> $srcfile
+    echo "" >> $srcfile
+    echo "int main(int argc, char* argv[])" >> $srcfile
+    echo "{" >> $srcfile
+    echo "    std::cout << \"Hello world\" << std::endl;" >> $srcfile
+    echo "    return 0;" >> $srcfile
+    echo "}" >> $srcfile
 fi
+
+# for ROS
+# . /opt/ros/kinetic/setup.bash
 
 ome_gen_cmake_file $@

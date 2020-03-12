@@ -5,5 +5,18 @@
 SELF_DIR=$(dirname $(readlink -f $0))
 . $SELF_DIR/../env
 
+ome_gen_rtags() {
+    if [ "$1" != "" ]; then
+        cd $1
+    fi
+    local proj_root=`pwd`
+    echo "ome_gen_rtags:$proj_root"
+    if [ ! -f "$proj_root/compile_commands.json" ]; then
+        ome_gen_cmake_file $proj_root
+    fi
+
+    cd $proj_root
+    rc -J .
+}
 
 ome_gen_rtags $@

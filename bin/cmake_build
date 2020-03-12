@@ -3,4 +3,31 @@
 SELF_DIR=$(dirname $(readlink -f $0))
 . $SELF_DIR/../env
 
+ome_cmake_build() {
+    local oldir=`pwd`
+    echo "file-dir::$oldir"
+    if [ -n $1 ]; then
+        cd $1
+    fi
+    local proj_root=`pwd`
+    echo "project-dir:$proj_root"
+    if [ -f "$proj_root/CMakeLists.txt" ]; then
+        echo $proj_root
+        mkdir -p $proj_root/build
+        cd $proj_root/build/
+
+        cmake .. -G "$OME_MAKE" \
+              -DCMAKE_INSTALL_PREFIX=$OME_PREFIX \
+              -DCMAKE_EXPORT_COMPILE_COMMANDS=1 \
+              -DCMAKE_CXX_STANDARD=11
+        cmake --build . --use-stderr --config Release #--target install
+        cd ..
+        rm -rf ./compile_commands.json
+        ln -s build/compile_commands.json
+    else
+        echo "'CMakeLists.txt' not found!"
+    fi
+    cd $oldir
+}
+
 ome_cmake_build $@
