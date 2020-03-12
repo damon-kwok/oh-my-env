@@ -2,6 +2,7 @@
 
 dotnet_install() {
     mono_install
+    omnisharp_install
     fsharp_install
 }
 
@@ -54,7 +55,8 @@ mono_install() {
         $OS_DFBSD) ;;
         # Windows
         $OS_CYGWIN) ;;
-        $OS_MSYS2) ;;
+        $OS_MSYS2)
+        pacman -S mingw-w64-x86_64-mono;;
         # Other
         $OS_UNKNOW) ;;
     esac
@@ -70,6 +72,13 @@ fsharp_install() {
     cd $OME_REPO/fsharp-language-server
     npm install
     mono build -c Release
+}
+
+omnisharp_install() {
+    github_upgrade OmniSharp/omnisharp-roslyn $OME_REPO/omnisharp-roslyn
+    cd $OME_REPO/omnisharp-roslyn
+    chmod +x ./build.sh
+    ./build.sh
 }
 
 dotnet_info() {
