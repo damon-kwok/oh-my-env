@@ -136,6 +136,11 @@ rust_set_env() {
         # fi
     # fi
     
+    export RUSTUP_DIST_SERVER=https://mirrors.ustc.edu.cn/rust-static
+    export RUSTUP_UPDATE_ROOT=https://mirrors.ustc.edu.cn/rust-static/rustup
+    export RUSTUP_HOME=$HOME/.rustup
+    export CARGO_HOME=$HOME/.cargo
+
     if [ -f $HOME/.cargo/env ]; then
         . $HOME/.cargo/env
     fi
@@ -143,11 +148,6 @@ rust_set_env() {
         export PATH="$HOME/.cargo/bin:$PATH"
         export RUST_SRC_PATH="$(rustc --print sysroot)/lib/rustlib/src/rust/src"
     fi
-    
-    export RUSTUP_DIST_SERVER=https://mirrors.ustc.edu.cn/rust-static
-    export RUSTUP_UPDATE_ROOT=https://mirrors.ustc.edu.cn/rust-static/rustup
-    export RUSTUP_HOME=$HOME/.rustup
-    export CARGO_HOME=$HOME/.cargo
 }
 rust_set_env
 
