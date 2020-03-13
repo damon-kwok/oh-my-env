@@ -153,16 +153,16 @@ cclib_install_tools() {
             ;;
         $OS_MSYS2)
 	        # libedit-devel libautotrace-devel libuuid-devel
-            pacman -S mingw-w64-x86_64-swig mingw-w64-x86_64-cppunit \
-                   mingw-w64-x86_64-openssl mingw-w64-x86_64-libgcrypt \
-                   mingw-w64-x86_64-curl mingw-w64-x86_64-ncurses \
-                   mingw-w64-x86_64-libxml2 mingw-w64-x86_64-libxslt mingw-w64-x86_64-expat mingw-w64-x86_64-libyaml \
-                   mingw-w64-x86_64-libffi mingw-w64-x86_64-readline mingw-w64-x86_64-gettext  \
-                   mingw-w64-x86_64-libevent mingw-w64-x86_64-pcre mingw-w64-x86_64-pcre2  \
-                   mingw-w64-x86_64-iconv  \
-	               bison mingw-w64-x86_64-icu  mingw-w64-x86_64-tidy  \
-                   mingw-w64-x86_64-zlib mingw-w64-x86_64-libzip mingw-w64-x86_64-bzip2 mingw-w64-x86_64-lz4 mingw-w64-x86_64-xz  \
-                   mingw-w64-x86_64-libatomic_ops re2c
+            # pacman -S mingw-w64-x86_64-swig mingw-w64-x86_64-cppunit \
+                   # mingw-w64-x86_64-openssl mingw-w64-x86_64-libgcrypt \
+                   # mingw-w64-x86_64-curl mingw-w64-x86_64-ncurses \
+                   # mingw-w64-x86_64-libxml2 mingw-w64-x86_64-libxslt mingw-w64-x86_64-expat mingw-w64-x86_64-libyaml \
+                   # mingw-w64-x86_64-libffi mingw-w64-x86_64-readline mingw-w64-x86_64-gettext  \
+                   # mingw-w64-x86_64-libevent mingw-w64-x86_64-pcre mingw-w64-x86_64-pcre2  \
+                   # mingw-w64-x86_64-iconv  \
+	               # bison mingw-w64-x86_64-icu  mingw-w64-x86_64-tidy  \
+                   # mingw-w64-x86_64-zlib mingw-w64-x86_64-libzip mingw-w64-x86_64-bzip2 mingw-w64-x86_64-lz4 mingw-w64-x86_64-xz  \
+                   # mingw-w64-x86_64-libatomic_ops re2c
             ;;
         # Other
         $OS_UNKNOW) ;;

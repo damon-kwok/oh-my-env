@@ -3,6 +3,12 @@
 config_offlineimap() {    
     local del_force=$1
     if [ "$del_force" = "1" ]; then
+	    rm -rf ~/.mbsyncrc
+    fi
+}
+config_offlineimap() {    
+    local del_force=$1
+    if [ "$del_force" = "1" ]; then
 	    rm -rf ~/.offlineimaprc
     fi
     
@@ -168,6 +174,12 @@ mu4e_install() {
 	    ./autogen.sh --prefix=$OME_PREFIX
 	    make install
 	fi
+
+    # mbsync
+    readp "config offlineimap?"
+	if [ $? -eq 1 ]; then
+        config_mbsync
+    fi
     # offlineimap
     readp "config offlineimap?"
 	if [ $? -eq 1 ]; then
