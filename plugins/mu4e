@@ -5,6 +5,10 @@ config_offlineimap() {
     if [ "$del_force" = "1" ]; then
 	    rm -rf ~/.mbsyncrc
     fi
+    cp -f $OME_WS/conf/email/outlook/.mbsyncrc ~/
+    mkdir -p ~/Mail/Outlook
+    mbsync -a
+    mu index -m ~/Mail/Outlook
 }
 config_offlineimap() {    
     local del_force=$1
