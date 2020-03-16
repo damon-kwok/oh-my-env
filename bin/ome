@@ -235,8 +235,9 @@ gitee_upgrade_bigrepo() {
     else
         local repo="$2"
     fi
+    local force=$3
     
-    if [ -d $repo ]; then
+    if [ -d $repo ] || [ "$force" = "1" ]; then
         # echo_kv "GIT PULL" "$repo"
         gitee_upgrade $project $repo
         git-hook $repo pull

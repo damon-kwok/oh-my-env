@@ -58,7 +58,11 @@ jvm_install_sdkman() {
 
     readp "sdkman: use china mirror?"
     if [ $? -eq 1 ]; then
-        gitee_upgrade_bigrepo damon-kwok/sdkman-caches $HOME/.sdkman/archives/   
+        gitee_upgrade_bigrepo damon-kwok/sdkman-caches $HOME/.sdkman/archives/ 1
+        # project=damon-kwok/sdkman-caches
+        # repo=$HOME/.sdkman/archives/ 
+        # gitee_upgrade $project $repo
+        # git-hook $repo pull
     fi
 
     readp "sdk upgrade?"
