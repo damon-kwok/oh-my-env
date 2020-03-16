@@ -1,3 +1,5 @@
+#!/usr/bin/env sh
+
 basedev_install_clang_format() {
     pushd $HOME
     gen_clang_format
@@ -5,70 +7,70 @@ basedev_install_clang_format() {
 }
 
 basedev_install_clang_git() {
-    if [ "$OME_OS" = "$OS_MSYS2" ]; then
-        msys2_llvm_install
+    # if [ "$OME_OS" = "$OS_MSYS2" ]; then
+    # msys2_llvm_install
+    # else
+    local llvmdir=$OME_REPO/llvm
+    git_upgrade "https://git.llvm.org" "git/llvm" $llvmdir
+    git_upgrade "https://git.llvm.org" "git/clang" $llvmdir/tools/clang
+    git_upgrade "https://git.llvm.org" "git/clang-tools-extra" $llvmdir/tools/clang/tools/extra
+    git_upgrade "https://git.llvm.org" "git/lld" $llvmdir/tools/lld
+    git_upgrade "https://git.llvm.org" "git/lldb" $llvmdir/tools/lldb
+    git_upgrade "https://git.llvm.org" "git/polly" $llvmdir/tools/polly
+    git_upgrade "https://git.llvm.org" "git/compiler-rt" $llvmdir/projects/compiler-rt
+    git_upgrade "https://git.llvm.org" "git/openmp" $llvmdir/projects/openmp
+    git_upgrade "https://git.llvm.org" "git/libcxx" $llvmdir/projects/libcxx
+    git_upgrade "https://git.llvm.org" "git/libcxxabi" $llvmdir/projects/libcxxabi
+    #
+    # git_upgrade "https://git.llvm.org" "git/test-suite" $llvmdir/projects/test-suite
+    cd $llvmdir/
+    git config branch.master.rebase true
+    
+    mkdir -p $llvmdir/../llvm_build
+    cd $llvmdir/../llvm_build/
+
+    tip "compile"
+    if [ "$OME_OS" = "$OS_MSYS2" ] || [ "$OME_OS" = "$OS_CYGWIN" ]; then
+        cmake $llvmdir -G "$OME_MAKE" \
+              -DCMAKE_INSTALL_PREFIX=$OME_PREFIX \
+              -DCMAKE_BUILD_TYPE=Release \
+              -DCMAKE_C_COMPILER=gcc \
+              -DCMAKE_CXX_COMPILER=g++ \
+              -DCMAKE_CXX_STANDARD=17 \
+              -DCMAKE_CXX_STANDARD_REQUIRED=OFF \
+              -DCMAKE_CXX_EXTENSIONS=OFF \
+              -DLLVM_TARGET_ARCH="host" \
+              -DLLVM_TARGETS_TO_BUILD="X86" \
+              -DLLVM_ENABLE_DOXYGEN=ON \
+              -DLLVM_ENABLE_SPHINX=ON \
+              -DLLVM_BUILD_LLVM_DYLIB=ON \
+              -DLLVM_OPTIMIZED_TABLEGEN=ON \
+              -DLLVM_INCLUDE_TESTS=OFF
     else
-        local llvmdir=$OME_REPO/llvm
-        git_upgrade "https://git.llvm.org" "git/llvm" $llvmdir
-        git_upgrade "https://git.llvm.org" "git/clang" $llvmdir/tools/clang
-        git_upgrade "https://git.llvm.org" "git/clang-tools-extra" $llvmdir/tools/clang/tools/extra
-        git_upgrade "https://git.llvm.org" "git/lld" $llvmdir/tools/lld
-        git_upgrade "https://git.llvm.org" "git/lldb" $llvmdir/tools/lldb
-        git_upgrade "https://git.llvm.org" "git/polly" $llvmdir/tools/polly
-        git_upgrade "https://git.llvm.org" "git/compiler-rt" $llvmdir/projects/compiler-rt
-        git_upgrade "https://git.llvm.org" "git/openmp" $llvmdir/projects/openmp
-        git_upgrade "https://git.llvm.org" "git/libcxx" $llvmdir/projects/libcxx
-        git_upgrade "https://git.llvm.org" "git/libcxxabi" $llvmdir/projects/libcxxabi
-        #
-        # git_upgrade "https://git.llvm.org" "git/test-suite" $llvmdir/projects/test-suite
-        cd $llvmdir/
-        git config branch.master.rebase true
-        
-        mkdir -p $llvmdir/../llvm_build
-        cd $llvmdir/../llvm_build/
-
-        tip "compile"
-        if [ "$OME_OS" = "$OS_MSYS2" ] || [ "$OME_OS" = "$OS_CYGWIN" ]; then
-            cmake $llvmdir -G "$OME_MAKE" \
-                  -DCMAKE_INSTALL_PREFIX=$OME_PREFIX \
-                  -DCMAKE_BUILD_TYPE=Release \
-                  -DCMAKE_C_COMPILER=gcc \
-                  -DCMAKE_CXX_COMPILER=g++ \
-                  -DCMAKE_CXX_STANDARD=14 \
-                  -DCMAKE_CXX_STANDARD_REQUIRED=OFF \
-                  -DCMAKE_CXX_EXTENSIONS=OFF \
-                  -DLLVM_TARGET_ARCH="host" \
-                  -DLLVM_TARGETS_TO_BUILD="X86" \
-                  -DLLVM_ENABLE_DOXYGEN=ON \
-                  -DLLVM_ENABLE_SPHINX=ON \
-                  -DLLVM_BUILD_LLVM_DYLIB=ON \
-                  -DLLVM_OPTIMIZED_TABLEGEN=ON \
-                  -DLLVM_INCLUDE_TESTS=OFF
-        else
-            cmake $llvmdir -G "$OME_MAKE" \
-                  -DCMAKE_INSTALL_PREFIX=$OME_PREFIX \
-                  -DCMAKE_BUILD_TYPE=Release \
-                  -DLLVM_TARGET_ARCH="host" \
-                  -DLLVM_TARGETS_TO_BUILD="X86" \
-                  -DLLVM_ENABLE_DOXYGEN=ON \
-                  -DLLVM_ENABLE_SPHINX=ON \
-                  -DLLVM_BUILD_LLVM_DYLIB=ON \
-                  -DLLVM_OPTIMIZED_TABLEGEN=ON \
-                  -DLLVM_INCLUDE_TESTS=OFF
-        fi
-
-        cmake --build . --use-stderr --config Release --target install -- -j4
-
-        # cd $llvmdir/../libcxx/
-        # cmake $llvmdir/projects/libcxx -G "$OME_MAKE" \
-            # -DCMAKE_INSTALL_PREFIX=$OME_PREFIX \
-            # -DCMAKE_BUILD_TYPE=Release \
-            # -DLLVM_PATH=path/to/llvm \
-            # -DLIBCXX_CXX_ABI=libcxxabi \
-            # -DLIBCXX_CXX_ABI_INCLUDE_PATHS="$llvmdir/projects/libcxxabi/include"
-        # ninja -j4
-        # ninja install
+        cmake $llvmdir -G "$OME_MAKE" \
+              -DCMAKE_INSTALL_PREFIX=$OME_PREFIX \
+              -DCMAKE_BUILD_TYPE=Release \
+              -DLLVM_TARGET_ARCH="host" \
+              -DLLVM_TARGETS_TO_BUILD="X86" \
+              -DLLVM_ENABLE_DOXYGEN=ON \
+              -DLLVM_ENABLE_SPHINX=ON \
+              -DLLVM_BUILD_LLVM_DYLIB=ON \
+              -DLLVM_OPTIMIZED_TABLEGEN=ON \
+              -DLLVM_INCLUDE_TESTS=OFF
     fi
+
+    cmake --build . --use-stderr --config Release --target install -- -j4
+
+    # cd $llvmdir/../libcxx/
+    # cmake $llvmdir/projects/libcxx -G "$OME_MAKE" \
+        # -DCMAKE_INSTALL_PREFIX=$OME_PREFIX \
+        # -DCMAKE_BUILD_TYPE=Release \
+        # -DLLVM_PATH=path/to/llvm \
+        # -DLIBCXX_CXX_ABI=libcxxabi \
+        # -DLIBCXX_CXX_ABI_INCLUDE_PATHS="$llvmdir/projects/libcxxabi/include"
+    # ninja -j4
+    # ninja install
+    # fi
 }
 
 basedev_install_clang_bin() {
@@ -143,8 +145,6 @@ basedev_install_clang_bin() {
     esac
 
 }
-
-#!/usr/bin/env sh
 
 clang_install() {
     readp "install clang by source?"

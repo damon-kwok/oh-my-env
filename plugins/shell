@@ -1,9 +1,12 @@
 #!/usr/bin/env sh
 
 shell_install() {
-    ome_check_install "npm" "nodejs"
-    tip "install bash language server"
-    npm i -g bash-language-server
+    readp "install bash language server?"
+    if [ $? -eq 1 ]; then
+        ome_check_install "npm" "nodejs"
+        tip "install bash language server"
+        npm i -g bash-language-server        
+    fi
     
     # tip "install oh-my-zsh"
     # sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
@@ -20,14 +23,9 @@ shell_install() {
 	    ~/.bash_it/install.sh
         
         ome_fix_dotfiles
+
+        bash
     fi
-
-    #set .bashrc
-
-    # ome_check_install "npm" "nodejs"
-    
-    # tip "install bash language server"
-    # npm i -g bash-language-server
 }
 
 shell_uninstall() {
