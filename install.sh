@@ -440,8 +440,12 @@ case $OME_OS in
 		if [ $? -eq 0 ]; then
 			tip "mirrorlist fix"
 			echo "Server = https://mirrors.tuna.tsinghua.edu.cn/msys2/mingw/i686" >> /etc/pacman.d/mirrorlist.mingw32
-			echo "Server = Server = https://mirrors.tuna.tsinghua.edu.cn/msys2/mingw/x86_64" >> /etc/pacman.d/mirrorlist.mingw64
-			echo 'Server = Server = https://mirrors.tuna.tsinghua.edu.cn/msys2/msys/$arch' >> /etc/pacman.d/mirrorlist.msys
+			echo "Server = https://mirrors.tuna.tsinghua.edu.cn/msys2/mingw/x86_64" >> /etc/pacman.d/mirrorlist.mingw64
+			echo 'Server = https://mirrors.tuna.tsinghua.edu.cn/msys2/msys/$arch' >> /etc/pacman.d/mirrorlist.msys
+
+            echo "Server = https://mirrors.ustc.edu.cn/msys2/mingw/i686" >> /etc/pacman.d/mirrorlist.mingw32
+			echo "Server = https://mirrors.ustc.edu.cn/msys2/mingw/x86_64" >> /etc/pacman.d/mirrorlist.mingw64
+			echo 'Server = https://mirrors.ustc.edu.cn/msys2/msys/$arch' >> /etc/pacman.d/mirrorlist.msys
 		else
 			tip "mirrorlist is already fix"
 		fi

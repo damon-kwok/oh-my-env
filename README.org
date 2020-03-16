@@ -6,9 +6,8 @@
 #+TODO: TODO DOING DONE
 
 *** Requires
-- git
 - curl
-- wget
+- bash
 *** Support OS
 | OS     | Distribution/Environment                   |
 |--------+--------------------------------------------|
@@ -16,84 +15,43 @@
 | Unix   | FreeBSD/Solaris/illumo                     |
 | Window | Cygwin/MSYS2                               |
 *** Install
-#+BEGIN_SRC 
+#+BEGIN_SRC shell 
 # curl -L https://raw.githubusercontent.com/damon-kwok/oh-my-env/master/install.sh | bash
-curl -L https://git.io/JeLGL | sh -s install
+curl -L https://git.io/JeLGL | bash -s install
 #+END_SRC
 *** Uninstall
-#+BEGIN_SRC shell
-ome uninstall self
-#+END_SRC
-or
-#+BEGIN_SRC shell
-source $OME_ROOT/uninstall.sh
-#+END_SRC
-or
-#+BEGIN_SRC shell
-# curl -L https://raw.githubusercontent.com/damon-kwok/oh-my-env/master/uninstall.sh | bash
-# curl -L https://git.io/JeL0d | sh
-curl -L https://git.io/JeLGL | sh -s uninstall
-#+END_SRC
-or
 #+BEGIN_SRC shell
 rm -rf ~/.oh-my-env
 rm -rf ~/.ome_local
 #+END_SRC
+
 *** Usage
-- init
+- install programming languages
 #+BEGIN_SRC shell
-ome init
-#+END_SRC
-- install
-#+BEGIN_SRC shell
-ome install oh_my_emacs # oh-my-emacs config
 ome install cc          # c/c++ development environment
 ome install jvm         # java/kotlin/groovy/scala development environment
 ome install golang      # golang development environment
 ome install haskell     # haskell development environment
 ome install rust        # rust development environment
 ome install php         # php development environment
-ome install python      # python2/3 development environment
+ome install python      # python3 development environment
 ome install ruby        # ruby development environment
 ome install perl        # perl development environment
 ome install erlang      # erlang development environment
 ome install elixir      # elixir development environment
 ome install nim         # nim development environment
 #+END_SRC
-- uninstall
-#+BEGIN_SRC shell
-ome uninstall cc
-#+END_SRC
+
 - update
 #+BEGIN_SRC shell
 ome update
 #+END_SRC
+
 - create project
 #+BEGIN_SRC shell
-ome new c helloc
-ome new c++ hellocpp
-ome new clojure helloclj
-ome new commonlisp hellocl
-ome new erlang helloerl
-ome new elixir helloex
-ome new golang hellogo
-ome new groovy hellogroovy
-ome new haskell hellohs
-ome new java hellojava
-ome new kotlin hellokt
-ome new nim hellonim
-ome new grunt hello_nodejs_grunt
-ome new gulp hello_nodejs_gulp
-ome new pipenv hellopy1
-ome new poetry hellopy2
-ome new hatch hellopy3
-ome new reason hellore
-ome new reason-bs hellores
-ome new ruby helloby
-ome new scala helloscala
-ome new swift helloswift
-ome new rust hellors
-
+ome new
 #+END_SRC
+
 *** Link
 - [[https://github.com/damon-kwok/oh-my-emacs][oh-my-emacs]]
+- [[https://github.com/damon-kwok/awesome-package-manager][awesome-package-manager]]

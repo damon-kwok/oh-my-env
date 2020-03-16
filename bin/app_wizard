@@ -49,6 +49,9 @@ ome_app_wizard() {
         echo "    q) quit"
 
         read -p "please enter your choice:" proj_lang
+        if [ "$proj_lang" == "q" ] || [ "$proj_lang" == "r" ]; then
+            return 0
+        fi
     fi
 
     if [ "$proj_root" == "" ]; then

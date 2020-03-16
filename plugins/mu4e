@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-config_offlineimap() {    
+config_mbsync() {    
     local del_force=$1
     if [ "$del_force" = "1" ]; then
 	    rm -rf ~/.mbsyncrc
@@ -163,12 +163,16 @@ mu4e_install() {
         $OS_CYGWIN)
             apt install libxapian-devel libgmime3.0-devel libiconv-devel
             ;;
-        $OS_MSYS2) ;;
+        $OS_MSYS2)
+            cd ~/.emacs.d/pkgs-bin/
+            pacman -U isync-git-*.pkg.tar.xz gmime3-3*.pkg.tar.xz xapian-core-*.pkg.tar.xz mu-*.pkg.tar.xz
+            pacman -S mingw-w64-x86_64-libxml2
+            ;;
         # Other
         $OS_UNKNOW) ;;
     esac
 
-    if [ "$OME_OS" != "$OS_FREEBSD" ]; then
+    if [ "$OME_OS" != "$OS_FREEBSD" ] && [ "$OME_OS" != "$OS_MSYS2" ]; then
         tip "install mu4e-git"
         github_upgrade djcb/mu $HOME/.emacs.d/libs/mu-git
         cd $HOME/.emacs.d/libs/mu-git/
@@ -179,24 +183,30 @@ mu4e_install() {
 	    make install
 	fi
 
+    # offlineimap
+    # readp "config offlineimap?"
+	# if [ $? -eq 1 ]; then
+    #     config_offlineimap
+
+    #     # Maildir
+    #     mkdir -p ~/Maildir/Archive/
+    #     mkdir -p ~/Maildir/Draft/
+    #     mkdir -p ~/Maildir/INBOX/
+    #     mkdir -p ~/Maildir/Junk/
+    #     mkdir -p ~/Maildir/Sent/
+    #     mkdir -p ~/Maildir/Trash/
+    # fi
+    
     # mbsync
-    readp "config offlineimap?"
+    readp "config mbsync?"
 	if [ $? -eq 1 ]; then
         config_mbsync
     fi
-    # offlineimap
-    readp "config offlineimap?"
-	if [ $? -eq 1 ]; then
-        config_offlineimap
 
-        # Maildir
-        mkdir -p ~/Maildir/Archive/
-        mkdir -p ~/Maildir/Draft/
-        mkdir -p ~/Maildir/INBOX/
-        mkdir -p ~/Maildir/Junk/
-        mkdir -p ~/Maildir/Sent/
-        mkdir -p ~/Maildir/Trash/
-    fi
+    mkdir -p ~/Mail/Outlook/Sent
+    mkdir -p ~/Mail/Outlook/Draft
+    mkdir -p ~/Mail/Outlook/Trash
+    mu init -m ~/Mail/Outlook
 }
 
 mu4e_uninstall() {
