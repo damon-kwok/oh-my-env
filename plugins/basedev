@@ -9,19 +9,21 @@ basedev_install_tools() {
         $OS_DEBIAN|$OS_UBUNTU)
             sudo apt install -y build-essential \
                  make ninja-build cmake \
-                 automake autogen autoconf autopoint \
-                 pkg-config libtool intltool libtool-bin
+                 autogen automake autoconf libtool libtool-bin \
+                 pkg-config
             ;;
         # $OS_REDHAT) ;;
         # $OS_FEDORA) ;;
         $OS_REDHAT|$OS_FEDORA)
             sudo yum groupinstall -y "Development Tools"
             sudo yum install -y gcc gcc-c++ make ninja-build cmake \
-                 automake autogen autoconf autopoint pkg-config libtool intltool
+                 autogen automake autoconf libtool \
+                 pkg-config
             ;;
         $OS_ARCH)
-            trizen -S base-devel make ninja cmake automake autogen autoconf \
-                   pkg-config libtool intltool
+            trizen -S base-devel make ninja cmake \
+                   autogen automake autoconf libtool \
+                   pkg-config
             ;;
         $OS_GENTOO) ;;
         $OS_SUSE)
@@ -30,8 +32,8 @@ basedev_install_tools() {
             # zypper info -t pattern devel_basis
             sudo zypper install -t pattern devel_basis
             sudo zypper install make ninja cmake \
-                 automake autogen autoconf autopoint \
-                 pkg-config libtool intltool
+                 autogen automake autoconf libtool \
+                 pkg-config
             ;;
         $OS_SLACKWARE) ;;
         $OS_NIXOS) ;;
@@ -44,13 +46,15 @@ basedev_install_tools() {
         $OS_MACOS)
             brew install gcc-core gcc-g++ \
                  make ninja cmake \
-                 automake autogen autoconf autopoint pkg-config libtool intltool
+                 autogen automake autoconf libtool \
+                 pkg-config
             ;;
         $OS_AIX) ;;
         $OS_SOLARIS) ;;
         $OS_FREEBSD)
             sudo pkg install gcc gmake ninja cmake \
-                 automake autogen autoconf pkgconf libtool intltool
+                 autogen automake autoconf libtool \
+                 pkgconf
             ;;
         $OS_OPENBSD) ;;
         $OS_NETBSD) ;;
@@ -59,16 +63,17 @@ basedev_install_tools() {
         $OS_CYGWIN)
             apt install gcc-core gcc-g++ \
                 make ninja cmake \
-                automake autogen autoconf autopoint pkg-config libtool intltool
+                autogen automake autoconf libtool \
+                pkg-config
             ;;
         $OS_MSYS2)
-            # pacman -S make mingw-w64-x86_64-gcc mingw-w64-x86_64-nasm \
+            # pacman -S mingw-w64-x86_64-make mingw-w64-x86_64-gcc mingw-w64-x86_64-nasm \
                    # mingw-w64-x86_64-make mingw-w64-x86_64-ninja \
-                   # automake autogen autoconf mingw-w64-x86_64-pkg-config mingw-w64-x86_64-libtool intltool \
-                   # mingw-w64-x86_64-cmake mingw-w64-x86_64-ninja
+                   # mingw-w64-x86_64-libtool mingw-w64-x86_64-pkg-config \
             pacman -S base-devel msys2-devel gcc gcc-libs\
                    make ninja cmake \
-                   automake autogen autoconf pkg-config libtool intltool
+                   autogen automake autoconf libtool \
+                   pkg-config
             # cross
             # pacman -S mingw-w64-cross-gcc mingw-w64-x86_64-pdcurses
             # mingw-w64-x86_64-python2 mingw-w64-x86_64-python2-pip
@@ -81,7 +86,7 @@ basedev_install_tools() {
 }
 
 basedev_install() {
-    # gcc clang make m4 automake libtool pkg-config"
+    # gcc clang make m4 automake pkg-config"
     
     # libdn2 libuv libason-devel
     # 

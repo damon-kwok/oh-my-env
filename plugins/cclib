@@ -14,7 +14,7 @@ cclib_install_tools() {
                  libmcrypt-dev libgcrypt-dev libscrypt-dev libxcrypt-dev \
                  libcurl4-gnutls-dev libcurl4-openssl-dev uuid-dev libncurses-dev \
                  libxml2-dev libxslt-dev libexpat-dev libyaml-dev \
-                 libffi-dev libreadline-dev gettext \
+                 libffi-dev libreadline-dev gettext intltool \
                  libevent-dev libpcre2-dev \
                  libedit-dev libtrace-dev \
                  libbison-dev libicu-dev libtidy-dev \
@@ -55,7 +55,7 @@ cclib_install_tools() {
                  openssl-devel libxcrypt-devel libmcrypt-devel \
                  libcurl-devel libuuid-devel ncurses-devel \
                  libxml2-devel libxslt-devel expat-devel libyaml-devel \
-                 libffi-devel readline-devel gettext-devel \
+                 libffi-devel readline-devel gettext-devel intltool \
                  libevent-devel pcre-devel pcre2-devel \
                  libticonv-devel libedit-devel autotrace-devel \
                  bison-devel libicu-devel libtidy-devel \
@@ -67,7 +67,7 @@ cclib_install_tools() {
                    openssl libgcrypt libmcrypt \
                    curl libutil-linux ncurses \
                    libxml2 libxslt expat libyaml \
-                   libffi readline gettext \
+                   libffi readline gettext intltool \
                    libevent pcre pcre2 \
                    libiconv libedit potrace \
                    bison icu tidy \
@@ -83,7 +83,7 @@ cclib_install_tools() {
                  libgcrypt libmcrypt-devel \
                  curl ossp-uuid ncurses \
                  libxml2 libxslt expat libyaml \
-                 libffi readline gettext \
+                 libffi readline gettext intltool \
                  libevent pcre pcre2 \
                  libticonv libedit autotrace \
                  bison icu tidy-devel \
@@ -103,7 +103,7 @@ cclib_install_tools() {
                  libgcrypt libmcrypt \
                  curl ossp-uuid ncurses \
                  libxml2 libxslt expat libyaml \
-                 libffi readline gettext \
+                 libffi readline gettext intltool \
                  libevent pcre pcre2 \
                  libticonv libedit autotrace \
                  bison icu tidy-devel \
@@ -117,7 +117,7 @@ cclib_install_tools() {
                  libgcrypt libmcrypt \
                  curl ossp-uuid ncurses \
                  libxml2 libxslt expat libyaml \
-                 libffi readline gettext \
+                 libffi readline gettext intltool \
                  libevent pcre pcre2 \
                  libticonv libedit autotrace \
                  bison icu tidy-devel \

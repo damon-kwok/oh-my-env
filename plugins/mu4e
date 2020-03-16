@@ -108,11 +108,6 @@ mu4e_install() {
     # ./configure --prefix=$HOME/.mu
     # make install
 	
-	# cygwin
-	# apt install libxapian-devel
-	# apt install libgmime3.0-devel
-	# apt install libiconv-devel
-
     get_os_type
     case $OME_OS in
         # Linux
