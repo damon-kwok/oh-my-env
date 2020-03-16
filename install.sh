@@ -1,11 +1,11 @@
 #!/usr/bin/env sh
 
 title() {
+    echo -e $(tput setaf 6)"\n<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>"$(tput sgr0)
     echo -e $(tput setaf 6)"<>\t\t\t\t"$(tput sgr0)"$1"
     echo -e $(tput setaf 6)"<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>"\
          $(tput sgr0)
 }
-
 tip() {
     echo -e "$(tput setaf 6)\n<><><> "$(tput sgr0)"$1"$(tput setaf 6)" >"$(tput sgr0)
 }
@@ -45,8 +45,8 @@ host_upgrade() {
 		else
 			sudo sh -c "echo '$ip $name' >> /etc/hosts"
 		fi
-    else
-	    echo "'$ip $name' is exist in $hostfile"
+    #else
+	#    echo "'$ip $name' is exist in $hostfile"
     fi
 }
 

@@ -195,7 +195,7 @@ ome_repl() {
 }
 
 ome_config() {
-    title "ome config"
+    # title "ome config"
     
     # tip "ldconfig"
     # if [ ! -f "/etc/ld.so.conf.d/`whoami`.conf" ]; then
@@ -206,7 +206,7 @@ ome_config() {
     # tip "libtool"
     # libtool --finish $OME_PREFIX/lib
     
-    tip "git config"
+    # tip "git config"
     git config --global core.editor $EDITOR
     git config --global core.autocrlf false
     git config --global core.safecrlf false
@@ -226,22 +226,6 @@ ome_config() {
     git config --global diff.tool ediff
     git config --global difftool.ediff.cmd "ediff \"\$LOCAL\" \"\$REMOTE\""
     git config --global difftool.prompt false
-}
-
-ome_init() {
-	ome_config
-    ome_install init
-	# ome_install "neofetch"
-    ome_install "goto"
-}
-
-ome_doctor() {
-    title "ome doctor"
-	. $OME_ROOT/install.sh install
-    # ome_config
-    # ome_fix_dotfiles
-	# ome_install oh_my_emacs
-    # ome_init
 }
 
 gitee_upgrade_bigrepo() {
@@ -427,10 +411,16 @@ ome_parse() {
             ome_config
         ;;
         "init")
-            ome_init
+            ome_config
+            . $OME_ROOT/install.sh install
+	        ome_install "neofetch"
+            ome_install "goto"
             ;;
 		"doctor"|"fix")
-			ome_doctor;;
+			title "ome doctor"
+            ome_config
+	        . $OME_ROOT/install.sh install
+            ;;
         "install"|"i")
             for ARG in $ARGV; do
                 ome_eval "install" $ARG
@@ -452,6 +442,7 @@ ome_parse() {
             $EDITOR "$OME_ROOT/plugins/$ARG1"
             ;;
         "pull"|"update"|"upgrade")
+            ome_config
             ome_pull
             ;;
         "push"|"commit")
@@ -530,7 +521,7 @@ ome_parse() {
     esac
     cd $oldir
 }
-readonly OME_VERSION="OME-2020.0306 copyleft 2020 damon-kwok"
+readonly OME_VERSION="OME-2020.0316 copyleft 2020 damon-kwok"
 #echo $@
 mkdir -p $OME_PREFIX/bin/
 mkdir -p $OME_REPO/
