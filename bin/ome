@@ -410,16 +410,12 @@ ome_parse() {
         "config")
             ome_config
         ;;
-        "init")
-            ome_config
-            . $OME_ROOT/install.sh install
-	        ome_install "neofetch"
-            ome_install "goto"
-            ;;
-		"doctor"|"fix")
+		"init"|"doctor"|"fix")
 			title "ome doctor"
             ome_config
 	        . $OME_ROOT/install.sh install
+            ome_install "neofetch"
+            ome_install "goto"
             ;;
         "install"|"i")
             for ARG in $ARGV; do
