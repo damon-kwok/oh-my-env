@@ -1,8 +1,9 @@
 .DS_Store
 *.elc
 .#*
-rebar.lock
-rebar3.crashdump
+*.lock
+*.crashdump
+*.stackdump
 erl_crash.dump
 node_modules/
 rtags_indexes/
@@ -12,3 +13,4 @@ rtags_indexes/
 /.vscode/
 /build/
 /prefix/
+
