@@ -98,7 +98,7 @@ ome_write_env_to_dotfile() {
 }
 
 ###############################################################################
-title "LOADING"
+title "env loading"
 # OSlist: https://git-scm.com/download/linux
 # Linux
 export OS_DEBIAN="Debian"
@@ -184,7 +184,7 @@ case "`uname -s`" in
     *) export OME_OS=$OS_UNKNOW;;
 esac
 ###############################################################################
-title "FIX HOSTS"
+title "hosts init"
 host_upgrade 192.30.253.113 github.com
 host_upgrade 151.101.44.249 github.global.ssl.fastly.net
 host_upgrade 103.245.222.133 assets-cdn.github.com
@@ -219,7 +219,7 @@ host_upgrade 199.232.28.133 camo.githubusercontent.com
 # host_upgrade 34.196.247.240 collector.githubapp.com
 host_upgrade 52.7.232.208 collector.githubapp.com
 ###############################################################################
-title "OME INIT"
+title "deps init"
 get_os_type
 case $OME_OS in
 	# Linux
@@ -454,7 +454,27 @@ case $OME_OS in
 	$OS_UNKNOW) ;;
 esac
 ###############################################################################
-# if [ "$1" == "" ] || [ "$1" == "install" ]; then
+title "git config"
+git config --global core.editor $EDITOR
+git config --global core.autocrlf false
+git config --global core.safecrlf false
+git config --global core.safecrlf warn
+
+git config --global user.email "damon-kwok@outlook.com"
+git config --global user.name "damon-kwok"
+# git config --global credential.helper 'cache --timeout=36000'
+git config --global credential.helper store
+
+git config --global color.ui true
+
+git config --global merge.tool emerge
+git config --global mergetool.diffmerge.cmd "emerge \$LOCAL \$BASE \$REMOTE \$MERGED"
+git config --global mergetool.keepBackup false
+
+git config --global diff.tool ediff
+git config --global difftool.ediff.cmd "ediff \"\$LOCAL\" \"\$REMOTE\""
+git config --global difftool.prompt false
+###############################################################################
 title "OME INSTALL"
 if [ ! -f "$HOME/.oh-my-env/.git/index" ]; then
 	git clone https://github.com/damon-kwok/oh-my-env $HOME/.oh-my-env --depth=1
