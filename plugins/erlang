@@ -86,10 +86,15 @@ erlang_install_kerl() {
     fi
 
     # 1) build form src
-    if [ -f $HOME/Downloads/otp_src_${ERLANG_VERSION}.tar.gz ]; then
+    readp "erlang: use china mirror?"
+    if [ $? -eq 1 ]; then
         echo "erlang use cache:"
+        mkdir -p $HOME/.kerl/archives/
         cp -f $HOME/Downloads/otp_src_${ERLANG_VERSION}.tar.gz $HOME/.kerl/archives/
     fi
+    # if [ -f $HOME/Downloads/otp_src_${ERLANG_VERSION}.tar.gz ]; then
+        # cp -f $HOME/Downloads/otp_src_${ERLANG_VERSION}.tar.gz $HOME/.kerl/archives/
+    # fi
     kerl build $ERLANG_VERSION
 
     # 2) build form github for
@@ -140,10 +145,9 @@ erlenv_install() {
 erlang_install() {
     if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
         if [ ! -d "$OME_REPO/erl10.7" ]; then
-            echo 11111111111
-            # cd ~/Downloads/
-            # unzip ./otp-${ERLANG_VERSION}-win-x86_64.zip -d $OME_REPO
-            # erlang_set_env
+            cd ~/Downloads/
+            unzip ./otp-${ERLANG_VERSION}-win-x86_64.zip -d $OME_REPO
+            erlang_set_env
         else
             local REBAR_VERINFO=`rebar3 --version | head -n 1 | cut -d ' ' -f 4-`
             echo "$REBAR_VERINFO is already installed!"
