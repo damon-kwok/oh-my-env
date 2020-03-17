@@ -27,7 +27,7 @@ export OS_DFBSD="DragonflyBSD"
 export OS_TRUEOS="TrueOS"
 # Windows
 export OS_CYGWIN="Cygwin"
-export OS_MSYS2="Msys2"
+export OS_MSYS2="MSYS2"
 # Other
 export OS_ANDROID="Android"
 export OS_UNKNOW="Unknow"
@@ -208,7 +208,10 @@ fi
 
 # FIX for win
 if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
-    alias xdg-open='cygstart'
+    # alias xdg-open='cygstart'
+    xdg-open() {
+        cygstart $@
+    }
 fi
 
 # lang

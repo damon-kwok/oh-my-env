@@ -410,7 +410,7 @@ ome_parse() {
     case "$OPT_TYPE" in
         "config")
             ome_config
-        ;;
+            ;;
 		"init"|"doctor"|"fix")
 			title "ome doctor"
             ome_config

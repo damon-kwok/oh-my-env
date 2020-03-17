@@ -57,7 +57,7 @@ get_os_type() {
         echo "    1) macOS"
         echo "    -------------------------"
         echo "    2) Cygwin"
-        echo "    3) Msys2"
+        echo "    3) MSYS2"
         echo "    -------------------------"
         echo "    4) ArchLinux"
         echo "    5) Debian"
@@ -126,7 +126,7 @@ export OS_DFBSD="DragonflyBSD"
 export OS_TRUEOS="TrueOS"
 # Windows
 export OS_CYGWIN="Cygwin"
-export OS_MSYS2="Msys2"
+export OS_MSYS2="MSYS2"
 # Other
 export OS_ANDROID="Android"
 export OS_UNKNOW="Unknow"
