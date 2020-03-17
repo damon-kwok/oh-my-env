@@ -12,51 +12,58 @@ erlang_install_git() {
     
     # get_os_type
     # case $OME_OS in
-        # $OS_UNKNOW) ;;
-        # $OS_MACOS)
-            # brew install openssl
-            # ;;
-        # $OS_CYGWIN) ;;
-        # $OS_MSYS2) ;;
-        # $OS_ARCH)
-            # sudo pacman -S libssl-devel
-            # ;;
-        # $OS_DEBIAN|$OS_UBUNTU)
-            # sudo apt install libssl-dev
-            # ;;
-        # $OS_REDHAT|$OS_FEDORA)
-            # sudo yum install openssl-devel
-            # ;;
-        # $OS_FREEBSD) ;;
+    # $OS_UNKNOW) ;;
+    # $OS_MACOS)
+    # brew install openssl
+    # ;;
+    # $OS_CYGWIN) ;;
+    # $OS_MSYS2) ;;
+    # $OS_ARCH)
+    # sudo pacman -S libssl-devel
+    # ;;
+    # $OS_DEBIAN|$OS_UBUNTU)
+    # sudo apt install libssl-dev
+    # ;;
+    # $OS_REDHAT|$OS_FEDORA)
+    # sudo yum install openssl-devel
+    # ;;
+    # $OS_FREEBSD) ;;
     # esac
 }
 
 erlang_install_zip() {
     if [ "`command -v erl`" = "" ]; then
-        local zipkg=otp-OTP-${ERLANG_VERSION}.zip
-        
+        # local zipkg=otp-OTP-${ERLANG_VERSION}.zip
+        local zipkg=otp_src_${ERLANG_VERSION}.tar.gz
         # echo "zipkg:$zipkg"
         mkdir -p $HOME/Downloads
         cd $HOME/Downloads/
         if [ ! -f $HOME/Downloads/$zipkg ]; then
             # https://codeload.github.com/erlang/otp/zip/OTP-21.1.4
-            wget https://codeload.github.com/erlang/otp/zip/OTP-${ERLANG_VERSION}
+            # wget https://codeload.github.com/erlang/otp/zip/OTP-${ERLANG_VERSION}
+            wget http://erlang.org/download/otp_src_${ERLANG_VERSION}.tar.gz
         fi
-        if [ ! -d $HOME/Downloads/otp-OTP-$ERLANG_VERSION/ ]; then
-            unzip ./$zipkg
+        # if [ ! -d $HOME/Downloads/otp-OTP-$ERLANG_VERSION/ ]; then
+        if [ ! -d $HOME/Downloads/otp_src_$ERLANG_VERSION/ ]; then
+            # unzip ./$zipkg
+            tar -zxvf $zipkg
         fi
-        cd $HOME/Downloads/otp-OTP-$ERLANG_VERSION/
+        # cd $HOME/Downloads/otp-OTP-$ERLANG_VERSION/
+        cd $HOME/Downloads/otp_src_$ERLANG_VERSION/
         ./otp_build autoconf
         # ./configure --prefix=$HOME/.erlang_otp
         # ./configure --prefix=$OME_PREFIX
-        ./configure CFLAGS="-fPIC -mcmodel=large" --prefix=$HOME/.erlang_otp
-        sed -i 's/HAVE_MALLOPT/HAVE_NOT_MALLOPT/g' erts/x86_64-pc-msys/config.h
-        sed -i 's/HAVE_PPOLL/HAVE_NOT_PPOLL/g' erts/x86_64-pc-msys/config.h
-        sed -i 's/HAVE_GETIFADDRS/HAVE_NOT_GETIFADDRS/g' erts/x86_64-pc-msys/config.h
-        sed -i 's/HAVE_WCWIDTH/HAVE_NOT_WCWIDTH/g' erts/x86_64-pc-msys/config.h
-        sed -i 's/ERTS_HAVE_OS_PHYSICAL_MEMORY_RESERVATION/ERTS_HAVE_NOT_OS_PHYSICAL_MEMORY_RESERVATION/g' erts/emulator/sys/common/erl_mmap.h
-        sed -i 's/ipi_spec_dst/ipi_addr/g' erts/emulator/nifs/common/socket_nif.c
-        make install
+        ./configure CFLAGS="-fPIC -mcmodel=large -O2 -g" --prefix=$HOME/.erlang_otp
+        if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
+            sed -i 's/HAVE_MALLOPT/HAVE_NOT_MALLOPT/g' erts/x86_64-pc-msys/config.h
+            sed -i 's/HAVE_PPOLL/HAVE_NOT_PPOLL/g' erts/x86_64-pc-msys/config.h
+            sed -i 's/HAVE_GETIFADDRS/HAVE_NOT_GETIFADDRS/g' erts/x86_64-pc-msys/config.h
+            sed -i 's/HAVE_WCWIDTH/HAVE_NOT_WCWIDTH/g' erts/x86_64-pc-msys/config.h
+            sed -i 's/ERTS_HAVE_OS_PHYSICAL_MEMORY_RESERVATION/ERTS_HAVE_NOT_OS_PHYSICAL_MEMORY_RESERVATION/g' erts/emulator/sys/common/erl_mmap.h
+            sed -i 's/ipi_spec_dst/ipi_addr/g' erts/emulator/nifs/common/socket_nif.c
+        fi
+        make
+        # make install
     fi
 }
 
@@ -174,10 +181,10 @@ erlang_info() {
 # ERLANG_VERSION=22.2
 
 erlenv_set_env() {
-if [ -d $HOME/.erlenv/ ]; then
-    export PATH=$HOME/.erlenv/bin:$PATH
-    eval "$(erlenv init -)"
-fi
+    if [ -d $HOME/.erlenv/ ]; then
+        export PATH=$HOME/.erlenv/bin:$PATH
+        eval "$(erlenv init -)"
+    fi
 }
 
 kerl_set_env
