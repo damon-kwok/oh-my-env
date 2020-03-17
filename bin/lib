@@ -234,6 +234,42 @@ gitee_ssh_upgrade() {
     git_ssh_upgrade $site $@
 }
 
+gitee_upgrade_bigrepo() {
+    local project=$1
+    if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
+        local repo=`cygpath $2`
+    else
+        local repo="$2"
+    fi
+    local force=$3
+    
+    if [ -d $repo ] || [ "$force" = "1" ]; then
+        # echo_kv "GIT PULL" "$repo"
+        gitee_upgrade $project $repo
+        git-hook $repo pull
+    fi
+}
+gitee_push_bigrepo() {
+    if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
+        local repo=`cygpath $1`
+    else
+        local repo="$1"
+    fi
+    if [ -d $repo ]; then
+        echo_kv "git push" "$repo"
+        local oldir=`pwd`
+        cd $repo
+        git status
+        readp "==>push $repo?"
+        if [ $? -eq 1 ]; then
+            git-hook "$repo" push
+            git_push
+        fi
+        cd $oldir
+    fi
+}
+
+
 git_complete_upgrade() {
     git fetch --unshallow origin
 }

@@ -94,10 +94,15 @@ jvm_install_sdkman() {
         # sdk install groovy $GROOVY_VERSION
     # fi
 
+    if [ "`command -v ant`" = "" ]; then
+        sdk install ant $ANT_VERSION
+    fi
+    
     #if ! command -v mvn >/dev/null 2>&1; then
     if [ "`command -v mvn`" = "" ]; then
         sdk install maven $MAVEN_VERSION
     fi
+    
     readp "maven: use china morrir?"
     if [ $? -eq 1 ]; then
         cp -f $OME_ROOT/conf/maven/settings.xml $HOME/.sdkman/candidates/maven/current/conf/

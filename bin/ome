@@ -228,41 +228,6 @@ ome_config() {
     git config --global difftool.prompt false
 }
 
-gitee_upgrade_bigrepo() {
-    local project=$1
-    if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
-        local repo=`cygpath $2`
-    else
-        local repo="$2"
-    fi
-    local force=$3
-    
-    if [ -d $repo ] || [ "$force" = "1" ]; then
-        # echo_kv "GIT PULL" "$repo"
-        gitee_upgrade $project $repo
-        git-hook $repo pull
-    fi
-}
-gitee_push_bigrepo() {
-    if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
-        local repo=`cygpath $1`
-    else
-        local repo="$1"
-    fi
-    if [ -d $repo ]; then
-        echo_kv "git push" "$repo"
-        local oldir=`pwd`
-        cd $repo
-        git status
-        readp "==>push $repo?"
-        if [ $? -eq 1 ]; then
-            git-hook "$repo" push
-            git_push
-        fi
-        cd $oldir
-    fi
-}
-
 ome_pull() {
     local oldir=`pwd`
     # echo_kv "GIT PULL" "~/.oh-my_env/"
@@ -452,6 +417,8 @@ ome_parse() {
             app_wizard $ARG1 $ARG2
             ;;
         "look"|"check")
+            xdg-open "https://nim-lang.org/install_windows.html"
+            xdg-open "https://sdkman.io/sdks#leiningen"
             xdg-open "https://clojure.org/guides/getting_started#_installation_on_linux"
             xdg-open "https://nodejs.org/en/download/"
             xdg-open "https://golang.google.cn/dl/"

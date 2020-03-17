@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 clj_install() {
-    ome_check_install "java" "jvm"
+    # ome_check_install "java" "jvm"
 
     # https://www.clojure.org/guides/getting_started
     # https://clojure.org/guides/deps_and_cli
