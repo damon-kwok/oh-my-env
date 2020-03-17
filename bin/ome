@@ -86,8 +86,8 @@ ome_package_info() {
             local EVAL="${PLUGIN}_info"
             
             #echo "$EVAL--------------:$plugin_file"
-            . $plugin_file > /dev/null
-            eval "$EVAL > /dev/null"
+            $plugin_file > /dev/null 2>&1
+            eval "$EVAL > /dev/null 2>&1"
             
             #. $plugin_file
             #eval "$EVAL"
