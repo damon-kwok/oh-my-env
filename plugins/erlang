@@ -138,9 +138,21 @@ erlenv_install() {
 }
 
 erlang_install() {
-    # erlang_install_git
-    erlang_install_zip
-    # erlang_install_kerl
+    if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
+        if [ ! -d "$OME_REPO/erl10.7" ]; then
+            echo 11111111111
+            # cd ~/Downloads/
+            # unzip ./otp-${ERLANG_VERSION}-win-x86_64.zip -d $OME_REPO
+            # erlang_set_env
+        else
+            local REBAR_VERINFO=`rebar3 --version | head -n 1 | cut -d ' ' -f 4-`
+            echo "$REBAR_VERINFO is already installed!"
+        fi
+    else
+        # erlang_install_git
+        # erlang_install_zip
+        erlang_install_kerl
+    fi
 
     # tip "install rebar3 for erlang(download)"
     # cd $OME_PREFIX/bin/
@@ -156,9 +168,12 @@ erlang_install() {
     ./bootstrap
     cp -rf ./rebar3 $OME_PREFIX/bin/
     chmod +x $OME_PREFIX/bin/rebar3
+    rebar3 --version
 
     tip "rebar3 local upgrade"
-    rebar3 local upgrade DEBUG=1
+    if [ "$OME_OS" != "$OS_CYGWIN" ] && [ "$OME_OS" != "$OS_MSYS2" ]; then
+        rebar3 local upgrade DEBUG=1
+    fi
     tip "rebar3 update"
     rebar3 update
     tip "rebar3 upgrade"
@@ -192,3 +207,10 @@ kerl_set_env
 hex_pulish_settings() {
     echo 111
 }
+
+erlang_set_env() {
+    if [ -d $OME_REPO/erl10.7/ ]; then
+        export PATH=$OME_REPO/erl10.7/bin:$PATH
+    fi
+}
+erlang_set_env
