@@ -47,8 +47,15 @@ erlang_install_zip() {
         fi
         cd $HOME/Downloads/otp-OTP-$ERLANG_VERSION/
         ./otp_build autoconf
-        ./configure --prefix=$HOME/.erlang_otp
+        # ./configure --prefix=$HOME/.erlang_otp
         # ./configure --prefix=$OME_PREFIX
+        ./configure CFLAGS="-fPIC -mcmodel=large" --prefix=$HOME/.erlang_otp
+        sed -i 's/HAVE_MALLOPT/HAVE_NOT_MALLOPT/g' erts/x86_64-pc-msys/config.h
+        sed -i 's/HAVE_PPOLL/HAVE_NOT_PPOLL/g' erts/x86_64-pc-msys/config.h
+        sed -i 's/HAVE_GETIFADDRS/HAVE_NOT_GETIFADDRS/g' erts/x86_64-pc-msys/config.h
+        sed -i 's/HAVE_WCWIDTH/HAVE_NOT_WCWIDTH/g' erts/x86_64-pc-msys/config.h
+        sed -i 's/ERTS_HAVE_OS_PHYSICAL_MEMORY_RESERVATION/ERTS_HAVE_NOT_OS_PHYSICAL_MEMORY_RESERVATION/g' erts/emulator/sys/common/erl_mmap.h
+        sed -i 's/ipi_spec_dst/ipi_addr/g' erts/emulator/nifs/common/socket_nif.c
         make install
     fi
 }

@@ -6,10 +6,52 @@ basedev_install_clang_format() {
     popd
 }
 
+basedev_install_clang_github() {
+    local llvmdir=$OME_REPO/llvm_project_gitee
+    # github_upgrade llvm/llvm-project $llvmdir
+    gitee_upgrade aNovaCean/llvm-project $llvmdir
+    cd $llvmdir/
+    mkdir -p $llvmdir/llvm_build
+    cd $llvmdir/llvm_build
+
+    tip "compile"
+    # Can include any of:
+    # clang, clang-tools-extra, libcxx, libcxxabi, libunwind, lldb,
+    # compiler-rt, lld, polly, or debuginfo-tests.
+    # Debug, Release, RelWithDebInfo, and MinSizeRel. Default is Debug.
+    # -DCMAKE_ASM_COMPILER=yasm
+    # -DCMAKE_MAKE_PROGRAM=make
+    
+    cmake $llvmdir -G "Unix Makefiles" \
+          -DLLVM_ENABLE_PROJECTS="clang-tools-extra;" \
+          -DCMAKE_INSTALL_PREFIX=$OME_PREFIX \
+          -DCMAKE_BUILD_TYPE=Release \
+          -DLLVM_ENABLE_ASSERTIONS=OFF \
+          -DCMAKE_C_COMPILER=gcc \
+          -DCMAKE_CXX_COMPILER=g++ \
+          -DCMAKE_CXX_STANDARD=17 \
+          -DCMAKE_CXX_STANDARD_REQUIRED=ON \
+          -DCMAKE_CXX_EXTENSIONS=ON \
+          -DLLVM_TARGET_ARCH="x86_64" \
+          -DLLVM_TARGETS_TO_BUILD="X86" \
+          -DLLVM_BUILD_DOCS=OFF \
+          -DLLVM_ENABLE_DOXYGEN=OFF \
+          -DLLVM_ENABLE_SPHINX=OFF \
+          -DLLVM_BUILD_LLVM_DYLIB=ON \
+          -DLLVM_OPTIMIZED_TABLEGEN=ON \
+          -DLLVM_INCLUDE_TESTS=OFF \
+          -DBUILD_SHARED_LIBS=ON \
+          ../llvm
+    # cmake --build . --use-stderr
+    make -j8
+}
+
 basedev_install_clang_git() {
     # if [ "$OME_OS" = "$OS_MSYS2" ]; then
     # msys2_llvm_install
     # else
+
+    # 1.
     local llvmdir=$OME_REPO/llvm
     git_upgrade "https://git.llvm.org" "git/llvm" $llvmdir
     git_upgrade "https://git.llvm.org" "git/clang" $llvmdir/tools/clang
@@ -23,12 +65,12 @@ basedev_install_clang_git() {
     git_upgrade "https://git.llvm.org" "git/libcxxabi" $llvmdir/projects/libcxxabi
     #
     # git_upgrade "https://git.llvm.org" "git/test-suite" $llvmdir/projects/test-suite
+    #
     cd $llvmdir/
     git config branch.master.rebase true
-    
     mkdir -p $llvmdir/../llvm_build
     cd $llvmdir/../llvm_build/
-
+    #
     tip "compile"
     if [ "$OME_OS" = "$OS_MSYS2" ] || [ "$OME_OS" = "$OS_CYGWIN" ]; then
         cmake $llvmdir -G "$OME_MAKE" \
@@ -149,7 +191,7 @@ basedev_install_clang_bin() {
 clang_install() {
     readp "install clang by source?"
     if [ $? -eq 1 ]; then
-        basedev_install_clang_git
+        basedev_install_clang_github
     else
         basedev_install_clang_bin
     fi

@@ -8,7 +8,7 @@ basedev_install_tools() {
         # $OS_UBUNTU) ;;
         $OS_DEBIAN|$OS_UBUNTU)
             sudo apt install -y build-essential \
-                 make ninja-build cmake \
+                 cmake make ninja-build meson-build \
                  autogen automake autoconf libtool libtool-bin \
                  pkg-config
             ;;
@@ -16,12 +16,12 @@ basedev_install_tools() {
         # $OS_FEDORA) ;;
         $OS_REDHAT|$OS_FEDORA)
             sudo yum groupinstall -y "Development Tools"
-            sudo yum install -y gcc gcc-c++ make ninja-build cmake \
+            sudo yum install -y gcc gcc-c++ cmake make ninja-build meson-build \
                  autogen automake autoconf libtool \
                  pkg-config
             ;;
         $OS_ARCH)
-            trizen -S base-devel make ninja cmake \
+            trizen -S base-devel cmake make ninja meson \
                    autogen automake autoconf libtool \
                    pkg-config
             ;;
@@ -31,7 +31,7 @@ basedev_install_tools() {
             # sudo zypper update
             # zypper info -t pattern devel_basis
             sudo zypper install -t pattern devel_basis
-            sudo zypper install make ninja cmake \
+            sudo zypper install cmake make ninja meson \
                  autogen automake autoconf libtool \
                  pkg-config
             ;;
@@ -45,14 +45,14 @@ basedev_install_tools() {
         # Unix
         $OS_MACOS)
             brew install gcc-core gcc-g++ \
-                 make ninja cmake \
+                 cmake make ninja meson \
                  autogen automake autoconf libtool \
                  pkg-config
             ;;
         $OS_AIX) ;;
         $OS_SOLARIS) ;;
         $OS_FREEBSD)
-            sudo pkg install gcc gmake ninja cmake \
+            sudo pkg install gcc cmake gmake ninja meson \
                  autogen automake autoconf libtool \
                  pkgconf
             ;;
@@ -62,16 +62,16 @@ basedev_install_tools() {
         # Windows
         $OS_CYGWIN)
             apt install gcc-core gcc-g++ \
-                make ninja cmake \
+                cmake make ninja meson \
                 autogen automake autoconf libtool \
                 pkg-config
             ;;
         $OS_MSYS2)
-            # pacman -S mingw-w64-x86_64-make mingw-w64-x86_64-gcc mingw-w64-x86_64-nasm \
-                   # mingw-w64-x86_64-make mingw-w64-x86_64-ninja \
+            # pacman -S mingw-w64-x86_64-gcc mingw-w64-x86_64-nasm \
+                   # mingw-w64-x86_64-cmake mingw-w64-x86_64-make mingw-w64-x86_64-ninja mingw-w64-x86_64-meson \
                    # mingw-w64-x86_64-libtool mingw-w64-x86_64-pkg-config \
-            pacman -S base-devel msys2-devel gcc gcc-libs\
-                   make ninja cmake \
+            pacman -S base-devel msys2-devel gcc gcc-libs glib2-devel \
+                   cmake make ninja meson \
                    autogen automake autoconf libtool \
                    pkg-config
             # cross
@@ -114,8 +114,6 @@ basedev_exist_p() {
 #     MAKE_PROG="make"
 # fi
 
-export OME_MAKE="Ninja"
-export MAKE_PROG="make"
 basedev_info() {
     # ome_get_version gcc "GCC_VERSION"
     # echo_kv "C/C++" "$GCC_VERSION|$CLANG_VERSION"
