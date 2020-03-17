@@ -3,7 +3,7 @@
 elixir_install_language_server() {
     github_upgrade JakeBecker/elixir-ls $OME_REPO/elixir-ls
     cd $OME_REPO/elixir-ls/
-    # mix deps.get
+    mix deps.get
     # Shall I install rebar3? (if running non-interactively, use "mix local.rebar --force") [Yn]
     mix local.rebar --force
     mix compile
