@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 elixir_install_language_server() {
-    github_upgrade JakeBecker/elixir-ls $OME_REPO/elixir-ls
+    github_upgrade elixir-lsp/elixir-ls $OME_REPO/elixir-ls
     cd $OME_REPO/elixir-ls/
     HEX_MIRROR=https://hexpm.upyun.com mix deps.get
     HEX_MIRROR=https://hexpm.upyun.com mix compile
