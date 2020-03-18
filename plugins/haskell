@@ -1,61 +1,5 @@
 #!/usr/bin/env sh
 
-haskell_set_env() {
-    if [ -d "$OME_REPO/stack" ]; then
-        export PATH=$OME_REPO/stack:$PATH
-    fi
-}
-haskell_set_env
-if [ "$OME_OS" = "$OS_CYGWIN" ]; then
-    # STACK_MAJOR_VERSION=1
-    # STACK_MINOR_VERSION=9
-    # STACK_PATCH_VERSION=1
-    # STACK_VERSION=node-v${STACK_MAJOR_VERSION}.${STACK_MINOR_VERSION}.${STACK_PATCH_VERSION}-win-x64
-    
-    # STACK_VERSION=2.1.3
-
-    # tip "set env:$OME_REPO/$STACK_VERSION"
-    export PATH=$OME_REPO/stack:$PATH
-fi
-
-stack_install_download() {
-    if [ "`command -v stack`" = "" ]; then
-        # if [ "$OME_OS" = "$OS_CYGWIN" ]; then
-        if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
-            local pkgver=stack-${STACK_VERSION}-windows-x86_64
-            local zipkg=$pkgver.zip
-            
-            if [ ! -d $OME_REPO/$pkgver ]; then
-                mkdir -p ~/Downloads
-                cd ~/Downloads/
-                
-                if [ ! -f $HOME/Downloads/$zipkg ]; then
-                    # wget https://nodejs.org/dist/latest-v${STACK_MAJOR_VERSION}.x/$zipkg
-                    wget -c https://github.com/commercialhaskell/stack/releases/download/v${STACK_VERSION}/$zipkg
-                fi
-                
-                # if [ ! -d $OME_REPO/$pkgver ]; then
-                unzip ./$zipkg -d $OME_REPO/stack
-                cd $OME_REPO/stack/
-                chmod +x ./*
-                haskell_set_env
-                # fi
-            fi
-            cp -f $OME_ROOT/conf/stack/config.yaml ${APPDATA}/stack/
-        # elif [ "$OME_OS" = "$OS_ARCH" ]; then
-           # sudo pacman -S stack
-        else
-            arch1() {
-                echo `uname -m`
-            }
-            curl -sSL https://get.haskellstack.org/ | sh
-            cp -f $OME_ROOT/conf/stack/config.yaml ~/.stack/
-            # or
-            # wget -qO- https://get.haskellstack.org/ | sh    
-        fi
-    fi
-}
-
 stack_install_bin() {
     # https://docs.haskellstack.org/en/stable/install_and_upgrade/#installupgrade
     get_os_type
@@ -103,13 +47,58 @@ stack_install_bin() {
 
 }
 
+if [ "$OME_OS" = "$OS_CYGWIN" ]; then
+    # STACK_MAJOR_VERSION=1
+    # STACK_MINOR_VERSION=9
+    # STACK_PATCH_VERSION=1
+    # STACK_VERSION=node-v${STACK_MAJOR_VERSION}.${STACK_MINOR_VERSION}.${STACK_PATCH_VERSION}-win-x64
+    
+    # STACK_VERSION=2.1.3
+
+    # tip "set env:$OME_REPO/$STACK_VERSION"
+    export PATH=$OME_REPO/stack:$PATH
+fi
+
+stack_install_download() {
+    if [ "`command -v stack`" = "" ]; then
+        # if [ "$OME_OS" = "$OS_CYGWIN" ]; then
+        if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
+            local pkgver=stack-${STACK_VERSION}-windows-x86_64
+            local zipkg=$pkgver.zip
+            
+            if [ ! -d $OME_REPO/$pkgver ]; then
+                mkdir -p ~/Downloads
+                cd ~/Downloads/
+                
+                if [ ! -f $HOME/Downloads/$zipkg ]; then
+                    # wget https://nodejs.org/dist/latest-v${STACK_MAJOR_VERSION}.x/$zipkg
+                    wget -c https://github.com/commercialhaskell/stack/releases/download/v${STACK_VERSION}/$zipkg
+                fi
+                
+                # if [ ! -d $OME_REPO/$pkgver ]; then
+                unzip ./$zipkg -d $OME_REPO/stack
+                cd $OME_REPO/stack/
+                chmod +x ./*
+                haskell_set_env
+                # fi
+            fi
+        else
+            arch1() {
+                echo `uname -m`
+            }
+            curl -sSL https://get.haskellstack.org/ | sh
+            # or
+            # wget -qO- https://get.haskellstack.org/ | sh    
+        fi
+    fi
+}
+
 install_haskell_language_server() {
     # https://github.com/haskell/haskell-ide-engine#installation
     github_upgrade haskell/haskell-ide-engine $OME_REPO/haskell-ide-engine
     cd $OME_REPO/haskell-ide-engine/
-
     stack ./install.hs help
-    # make build-all
+    stack build
 }
 
 haskell_install()
@@ -117,16 +106,40 @@ haskell_install()
     stack_install_download
     # stack_install_bin
 
+    
+    readp "stack use china mirror?"
+    if [ $? -eq 1 ]; then
+        if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
+            mkdir -p ${APPDATA}/local/bin/
+            mkdir -p ${APPDATA}/local/lib/
+            mkdir -p ${APPDATA}/stack/
+            cp -f $OME_ROOT/conf/stack/config.yaml ${APPDATA}/stack/
+        else
+            mkdir -p ~/.local/bin/
+            mkdir -p ~/.local/lib/
+            mkdir -p ~/.stack
+            cp -f $OME_ROOT/conf/stack/config.yaml ~/.stack/
+        fi
+    fi
+
+    # tip "stack upgrade"
+    # stack upgrade
+
+    tip "stack update"
+    stack update
+    
     tip "stack setup"
     stack setup
     
-    tip "stack upgrade"
-    stack upgrade
+    
 
     # tip "install cabal"
     # stack install cabal-install
     # cabal update
 
+    tip "install build system: shake"
+    stack install shake
+    
     tip "install haskell language server"
     install_haskell_language_server
 }
@@ -144,3 +157,14 @@ haskell_info() {
         ome_show "Haskell" "stack `stack --version 2>&1 | head -n 1 | cut -d ' ' -f 1-3`"
     fi
 }
+
+haskell_set_env() {
+    if [ -d "$OME_REPO/stack" ]; then
+        export PATH=$OME_REPO/stack:$PATH
+    fi
+    
+    if [ -d "${APPDATA}/local/bin/" ]; then
+        export PATH=${APPDATA}/local/bin:$PATH
+    fi
+}
+haskell_set_env
