@@ -18,7 +18,7 @@ if [ "$OME_OS" = "$OS_CYGWIN" ]; then
     export PATH=$OME_REPO/stack:$PATH
 fi
 
-haskell_install_download() {
+stack_install_download() {
     if [ "`command -v stack`" = "" ]; then
         # if [ "$OME_OS" = "$OS_CYGWIN" ]; then
         if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
@@ -51,7 +51,7 @@ haskell_install_download() {
     fi
 }
 
-haskell_install_bin() {
+stack_install_bin() {
     # https://docs.haskellstack.org/en/stable/install_and_upgrade/#installupgrade
     get_os_type
     case $OME_OS in
@@ -103,20 +103,24 @@ install_haskell_language_server() {
     github_upgrade haskell/haskell-ide-engine $OME_REPO/haskell-ide-engine
     cd $OME_REPO/haskell-ide-engine/
 
-    make build-all
+    stack ./install.hs help
+    # make build-all
 }
 
 haskell_install()
 {
-    haskell_install_download
-    # haskell_install_bin
+    stack_install_download
+    # stack_install_bin
+
+    tip "stack setup"
+    stack setup
     
     tip "stack upgrade"
     stack upgrade
 
-    tip "install cabal"
-    stack install cabal-install
-    cabal update
+    # tip "install cabal"
+    # stack install cabal-install
+    # cabal update
 
     tip "install haskell language server"
     install_haskell_language_server
