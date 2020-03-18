@@ -9,7 +9,6 @@ erlang_install_git() {
     ./configure --prefix=$OME_PREFIX
     make install
 
-    
     # get_os_type
     # case $OME_OS in
     # $OS_UNKNOW) ;;
@@ -180,7 +179,7 @@ erlang_install() {
 
     # tip "rebar3 local upgrade"
     # if [ "$OME_OS" != "$OS_CYGWIN" ] && [ "$OME_OS" != "$OS_MSYS2" ]; then
-        # rebar3 local upgrade DEBUG=1
+    # rebar3 local upgrade DEBUG=1
     # fi
     tip "rebar3 update"
     CDN="https://hexpm.upyun.com" rebar3 update
@@ -210,7 +209,7 @@ erlenv_set_env() {
 kerl_set_env
 
 hex_pulish_settings() {
-    echo 111
+    echo ""
 }
 
 erlang_set_env() {

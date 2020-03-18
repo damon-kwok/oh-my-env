@@ -106,7 +106,6 @@ haskell_install()
     stack_install_download
     # stack_install_bin
 
-    
     readp "stack use china mirror?"
     if [ $? -eq 1 ]; then
         if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
@@ -162,9 +161,10 @@ haskell_set_env() {
     if [ -d "$OME_REPO/stack" ]; then
         export PATH=$OME_REPO/stack:$PATH
     fi
-    
-    if [ -d "${APPDATA}/local/bin/" ]; then
-        export PATH=${APPDATA}/local/bin:$PATH
+
+    local WIN_PATH=`cygpath "${APPDATA}/local/bin"`
+    if [ -d "$WIN_PATH" ]; then
+        export PATH="$WIN_PATH":"$PATH"
     fi
 }
 haskell_set_env
