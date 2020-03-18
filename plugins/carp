@@ -1,12 +1,14 @@
 #!/usr/bin/env sh
 
+if [ -d "$OME_REPO/carp" ]; then
+    export CARP_DIR=$OME_REPO/carp
+fi
+
 carp_install() {
     ome_check_install "stack" "haskell"
     
-    mkdir -p ~/Carp
-    export CARP_DIR=~/Carp/
-
     github_upgrade carp-lang/Carp $OME_REPO/carp
+    export CARP_DIR=$OME_REPO/carp
     cd $OME_REPO/carp/
     stack build
     stack install

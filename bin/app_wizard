@@ -366,7 +366,7 @@ ome_app_wizard() {
         if [ ! -d "$proj_root/.git" ]; then
             git init
         fi
-        ls -a
+        ome_show_dir
     fi
 
     cd $oldir

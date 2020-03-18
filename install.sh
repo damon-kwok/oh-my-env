@@ -185,6 +185,10 @@ case "`uname -s`" in
 esac
 ###############################################################################
 title "hosts init"
+# host_upgrade 192.30.253.112 http://github.com
+# host_upgrade 151.101.184.133 http://assets-cdn.github.com
+# host_upgrade 151.101.185.194 http://github.global.ssl.fastly.net
+
 host_upgrade 192.30.253.113 github.com
 host_upgrade 151.101.44.249 github.global.ssl.fastly.net
 host_upgrade 103.245.222.133 assets-cdn.github.com

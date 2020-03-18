@@ -149,7 +149,8 @@ erlang_install() {
             unzip ./otp-${ERLANG_VERSION}-win-x86_64.zip -d $OME_REPO
             erlang_set_env
         else
-            local REBAR_VERINFO=`rebar3 --version | head -n 1 | cut -d ' ' -f 4-`
+            # local REBAR_VERINFO=`rebar3 --version | head -n 1 | cut -d ' ' -f 4-`
+            local REBAR_VERINFO="Erlang/OTP ${ERLANG_VERSION}"
             echo "$REBAR_VERINFO is already installed!"
         fi
     else
@@ -169,9 +170,12 @@ erlang_install() {
     github_upgrade erlang/rebar3 $OME_REPO/rebar3
     cd $OME_REPO/rebar3/
     chmod +x ./bootstrap
-    ./bootstrap
-    cp -rf ./rebar3 $OME_PREFIX/bin/
+    CDN="https://hexpm.upyun.com/tarballs" ./bootstrap
+    cp -f ./rebar3 $OME_PREFIX/bin/rebar
+    cp -f ./rebar3 $OME_PREFIX/bin/rebar3
+    cp -f ./rebar.config $OME_PREFIX/bin/
     chmod +x $OME_PREFIX/bin/rebar3
+    echo "{rebar_packages_cdn, \"https://hexpm.upyun.com\"}." >> $OME_PREFIX/bin/rebar.config 
     rebar3 --version
 
     # tip "rebar3 local upgrade"
@@ -179,9 +183,9 @@ erlang_install() {
         # rebar3 local upgrade DEBUG=1
     # fi
     tip "rebar3 update"
-    rebar3 update
+    CDN="https://hexpm.upyun.com" rebar3 update
     tip "rebar3 upgrade"
-    rebar3 upgrade
+    CDN="https://hexpm.upyun.com" rebar3 upgrade
 }
 
 erlang_uninstall() {
@@ -196,9 +200,6 @@ erlang_info() {
     echo ""
     # ome_show "Erlang" "`ome_fetch_version rebar3`"
 }
-
-# ERLANG_VERSION=22.2
-
 erlenv_set_env() {
     if [ -d $HOME/.erlenv/ ]; then
         export PATH=$HOME/.erlenv/bin:$PATH
@@ -214,7 +215,18 @@ hex_pulish_settings() {
 
 erlang_set_env() {
     if [ -d $OME_REPO/erl10.7/ ]; then
-        export PATH=$OME_REPO/erl10.7/bin:$PATH
+        export PATH=$OME_REPO/erl10.7/bin:$OME_REPO/erl10.7/erts-10.7/bin:$PATH
+        local bindir=`cygpath -m $OME_REPO/erl10.7/erts-10.7/bin`
+        local rootdir=`cygpath -m $OME_REPO/erl10.7`
+        echo "[erlang]" > $OME_REPO/erl10.7/bin/erl.ini
+        echo "Bindir=${bindir//'/'/'\\'}" >> $OME_REPO/erl10.7/bin/erl.ini
+        echo "Progname=erl" >> $OME_REPO/erl10.7/bin/erl.ini
+        echo "Rootdir=${rootdir//'/'/'\\'}" >> $OME_REPO/erl10.7/bin/erl.ini
+
+        echo "[erlang]" > $OME_REPO/erl10.7/erts-10.7/bin/erl.ini
+        echo "Bindir=${bindir//'/'/'\\'}" >> $OME_REPO/erl10.7/erts-10.7/bin/erl.ini
+        echo "Progname=erl" >> $OME_REPO/erl10.7/erts-10.7/bin/erl.ini
+        echo "Rootdir=${rootdir//'/'/'\\'}" >> $OME_REPO/erl10.7/erts-10.7/bin/erl.ini
     fi
 }
 erlang_set_env

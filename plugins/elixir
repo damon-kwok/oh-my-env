@@ -3,24 +3,26 @@
 elixir_install_language_server() {
     github_upgrade JakeBecker/elixir-ls $OME_REPO/elixir-ls
     cd $OME_REPO/elixir-ls/
-    mix deps.get
-    # Shall I install rebar3? (if running non-interactively, use "mix local.rebar --force") [Yn]
-    mix local.rebar --force
-    mix compile
-    mix elixir_ls.release -o $HOME/elixier-ls-release
+    HEX_MIRROR=https://hexpm.upyun.com mix deps.get
+    HEX_MIRROR=https://hexpm.upyun.com mix compile
+    HEX_MIRROR=https://hexpm.upyun.com mix elixir_ls.release -o $HOME/elixier-ls-release
 }
 
 elixir_install_kiex() {
-    \curl -sSL https://raw.githubusercontent.com/taylor/kiex/master/install | bash -s
+    curl -sSL https://raw.githubusercontent.com/taylor/kiex/master/install | bash -s
     test -s "$HOME/.kiex/scripts/kiex" && source "$HOME/.kiex/scripts/kiex"
 }
 
 elixir_install_git() {
     ome_check_install "erl" "erlang"
-    github_upgrade elixir-lang/elixir $OME_REPO/elixir
+    # github_upgrade elixir-lang/elixir $OME_REPO/elixir
     cd $OME_REPO/elixir
     make
-    # make test
+    make test
+    elixir_set_env
+    # Shall I install rebar3? (if running non-interactively, use "mix local.rebar --force") [Yn]
+    HEX_MIRROR="https://hexpm.upyun.com" mix local.rebar --force
+    HEX_MIRROR="https://hexpm.upyun.com" mix hex.config mirror_url https://hexpm.upyun.com
 }
 
 elixir_install() {
@@ -49,5 +51,10 @@ elixir_info() {
     
 }
 
-export PATH=$OME_REPO/elixir/bin:$PATH
-test -s "$HOME/.kiex/scripts/kiex" && source "$HOME/.kiex/scripts/kiex"
+elixir_set_env() {
+    if [ -d "$OME_REPO/elixir/bin" ]; then
+        export PATH=$OME_REPO/elixir/bin:$PATH
+        test -s "$HOME/.kiex/scripts/kiex" && source "$HOME/.kiex/scripts/kiex"
+    fi
+}
+elixir_set_env

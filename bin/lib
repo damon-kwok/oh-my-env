@@ -699,6 +699,14 @@ ome_def_ws() {
     echo 'gitee_upgrade ${repo} $HOME/workspace'
 }
 
+ome_show_dir() {
+    if ! command -v tree >/dev/null 2>&1; then
+        ls -a
+    else
+        tree -ca
+    fi
+}
+
 gen_clang_format() {
     local oldir=`pwd`
     if [ ! -e ./.clang-format ]; then

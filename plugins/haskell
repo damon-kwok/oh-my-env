@@ -1,5 +1,11 @@
 #!/usr/bin/env sh
 
+haskell_set_env() {
+    if [ -d "$OME_REPO/stack" ]; then
+        export PATH=$OME_REPO/stack:$PATH
+    fi
+}
+haskell_set_env
 if [ "$OME_OS" = "$OS_CYGWIN" ]; then
     # STACK_MAJOR_VERSION=1
     # STACK_MINOR_VERSION=9
@@ -14,7 +20,8 @@ fi
 
 haskell_install_download() {
     if [ "`command -v stack`" = "" ]; then
-        if [ "$OME_OS" = "$OS_CYGWIN" ]; then
+        # if [ "$OME_OS" = "$OS_CYGWIN" ]; then
+        if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
             local pkgver=stack-${STACK_VERSION}-windows-x86_64
             local zipkg=$pkgver.zip
             
@@ -31,12 +38,12 @@ haskell_install_download() {
                 unzip ./$zipkg -d $OME_REPO/stack
                 cd $OME_REPO/stack/
                 chmod +x ./*
+                haskell_set_env
                 # fi
             fi
         elif [ "$OME_OS" = "$OS_ARCH" ]; then
             sudo pacman -S stack
         else
-            # if test stack = "" ; then
             curl -sSL https://get.haskellstack.org/ | sh
             # or
             # wget -qO- https://get.haskellstack.org/ | sh    

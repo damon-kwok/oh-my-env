@@ -88,31 +88,31 @@ esac
 ################################################################################
 
 # Oh-My-Emacs
-# readonly OME_BIN=$(dirname $(readlink -f $0))
-# readonly OME_ROOT=$OME_BIN/..
-readonly OME_ROOT=$HOME/.oh-my-env
-readonly OME_BIN=$OME_ROOT/bin
+# export OME_BIN=$(dirname $(readlink -f $0))
+# export OME_ROOT=$OME_BIN/..
+export OME_ROOT=$HOME/.oh-my-env
+export OME_BIN=$OME_ROOT/bin
 
 # if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
-    # readonly OME_NULL=$HOME/.ome_local/null_dev.log
+    # export OME_NULL=$HOME/.ome_local/null_dev.log
 # else
-    # readonly OME_NULL=/dev/null
+    # export OME_NULL=/dev/null
 # fi
-readonly OME_PREFIX=$HOME/.ome_local
-readonly OME_CACHE=$OME_PREFIX/caches
-readonly OME_REPO=$OME_PREFIX/repo
+export OME_PREFIX=$HOME/.ome_local
+export OME_CACHE=$OME_PREFIX/caches
+export OME_REPO=$OME_PREFIX/repo
 
-readonly OME_WS=$HOME/workspace
-readonly OME_BOOK=$HOME/book
-readonly OME_PROJ=$HOME/projects
+export OME_WS=$HOME/workspace
+export OME_BOOK=$HOME/book
+export OME_PROJ=$HOME/projects
 
 export PATH=$OME_WS/bin:$OME_BIN:"$PATH"
 
 # Emacs
-#readonly ALTERNATE_EDITOR=""
-readonly OME_EMACS=$HOME/.oh-my-emacs
-readonly OME_EMACS_MODULE=$HOME/.oh-my-emacs/emacs-config/modules
-readonly OME_EMACS_SNIPPET=$HOME/.oh-my-emacs/emacs-config/snippets
+#export ALTERNATE_EDITOR=""
+export OME_EMACS=$HOME/.oh-my-emacs
+export OME_EMACS_MODULE=$HOME/.oh-my-emacs/emacs-config/modules
+export OME_EMACS_SNIPPET=$HOME/.oh-my-emacs/emacs-config/snippets
 
 # lib
 . $HOME/.oh-my-env/bin/lib
@@ -177,7 +177,7 @@ if [ "$OME_OS" = "$OS_DEBIAN" ] || [ "$OME_OS" = "$OS_UBUNTU" ]; then
 fi
 
 # editor
-readonly EDITOR=em
+export EDITOR=em
 
 ################################################################################
 # FIX
