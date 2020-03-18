@@ -19,6 +19,13 @@ templates:
 # Rendition) control codes (in decimal). Use "stack ls stack-colors --basic"
 # to see the current sequence.
 # stack-colors: STYLES
+
+setup-info: 
+  http://mirrors.tuna.tsinghua.edu.cn/stackage/stack-setup.yaml
+urls:
+  latest-snapshot: http://mirrors.tuna.tsinghua.edu.cn/stackage/snapshots.json
+
+
 package-indices:
   - download-prefix: http://mirrors.tuna.tsinghua.edu.cn/hackage/
     hackage-security:
