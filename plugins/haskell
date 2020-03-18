@@ -38,7 +38,7 @@ stack_install_download() {
                 unzip ./$zipkg -d $OME_REPO/stack
                 cd $OME_REPO/stack/
                 chmod +x ./*
-                cp -f $OME_ROOT/conf/stack/config.yaml ${appdata}/stack/
+                cp -f $OME_ROOT/conf/stack/config.yaml ${APPDATA}/stack/
                 haskell_set_env
                 # fi
             fi
