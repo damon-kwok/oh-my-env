@@ -20,6 +20,9 @@ templates:
 # to see the current sequence.
 # stack-colors: STYLES
 
+#setup-info: 
+#  http://mirrors.tuna.tsinghua.edu.cn/stackage/stack-setup.yaml
+
 setup-info-locations: 
   - http://mirrors.tuna.tsinghua.edu.cn/stackage/stack-setup.yaml
 urls:
