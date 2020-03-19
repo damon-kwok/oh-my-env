@@ -12,12 +12,13 @@ install_groovy_language_server() {
 }
 
 
-scala_install() {
+groovy_install() {
     ome_check_install "sdk" "jvm"
 
     #if ! command -v groovy >/dev/null 2>&1; then
     if [ "`command -v groovy`" = "" ]; then
         sdk install groovy $GROOVY_VERSION
+        sdk install grails $GRAILS_VERSION
     fi
 
     # tip "install groovy language server"

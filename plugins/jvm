@@ -71,7 +71,7 @@ jvm_install_sdkman() {
         sdk update
         
         tip "sdkman self update"
-        sdk selfupdate
+        sdk selfupdate force
         
         tip "sdkman upgrade"
         sdk upgrade      
@@ -216,7 +216,8 @@ jvm_info() {
     ome_show "JVM" "`sdkman_info java Java` | \
 `sdkman_info kotlin Kotlin` | \
 `sdkman_info scala Scala` | \
-`sdkman_info groovy Groovy`"
+`sdkman_info groovy Groovy` | \
+`sdkman_info ceylon Ceylon`"
 
     ome_show "JVMTool" "`sdkman_info maven Maven` | \
 `sdkman_info sbt SBT` | \

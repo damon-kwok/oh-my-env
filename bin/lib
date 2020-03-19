@@ -95,10 +95,48 @@ get_os_type() {
         esac
     fi
 }
+__git_upgrade() {
+    local oldir=`pwd`
+    local dir="$1"
+    local url="$2"
+    
+    if [ ! -d "$dir" ]; then # || [ ! -e "$dir/.git/index" ]
+	    echo_kv "clone" "[$project]" "$dir"
+        # echo_success "git clone $url $dir --single-branch --depth=1 $branch"
+        if [ "$submodule" != "0" ]; then
+	        git clone $url $dir --single-branch --depth=1 $branch
+        else
+            git clone $url $dir --recurse-submodules --single-branch --depth=1 $branch
+        fi
+        # elif [ "`ls -A $DIRECTORY`" = "" ]; then
+        # echo "$DIRECTORY is indeed empty"
+    elif [ -d "$dir/" ] && [ ! -d "$dir/.git/" ]; then
+        cd $dir
+        git init
+        git remote add origin $url
+        git pull origin master
+    else
+	    cd $dir
+	    echo_kv "git pull" "[$project]" "$dir"
+        # if [ -n "$5" ]; then
+        # git checkout -b $5 origin/$5
+        # fi
+	    git pull
 
+        # git submodule foreach --recursive 'git fetch --tags'
+        if [ "$submodule" != "0" ]; then
+            # echo_success "git submodule update --init --depth=1"
+	        # git submodule update --init --depth=1
+            # echo_success "git submodule update --init"
+	        # git submodule update --init --depth 1
+            # git submodule update
+            git submodule sync && git submodule update --init --depth 1
+        fi
+    fi
+    cd $oldir
+}
 git_upgrade() {
     # echo $@
-    local oldir=`pwd`
     local site=$1
     local project=$2
     if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
@@ -113,41 +151,10 @@ git_upgrade() {
         local branch="-b $5"
     fi    
     local url="$site/${project}.git"
-
-    if [ ! -d "$dir/.git/" ]; then
-        rm -rf $dir
-    fi
-
-    if [ ! -d $dir ] || [ ! -e "$dir/.git/index" ]; then
-	    echo_kv "clone" "[$project]" "$dir"
-        # echo_success "git clone $url $dir --single-branch --depth=1 $branch"
-	    git clone $url $dir --single-branch --depth=1 $branch
-        # elif [ "`ls -A $DIRECTORY`" = "" ]; then
-        # echo "$DIRECTORY is indeed empty"
-    else
-	    cd $dir
-	    echo_kv "git pull" "[$project]" "$dir"
-        # if [ -n "$5" ]; then
-        # git checkout -b $5 origin/$5
-        # fi
-	    git pull
-    fi
-    cd $dir
-    
-    # git submodule foreach --recursive 'git fetch --tags'
-    if [ "$submodule" != "0" ]; then
-        # echo_success "git submodule update --init --depth=1"
-	    # git submodule update --init --depth=1
-        # echo_success "git submodule update --init"
-	    git submodule update --init --depth 1
-    fi
-    
-    cd $oldir
-}
+    __git_upgrade $dir $url
+ }
 
 git_ssh_upgrade() {
-    # echo $@
-    local oldir=`pwd`
     local site=$1
     local project=$2
     if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
@@ -163,35 +170,7 @@ git_ssh_upgrade() {
     fi    
     local url="git@${site}:${project}.git"
 
-    if [ ! -d "$dir/.git/" ]; then
-        rm -rf $dir
-    fi
-    
-    if [ ! -d $dir ] || [ ! -e "$dir/.git/index" ]; then
-	    tip "clone $project"
-        # echo_success "git clone $url $dir --single-branch --depth=1 $branch"
-	    git clone $url $dir --single-branch --depth=1 $branch
-        # elif [ "`ls -A $DIRECTORY`" = "" ]; then
-        # echo "$DIRECTORY is indeed empty"
-    else
-	    cd $dir
-        tip "update $project"
-        # if [ -n "$5" ]; then
-        # git checkout -b $5 origin/$5
-        # fi
-	    git pull
-    fi
-    cd $dir
-    # git submodule foreach --recursive 'git fetch --tags'
-    
-    if [ "$submodule" != "0" ]; then
-        # echo_success "git submodule update --init --depth=1"
-	    # git submodule update --init --depth=1
-        echo_success "git submodule update --init"
-	    git submodule update --init
-    fi
-    echo "finish!"
-    cd $oldir
+    __git_upgrade $dir $url
 }
 
 github_upgrade() {

@@ -20,12 +20,12 @@ templates:
 # to see the current sequence.
 # stack-colors: STYLES
 
-setup-info: 
-  http://mirrors.tuna.tsinghua.edu.cn/stackage/stack-setup.yaml
+setup-info-locations: 
+  - http://mirrors.tuna.tsinghua.edu.cn/stackage/stack-setup.yaml
 urls:
   latest-snapshot: http://mirrors.tuna.tsinghua.edu.cn/stackage/snapshots.json
-  lts-build-plans: http://mirrors.tuna.tsinghua.edu.cn/stackage/lts-haskell/
-  nightly-build-plans: http://mirrors.tuna.tsinghua.edu.cn/stackage/stackage-nightly/
+  # lts-build-plans: http://mirrors.tuna.tsinghua.edu.cn/stackage/lts-haskell/
+  # nightly-build-plans: http://mirrors.tuna.tsinghua.edu.cn/stackage/stackage-nightly/
 
 
 package-indices:

@@ -10,6 +10,7 @@ carp_install() {
     github_upgrade carp-lang/Carp $OME_REPO/carp
     export CARP_DIR=$OME_REPO/carp
     cd $OME_REPO/carp/
+    stack setup
     stack build
     stack install
 }

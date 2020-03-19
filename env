@@ -218,7 +218,8 @@ fi
 export OME_MAKE="Ninja"
 export MAKE_PROG="make"
 
-export JAVA_VERSION=11.0.6.hs-adpt
+# export JAVA_VERSION=11.0.6.hs-adpt
+export JAVA_VERSION=20.0.0.r11-grl
 export JBANG_VERSION=0.17.0
 export ANT_VERSION=1.10.1
 export MAVEN_VERSION=3.6.3
@@ -227,6 +228,7 @@ export KOTLIN_VERSION=1.3.70
 export SCALA_VERSION=2.13.1
 export SBT_VERSION=1.3.8
 export GROOVY_VERSION=3.0.2
+export GRAILS_VERSION=4.0.1
 export CLOJURE_VERSION=1.10.1.536
 export LEIN_VERSION=2.9.3
 
@@ -250,8 +252,12 @@ export JETBRINS_FONT_VERSION=1.0.3
 # load plugins
 for plugin in $HOME/.oh-my-env/plugins/* ; do
     if [ ! -d "$plugin" ] && [ "$plugin" != "$HOME/.oh-my-env/plugins/README.org" ]; then
-        # echo "name: $plugin"
-        # time `. "$plugin"`
-        . "$plugin"
+        if [ "$OME_DEBUG_MODE" = "1" ]; then
+            # time "$plugin"">/dev/null 2>&1
+            tip "$plugin"
+            time `. $plugin`
+        else
+            . "$plugin"            
+        fi
     fi
 done
