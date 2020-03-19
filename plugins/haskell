@@ -128,9 +128,10 @@ haskell_install()
     github_upgrade  commercialhaskell/stack $OME_REPO/stack-git
     cd $OME_REPO/stack-git
     stack install
+    haskell_set_env
     
-    tip "stack install hoogle"
-    stack install hoogle --ghc-options " -fdiagnostics-color=always"
+    tip "stack install tool"
+    stack install hoogle happy hlint
     
     tip "install build system: shake"
     stack install shake

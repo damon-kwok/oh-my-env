@@ -17,7 +17,27 @@ rem )
 
 rem pause
 
+rem %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+set args=%1
+shift /0
+
+:loop
+set arg=%1
+if "%arg%"=="" (goto end)
+set args=%args% %arg%
+shift /0
+goto loop
+
+:end
+if "%args%"=="" (goto eof)
+
+rem %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+cd "%args%"
+
+:eof
 set PATH=D:\\msys64\\mingw64\\bin;D:\\msys64\\usr\\bin;%PATH%
-%comspec% /k "C:\Program Files (x86)\Microsoft Visual Studio\2019\Preview\VC\Auxiliary\Build\vcvars64.bat"
-cd %1
+rem @call "%PROGRAMFILES(x86)%\\Microsoft Visual Studio\\2019\\Preview\\VC\\Auxiliary\\Build\\vcvarsall.bat" x64
+@call "%PROGRAMFILES(x86)%\\Microsoft Visual Studio\2019\\Community\\VC\\Auxiliary\\Build\\vcvarsall.bat" x64
+rem @call "%VCINSTALLDIR%\\Auxiliary\\Build\\vcvarsall.bat" x64
+
 bash
