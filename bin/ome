@@ -239,9 +239,9 @@ ome_pull() {
     github_upgrade damon-kwok/oh-my-env $OME_ROOT/
     chmod +x $OME_ROOT/bin/*
     if [ "$OME_OS" = "$OS_MSYS2" ]; then
-        cp -f $OME_ROOT/desktop-extensions/msys2/*.bat /usr/bin/
+        cp -f $OME_ROOT/desktop-extensions/msys2/*.bat /
     elif [ "$OME_OS" = "$OS_CYGWIN" ]; then
-        cp -f $OME_ROOT/desktop-extensions/cygwin/*.bat /usr/bin/
+        cp -f $OME_ROOT/desktop-extensions/cygwin/*.bat /
     fi
     
     # ome_fix_dotfiles

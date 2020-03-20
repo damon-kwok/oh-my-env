@@ -89,15 +89,22 @@ install_haskell_language_server() {
 
     # 1
     stack update
-    stack setup
+    stack setup 8.6.5
     # 2
-    hoogle generate
+    # hoogle generate
     # 3
     # stack build
-    stack --stack-yaml=stack-8.8.2.yaml build
+    stack build --stack-yaml=stack-8.6.5.yaml
     # 4
     # stack install
-    stack --stack-yaml=stack-8.8.2.yaml install
+    stack install --stack-yaml=stack-8.6.5.yaml
+}
+
+install_haskell_ghcide() {
+    github_upgrade digital-asset/ghcide $OME_REPO/ghcide
+    cd $OME_REPO/ghcide
+    stack setup 8.8.3
+    stack install --stack-yaml=stack88.yaml
 }
 
 haskell_install()
@@ -138,6 +145,7 @@ haskell_install()
     
     tip "install haskell language server"
     install_haskell_language_server
+    install_haskell_ghcide
 }
 
 haskell_uninstall() {

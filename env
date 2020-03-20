@@ -92,12 +92,6 @@ esac
 # export OME_ROOT=$OME_BIN/..
 export OME_ROOT=$HOME/.oh-my-env
 export OME_BIN=$OME_ROOT/bin
-
-# if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
-    # export OME_NULL=$HOME/.ome_local/null_dev.log
-# else
-    # export OME_NULL=/dev/null
-# fi
 export OME_PREFIX=$HOME/.ome_local
 export OME_CACHE=$OME_PREFIX/caches
 export OME_REPO=$OME_PREFIX/repo
@@ -120,22 +114,6 @@ export OME_EMACS_SNIPPET=$HOME/.oh-my-emacs/emacs-config/snippets
 . $HOME/.oh-my-env/bin/proj
 
 ################################################################################
-# declare -x OME_SHOW=""
-export OME_SHOW=""
-ome_show() {
-    index=0
-    for item in $@; do
-        if [ "$index" = "0" ]; then
-            export OME_SHOW="${OME_SHOW}${item}\t"
-	        index=1
-        else
-            export OME_SHOW="$OME_SHOW${item} "
-        fi
-    done
-    export OME_SHOW="$OME_SHOW\n"
-}
-
-################################################################################
 # User Settings
 # if [ -d /mingw64/bin2 ]; then
 # export PATH=/mingw64/bin:"$PATH"
@@ -154,15 +132,11 @@ ome_dev_path $HOME/.local
 if [ ! "$OME_OS" = "$OS_MACOS" ]; then
     alias ls='ls --color'
 fi
-
-# alias pip='pip --prefix $OME_PREFIX -i http://mirrors.aliyun.com/pypi/simple/ --trusted-host mirrors.aliyun.com'
-# alias pip3='pip3 --install-option=--prefix=$OME_PREFIX -i http://mirrors.aliyun.com/pypi/simple/ --trusted-host mirrors.aliyun.com'
 alias wget='wget -c'
 alias omecd='f(){ cd $OME_ROOT/$1; ls; unset -f f; }; f'
 alias pjcd='f(){ cd $OME_PROJ/$1; ls; unset -f f; }; f'
 alias emcd='f(){ cd $OME_EMACS/$1; ls; unset -f f; }; f'
 alias repocd='f(){ cd $OME_REPO/$1; ls; unset -f f; }; f'
-# alias opam='opam --debug'
 
 if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
     export LANG=en_US.UTF-8
@@ -181,14 +155,11 @@ export EDITOR=em
 
 ################################################################################
 # FIX
-# bugfix:emacs crash
+#
+# Fix for Ubuntu: emacs crash on Ubuntu
 export XLIB_SKIP_ARGB_VISUALS=1
 
-# grep_str() {
-    # grep -n "$1" -r .
-# }
-
-# FIX for macos
+# FIX for macOS
 if [ "$OME_OS" = "$OS_MACOS" ]; then
     # FIX: "readlink: illegal option -- f"   https://blog.csdn.net/libing_zeng/article/details/82953038
     export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
@@ -206,12 +177,14 @@ if [ "$OME_OS" = "$OS_MACOS" ]; then
     fi
 fi
 
-# FIX for win
-if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
-    # alias xdg-open='cygstart'
-    xdg-open() {
-        cygstart $@
-    }
+# FIX `xdg-open' for MSYS2
+if [ "$OME_OS" = "$OS_MSYS2" ]; then
+    if [ "`command -v xdg-open`" = "" ]; then
+        echo '#!/usr/bin/env sh' > /usr/bin/xdg-open
+        echo "" >> /usr/bin/xdg-open
+        echo 'cygstart $@' >> /usr/bin/xdg-open
+        chmod +x /usr/bin/xdg-open
+    fi
 fi
 
 # lang

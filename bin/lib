@@ -752,3 +752,19 @@ gen_clang_format() {
     fi
     cd $oldir
 }
+
+################################################################################
+# declare -x OME_SHOW=""
+export OME_SHOW=""
+ome_show() {
+    index=0
+    for item in $@; do
+        if [ "$index" = "0" ]; then
+            export OME_SHOW="${OME_SHOW}${item}\t"
+	        index=1
+        else
+            export OME_SHOW="$OME_SHOW${item} "
+        fi
+    done
+    export OME_SHOW="$OME_SHOW\n"
+}
