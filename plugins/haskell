@@ -93,10 +93,10 @@ install_haskell_language_server() {
     # 2
     # hoogle generate
     # 3
-    # stack build
+    # stack build --stack-yaml=stack-8.8.1.yaml
     stack build --stack-yaml=stack-8.6.5.yaml
     # 4
-    # stack install
+    # stack install --stack-yaml=stack-8.8.1.yaml
     stack install --stack-yaml=stack-8.6.5.yaml
 }
 
@@ -134,11 +134,18 @@ haskell_install()
     # stack upgrade
     github_upgrade  commercialhaskell/stack $OME_REPO/stack-git
     cd $OME_REPO/stack-git
+    stack setup
     stack install
     haskell_set_env
+
     
     tip "stack install tool"
-    stack install hoogle happy hlint
+    # stack install ormolu --resolver ghc-8.8.1
+    stack install hoogle alex happy hlint hscpp brittany ghc-lib-parser
+    readp "execute hoogle generate?"
+    if [ $? -eq 1 ]; then
+        hoogle generate --haskell
+    fi
     
     tip "install build system: shake"
     stack install shake

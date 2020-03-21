@@ -215,7 +215,7 @@ ome_config() {
     git config --global core.safecrlf warn
 
     git config --global core.longpaths true
-    git config --system core.longpaths true
+    # git config --system core.longpaths true
 
     git config --global user.email "damon-kwok@outlook.com"
     git config --global user.name "damon-kwok"
