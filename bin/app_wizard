@@ -162,13 +162,13 @@ ome_app_wizard() {
             ome_check_install "erl" "erlang"
             rebar3 new release $proj_name
             cd $proj_root
-            $EDITOR "${proj_name}.rebar"
+            $EDITOR "apps/${proj_name}/src/${proj_name}_app.erl"
             ;;
         "10"|"elixir"|"elx"|"ex")
             ome_check_install "mix" "elixir"
             mix new $proj_name
             cd $proj_root
-            $EDITOR "${proj_name}.exs"
+            $EDITOR "lib/${proj_name}.ex"
             ;;
         "11"|"golang"|"go")
             ome_check_install "go" "golang"
