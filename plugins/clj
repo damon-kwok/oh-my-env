@@ -30,10 +30,15 @@ clj_install() {
     fi
 
     tip "install leiningen"
-    mkdir -p $HOME/.lein/self-installs/
     if [ -f $HOME/Downloads/leiningen-${LEIN_VERSION}-standalone.jar ]; then
         # echo "leiningen use cache:"
+        mkdir -p $HOME/.lein/self-installs/
         cp -f $HOME/Downloads/leiningen-${LEIN_VERSION}-standalone.jar $HOME/.lein/self-installs/
+
+        if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
+            mkdir -p $USERPROFILE/.lein/self-installs/
+            cp -f $HOME/Downloads/leiningen-${LEIN_VERSION}-standalone.jar $USERPROFILE/.lein/self-installs/
+        fi
     fi
 
     if [ "`command -v lein`" = "" ] || [ ! "`lein --version | cut -d ' ' -f 2`" = "$LEIN_VERSION" ]; then
@@ -41,6 +46,9 @@ clj_install() {
         cd $OME_PREFIX/bin/
         rm -rf ./lein
         wget https://raw.githubusercontent.com/technomancy/leiningen/stable/bin/lein
+        if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
+            wget https://raw.githubusercontent.com/technomancy/leiningen/stable/bin/lein.bat
+        fi
         chmod +x ./lein
         lein --version
     else
