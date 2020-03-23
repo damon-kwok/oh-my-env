@@ -338,7 +338,8 @@ ome_app_wizard() {
             ome_check_install "cargo" "rust"
             cargo new $proj_name --bin
             cd $proj_root
-            $EDITOR "Cargo.toml"
+            # $EDITOR "Cargo.toml"
+            $EDITOR "src/main.rs"
             ;;
         "30"|"scala")
             ome_check_install "gradle" "jvm"

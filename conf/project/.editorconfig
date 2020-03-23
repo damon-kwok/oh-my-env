@@ -5,24 +5,35 @@ root = true
 
 # Unix-style newlines with a newline ending every file
 [*]
+indent_style                = space
+indent_size                 = 4
+tab_width                   = 4
 end_of_line                 = lf
-insert_final_newline        = true
 charset                     = utf-8
 trim_trailing_whitespace    = true
+insert_final_newline        = true
+max_line_length             = 80
 
-[*.{cc,cx,cpp,cxx,hh,hx,hpp,hxx}]
+[*.{c++,cc,cx,cpp,cxx,h,h++,hh,hx,hpp,hxx,inl,ipp,tlh,tli}]
+charset                     = utf-8
 indent_style                = space
-indent_size                 = 8
+indent_size                 = 4
 max_line_length             = 100
 
 [*.{c,h}]
 indent_style                = space
-indent_size                 = 8
+indent_size                 = 4
+max_line_length             = 80
+
+[*.cs]
+indent_style                = space
+indent_size                 = 4
 max_line_length             = 80
 
 # Tab indentation (no size specified)
 [Makefile]
 indent_style                = tab
+tab_width                   = 4
 
 [Makefile.am]
 indent_style                = tab
@@ -50,6 +61,6 @@ indent_style                = space
 indent_size                 = 2
 
 # Matches the exact files either package.json or .travis.yml
-[{package.json,.travis.yml}]
+[{package.json,.travis.yml,PKGBUILD,*.sh}]
 indent_style                = space
 indent_size                 = 2
