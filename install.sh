@@ -185,15 +185,18 @@ case "`uname -s`" in
 esac
 ###############################################################################
 title "hosts init"
-# host_upgrade 192.30.253.112 http://github.com
-# host_upgrade 151.101.184.133 http://assets-cdn.github.com
-# host_upgrade 151.101.185.194 http://github.global.ssl.fastly.net
 
 host_upgrade 192.30.253.113 github.com
+host_upgrade 192.30.253.112 http://github.com
+
 host_upgrade 151.101.44.249 github.global.ssl.fastly.net
+host_upgrade 151.101.185.194 http://github.global.ssl.fastly.net
+
 host_upgrade 103.245.222.133 assets-cdn.github.com
 host_upgrade 23.235.47.133 assets-cdn.github.com
 host_upgrade 203.208.39.104 assets-cdn.github.com
+host_upgrade 151.101.184.133 http://assets-cdn.github.com
+
 host_upgrade 204.232.175.78 documentcloud.github.com
 host_upgrade 204.232.175.94 gist.github.com
 host_upgrade 107.21.116.220 help.github.com
@@ -216,12 +219,25 @@ host_upgrade 151.101.100.133 avatars6.githubusercontent.com
 host_upgrade 151.101.100.133 avatars7.githubusercontent.com
 host_upgrade 151.101.100.133 avatars8.githubusercontent.com
 
-host_upgrade 199.232.4.133 raw.githubusercontent.com
-host_upgrade 209.126.119.175 ipaddress.com
+# host_upgrade 209.126.119.175 ipaddress.com
 host_upgrade 140.82.114.25 live.github.com
 host_upgrade 199.232.28.133 camo.githubusercontent.com
 # host_upgrade 34.196.247.240 collector.githubapp.com
 host_upgrade 52.7.232.208 collector.githubapp.com
+
+host_upgrade 199.232.28.133 raw.githubusercontent.com
+host_upgrade 199.232.4.133 raw.githubusercontent.com
+host_upgrade 199.232.28.133 githubusercontent.com
+
+host_upgrade 151.101.1.69 stackoverflow.com
+host_upgrade 151.101.65.69 stackoverflow.com
+host_upgrade 151.101.129.69 stackoverflow.com
+host_upgrade 151.101.193.69 stackoverflow.com
+
+host_upgrade 185.199.108.153 github.io
+host_upgrade 185.199.109.153 github.io
+host_upgrade 185.199.110.153 github.io
+host_upgrade 185.199.111.153 github.io
 ###############################################################################
 title "deps init"
 get_os_type
