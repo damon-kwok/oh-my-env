@@ -225,7 +225,6 @@ ome_pull() {
     cp -f $OME_ROOT/conf/project/.editorconfig $OME_ROOT
     cp -f $OME_ROOT/conf/project/.editorconfig $OME_EMACS
     cp -f $OME_ROOT/conf/project/.editorconfig $OME_WS
-    cp -f $OME_ROOT/conf/project/.editorconfig $OME_PROJ
 
     # ome_fix_dotfiles
     # echo_kv "GIT PULL" "~/.oh_my_emacs/"
@@ -473,7 +472,7 @@ ome_parse() {
     esac
     cd $oldir
 }
-readonly OME_VERSION="OME-2020.0319 copyleft 2020 damon-kwok"
+readonly OME_VERSION="OME-2020.0325 copyleft 2020 damon-kwok"
 
 #echo $@
 if [[ "$@" == *"--debug"* ]]; then
