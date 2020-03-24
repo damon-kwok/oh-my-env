@@ -76,7 +76,7 @@ ome_package_info() {
     ome_show "VCS" "`ome_fetch_version git` | `ome_fetch_version svn`"
     for plugin_file in $HOME/.oh-my-env/plugins/* ; do
         if [ "$plugin_file" != "$HOME/.oh-my-env/plugins/README.org" ]; then
-            
+
             # local idx=$((index%4))
             # echo -n -e "${strload[$idx]}"
             # let index++
@@ -90,10 +90,10 @@ ome_package_info() {
             fi
             $plugin_file > /dev/null 2>&1
             eval "$FUNC_INFO > /dev/null 2>&1"
-            
+
             #. $plugin_file
             #eval "$EVAL"
-            
+
             # sleep 0.2
             # echo -n -e "\b\b"
         fi
@@ -108,11 +108,11 @@ ome_eval() {
     # . $OME_ROOT/bin/env
     # SELF_DIR=$(dirname $(readlink -f $0))
     # . $SELF_DIR/../env
-    
+
     #echo "ome_eval:$@"
     local FUNC="$1"
     local PLUGIN="$2"
-    
+
     # local OPT_TYPE=$2
     # local ARG1=$3
     # local ARG2=$4
@@ -198,7 +198,7 @@ ome_repl() {
 
 ome_config() {
     # title "ome config"
-    
+
     # tip "ldconfig"
     # if [ ! -f "/etc/ld.so.conf.d/`whoami`.conf" ]; then
     # sudo sh -c 'echo "$OME_PREFIX/lib" >> /etc/ld.so.conf.d/`whoami`.conf'
@@ -207,7 +207,7 @@ ome_config() {
 
     # tip "libtool"
     # libtool --finish $OME_PREFIX/lib
-    
+
     # tip "git config"
     ome_git_config
 }
@@ -222,12 +222,16 @@ ome_pull() {
     elif [ "$OME_OS" = "$OS_CYGWIN" ]; then
         cp -f $OME_ROOT/desktop-extensions/cygwin/*.bat /
     fi
-    
+    cp -f $OME_ROOT/conf/project/.editorconfig $OME_ROOT
+    cp -f $OME_ROOT/conf/project/.editorconfig $OME_EMACS
+    cp -f $OME_ROOT/conf/project/.editorconfig $OME_WS
+    cp -f $OME_ROOT/conf/project/.editorconfig $OME_PROJ
+
     # ome_fix_dotfiles
     # echo_kv "GIT PULL" "~/.oh_my_emacs/"
     github_upgrade damon-kwok/oh-my-emacs $HOME/.oh-my-emacs/
     link_init_el
-    
+
     # echo_kv "GIT PULL" "~/.emacs.d/"
     gitee_upgrade damon-kwok/emacs.d $HOME/.emacs.d/
 
@@ -243,7 +247,7 @@ ome_pull() {
 
     # echo_kv "GIT PULL" "~/wrokspace/"
     gitee_upgrade damon-kwok/workspace $HOME/workspace/
-    
+
     cd $oldir
 }
 
@@ -350,12 +354,12 @@ ome_help() {
 
 ome_parse() {
     local oldir=`pwd`
-    
+
     local OPT_TYPE=$1
     local ARG1=$2
     local ARG2=$3
     local ARGV=`echo $@ | cut -d ' ' -f 2-`
-    
+
     case "$OPT_TYPE" in
         "config")
             ome_config

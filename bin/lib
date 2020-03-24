@@ -28,7 +28,7 @@ echo_waiting() {
 
 readp() {
     local str=$1
-    
+
     read -p "$(tput setaf 14)$str$(tput sgr0)(Y/n)" input
     if [ "$input" == "y" ] || [ "$input" == "Y" ] || [ "$input" == "" ]; then
 	    return $(( 1 ));
@@ -64,7 +64,7 @@ tip() {
 
 get_os_type() {
     if [ $OS_UNKNOW == $OME_OS ]; then
-        # $OS_UNKNOW) os_choose;;    
+        # $OS_UNKNOW) os_choose;;
         tip "please choose your os:"
         echo "    1) macOS"
         echo "    -------------------------"
@@ -98,7 +98,7 @@ get_os_type() {
 
 ome_git_config() {
     # title "ome config"
-    
+
     # tip "ldconfig"
     # if [ ! -f "/etc/ld.so.conf.d/`whoami`.conf" ]; then
     # sudo sh -c 'echo "$OME_PREFIX/lib" >> /etc/ld.so.conf.d/`whoami`.conf'
@@ -107,13 +107,11 @@ ome_git_config() {
 
     # tip "libtool"
     # libtool --finish $OME_PREFIX/lib
-    
+
     # tip "git config"
     local oldir=`pwd`
-    local option="--global"
-    if [ -d $1 ]; then
+    if [ "$1" != "" ]; then
         cd $1
-        local option=""
         tip "git project config"
         git config core.editor $EDITOR
         git config core.autocrlf false
@@ -134,7 +132,7 @@ ome_git_config() {
         git config --global credential.helper store
 
         git config --global color.ui true
-        
+
         git config --global merge.tool emerge
         git config --global mergetool.diffmerge.cmd "emerge \$LOCAL \$BASE \$REMOTE \$MERGED"
         git config --global mergetool.keepBackup false
@@ -149,7 +147,7 @@ __git_upgrade() {
     local oldir=`pwd`
     local dir="$1"
     local url="$2"
-    
+
     if [ ! -d "$dir" ]; then # || [ ! -e "$dir/.git/index" ]
 	    echo_kv "clone" "[$project]" "$dir"
         # echo_success "git clone $url $dir --single-branch --depth=1 $branch"
@@ -199,7 +197,7 @@ git_upgrade() {
         local branch=""
     else
         local branch="-b $5"
-    fi    
+    fi
     local url="$site/${project}.git"
     __git_upgrade $dir $url
  }
@@ -217,7 +215,7 @@ git_ssh_upgrade() {
         local branch=""
     else
         local branch="-b $5"
-    fi    
+    fi
     local url="git@${site}:${project}.git"
 
     __git_upgrade $dir $url
@@ -271,7 +269,7 @@ gitee_upgrade_bigrepo() {
         local repo="$2"
     fi
     local force=$3
-    
+
     if [ -d $repo ] || [ "$force" = "1" ]; then
         # echo_kv "GIT PULL" "$repo"
         gitee_upgrade $project $repo
@@ -329,7 +327,7 @@ svn_add_new() {
 svn_commit() {
     svn_remove_lose
     svn_add_new
-    
+
     svn status
     readp "auto commit?"
     if [ $? -eq 1 ]; then
@@ -350,9 +348,9 @@ svn_commit() {
 find_str() {
     local str=$1
     local file=$2
-    
+
     grep $str $file >/dev/null
-    
+
     if [ $? -eq 0 ]; then
 	    # echo "found:$str"
 	    return $(( 1 ));
@@ -383,9 +381,9 @@ dns_upgrade() {
         echo_error "'dns_upgrade' does not support windows"
         return
     fi
-    
+
     local ip=$1
-    
+
     tip "Add '$ip' to /etc/network/interfaces"
     find_str $ip /etc/network/interfaces
     if [ $? -eq 0 ]; then
@@ -398,7 +396,7 @@ dns_upgrade() {
 host_upgrade() {
     local ip=$1
     local name=$2
-    
+
     if [ "$OME_OS" = "$OS_MSYS2" ]; then
         local hostfile=/c/Windows/System32/drivers/etc/hosts
     elif [ "$OME_OS" = "$OS_CYGWIN" ]; then
@@ -406,7 +404,7 @@ host_upgrade() {
     else
         local hostfile=/etc/hosts
     fi
-    
+
     find_str $name $hostfile
     if [ $? -eq 0 ]; then
 		echo "Add '$ip $name' to $hostfile"
@@ -445,7 +443,7 @@ curdir_upgrade() {
 	    rm -rf $dst
 	    cp -r $src $dst
 	    # cp -r $dir1/. $dir2
-    fi	
+    fi
 }
 
 dir_search() {
@@ -519,7 +517,7 @@ svn_commit() {
 
     tip "show status"
     svn status
-    
+
     readp "auto commit?"
     if [ $? -eq 1 ]; then
 	    svn commit -m `date +%Y-%m-%d@%H-%M-%S`
@@ -652,7 +650,7 @@ ome_write_env_to_dotfile() {
     touch $dotfile
     if [ -f $dotfile ]; then
         find_str ".oh-my-env/env" $dotfile
-        if [ $? -eq 0 ]; then	
+        if [ $? -eq 0 ]; then
             echo "" >> $dotfile
             echo "# oh-my-emacs" >> $dotfile
             echo '. $HOME/.oh-my-env/env' >> $dotfile
@@ -661,7 +659,7 @@ ome_write_env_to_dotfile() {
 }
 
 ome_fix_dotfiles() {
-    ome_write_env_to_dotfile $HOME/.profile 
+    ome_write_env_to_dotfile $HOME/.profile
     ome_write_env_to_dotfile $HOME/.shrc
     ome_write_env_to_dotfile $HOME/.bashrc
     ome_write_env_to_dotfile $HOME/.zshrc
@@ -793,7 +791,7 @@ gen_clang_format() {
         echo "AllowAllParametersOfDeclarationOnNextLine: true" >> ./.clang-format
         echo "# 括号后添加空格" >> ./.clang-format
         echo "SpaceAfterCStyleCast: true" >> ./.clang-format
-        
+
         echo "" >> ./.clang-format
         echo "---" >> ./.clang-format
         echo "Language: JavaScript" >> ./.clang-format
