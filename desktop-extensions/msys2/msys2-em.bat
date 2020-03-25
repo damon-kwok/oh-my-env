@@ -1,6 +1,6 @@
 @echo off
 
-set PATH=D:\\msys64\\usr\\bin;D:\\msys64\\mingw64\\bin;%PATH%
+set PATH=D:\\msys64\\mingw64\\bin;D:\\msys64\\usr\\bin;%PATH%
 
 rem %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 rem /cygdrive/d/
@@ -40,7 +40,7 @@ rem D:\\msys64\\usr\\bin\\bash -c "em \"%1%\""
 rem %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 echo open:%args%
-bash -c "emacsclientw --no-wait --server-file='/tmp/emacs1000/server' --alternate-editor='emacs -Q' `cygpath \"%args%\"`"
+bash -c "emacsclientw --no-wait --server-file='/tmp/emacs1000/server' --alternate-editor='emacs -Q' \"`cygpath \"%args%\"`\""
 rem bash -c "emacsclientw --no-wait --server-file='/tmp/emacs1000/server' --alternate-editor='emacs -Q' \"%args%\""
 
 :eof

@@ -180,6 +180,7 @@ __git_upgrade() {
             # git submodule update
             git submodule sync && git submodule update --init --depth 1
         fi
+        echo_kv "[$project]" "Upgrade to" `git log -1 --format="%cd" --date=short | sed 's|-||g'`
     fi
     cd $oldir
 }

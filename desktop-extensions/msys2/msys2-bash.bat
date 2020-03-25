@@ -15,9 +15,6 @@ rem 		D:\\msys64\\usr\\bin\\bash
 rem 	)
 rem )
 
-cd "%*"
-set PATH=D:\\msys64\\mingw64\\bin;D:\\msys64\\usr\\bin;%PATH%
-
 rem %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 rem VS2017
 if exist "%PROGRAMFILES(x86)%\\Microsoft Visual Studio\\2017\\Preview\\VC\\" ( 
@@ -53,9 +50,11 @@ if exist "%PROGRAMFILES(x86)%\\Microsoft Visual Studio\\2019\\Professional\\VC\\
 if exist "%PROGRAMFILES(x86)%\\Microsoft Visual Studio\\2019\\Enterprise\\VC\\" ( 
 	@call "%PROGRAMFILES(x86)%\\Microsoft Visual Studio\\2019\\Enterprise\\VC\\Auxiliary\\Build\\vcvarsall.bat" x64
 )
+rem @call "%VCINSTALLDIR%\\Auxiliary\\Build\\vcvarsall.bat" x64
 
 rem %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 rem Bash
-
-rem @call "%VCINSTALLDIR%\\Auxiliary\\Build\\vcvarsall.bat" x64
-D:\\msys64\\usr\\bin\\bash
+rem cd "%*"
+set PATH=D:\\msys64\\mingw64\\bin;D:\\msys64\\usr\\bin;%PATH%
+rem bash -c neofetch
+bash
