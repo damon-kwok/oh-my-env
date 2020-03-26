@@ -5,20 +5,23 @@
 #+OPTIONS: toc:nil creator:nil author:nil email:nil timestamp:nil html-postamble:nil
 #+TODO: TODO DOING DONE
 
+*** Support OS
+| OS     | Distribution                               |
+|--------+--------------------------------------------|
+| Linux  | Arch/Debian/Ubuntu/Mint/Redhat/Fedora/SUSE |
+| Unix   | FreeBSD/OpenBSD/Dragonfly/Solaris/illumo   |
+| Window | Cygwin/MSYS2                               |
+
 *** Requires
 - curl
 - bash
-*** Support OS
-| OS     | Distribution/Environment                   |
-|--------+--------------------------------------------|
-| Linux  | Debian/Ubuntu/Redhat/Fedora/SUSE/ArchLinux |
-| Unix   | FreeBSD/Solaris/illumo                     |
-| Window | Cygwin/MSYS2                               |
+
 *** Install
-#+BEGIN_SRC shell 
+#+BEGIN_SRC shell
 # curl -L https://raw.githubusercontent.com/damon-kwok/oh-my-env/master/install.sh | bash
 curl -L https://git.io/JeLGL | bash -s install
 #+END_SRC
+
 *** Uninstall
 #+BEGIN_SRC shell
 rm -rf ~/.oh-my-env
@@ -28,18 +31,23 @@ rm -rf ~/.ome_local
 *** Usage
 - install programming languages
 #+BEGIN_SRC shell
-ome install cc          # c/c++ development environment
-ome install jvm         # java/kotlin/groovy/scala development environment
-ome install golang      # golang development environment
-ome install haskell     # haskell development environment
-ome install rust        # rust development environment
-ome install php         # php development environment
-ome install python      # python3 development environment
-ome install ruby        # ruby development environment
-ome install perl        # perl development environment
-ome install erlang      # erlang development environment
-ome install elixir      # elixir development environment
-ome install nim         # nim development environment
+ome install cc          # gcc clang lsp:clangd
+ome install jvm         # java eclipse.jdt.ls
+ome install clj         # leiningen clojure-cli
+ome install kotlin      # kotlin
+ome install groovy      # groovy
+ome install scala       # scala
+ome install ceylon      # ceylon
+ome install golang      # golang
+ome install haskell     # haskel
+ome install rust        # rust
+ome install php         # php
+ome install python      # python3
+ome install ruby        # ruby
+ome install perl        # perl
+ome install erlang      # erlang
+ome install elixir      # elixir
+ome install nim         # nim
 #+END_SRC
 
 - update
