@@ -1,0 +1,27 @@
+#!/usr/bin/env sh
+
+pony_install() {
+    # curl --proto '=https' --tlsv1.2 -sSf https://raw.githubusercontent.com/ponylang/ponyup/latest-release/ponyup-init.sh | sh
+    # ponyup update ponyc release
+    # ponyup update ponyc nightly
+    github_upgrade ponylang/ponyc $OME_PREFIX/ponyc-git 0
+    cd $OME_PREFIX/ponyc-git
+
+    make libs
+    make configure
+    make build
+    make test
+    # sudo make install
+}
+
+pony_uninstall() {
+    echo_error "'pony_uninstall' not implemented"
+}
+
+pony_exist_p() {
+    echo_error "'pony_exist_p' not implemented"
+}
+
+pony_info() {
+    echo_error ""
+}

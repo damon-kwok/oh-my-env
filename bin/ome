@@ -6,41 +6,11 @@
 ################################################################################
 
 ################################################################################
-run_emacs() {
-    if [ ! -f $HOME/.emacs ]; then
-        link_init_el
-    fi
-
-    emacs --debug-init
-    exit
-}
-
-run_emacs_nw() {
-    if [ ! -f $HOME/.emacs ]; then
-        link_init_el
-    fi
-
-    emacs -nw --debug-init
-}
 
 delete_elc() {
     cd $OME_ROOT/emacs-config/modules
     rm -rf *.elc
     cd $OME_ROOT
-}
-
-echo_error() {
-    echo -e $(tput setaf 1)"$1"$(tput sgr0)
-}
-
-ome_package_list_1() {
-    local olddir=`pwd`
-    tip "package list"
-    for plugin in $HOME/.oh-my-env/plugins/* ; do
-        echo_success `basename $plugin`
-    done
-
-    cd $olddir
 }
 
 ome_package_list() {
@@ -174,23 +144,27 @@ ome_repl() {
     if [ ! "`command -v lumo`" == "" ]; then
         echo "    s) ClojureScript"
     fi
+    if [ ! "`command -v carp`" == "" ]; then
+        echo "    C) carp"
+    fi
     echo "    -------------------------"
     echo "    q | C-c) exit"
 
     read -p "please enter your choice:" item
     case $item in
-        e) echo abort elisp repl with "C-d | (exit) | (quit)" && emacs -Q -nw --eval "(ielm)";;
-        1) echo abort lein repl with "C-d | (exit) | (quit)" && lein repl;;
-        2) echo abort stack repl with "C-d | :quit" && stack repl;;
-        3) echo abort elixir repl with "C-c" && iex;;
-        4) echo abort erlang repl with "C-c | C-g | q()." && erl;;
-        5) echo abort java repl with "C-d" && jshell;;
-        6) echo abort cl repl with "(exit)" && ros run;;
-        7) echo abort node repl with "C-d" && node;;
-        8) echo abort python repl with "quit() | C-z ret" && python3;;
-        8) echo abort ocaml repl with "C-c" && ocaml;;
-        c) echo abort clj repl with "C-c" && clj;;
-        s) echo abort cljs repl with "C-d | (exit) | (quit)" && lumo;;
+        e) echo "abort elisp repl with C-d | (exit) | (quit)" && emacs -Q -nw --eval "(ielm)";;
+        1) echo "abort lein repl with C-d | (exit) | (quit)" && lein repl;;
+        2) echo "abort stack repl with C-d | :quit" && stack repl;;
+        3) echo "abort elixir repl with C-c" && iex;;
+        4) echo "abort erlang repl with C-c | C-g | q()." && erl;;
+        5) echo "abort java repl with C-d" && jshell;;
+        6) echo "abort cl repl with (exit)" && ros run;;
+        7) echo "abort node repl with C-d" && node;;
+        8) echo "abort python repl with quit() | C-z ret" && python3;;
+        8) echo "abort ocaml repl with C-c" && ocaml;;
+        c) echo "abort clj repl with C-c" && clj;;
+        s) echo "abort cljs repl with C-d | (exit) | (quit)" && lumo;;
+        C) echo "abort carp repl with C-c" && carp;;
         q|Q) exit;;
         *) ome_repl;;
     esac
