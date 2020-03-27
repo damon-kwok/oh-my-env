@@ -4,7 +4,7 @@ pony_install() {
     # curl --proto '=https' --tlsv1.2 -sSf https://raw.githubusercontent.com/ponylang/ponyup/latest-release/ponyup-init.sh | sh
     # ponyup update ponyc release
     # ponyup update ponyc nightly
-    github_upgrade ponylang/ponyc $OME_PREFIX/ponyc-git 0
+    github_upgrade ponylang/ponyc $OME_REPO/ponyc-git 0
     cd $OME_PREFIX/ponyc-git
 
     make libs
