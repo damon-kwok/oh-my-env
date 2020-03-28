@@ -3,7 +3,7 @@
 toccata_install() {
     github_upgrade Toccata-Lang/toccata $OME_REPO/toccata
     cd $OME_REPO/toccata/
-    
+
     # Compile core.c
     clang -O3 -g -fno-objc-arc -std=c99 -c core.c
 
@@ -24,13 +24,15 @@ toccata_info() {
 }
 
 toccata_set_env() {
-    # Set the TOCCATA_DIR environment variable to the directory that contains core.toc
-    export TOCCATA_DIR=$OME_REPO/toccata
+    if [ -d "$OME_REPO/toccata" ]; then
+        # Set the TOCCATA_DIR environment variable to the directory that contains core.toc
+        export TOCCATA_DIR=$OME_REPO/toccata
 
-    # Add that same directory to the C_INCLUDE_PATH environment variable
-    export C_INCLUDE_PATH=$C_INCLUDE_PATH:$TOCCATA_DIR
+        # Add that same directory to the C_INCLUDE_PATH environment variable
+        export C_INCLUDE_PATH=$C_INCLUDE_PATH:$TOCCATA_DIR
 
-    # For convenience, make sure the toccata executable is on the $PATH.
-    export PATH=$PATH:$TOCCATA_DIR
+        # For convenience, make sure the toccata executable is on the $PATH.
+        export PATH=$PATH:$TOCCATA_DIR
+    fi
 }
 toccata_set_env

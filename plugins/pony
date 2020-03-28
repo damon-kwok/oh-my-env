@@ -5,7 +5,7 @@ pony_install() {
     # ponyup update ponyc release
     # ponyup update ponyc nightly
     github_upgrade ponylang/ponyc $OME_REPO/ponyc-git 0
-    cd $OME_PREFIX/ponyc-git
+    cd $OME_REPO/ponyc-git
 
     make libs
     make configure

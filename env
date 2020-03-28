@@ -185,7 +185,7 @@ if [ "$OME_OS" = "$OS_MACOS" ]; then
 
     # FIX: bashrc https://blog.csdn.net/liu510817387/article/details/8126719
     if [ ! -f $HOME/.bash_profile ]; then
-        echo 'if [ "${BASH-no}" != "no" ]; then' > $HOME/.bash_profile 
+        echo 'if [ "${BASH-no}" != "no" ]; then' > $HOME/.bash_profile
         echo '    [ -r ~/.bashrc ] && . ~/.bashrc' >> $HOME/.bash_profile
         echo 'fi' >> $HOME/.bash_profile
     fi
@@ -224,7 +224,7 @@ export CLOJURE_VERSION=1.10.1.536
 export LEIN_VERSION=2.9.3
 
 export ERLANG_VERSION=22.3
-export GOLANG_VERSION=1.14
+export GOLANG_VERSION=1.14.1
 export STACK_VERSION=2.1.3
 export GHC_VERSION=8.8.3
 export PYTHON2_VERSION=2.7.17
@@ -249,7 +249,7 @@ for plugin in $HOME/.oh-my-env/plugins/* ; do
             tip "$plugin"
             time `. $plugin`
         else
-            . "$plugin"            
+            . "$plugin"
         fi
     fi
 done
