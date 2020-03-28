@@ -1,0 +1,37 @@
+#!/usr/bin/env sh
+
+chez_install() {
+    github_upgrade cisco/ChezScheme $OME_REPO/ChezScheme
+    cd $OME_REPO/ChezScheme
+	#--installprefix=$OME_PREFIX
+    ./configure --help
+	rm -rf ./Makefile
+	rm -rf ./a6nt
+
+    ./configure
+	cd a6nt/c
+    ./make.bat
+    cd ..
+    make
+    chez_set_env
+}
+
+chez_uninstall() {
+    echo_error "'chez_uninstall' not implemented"
+}
+
+chez_exist_p() {
+    echo_error "'chez_exist_p' not implemented"
+}
+
+chez_info() {
+    echo_error ""
+}
+
+chez_set_env() {
+    if [ -d "$OME_REPO/ChezScheme/a6nt/bin/a6nt" ]; then
+        # $OME_REPO/vcpkg
+        export PATH=$OME_REPO/ChezScheme/a6nt/bin/a6nt:$PATH
+    fi
+}
+chez_set_env

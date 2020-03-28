@@ -65,11 +65,13 @@ indent_size                 = 2
 indent_style                = space
 indent_size                 = 2
 
-[*.{el,els,ros,cl,lisp,lsp,scm,rkt,clj,cljs,cljs.*,cljc,edn,hy,carp}]
+# Matches the lisp files
+[*.{el,els,ros,cl,lisp,lsp,scm,ss,rkt,clj,cljs,cljs.*,cljc,edn,hy,carp}]
 indent_style                = space
 indent_size                 = 2
 tab_width                   = 2
 
+# Matches the pony files
 [*.pony]
 indent_style                = space
 indent_size                 = 2
