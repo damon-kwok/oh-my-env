@@ -57,7 +57,7 @@ steam_on_freebsd() {
 	        sudo sh -c 'echo "permit nopass keepenv `whoami`" >> /usr/local/etc/doas.conf'
         fi
 
-        if [ ! -e steam.deb ]; then		
+        if [ ! -e steam.deb ]; then
 	        fetch http://media.steampowered.com/client/installer/steam.deb
         fi
 
@@ -66,7 +66,7 @@ steam_on_freebsd() {
         # git clone https://github.com/SteamOnFreeBSD/SteamOnFreeBSD.git
         github_upgrade SteamOnFreeBSD/SteamOnFreeBSD $HOME/SteamOnFreeBSD
         cd $HOME/SteamOnFreeBSD
-        
+
         ./install_x86_64.sh
         ./steamrun
     fi
@@ -113,23 +113,32 @@ cinnamon_install() {
 }
 
 swapkey_init() {
-    if [ ! -e $HOME/.Xmodmap ]; then
-        echo "!" >> $HOME/.Xmodmap
-        echo "! Swap Caps_Lock and Control_R" >> $HOME/.Xmodmap
-        echo "!" >> $HOME/.Xmodmap
-        echo "remove Lock = Caps_Lock" >> $HOME/.Xmodmap
-        echo "remove Control = Control_R" >> $HOME/.Xmodmap
-        echo "keysym Control_R = Caps_Lock" >> $HOME/.Xmodmap
-        echo "keysym Caps_Lock = Control_R" >> $HOME/.Xmodmap
-        echo "add Lock = Caps_Lock" >> $HOME/.Xmodmap
-        echo "add Control = Control_R" >> $HOME/.Xmodmap
-    fi
+    readp "wayland mode?"
+    if [ $? -eq 1 ]; then
+        setxkbmap -option ctrl:swapcaps
+        find_str "setxkbmap" $HOME/.profile
+        if [ $? -eq 0 ]; then
+            echo "setxkbmap -option ctrl:swapcaps" >> $HOME/.profile
+        fi
+    else
+        if [ ! -e $HOME/.Xmodmap ]; then
+            echo "!" >> $HOME/.Xmodmap
+            echo "! Swap Caps_Lock and Control_R" >> $HOME/.Xmodmap
+            echo "!" >> $HOME/.Xmodmap
+            echo "remove Lock = Caps_Lock" >> $HOME/.Xmodmap
+            echo "remove Control = Control_R" >> $HOME/.Xmodmap
+            echo "keysym Control_R = Caps_Lock" >> $HOME/.Xmodmap
+            echo "keysym Caps_Lock = Control_R" >> $HOME/.Xmodmap
+            echo "add Lock = Caps_Lock" >> $HOME/.Xmodmap
+            echo "add Control = Control_R" >> $HOME/.Xmodmap
+        fi
 
-    find_str "xmodmap" $HOME/.xinitrc
-    if [ $? -eq 0 ]; then
-        echo "xmodmap $HOME/.Xmodmap" >> $HOME/.xinitrc
+        find_str "xmodmap" $HOME/.xinitrc
+        if [ $? -eq 0 ]; then
+            echo "xmodmap $HOME/.Xmodmap" >> $HOME/.xinitrc
+        fi
+        xmodmap $HOME/.Xmodmap
     fi
-    xmodmap $HOME/.Xmodmap
 }
 
 xbindkey_install() {
@@ -139,11 +148,11 @@ xbindkey_install() {
     # if [ ! -f $HOME/.xbindkeysrc ]; then
     #   xbindkeys --defaults > $HOME/.xbindkeysrc
     # fi
-    
+
     # gen $HOME/.xbindkeysrc.scm
     if [ ! -f $HOME/.xbindkeysrc.scm ]; then
         xbindkeys --defaults-guile > $HOME/.xbindkeysrc.scm
-        echo "(xbindkey '(control alt e) \"dmenu_run\")" >> $HOME/.xbindkeysrc.scm 
+        echo "(xbindkey '(control alt e) \"dmenu_run\")" >> $HOME/.xbindkeysrc.scm
     fi
 }
 
@@ -157,7 +166,7 @@ i3_install() {
     local olddir=`pwd`
     echo "i3_install"
     # {i3-wm } roxterm
-    sudo apt install -y i3 i3status i3lock dmenu feh xcompmgr scrot alsa-utils xrandr arandr    
+    sudo apt install -y i3 i3status i3lock dmenu feh xcompmgr scrot alsa-utils xrandr arandr
     cd $olddir
 }
 

@@ -7,9 +7,9 @@ pony_install() {
     github_upgrade ponylang/ponyc $OME_REPO/ponyc-git 0
     cd $OME_REPO/ponyc-git
 
-    # make libs
-    # make configure
-    # make build
+    make libs
+    make configure
+    make build
     # make test
     # sudo make install
     pony_setenv
