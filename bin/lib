@@ -170,7 +170,8 @@ __git_upgrade() {
         if [ "$submodule" != "0" ]; then
 	        git clone $url $dir --single-branch --depth=1 $branch
         else
-            git clone $url $dir --recurse-submodules --single-branch --depth=1 $branch
+            # git clone $url $dir --recurse-submodules --single-branch --depth=1 $branch
+            git clone $url $dir --recursive --single-branch --depth=1 $branch
         fi
         # elif [ "`ls -A $DIRECTORY`" = "" ]; then
         # echo "$DIRECTORY is indeed empty"
@@ -186,15 +187,11 @@ __git_upgrade() {
         # git checkout -b $5 origin/$5
         # fi
 	    git pull
-
         # git submodule foreach --recursive 'git fetch --tags'
         if [ "$submodule" != "0" ]; then
             # echo_success "git submodule update --init --depth=1"
-	        # git submodule update --init --depth=1
             # echo_success "git submodule update --init"
-	        # git submodule update --init --depth 1
-            # git submodule update
-            git submodule sync && git submodule update --init --depth 1
+            git submodule sync && git submodule update --init --recursive --depth 1
         fi
         echo_kv "[$project]" "Upgrade to" `git log -1 --format="%cd" --date=short | sed 's|-||g'`
     fi
