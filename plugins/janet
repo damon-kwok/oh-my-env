@@ -1,0 +1,17 @@
+#!/usr/bin/env sh
+
+janet_install() {
+    echo_error "'janet_install' not implemented"
+}
+
+janet_uninstall() {
+    echo_error "'janet_uninstall' not implemented"
+}
+
+janet_exist_p() {
+    echo_error "'janet_exist_p' not implemented"
+}
+
+janet_info() {
+    echo_error ""
+}

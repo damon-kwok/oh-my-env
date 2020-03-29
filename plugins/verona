@@ -1,0 +1,23 @@
+#!/usr/bin/env sh
+
+verona_install() {
+    github_upgrade microsoft/verona $OME_REPO/verona
+    cd $OME_REPO/verona
+    mkdir build_ninja
+    cd build_ninja
+    cmake .. -GNinja -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_COMPILER=clang++ -DCMAKE_C_COMPILER=clang
+    ninja build
+    # ninja install
+}
+
+verona_uninstall() {
+    echo_error "'verona_uninstall' not implemented"
+}
+
+verona_exist_p() {
+    echo_error "'verona_exist_p' not implemented"
+}
+
+verona_info() {
+    echo_error ""
+}

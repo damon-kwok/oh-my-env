@@ -1,0 +1,17 @@
+#!/usr/bin/env sh
+
+zig_install() {
+    echo_error "'zig_install' not implemented"
+}
+
+zig_uninstall() {
+    echo_error "'zig_uninstall' not implemented"
+}
+
+zig_exist_p() {
+    echo_error "'zig_exist_p' not implemented"
+}
+
+zig_info() {
+    echo_error ""
+}
