@@ -1,29 +1,45 @@
 #!/usr/bin/env sh
 
 ask() {
-    read -p $(tput setaf 2)"$1 "$(tput sgr0)
+    read -p $(tput setaf 2)"$@ "$(tput sgr0)
 }
 warning_ask() {
-    read -p $(tput setaf 3)"$1 "$(tput sgr0)
+    read -p $(tput setaf 3)"$@ "$(tput sgr0)
 }
 
 echo_success() {
-    echo -e $(tput setaf 2)"$1"$(tput sgr0) #2
+    echo -e $(tput setaf 2)"$@"$(tput sgr0) #2
 }
 echo_warning() {
-    echo -e $(tput setaf 3)"$1"$(tput sgr0) #3 dark yellow
+    echo -e $(tput setaf 3)"$@"$(tput sgr0) #3 dark yellow
 }
 echo_error() {
-    echo -e $(tput setaf 1)"$1"$(tput sgr0)
+    echo -e $(tput setaf 1)"$@"$(tput sgr0)
 }
 echo_tip() {
-    echo -e $(tput setaf 6)"$1"$(tput sgr0) #6
+    echo -e $(tput setaf 6)"$@"$(tput sgr0) #6
 }
 echo_debug() {
-    echo -e $(tput setaf 8)"$1"$(tput sgr0)
+    echo -e $(tput setaf 8)"$@"$(tput sgr0)
 }
 echo_waiting() {
-    echo -e $(tput setaf 4)"$1"$(tput sgr0)
+    echo -e $(tput setaf 4)"$@"$(tput sgr0)
+}
+
+echo_lang1() {
+    echo_error $*
+}
+
+echo_lang2() {
+    echo_success $*
+}
+
+echo_lang3() {
+    echo_warning $*
+}
+
+echo_lang4() {
+    echo_tip $*
 }
 
 readp() {

@@ -1,0 +1,18 @@
+#!/usr/bin/env sh
+
+gluon_install() {
+    ome_check_install "cargo" "rust"
+    cargo install gluon_repl
+}
+
+gluon_uninstall() {
+    echo_error "'gluon_uninstall' not implemented"
+}
+
+gluon_exist_p() {
+    echo_error "'gluon_exist_p' not implemented"
+}
+
+gluon_info() {
+    echo_error ""
+}

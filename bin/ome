@@ -110,45 +110,49 @@ ome_install() {
 ome_repl() {
     echo ""
     tip "what do you need?"
-    echo "    e) ELisp"
-    if [ ! "`command -v lein`" == "" ]; then
-        echo "    1) Clojure"
-    fi
+
+    echo_lang1 "    e) ELisp"
     if [ ! "`command -v scheme`" == "" ]; then
-        echo "    0) Scheme"
+        echo_lang1 "    0) Scheme"
+    fi
+    if [ ! "`command -v lein`" == "" ]; then
+        echo_lang3 "    1) Clojure"
     fi
     if [ ! "`command -v stack`" == "" ]; then
-        echo "    2) Haskell"
+        echo_lang2 "    2) Haskell"
     fi
     if [ ! "`command -v iex`" == "" ]; then
-        echo "    3) Elixir"
+        echo_lang3 "    3) Elixir"
     fi
     if [ ! "`command -v erl`" == "" ]; then
-        echo "    4) Erlang"
+        echo_lang2 "    4) Erlang"
     fi
     if [ ! "`command -v jshell`" == "" ]; then
-        echo "    5) Java"
+        echo_lang2 "    5) Java"
     fi
     if [ ! "`command -v ros`" == "" ]; then
-        echo "    6) CommonLisp"
+        echo_lang1 "    6) CommonLisp"
     fi
     if [ ! "`command -v node`" == "" ]; then
-        echo "    7) Nodejs"
+        echo_lang3 "    7) Nodejs"
     fi
     if [ ! "`command -v python3`" == "" ]; then
-        echo "    8) Python"
+        echo_lang2 "    8) Python"
     fi
     if [ ! "`command -v ocaml`" == "" ]; then
-        echo "    9) ocaml"
+        echo_lang2 "    9) ocaml"
     fi
     if [ ! "`command -v clj`" == "" ]; then
-        echo "    c) Clojure"
+        echo_lang3 "    c) Clojure"
     fi
     if [ ! "`command -v lumo`" == "" ]; then
-        echo "    s) ClojureScript"
+        echo_lang3 "    s) ClojureScript"
     fi
     if [ ! "`command -v carp`" == "" ]; then
-        echo "    C) carp"
+        echo_lang4 "    C) carp"
+    fi
+    if [ "`command -v gluon_repl`" != "" ]; then
+        echo_lang4 "    g) Gluon"
     fi
     echo "    -------------------------"
     echo "    q | C-c) exit"
@@ -169,6 +173,7 @@ ome_repl() {
         c) echo_success "abort clj repl with C-c" && clj;;
         s) echo_success "abort cljs repl with C-d | (exit) | (quit)" && lumo;;
         C) echo_success "abort carp repl with C-c" && carp;;
+        g) echo_success "abort gluon repl with C-c" && cargo run -p gluon_repl -- -i;;
         q|Q) exit;;
         *) ome_repl;;
     esac

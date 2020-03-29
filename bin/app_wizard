@@ -43,6 +43,7 @@ ome_app_wizard() {
         echo "    29) Rust (cargo)"
         echo "    30) Scala (gradle)"
         echo "    31) Swift (SPM)"
+        echo "    32) Pony"
         # echo "    32) .net"
         echo "    --------------------------"
         echo "    r) return"
@@ -57,10 +58,10 @@ ome_app_wizard() {
     if [ "$proj_root" == "" ]; then
         read -p "please enter project root directory:" proj_root
     fi
-    
+
     local proj_name=`basename $2`
     local proj_ws=`dirname $2`
-    
+
 
     if [ -d $proj_root ]; then
         echo "'$proj_root' already exist!"
@@ -287,7 +288,7 @@ ome_app_wizard() {
             mkdir -p $proj_root
             cd $proj_root
             # pipenv --three install
-            
+
             echo '#!/usr/bin/env python3' >> ${proj_name}.py
             echo '# -*- coding: utf-8 -*-' >> ${proj_name}.py
             echo '' >> ${proj_name}.py
@@ -356,14 +357,18 @@ ome_app_wizard() {
             swift package init --type executable
             $EDITOR "Sources/main.swift"
             ;;
-        "32"|".net")
+        "32"|"pony")
+            ome_check_install "ponyc" "pony"
+            mkdir -p $proj_root
+            cd $proj_root
+            $EDITOR "main.pony"
             ;;
         "q") exit;;
     esac
     echo "root:$proj_root"
     if [ -d "$proj_root" ]; then
         cd $proj_root
-        cp -u $SELF_DIR/../conf/project/.editorconfig $proj_root 
+        cp -u $SELF_DIR/../conf/project/.editorconfig $proj_root
         if [ ! -d "$proj_root/.git" ]; then
             git init
         fi

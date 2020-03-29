@@ -32,9 +32,9 @@ roswell_install() {
             gitee_upgrade_bigrepo damon-kwok/roswell-caches $USERPROFILE/.roswell/archives/ 1
         else
             gitee_upgrade_bigrepo damon-kwok/roswell-caches $HOME/.roswell/archives/ 1
-        fi     
+        fi
     fi
-    
+
     tip "lisp install"
     ros install sbcl-bin/$SBCL_VERSION
     #ros use sbcl/system
@@ -53,13 +53,13 @@ roswell_exist_p() {
 }
 
 roswell_info() {
-    echo_error ""
+    # if [ -d $HOME/.roswell/ ]; then
+    if [ "`command -v ros`" != "" ]; then
+        ome_show "Roswell" "`ome_fetch_version ros` | `ros run -- --version`"
+    fi
+    # fi
 }
 
 if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
     export PATH=$OME_REPO/roswell:$PATH
-fi
-
-if [ -d $HOME/.roswell/ ]; then
-    ome_show "Roswell" "`ome_fetch_version ros` | `ros run -- --version`"
 fi

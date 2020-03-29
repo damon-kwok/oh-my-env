@@ -33,7 +33,7 @@ chez_exist_p() {
 
 chez_info() {
     if [ "`command -v scheme`" != "" ]; then
-        ome_show "Scheme" "`ome_fetch_version scheme`"
+        ome_show "Scheme" "ChezScheme `ome_fetch_version scheme`"
     fi
 }
 
