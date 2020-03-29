@@ -56,7 +56,7 @@ rust_install() {
         fi
 
         tip "rust set env"
-        rust_set_env
+        rust_setenv
     else
         tip "rustup self update"
         rustup self update
@@ -86,7 +86,7 @@ rust_install() {
     rustup component add rls rust-analysis rust-src
 
     tip "rust set env"
-    rust_set_env
+    rust_setenv
     
     # tip "install tool:racer"
     # cargo install --force racer
@@ -117,7 +117,7 @@ rust_info() {
 }
 
 # Rust
-rust_set_env() {
+rust_setenv() {
     # [ -s "$HOME/.cargo/env" ] && \. "$HOME/.cargo/env"
 
     # if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
@@ -149,7 +149,7 @@ rust_set_env() {
         export RUST_SRC_PATH="$(rustc --print sysroot)/lib/rustlib/src/rust/src"
     fi
 }
-rust_set_env
+rust_setenv
 
 rust_install_cn() {
     tip "install rust + cargo"

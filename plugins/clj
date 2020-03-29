@@ -81,10 +81,8 @@ clj_exist_p() {
 }
 
 clj_info() {
-    if [ "`command -v java`" != "" ]; then
-        ome_show "CLJ" "`ome_fetch_version lein | cut -d ' ' -f 1-2`"
-    else
-        echo_error ""
+    if [ "`command -v lein`" != "" ]; then
+        ome_show "Clojure" "`ome_fetch_version lein | cut -d ' ' -f 1-2`"
     fi
 }
 

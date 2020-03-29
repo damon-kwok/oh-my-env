@@ -8,7 +8,7 @@ install_java_language_server() {
         rm -rf ~/Downloads/jdt-language-server-latest.tar.gz
         rm -rf ~/.emacs.d/eclipse.jdt.ls/server/
     fi
-    
+
     if [ ! -d ~/.emacs.d/eclipse.jdt.ls/server/ ]; then
         mkdir -p ~/.emacs.d/eclipse.jdt.ls/server/
         if [ ! -f ~/Downloads/jdt-language-server-latest.tar.gz ]; then
@@ -60,7 +60,7 @@ jvm_install_sdkman() {
     if [ $? -eq 1 ]; then
         gitee_upgrade_bigrepo damon-kwok/sdkman-caches $HOME/.sdkman/archives/ 1
         # project=damon-kwok/sdkman-caches
-        # repo=$HOME/.sdkman/archives/ 
+        # repo=$HOME/.sdkman/archives/
         # gitee_upgrade $project $repo
         # git-hook $repo pull
     fi
@@ -69,12 +69,12 @@ jvm_install_sdkman() {
     if [ $? -eq 1 ]; then
         tip "sdkman update"
         sdk update
-        
+
         tip "sdkman self update"
         sdk selfupdate force
-        
+
         tip "sdkman upgrade"
-        sdk upgrade      
+        sdk upgrade
     fi
 
     #if ! command -v javac >/dev/null 2>&1; then
@@ -83,26 +83,26 @@ jvm_install_sdkman() {
     fi
     #if ! command -v kotlinc >/dev/null 2>&1; then
     # if [ "`command -v kotlinc`" = "" ]; then
-        # sdk install kotlin $KOTLIN_VERSION
+    # sdk install kotlin $KOTLIN_VERSION
     # fi
     #if ! command -v scalac >/dev/null 2>&1; then
     # if [ "`command -v scalac`" = "" ]; then
-        # sdk install scala $SCALA_VERSION
+    # sdk install scala $SCALA_VERSION
     # fi
     #if ! command -v groovy >/dev/null 2>&1; then
     # if [ "`command -v groovy`" = "" ]; then
-        # sdk install groovy $GROOVY_VERSION
+    # sdk install groovy $GROOVY_VERSION
     # fi
 
     if [ "`command -v ant`" = "" ]; then
         sdk install ant $ANT_VERSION
     fi
-    
+
     #if ! command -v mvn >/dev/null 2>&1; then
     if [ "`command -v mvn`" = "" ]; then
         sdk install maven $MAVEN_VERSION
     fi
-    
+
     readp "maven: use china morrir?"
     if [ $? -eq 1 ]; then
         cp -f $OME_ROOT/conf/maven/settings.xml $HOME/.sdkman/candidates/maven/current/conf/
@@ -115,7 +115,7 @@ jvm_install_sdkman() {
 
     #if ! command -v sbt >/dev/null 2>&1; then
     # if [ "`command -v sbt`" = "" ]; then
-        # sdk install sbt $SBT_VERSION
+    # sdk install sbt $SBT_VERSION
     # fi
 
     #tip "install java language server"
@@ -181,11 +181,11 @@ jvm_install_download() {
 
 jvm_install() {
     jvm_install_sdkman
-    
+
     # if [ "$OME_OS" = "$OS_FREEBSD" ]; then
-        # jvm_install_download
+    # jvm_install_download
     # else
-        # jvm_install_sdkman
+    # jvm_install_sdkman
     # fi
 }
 
@@ -213,14 +213,16 @@ sdkman_info() {
 }
 
 jvm_info() {
-    ome_show "JVM" "`sdkman_info java Java` | \
+    if [ "`command -v java`" != "" ]; then
+        ome_show "JVM" "`sdkman_info java Java` | \
 `sdkman_info kotlin Kotlin` | \
 `sdkman_info scala Scala` | \
 `sdkman_info groovy Groovy` | \
 `sdkman_info ceylon Ceylon`"
 
-    ome_show "JVMTool" "`sdkman_info maven Maven` | \
+        ome_show "JVMTool" "`sdkman_info maven Maven` | \
 `sdkman_info sbt SBT` | \
 `sdkman_info gradle Gradle`"
+    fi
     # `sdkman_info leiningen Lein`"
 }

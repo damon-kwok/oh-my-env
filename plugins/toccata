@@ -23,7 +23,7 @@ toccata_info() {
     echo_error ""
 }
 
-toccata_set_env() {
+toccata_setenv() {
     if [ -d "$OME_REPO/toccata" ]; then
         # Set the TOCCATA_DIR environment variable to the directory that contains core.toc
         export TOCCATA_DIR=$OME_REPO/toccata
@@ -35,4 +35,4 @@ toccata_set_env() {
         export PATH=$PATH:$TOCCATA_DIR
     fi
 }
-toccata_set_env
+toccata_setenv

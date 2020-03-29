@@ -121,14 +121,14 @@ erlang_install_kerl() {
         kerl install ${ERLANG_VERSION} $OME_REPO/otp_${ERLANG_VERSION}
     fi
 
-    tip "kerl_set_env"
-    kerl_set_env
+    tip "kerl_setenv"
+    kerl_setenv
 
     tip "kerl status"
     kerl status
 }
 
-kerl_set_env() {
+kerl_setenv() {
     if [ -f $OME_REPO/otp_${ERLANG_VERSION}/activate ]; then
         . $OME_REPO/otp_${ERLANG_VERSION}/activate
     fi
@@ -137,8 +137,8 @@ kerl_set_env() {
 erlenv_install() {
     github_upgrade talentdeficit/erlenv $HOME/.erlenv
 
-    tip "erlenv_set_env"
-    erlenv_set_env
+    tip "erlenv_setenv"
+    erlenv_setenv
 }
 
 erlang_install() {
@@ -146,7 +146,7 @@ erlang_install() {
         if [ ! -d "$OME_REPO/erl10.7" ]; then
             cd ~/Downloads/
             unzip ./otp-${ERLANG_VERSION}-win-x86_64.zip -d $OME_REPO
-            erlang_set_env
+            erlang_setenv
         else
             # local REBAR_VERINFO=`rebar3 --version | head -n 1 | cut -d ' ' -f 4-`
             local REBAR_VERINFO="Erlang/OTP ${ERLANG_VERSION}"
@@ -199,20 +199,20 @@ erlang_info() {
     echo ""
     # ome_show "Erlang" "`ome_fetch_version rebar3`"
 }
-erlenv_set_env() {
+erlenv_setenv() {
     if [ -d $HOME/.erlenv/ ]; then
         export PATH=$HOME/.erlenv/bin:$PATH
         eval "$(erlenv init -)"
     fi
 }
 
-kerl_set_env
+kerl_setenv
 
 hex_pulish_settings() {
     echo ""
 }
 
-erlang_set_env() {
+erlang_setenv() {
     if [ -d $OME_REPO/erl10.7/ ]; then
         export PATH=$OME_REPO/erl10.7/bin:$OME_REPO/erl10.7/erts-10.7/bin:$PATH
         local bindir=`cygpath -m $OME_REPO/erl10.7/erts-10.7/bin`
@@ -228,4 +228,4 @@ erlang_set_env() {
         echo "Rootdir=${rootdir//'/'/'\\'}" >> $OME_REPO/erl10.7/erts-10.7/bin/erl.ini
     fi
 }
-erlang_set_env
+erlang_setenv

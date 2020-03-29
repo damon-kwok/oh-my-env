@@ -44,7 +44,7 @@ ruby_install_rvm() {
         curl -sSL https://get.rvm.io | sh -s stable
         curl -sSL https://rvm.io/mpapis.asc | gpg2 --import -
     fi
-    
+
     tip "rvm self upgrade"
     rvm get stable
 
@@ -61,15 +61,15 @@ ruby_install_rbenv() {
     cd $HOME/.ruby-build/
     PREFIX=$OME_PREFIX $HOME/.ruby-build/install.sh
 
-    tip "rbenv_set_env"
-    rbenv_set_env
-    
+    tip "rbenv_setenv"
+    rbenv_setenv
+
     # 用来管理 gemset, 可选, 因为有 bundler 也没什么必要
     github_upgrade jamis/rbenv-gemset  ~/.rbenv/plugins/rbenv-gemset
-    
+
     # 通过 rbenv update 命令来更新 rbenv 以及所有插件, 推荐
     github_upgrade rkh/rbenv-update ~/.rbenv/plugins/rbenv-update
-    
+
     # rbenv-china-mirror
     # github_upgrade AndorChen/rbenv-china-mirror "$(rbenv root)"/plugins/rbenv-china-mirror
 
@@ -81,7 +81,7 @@ ruby_install_rbenv() {
     # CONFIGURE_OPTS="--disable-install-doc"  rbenv install $RUBY_VERSION
     rbenv install $RUBY_VERSION
     rbenv global $RUBY_VERSION
-    
+
     tip "rbenv whence rackup"
     rbenv whence rackup
 }
@@ -90,7 +90,7 @@ ruby_install() {
     # ruby_install_rvm
     # or
     ruby_install_rbenv
-    
+
     tip "install bundler"
     gem env home
     gem install bundler
@@ -110,7 +110,7 @@ ruby_exist_p() {
 
 # RUBY_VERSION=2.7.0
 
-rbenv_set_env() {
+rbenv_setenv() {
     export PATH=$HOME/.rbenv/bin:$HOME/.rbenv/shims:$PATH
     if [ -f $HOME/.rbenv/bin/rbenv ]; then
         eval "$(rbenv init -)"
@@ -118,7 +118,9 @@ rbenv_set_env() {
 }
 
 ruby_info() {
-    ome_show "Ruby" "`ome_fetch_version ruby`"
+    if [ "`command -v ruby`" != "" ]; then
+        ome_show "Ruby" "`ome_fetch_version ruby`"
+    fi
 }
 
 rbenv_doctor() {

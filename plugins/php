@@ -56,7 +56,7 @@ php_install_phpenv() {
     curl -L https://raw.githubusercontent.com/phpenv/phpenv-installer/master/bin/phpenv-installer | sh
 
     tip "set phpenv env"
-    phpenv_set_env
+    phpenv_setenv
 
     tip "phpenv update"
     phpenv update
@@ -78,8 +78,8 @@ php_install_phpbrew() {
     fi
 
     tip "phpbrew set env"
-    phpbrew_set_env
-    
+    phpbrew_setenv
+
     tip "phpbrew self-update"
     phpbrew self-update
 
@@ -127,7 +127,9 @@ php_exist_p() {
 }
 
 php_info() {
-    ome_show "PHP" "`ome_fetch_version php` | `ome_fetch_version composer`"
+    if [ "`command -v php`" != "" ]; then
+        ome_show "PHP" "`ome_fetch_version php` | `ome_fetch_version composer`"
+    fi
 }
 
 php_edit_ini() {
@@ -142,20 +144,20 @@ php_edit_ini() {
 
 # PHP_VERSION=7.4.2
 # PHP_VERSION=5.6.39
-phpenv_set_env() {
+phpenv_setenv() {
     export PHPENV_ROOT="/home/damon/.phpenv"
     if [ -d "${PHPENV_ROOT}" ]; then
         export PATH="${PHPENV_ROOT}/bin:${PATH}"
         eval "$(phpenv init -)"
     fi
 }
-phpenv_set_env
+phpenv_setenv
 
-phpbrew_set_env() {
+phpbrew_setenv() {
     if [ -f "$HOME/.phpbrew/bashrc" ]; then
         # export PHPBREW_SET_PROMPT=1
         export PHPBREW_RC_ENABLE=1
         . $HOME/.phpbrew/bashrc
     fi
 }
-phpbrew_set_env
+phpbrew_setenv

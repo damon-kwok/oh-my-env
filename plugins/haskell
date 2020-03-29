@@ -67,7 +67,7 @@ stack_install_download() {
                 unzip ./$zipkg -d $OME_REPO/stack
                 cd $OME_REPO/stack/
                 chmod +x ./*
-                haskell_set_env
+                haskell_setenv
                 # fi
             fi
         else
@@ -136,7 +136,7 @@ haskell_install()
     cd $OME_REPO/stack-git
     stack setup
     stack install
-    haskell_set_env
+    haskell_setenv
 
     
     tip "stack install tool"
@@ -169,7 +169,7 @@ haskell_info() {
     fi
 }
 
-haskell_set_env() {
+haskell_setenv() {
     if [ -d "$OME_REPO/stack" ]; then
         export PATH=$PATH:$OME_REPO/stack
     fi
@@ -180,4 +180,4 @@ haskell_set_env() {
         fi
     fi
 }
-haskell_set_env
+haskell_setenv

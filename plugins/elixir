@@ -19,7 +19,7 @@ elixir_install_git() {
     cd $OME_REPO/elixir
     make
     make test
-    elixir_set_env
+    elixir_setenv
     # Shall I install rebar3? (if running non-interactively, use "mix local.rebar --force") [Yn]
     HEX_MIRROR="https://hexpm.upyun.com" mix local.rebar --force
     HEX_MIRROR="https://hexpm.upyun.com" mix hex.config mirror_url https://hexpm.upyun.com
@@ -51,7 +51,7 @@ elixir_info() {
 
 }
 
-elixir_set_env() {
+elixir_setenv() {
     if [ -d "$OME_REPO/elixir/bin" ]; then
         export PATH=$OME_REPO/elixir/bin:$PATH
         test -s "$HOME/.kiex/scripts/kiex" && source "$HOME/.kiex/scripts/kiex"
@@ -61,4 +61,4 @@ elixir_set_env() {
         export PATH=$OME_PREFIX/elixier-ls-release:$PATH
     fi
 }
-elixir_set_env
+elixir_setenv

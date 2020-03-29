@@ -16,7 +16,7 @@ ros_info() {
     echo_error ""
 }
 
-ros_set_env () {
+ros_setenv () {
     # ROS
     if [ -d /opt/ros/kinetic/ ] && [ -d $HOME/catkin_ws/ ]; then
         case "$OME_SHELL" in
@@ -36,4 +36,4 @@ ros_set_env () {
     # export PATH=$HOME/Cyberman:$PATH
 }
 
-ros_set_env
+ros_setenv

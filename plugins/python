@@ -4,8 +4,8 @@ python_install_pyenv() {
     tip "install pyenv"
     github_upgrade pyenv/pyenv $HOME/.pyenv
 
-    tip "pyenv_set_env"
-    pyenv_set_env
+    tip "pyenv_setenv"
+    pyenv_setenv
 
     tip "install python"
     pyenv install $PYTHON3_VERSION
@@ -208,7 +208,7 @@ python_info() {
 
 # PYTHON2_VERSION=2.7.17
 # PYTHON3_VERSION=3.8.1
-pyenv_set_env() {
+pyenv_setenv() {
     export PYENV_ROOT="$HOME/.pyenv"
     export PATH="$PYENV_ROOT/bin:$PATH"
 
@@ -220,4 +220,4 @@ pyenv_set_env() {
     fi
     # export PYTHON_BUILD_MIRROR_URL="http://mirrors.sohu.com/python/2.7.12/"
 }
-# pyenv_set_env
+# pyenv_setenv

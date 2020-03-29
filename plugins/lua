@@ -5,13 +5,13 @@ lua_install_lenv() {
         tip "install lenv"
         curl -L http://git.io/lenv | perl
     fi
-    
-    tip "lenv_set_env"
-    lenv_set_env
+
+    tip "lenv_setenv"
+    lenv_setenv
 
     if [ ! -d $HOME/.lenv/lua/$LUA_VERSION ]; then
         tip "install lua $LUA_VERSION"
-        lenv install $LUA_VERSION   
+        lenv install $LUA_VERSION
     fi
 
     tip "lua version info"
@@ -19,7 +19,7 @@ lua_install_lenv() {
     lua -v
 }
 
-lenv_set_env() {
+lenv_setenv() {
     if [ -f $HOME/.lenvrc ]; then
         . $HOME/.lenvrc
     fi
@@ -43,9 +43,7 @@ lua_exist_p() {
 }
 
 lua_info() {
-    if [ "`command -v lua`" = "" ]; then
-        ome_show "Lua" "miss"
-    else
+    if [ "`command -v lua`" != "" ]; then
         ome_show "Lua" "`lua -v`"
     fi
 }

@@ -24,19 +24,19 @@ link_init_el() {
     # fi
 }
 
-oh_my_emacs_install() {
+emacs_install() {
     github_upgrade damon-kwok/oh-my-emacs $HOME/.oh-my-emacs
     link_init_el
 }
 
-oh_my_emacs_uninstall() {
-    echo_error "'oh_my_emacs_uninstall' not implemented"
+emacs_uninstall() {
+    echo_error "'emacs_uninstall' not implemented"
 }
 
-oh_my_emacs_exist_p() {
-    echo_error "'oh_my_emacs_exist_p' not implemented"
+emacs_exist_p() {
+    echo_error "'emacs_exist_p' not implemented"
 }
 
-oh_my_emacs_info() {
+emacs_info() {
     echo_error ""
 }

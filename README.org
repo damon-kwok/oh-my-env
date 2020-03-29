@@ -18,8 +18,8 @@
 
 *** Install
 #+BEGIN_SRC shell
-# curl -L https://raw.githubusercontent.com/damon-kwok/oh-my-env/master/install.sh | bash
-curl -L https://git.io/JeLGL | bash -s install
+# curl -L https://raw.githubusercontent.com/damon-kwok/oh-my-env/master/install.sh | bash -s install
+curl -L https://git.io/JeLGL | bash
 #+END_SRC
 
 *** Uninstall
@@ -32,12 +32,7 @@ rm -rf ~/.ome_local
 - install programming languages
 #+BEGIN_SRC shell
 ome install cc          # gcc clang lsp:clangd
-ome install jvm         # java eclipse.jdt.ls
 ome install clj         # leiningen clojure-cli
-ome install kotlin      # kotlin
-ome install groovy      # groovy
-ome install scala       # scala
-ome install ceylon      # ceylon
 ome install golang      # golang
 ome install haskell     # haskel
 ome install rust        # rust
@@ -48,11 +43,20 @@ ome install perl        # perl
 ome install erlang      # erlang
 ome install elixir      # elixir
 ome install nim         # nim
+ome install pony        # pony-lang
+ome install chez        # ChezScheme
+ome install roswell     # CommonLisp
+ome install jvm kotlin groovy scala ceylon
 #+END_SRC
 
 - update
 #+BEGIN_SRC shell
 ome update
+#+END_SRC
+
+- REPL
+#+BEGIN_SRC shell
+ome repl
 #+END_SRC
 
 - create project

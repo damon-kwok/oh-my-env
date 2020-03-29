@@ -12,6 +12,7 @@ pony_install() {
     make build
     make test
     # sudo make install
+    pony_setenv
 }
 
 pony_uninstall() {
@@ -23,5 +24,14 @@ pony_exist_p() {
 }
 
 pony_info() {
-    echo_error ""
+    if [ "`command -v ponyc`" != "" ]; then
+        ome_show "Pony" "`ome_fetch_version ponyc`"
+    fi
 }
+
+pony_setenv() {
+    if [ -d "$OME_REPO/ponyc-git/build/release" ]; then
+        export PATH=$OME_REPO/ponyc-git/build/release:$PATH
+    fi
+}
+pony_setenv

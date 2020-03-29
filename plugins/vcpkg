@@ -9,7 +9,7 @@ vcpkg_install() {
     else
         ./bootstrap-vcpkg.sh
     fi
-    vcpkg_set_env
+    vcpkg_setenv
 }
 
 vcpkg_uninstall() {
@@ -24,10 +24,10 @@ vcpkg_info() {
     echo_error ""
 }
 
-vcpkg_set_env() {
+vcpkg_setenv() {
     if [ -d "$OME_REPO/vcpkg" ]; then
         # $OME_REPO/vcpkg
         export PATH=$OME_REPO/vcpkg:$PATH
     fi
 }
-vcpkg_set_env
+vcpkg_setenv

@@ -118,7 +118,7 @@ ocaml_info() {
     fi
 }
 
-ocaml_set_env() {
+ocaml_setenv() {
     # Ocaml: OPAM configuration
     if [ -d $HOME/.opam/opam-init/ ]; then
         case "$OME_SHELL" in
@@ -140,4 +140,4 @@ ocaml_set_env() {
 
 }
 
-ocaml_set_env
+ocaml_setenv

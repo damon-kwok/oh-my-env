@@ -20,7 +20,7 @@ chez_install() {
     fi
     make
     make install
-    # chez_set_env
+    chez_setenv
 }
 
 chez_uninstall() {
@@ -32,13 +32,15 @@ chez_exist_p() {
 }
 
 chez_info() {
-    echo_error ""
+    if [ "`command -v scheme`" != "" ]; then
+        ome_show "Scheme" "`ome_fetch_version scheme`"
+    fi
 }
 
-chez_set_env() {
+chez_setenv() {
     if [ -d "$OME_REPO/ChezScheme/a6nt/bin/a6nt" ]; then
         # $OME_REPO/vcpkg
         export PATH=$OME_REPO/ChezScheme/a6nt/bin/a6nt:$PATH
     fi
 }
-# chez_set_env
+chez_setenv
