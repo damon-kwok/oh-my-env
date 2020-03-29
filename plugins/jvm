@@ -214,7 +214,7 @@ sdkman_info() {
 
 jvm_info() {
     if [ "`command -v java`" != "" ]; then
-        ome_show "JVM" "`java -version 2>&1 | head -n 1`|`sdkman_info ant Ant`|`sdkman_info maven Maven`|`sdkman_info gradle Gradle`"
+        ome_show "Java" "`java -version 2>&1 | head -n 1`|`sdkman_info ant Ant`|`sdkman_info maven Maven`|`sdkman_info gradle Gradle`"
     fi
     if [ "`command -v kotlin`" != "" ]; then
         ome_show "Kotlin" "`sdkman_info kotlin Kotlin` | `sdkman_info gradle Gradle`"
