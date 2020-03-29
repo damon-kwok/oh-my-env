@@ -3,9 +3,11 @@
 janet_install() {
     github_upgrade janet-lang/janet $OME_REPO/janet
     cd $OME_REPO/janet
+    make clean
     make
-    make test
-    make repl
+    # make test
+    # make repl
+    janet_setenv
 }
 
 janet_uninstall() {
@@ -17,5 +19,14 @@ janet_exist_p() {
 }
 
 janet_info() {
-    echo_error ""
+    if [ "`command -v janet`" != "" ]; then
+        ome_show "Janet" "`janet -v`"
+    fi
 }
+
+janet_setenv() {
+    if [ -e "$OME_REPO/janet/build/janet" ]; then
+        export PATH=$OME_REPO/janet/build:$PATH
+    fi
+}
+janet_setenv
