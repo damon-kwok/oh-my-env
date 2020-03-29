@@ -214,15 +214,18 @@ sdkman_info() {
 
 jvm_info() {
     if [ "`command -v java`" != "" ]; then
-        ome_show "JVM" "`java -version 2>&1 | head -n 1` | \
-`sdkman_info kotlin Kotlin` | \
-`sdkman_info scala Scala` | \
-`sdkman_info groovy Groovy` | \
-`sdkman_info ceylon Ceylon`"
-
-        ome_show "JVMTool" "`sdkman_info maven Maven` | \
-`sdkman_info sbt SBT` | \
-`sdkman_info gradle Gradle`"
+        ome_show "JVM" "`java -version 2>&1 | head -n 1`|`sdkman_info ant Ant`|`sdkman_info maven Maven`|`sdkman_info gradle Gradle`"
     fi
-    # `sdkman_info leiningen Lein`"
+    if [ "`command -v kotlin`" != "" ]; then
+        ome_show "Kotlin" "`sdkman_info kotlin Kotlin` | `sdkman_info gradle Gradle`"
+    fi
+    if [ "`command -v scala`" != "" ]; then
+        ome_show "Scala" "`sdkman_info scala Scala` | `sdkman_info sbt SBT`"
+    fi
+    if [ "`command -v groovy`" != "" ]; then
+        ome_show "Groovy" "`sdkman_info groovy Groovy` | `sdkman_info gradle Gradle`"
+    fi
+    if [ "`command -v ceylon`" != "" ]; then
+        ome_show "Ceylon" "`sdkman_info ceylon Ceylon`"
+    fi
 }

@@ -87,9 +87,9 @@ basedev_install_tools() {
 
 basedev_install() {
     # gcc clang make m4 automake pkg-config"
-    
+
     # libdn2 libuv libason-devel
-    # 
+    #
     # libgmime glibc
     # libiconv
     # sed awk grep tar zip unzip 7zip flex gawke bison bc mt
@@ -122,7 +122,7 @@ basedev_info() {
 
     ome_show "GCC" "`ome_fetch_version gcc`"
     ome_show "Clang" "`ome_fetch_version clang`"
-    ome_show "Make" "`ome_fetch_version make` | `ome_fetch_version cmake` (default: $OME_MAKE)"
+    ome_show "Make" "`ome_fetch_version make` | `ome_fetch_version cmake` | Ninja `ome_fetch_version ninja` | Meson `ome_fetch_version meson`"
     # ome_show "Auto" "`ome_fetch_version autogen` | `ome_fetch_version automake` | `ome_fetch_version autoconf`"
-    # ome_show "CTool" "pkg-config `ome_fetch_version pkg-config` | `ome_fetch_version libtool`" #`ome_fetch_version m4` | 
+    # ome_show "CTool" "pkg-config `ome_fetch_version pkg-config` | `ome_fetch_version libtool`" #`ome_fetch_version m4` |
 }
