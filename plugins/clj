@@ -82,7 +82,7 @@ clj_exist_p() {
 
 clj_info() {
     if [ "`command -v lein`" != "" ]; then
-        ome_show "Clojure" "`ome_fetch_version lein | cut -d ' ' -f 1-2`"
+        ome_show "Clojure" "`clj --help | head -n 1` | `ome_fetch_version lein | cut -d ' ' -f 1-2`"
     fi
 }
 
