@@ -3,11 +3,16 @@
 verona_install() {
     github_upgrade microsoft/verona $OME_REPO/verona
     cd $OME_REPO/verona
-    mkdir build_ninja
+    mkdir -p build_ninja
     cd build_ninja
-    cmake .. -GNinja -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_COMPILER=clang++ -DCMAKE_C_COMPILER=clang
-    ninja build
-    # ninja install
+    cmake .. -GNinja \
+          -DCMAKE_INSTALL_PREFIX=$OME_PREFIX/bin \
+          -DCMAKE_BUILD_TYPE=Release \
+          -DCMAKE_C_COMPILER=clang \
+          -DCMAKE_CXX_COMPILER=clang++
+
+    # cmake --build . --use-stderr --config Release --target install
+    ninja install
 }
 
 verona_uninstall() {

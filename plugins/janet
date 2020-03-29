@@ -1,7 +1,11 @@
 #!/usr/bin/env sh
 
 janet_install() {
-    echo_error "'janet_install' not implemented"
+    github_upgrade janet-lang/janet $OME_REPO/janet
+    cd $OME_REPO/janet
+    make
+    make test
+    make repl
 }
 
 janet_uninstall() {

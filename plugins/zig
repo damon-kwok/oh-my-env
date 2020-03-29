@@ -1,7 +1,18 @@
 #!/usr/bin/env sh
 
 zig_install() {
-    echo_error "'zig_install' not implemented"
+    github_upgrade ziglang/zig $OME_REPO/zig
+    cd $OME_REPO/zig
+    mkdir -p build_ninja
+    cd build_ninja
+    cmake .. -GNinja \
+          -DCMAKE_INSTALL_PREFIX=$OME_PREFIX \
+          -DCMAKE_BUILD_TYPE=Release \
+          -DCMAKE_C_COMPILER=clang \
+          -DCMAKE_CXX_COMPILER=clang++
+
+    # cmake --build . --use-stderr --config Release --target install
+    ninja install
 }
 
 zig_uninstall() {
