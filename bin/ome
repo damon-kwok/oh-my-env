@@ -111,44 +111,50 @@ ome_repl() {
     echo ""
     tip "what do you need?"
 
-    echo_lang1 "    e) ELisp"
-    if [ ! "`command -v scheme`" == "" ]; then
-        echo_lang1 "    0) Scheme"
+    echo_lang1 "    e) EmacsLisp"
+    if [ "`command -v ros`" != "" ]; then
+        echo_lang1 "    1) CommonLisp (Roswell)"
     fi
-    if [ ! "`command -v lein`" == "" ]; then
-        echo_lang3 "    1) Clojure"
+    if [ "`command -v scheme`" != "" ]; then
+        echo_lang1 "    2) Scheme (ChezScheme)"
     fi
-    if [ ! "`command -v stack`" == "" ]; then
-        echo_lang2 "    2) Haskell"
+
+    if [ "`command -v jshell`" != "" ]; then
+        echo_lang2 "    j) Java"
     fi
-    if [ ! "`command -v iex`" == "" ]; then
-        echo_lang3 "    3) Elixir"
+    if [ "`command -v python3`" != "" ]; then
+        echo_lang2 "    p) Python"
     fi
-    if [ ! "`command -v erl`" == "" ]; then
-        echo_lang2 "    4) Erlang"
+    # if [ "`command -v erl`" != "" ]; then
+        echo_lang2 "    e) Erlang"
+    # fi
+    if [ "`command -v stack`" != "" ]; then
+        echo_lang2 "    h) Haskell"
     fi
-    if [ ! "`command -v jshell`" == "" ]; then
-        echo_lang2 "    5) Java"
+    if [ "`command -v ocaml`" != "" ]; then
+        echo_lang2 "    o) Ocaml"
     fi
-    if [ ! "`command -v ros`" == "" ]; then
-        echo_lang1 "    6) CommonLisp"
+
+    if [ "`command -v gomacro`" != "" ]; then
+        echo_lang3 "    g) Golang (gomacro)"
     fi
-    if [ ! "`command -v node`" == "" ]; then
-        echo_lang3 "    7) Nodejs"
+    if [ "`command -v lein`" != "" ]; then
+        echo_lang3 "    l) Clojure (Leiningen)"
     fi
-    if [ ! "`command -v python3`" == "" ]; then
-        echo_lang2 "    8) Python"
+    if [ "`command -v clj`" != "" ]; then
+        echo_lang3 "    c) Clojure (cli)"
     fi
-    if [ ! "`command -v ocaml`" == "" ]; then
-        echo_lang2 "    9) ocaml"
+    if [ "`command -v lumo`" != "" ]; then
+        echo_lang3 "    s) ClojureScript (lumo)"
     fi
-    if [ ! "`command -v clj`" == "" ]; then
-        echo_lang3 "    c) Clojure"
+    if [ "`command -v iex`" != "" ]; then
+        echo_lang3 "    i) Elixir (iex)"
     fi
-    if [ ! "`command -v lumo`" == "" ]; then
-        echo_lang3 "    s) ClojureScript"
+    if [ "`command -v node`" != "" ]; then
+        echo_lang3 "    n) Nodejs"
     fi
-    if [ ! "`command -v carp`" == "" ]; then
+
+    if [ "`command -v carp`" != "" ]; then
         echo_lang4 "    C) carp"
     fi
     if [ "`command -v gluon`" != "" ]; then
@@ -160,20 +166,24 @@ ome_repl() {
     read -p "please enter your choice:" item
     case $item in
         e) echo_success "abort elisp repl with C-d | (exit) | (quit)" && emacs -Q -nw --eval "(ielm)";;
-        0) echo_success "abort scheme repl with C-d" && scheme;;
-        1) echo_success "abort lein repl with C-d | (exit) | (quit)" && lein repl;;
-        2) echo_success "abort stack repl with C-d | :quit" && stack repl;;
-        3) echo_success "abort elixir repl with C-c" && iex;;
-        4) echo_success "abort erlang repl with C-c | C-g | q()." && erl;;
-        5) echo_success "abort java repl with C-d" && jshell;;
-        6) echo_success "abort cl repl with (exit)" && ros run;;
-        7) echo_success "abort node repl with C-d" && node;;
-        8) echo_success "abort python repl with quit() | C-z ret" && python3;;
-        8) echo_success "abort ocaml repl with C-c" && ocaml;;
-        c) echo_success "abort clj repl with C-c" && clj;;
+        1) echo_success "abort cl repl with (exit)" && ros run;;
+        2) echo_success "abort scheme repl with C-d" && scheme;;
+
+        j) echo_success "abort java repl with C-d" && jshell;;
+        p) echo_success "abort python repl with quit() | C-z ret" && python3;;
+        e) echo_success "abort erlang repl with C-c | C-g | q()." && erl;;
+        h) echo_success "abort haskell repl with C-d | :quit" && stack repl;;
+        o) echo_success "abort ocaml repl with C-c" && ocaml;;
+
+        g) echo_success "abort golang repl with C-d | :q" && gomacro;;
+        l) echo_success "abort lein repl with C-d | (exit) | (quit)" && lein repl;;
+        c) echo_success "abort clj-cli repl with C-c" && clj;;
         s) echo_success "abort cljs repl with C-d | (exit) | (quit)" && lumo;;
+        i) echo_success "abort elixir repl with C-c" && iex;;
+        n) echo_success "abort node repl with C-d" && node;;
+
         C) echo_success "abort carp repl with C-c" && carp;;
-        g) echo_success "abort gluon repl with C-d | :q" && gluon -i;;
+        G) echo_success "abort gluon repl with C-d | :q" && gluon -i;;
         q|Q) exit;;
         *) ome_repl;;
     esac

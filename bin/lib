@@ -31,11 +31,11 @@ echo_lang1() {
 }
 
 echo_lang2() {
-    echo_success $*
+    echo_warning $*
 }
 
 echo_lang3() {
-    echo_warning $*
+    echo_success $*
 }
 
 echo_lang4() {

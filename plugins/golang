@@ -66,14 +66,14 @@ golang_install() {
         export PATH=$GOROOT/bin:$GOBIN:/bin:$PATH
         echo $GOROOT
         #}
-        
+
     else
         export CGO_ENABLED=0
         unset GOROOT
         unset GOBIN
         mkdir -p $OME_REPO/go_bootstrap
-        
-        # bootstrap get src 
+
+        # bootstrap get src
         # github_upgrade golang/go $OME_REPO/go_bootstrap/go 1 "release-branch.go1.4"
         if [ ! -d $OME_REPO/go_bootstrap/go/ ]; then
             if [ ! -f ~/Downloads/go1.4.3.src.tar.gz ]; then
@@ -107,7 +107,7 @@ golang_install() {
             # golang_src_download_git
             golang_src_download_zip
             cd $OME_REPO/go/src/
-            
+
             if [ "$OME_OS" = "$OS_MSYS2" ] || [ "$OME_OS" = "$OS_CYGWIN" ]; then
                 chmod +x ./make.bat
                 ./make.bat
@@ -135,12 +135,15 @@ golang_install() {
     # github_upgrade saibing/bingo $OME_REPO/bingo
     # cd $OME_REPO/bingo/
     # GO111MODULE=on go install
-    
+
     tip "install go language server (gopls)"
     go get -u golang.org/x/tools/gopls@latest
-    
+
     tip "install gocode"
     go get -u github.com/mdempsky/gocode
+
+    tip "install REPL (gomacro)"
+    go get -u github.com/cosmos72/gomacro
 
     # tip "install godef"
     # go get -u github.com/rogpeppe/godef
@@ -153,7 +156,7 @@ golang_install() {
 
     # tip "install vgo"
     # go get -u github.com/golang/vgo
-    
+
     # tip "install golang/tool"
     # go get -u github.com/golang/tools/cmd/godoc
 
