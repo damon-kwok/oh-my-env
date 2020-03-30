@@ -100,9 +100,6 @@ python_install() {
         # echo "install-option=--prefix=`cygpath -w ~/.local`" >> $USERPROFILE/pip/pip.ini
     fi
 
-    # if [ "$OME_OS" = "$OS_MSYS2" ]; then
-        # export PATH="$USERPROFILE/.local/bin:$PATH"
-    # fi
     # if ! command -v pip3 >/dev/null 2>&1; then
     if [ "`command -v pip3`" = "" ]; then
         tip "install pip3"
@@ -111,17 +108,18 @@ python_install() {
             curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
         fi
         # python3 get-pip.py --user
-        python3 get-pip.py --prefix=$OME_PREFIX
         # curl https://bootstrap.pypa.io/get-pip.py | python3
+        #11 python3 get-pip.py --prefix=$OME_PREFIX
     else
         # pip3 install --prefix $OME_PREFIX --user -U pip
-        pip3 install --prefix $OME_PREFIX --upgrade pip #-i http://mirrors.aliyun.com/pypi/simple/ --trusted-host mirrors.aliyun.com
+        #11 pip3 install --prefix $OME_PREFIX --upgrade pip -i http://mirrors.aliyun.com/pypi/simple/ --trusted-host mirrors.aliyun.com
+        echo ""
     fi
 
     tip "check pip3"
     which pip3
     pip3 --version
-    
+
     # tip "pip3 version"
     # pip3 --version
 
@@ -131,7 +129,7 @@ python_install() {
 
     tip "install virtualenv"
     pip3 install --prefix $OME_PREFIX -U virtualenv
-    
+
     tip "install pipenv"
     pip3 install --prefix $OME_PREFIX -U pipenv
 
@@ -144,7 +142,7 @@ python_install() {
     tip "install python language server"
     # pip3 install --prefix $OME_PREFIX -U python-language-server
     pip3 install --prefix $OME_PREFIX -U 'python-language-server[all]'
-    
+
     tip "install build tools:gyp"
     github_upgrade chromium/gyp $OME_REPO/gyp
     cd $OME_REPO/gyp/
@@ -166,6 +164,9 @@ python_install() {
     # else
         # echo_error "gen scons failed!"
     # fi
+
+    tip "install OutputCheck tool"
+    pip3 install --prefix $OME_PREFIX -U OutputCheck
 
     # pip install ipython jupyter rope jedi flake8 importmagic autopep8 yapf
     tip "install ebook build tool"

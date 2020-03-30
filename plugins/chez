@@ -1,5 +1,41 @@
 #!/usr/bin/env sh
 
+chez_deps() {
+    get_os_type
+    case $OME_OS in
+        # Linux
+        # $OS_DEBIAN) ;;
+        # $OS_UBUNTU) ;;
+        $OS_DEBIAN|$OS_UBUNTU) sudo apt install guile-dev;;
+        # $OS_REDHAT) ;;
+        # $OS_FEDORA) ;;
+        $OS_REDHAT|$OS_FEDORA) sudo dnf install guile-devel;;
+        $OS_ARCH) trizen -S guile-devel;;
+        $OS_GENTOO) ;;
+        $OS_SUSE) sudo zypper install guile-devel;;
+        $OS_SLACKWARE) ;;
+        $OS_NIXOS) ;;
+        $OS_VOID) ;;
+        $OS_ALPINE) ;;
+        $OS_MAGEIA) ;;
+        $OS_SLITAZ) ;;
+        $OS_GUIXSD) ;;
+        # Unix
+        $OS_MACOS) ;;
+        $OS_AIX) ;;
+        $OS_SOLARIS) ;;
+        $OS_FREEBSD) ;;
+        $OS_OPENBSD) ;;
+        $OS_NETBSD) ;;
+        $OS_DFBSD) ;;
+        # Windows
+        $OS_CYGWIN) apt install guile;;
+        $OS_MSYS2) pacman -S guile libguile-devel;;
+        # Other
+        $OS_UNKNOW) ;;
+    esac
+
+}
 chez_install() {
     github_upgrade cisco/ChezScheme $OME_REPO/ChezScheme
     cd $OME_REPO/ChezScheme
@@ -19,8 +55,24 @@ chez_install() {
         cd ..
     fi
     make
-    make install
+    # make install
     chez_setenv
+
+    tip "isntall package manager:akku"
+    github_upgrade weinholt/akku $OME_REPO/akku
+    cd $OME_REPO/akku
+    chmod +x bootstrap
+    ./bootstrap
+    ./configure --prefix=$OME_PREFIX
+    make install
+
+    # tip "install Raven:"
+    # github_upgrade guenchi/Raven $OME_REPO/Raven
+    # chmod +x $OME_REPO/Raven/raven.sc
+    # cp -f $OME_REPO/Raven/raven.sc $OME_REPO/Raven/raven
+    # chmod +x $OME_REPO/Raven/raven
+    # # ln -s $OME_REPO/Raven/raven.sc $OME_PREFIX/bin/raven
+    # chez_setenv
 }
 
 chez_uninstall() {
@@ -39,8 +91,11 @@ chez_info() {
 
 chez_setenv() {
     if [ -d "$OME_REPO/ChezScheme/a6nt/bin/a6nt" ]; then
-        # $OME_REPO/vcpkg
         export PATH=$OME_REPO/ChezScheme/a6nt/bin/a6nt:$PATH
+    fi
+
+    if [ -d "$OME_REPO/Raven" ]; then
+        export PATH=$OME_REPO/Raven:$PATH
     fi
 }
 chez_setenv

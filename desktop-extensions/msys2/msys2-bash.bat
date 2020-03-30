@@ -33,10 +33,16 @@ if exist "%PROGRAMFILES(x86)%\\Microsoft Visual Studio\\2017\\Enterprise\\VC\\" 
 	@call "%PROGRAMFILES(x86)%\\Microsoft Visual Studio\\2017\\Enterprise\\VC\\Auxiliary\\Build\\vcvarsall.bat" x64
 )
 
+if exist "%PROGRAMFILES(x86)%\\Microsoft Visual Studio\\2017\\BuildTools\\VC\\" ( 
+	@call "%PROGRAMFILES(x86)%\\Microsoft Visual Studio\\2017\\BuildTools\\VC\\Auxiliary\\Build\\vcvarsall.bat" x64
+)
+
 rem %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 rem VS2019
 if exist "%PROGRAMFILES(x86)%\\Microsoft Visual Studio\\2019\\Preview\\VC\\" ( 
 	@call "%PROGRAMFILES(x86)%\\Microsoft Visual Studio\\2019\\Preview\\VC\\Auxiliary\\Build\\vcvarsall.bat" x64
+	::@call "%PROGRAMFILES(x86)%\\Microsoft Visual Studio\\2019\\Preview\\MSBuild\\Current\Bin"
+	::@call "%PROGRAMFILES(x86)%\Microsoft Visual Studio\2019\Preview\Common7\Tools\VsDevCmd.bat"
 )
 
 if exist "%PROGRAMFILES(x86)%\\Microsoft Visual Studio\\2019\\Community\\VC\\" ( 
@@ -50,11 +56,17 @@ if exist "%PROGRAMFILES(x86)%\\Microsoft Visual Studio\\2019\\Professional\\VC\\
 if exist "%PROGRAMFILES(x86)%\\Microsoft Visual Studio\\2019\\Enterprise\\VC\\" ( 
 	@call "%PROGRAMFILES(x86)%\\Microsoft Visual Studio\\2019\\Enterprise\\VC\\Auxiliary\\Build\\vcvarsall.bat" x64
 )
+
+if exist "%PROGRAMFILES(x86)%\\Microsoft Visual Studio\\2019\\BuildTools\\VC\\" ( 
+	@call "%PROGRAMFILES(x86)%\\Microsoft Visual Studio\\2019\\BuildTools\\VC\\Auxiliary\\Build\\vcvarsall.bat" x64
+)
+
 rem @call "%VCINSTALLDIR%\\Auxiliary\\Build\\vcvarsall.bat" x64
 
 rem %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 rem Bash
 rem cd "%*"
-set PATH=D:\\msys64\\mingw64\\bin;D:\\msys64\\usr\\bin;%PATH%
+
+set PATH=D:\\msys64\\mingw64\\bin;D:\\msys64\\usr\\bin;D:\\msys64\\usr\\local\\bin;%PATH%
 rem bash -c neofetch
 bash

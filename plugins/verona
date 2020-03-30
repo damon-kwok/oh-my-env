@@ -3,13 +3,22 @@
 verona_install() {
     github_upgrade microsoft/verona $OME_REPO/verona
     cd $OME_REPO/verona
-    mkdir -p build_ninja
-    cd build_ninja
-    cmake .. -GNinja \
-          -DCMAKE_INSTALL_PREFIX=$OME_PREFIX/bin \
-          -DCMAKE_BUILD_TYPE=Release \
-          -DCMAKE_C_COMPILER=clang \
-          -DCMAKE_CXX_COMPILER=clang++
+
+
+    if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
+        mkdir -p vs_build
+        cd vs_build
+        cmake .. -G "Visual Studio 16 2019" -A x64
+        msbuild INSTALL.vcxproj /m /P:Configuration=Debug
+    else
+        mkdir -p build_ninja
+        cd build_ninja
+        cmake .. -GNinja \
+              -DCMAKE_INSTALL_PREFIX=$OME_PREFIX/bin \
+              -DCMAKE_BUILD_TYPE=Release \
+              -DCMAKE_C_COMPILER=clang \
+              -DCMAKE_CXX_COMPILER=clang++
+    fi
 
     # cmake --build . --use-stderr --config Release --target install
     ninja install

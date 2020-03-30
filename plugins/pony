@@ -18,6 +18,11 @@ pony_install() {
     cd $OME_REPO/pony-stable
     make
     pony_setenv
+
+    github_upgrade ponylang/corral $OME_REPO/corral
+    cd corral
+    make
+    pony_setenv
 }
 
 pony_uninstall() {
@@ -41,6 +46,10 @@ pony_setenv() {
 
     if [ -d "$OME_REPO/pony-stable/build/release" ]; then
         export PATH=$OME_REPO/pony-stable/build/release:$PATH
+    fi
+
+    if [ -d "$OME_REPO/cprral/build/release" ]; then
+        export PATH=$OME_REPO/cprral/build/release:$PATH
     fi
 }
 pony_setenv
