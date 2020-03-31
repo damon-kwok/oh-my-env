@@ -13,9 +13,9 @@ tip() {
 find_str() {
     local str=$1
     local file=$2
-    
+
     grep $str $file >/dev/null
-    
+
     if [ $? -eq 0 ]; then
 	    # echo "found:$str"
 	    return $(( 1 ));
@@ -28,7 +28,7 @@ find_str() {
 host_upgrade() {
     local ip=$1
     local name=$2
-    
+
     if [ "$OME_OS" = "$OS_MSYS2" ]; then
         local hostfile=/c/Windows/System32/drivers/etc/hosts
     elif [ "$OME_OS" = "$OS_CYGWIN" ]; then
@@ -36,7 +36,7 @@ host_upgrade() {
     else
         local hostfile=/etc/hosts
     fi
-    
+
     find_str $name $hostfile
     if [ $? -eq 0 ]; then
 		echo "Add '$ip $name' to $hostfile"
@@ -52,7 +52,7 @@ host_upgrade() {
 
 get_os_type() {
     if [ $OS_UNKNOW == $OME_OS ]; then
-        # $OS_UNKNOW) os_choose;;    
+        # $OS_UNKNOW) os_choose;;
         tip "please choose your os:"
         echo "    1) macOS"
         echo "    -------------------------"
@@ -186,16 +186,18 @@ esac
 ###############################################################################
 title "hosts init"
 
+
 host_upgrade 192.30.253.113 github.com
-host_upgrade 192.30.253.112 http://github.com
+host_upgrade 192.30.253.112 github.com
+host_upgrade 140.82.112.6 api.github.com
 
 host_upgrade 151.101.44.249 github.global.ssl.fastly.net
-host_upgrade 151.101.185.194 http://github.global.ssl.fastly.net
+host_upgrade 151.101.185.194 github.global.ssl.fastly.net
 
 host_upgrade 103.245.222.133 assets-cdn.github.com
 host_upgrade 23.235.47.133 assets-cdn.github.com
 host_upgrade 203.208.39.104 assets-cdn.github.com
-host_upgrade 151.101.184.133 http://assets-cdn.github.com
+host_upgrade 151.101.184.133 assets-cdn.github.com
 
 host_upgrade 204.232.175.78 documentcloud.github.com
 host_upgrade 204.232.175.94 gist.github.com
@@ -249,7 +251,7 @@ case $OME_OS in
 		# https://github.com/AndyYoungDev/ubuntu-aliyun-sources"
 		tip "use aliyun source:"
 		sudo curl -L https://github.com/AndyYoungDev/ubuntu-aliyun-sources/releases/download/shell/change.sh | bash
-		
+
 		# if [ ! -f /etc/apt/sources.list.d/ubuntu-elisp-ubuntu-ppa-xenial.list ]; then
 		tip "add ppa:emacs"
 		sudo add-apt-repository -y ppa:ubuntu-elisp
@@ -259,11 +261,11 @@ case $OME_OS in
 		tip "add ppa:nvidia-driver"
 		sudo add-apt-repository -y ppa:graphics-drivers/ppa
 		# fi
-		
+
 		readp "update system?"
 		if [ $? -eq 1 ]; then
 			sudo apt update
-			sudo apt dist-upgrade -y   
+			sudo apt dist-upgrade -y
 		fi
 
 		tip "install base tool"
@@ -276,7 +278,7 @@ case $OME_OS in
 			sudo apt install -y software-properties-gtk emacs-snapshot
 			readp "install nvidia-driver?"
 			if [ $? -eq 1 ]; then
-				sudo apt install -y nvidia-driver-390     
+				sudo apt install -y nvidia-driver-390
 				# nomodeset
 				readp "nomodeset for grub.cfg?"
 				if [ $? -eq 1 ]; then
@@ -306,7 +308,7 @@ case $OME_OS in
 				sudo subscription-manager repos --enable "codeready-builder-for-rhel-8-*-rpms"
 			fi
 		fi
-		
+
 		readp "update system?"
 		if [ $? -eq 1 ]; then
 			sudo dnf -y update
@@ -368,13 +370,13 @@ case $OME_OS in
 		echo "Install Homebrew"
 		/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 		brew update
-		
+
 		# echo "Install wget & coreutils findutils"
 		# brew install wget
 		# brew install coreutils findutils
 		brew install git subversion wget curl make \
 			 tar zip unzip rlwrap coreutils findutils diffutils
-		
+
 		echo "Install font-bitstream-vera"
 		brew tap homebrew/cask-fonts
 		brew cask install font-bitstream-vera
@@ -395,7 +397,7 @@ case $OME_OS in
 		sudo pkg install git subversion wget curl gmake \
 			 bash zip unzip rlwrap coreutils findutils diffutils \
 			 zh-font-std bitstream-vera emacs
-		
+
 		# tip "install mate desktop"
 		# sudo pkg install xorg slime mate
 		# sudo sh -c 'echo "moused_enable=\"YES\"" >> /etc/rc.conf'
@@ -455,7 +457,7 @@ case $OME_OS in
 		#	pacman -Syyu
 		#fi
 		# pacman -Sy pacman-mirrors
-		
+
 		find_str "tuna.tsinghua.edu.cn" /etc/pacman.d/mirrorlist.mingw32
 		if [ $? -eq 0 ]; then
 			tip "mirrorlist fix"
@@ -469,7 +471,7 @@ case $OME_OS in
 		else
 			tip "mirrorlist is already fix"
 		fi
-		
+
 		pacman -S git subversion wget curl make \
 			   tar zip unzip rlwrap coreutils findutils diffutils \
 			   mingw-w64-x86_64-emacs
@@ -507,7 +509,7 @@ else
 	git pull
 fi
 
-ome_write_env_to_dotfile $HOME/.profile 
+ome_write_env_to_dotfile $HOME/.profile
 ome_write_env_to_dotfile $HOME/.shrc
 ome_write_env_to_dotfile $HOME/.bashrc
 ome_write_env_to_dotfile $HOME/.zshrc
@@ -515,5 +517,3 @@ ome_write_env_to_dotfile $HOME/.zshrc
 $HOME/.oh-my-env/bin/ome pull
 bash
 # fi
-
-
