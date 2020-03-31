@@ -230,10 +230,10 @@ ome_pull() {
     # ome_fix_dotfiles
     # echo_kv "GIT PULL" "~/.oh_my_emacs/"
     github_upgrade damon-kwok/oh-my-emacs $HOME/.oh-my-emacs/
-    link_init_el
 
     # echo_kv "GIT PULL" "~/.emacs.d/"
     gitee_upgrade damon-kwok/emacs.d $HOME/.emacs.d/
+    cp -f $HOME/.oh-my-emacs/emacs-config/init.el $HOME/.emacs.d/
 
     # tip "cache upgrade"
     chmod +x $OME_ROOT/bin/git-hook

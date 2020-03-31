@@ -18,15 +18,15 @@ split_file() {
         echo "split==> $file"
         touch $DIR_DEFS/$file
         # echo "split -b 52428800 -d $1/$file $DIR_PARTS/${file}_"
-        split -b 52428800 -d $DIR_ROOT/$file $DIR_PARTS/${file}_
+        split -b 4096000 -d $DIR_ROOT/$file $DIR_PARTS/${file}_
     else
         echo "skip==> $file"
     fi
 }
 
-split_all_files() {  
+split_all_files() {
     for file in ` ls $1 `
-    do  
+    do
         if [ -d $1"/"$file ]; then
             echo "skip dir: $1"/"$file"
             # split_all_files $1"/"$file
@@ -41,17 +41,17 @@ split_all_files() {
                 echo "!defs/${file}" >> $DIR_ROOT/.gitignore
                 split_file "$file"
             fi
-            
+
         fi
     done
 }
 
-merge_all_files() {  
-    for file in ` ls $1 `  
-    do  
-        if [ -d $1"/"$file ]   
-        then  
-            merge_all_files $1"/"$file  
+merge_all_files() {
+    for file in ` ls $1 `
+    do
+        if [ -d $1"/"$file ]
+        then
+            merge_all_files $1"/"$file
         else
             if [ ! -f "$DIR_MERGE/${file}" ]; then
                 echo "merge==> $file"
@@ -60,8 +60,8 @@ merge_all_files() {
             else
                 echo "skip==> $file"
             fi
-        fi  
-    done  
+        fi
+    done
 }
 
 # rm -rf $DIR_DEFS/*
@@ -69,7 +69,7 @@ merge_all_files() {
 
 if [ ! "$1" == "" ]; then
     cd $1
-    
+
     DIR_ROOT="`pwd`"
     DIR_DEFS="$DIR_ROOT/defs"
     DIR_PARTS="$DIR_ROOT/parts"
