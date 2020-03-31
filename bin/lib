@@ -160,18 +160,22 @@ ome_git_config() {
 }
 
 __git_upgrade() {
+    # echo "__git_upgrade:$@"
     local oldir=`pwd`
     local dir="$1"
     local url="$2"
+    local submodule="$3"
+    local branch="$4"
 
     if [ ! -d "$dir" ]; then # || [ ! -e "$dir/.git/index" ]
-	    echo_kv "clone" "[$project]" "$dir"
         # echo_success "git clone $url $dir --single-branch --depth=1 $branch"
         if [ "$submodule" != "0" ]; then
-	        git clone $url $dir --single-branch --depth=1 $branch
-        else
+            echo_kv "clone --recurse-submodules" "[$project]" "$dir"
             # git clone $url $dir --recurse-submodules --single-branch --depth=1 $branch
             git clone $url $dir --recursive --single-branch --depth=1 $branch
+        else
+            echo_kv "clone" "[$project]" "$dir"
+            git clone $url $dir --single-branch --depth=1 $branch
         fi
         # elif [ "`ls -A $DIRECTORY`" = "" ]; then
         # echo "$DIRECTORY is indeed empty"
@@ -189,6 +193,7 @@ __git_upgrade() {
 	    git pull
         # git submodule foreach --recursive 'git fetch --tags'
         if [ "$submodule" != "0" ]; then
+            echo_kv "git submodule update" "[$project]" "$dir"
             # echo_success "git submodule update --init --depth=1"
             # echo_success "git submodule update --init"
             git submodule sync && git submodule update --init --recursive --depth 1
@@ -198,7 +203,7 @@ __git_upgrade() {
     cd $oldir
 }
 git_upgrade() {
-    # echo $@
+    # echo "git_upgrade:$@"
     local site=$1
     local project=$2
     if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
@@ -213,7 +218,7 @@ git_upgrade() {
         local branch="-b $5"
     fi
     local url="$site/${project}.git"
-    __git_upgrade $dir $url
+    __git_upgrade $dir $url $submodule $branch
  }
 
 git_ssh_upgrade() {
@@ -232,7 +237,7 @@ git_ssh_upgrade() {
     fi
     local url="git@${site}:${project}.git"
 
-    __git_upgrade $dir $url
+    __git_upgrade $dir $url $submodule $branch
 }
 
 github_upgrade() {

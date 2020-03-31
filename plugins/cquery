@@ -6,12 +6,14 @@ cquery_install() {
     github_upgrade cquery-project/cquery $OME_REPO/cquery
     mkdir -p $OME_REPO/cquery/build
     cd $OME_REPO/cquery/build/
-    # -DLIBCLANG_LLVM_CONFIG_EXECUTABLE=$LLVM_BIN/llvm-config 
-    # -DCLANG_USE_BUNDLED_LIBC++=on 
+    # -DLIBCLANG_LLVM_CONFIG_EXECUTABLE=$LLVM_BIN/llvm-config
+    # -DCLANG_USE_BUNDLED_LIBC++=on
     cmake .. -G "$OME_MAKE" \
 	      -DCMAKE_INSTALL_PREFIX=$OME_PREFIX \
 	      -DCMAKE_EXPORT_COMPILE_COMMANDS=YES \
 	      -DCMAKE_BUILD_TYPE=Release \
+          -DCMAKE_C_COMPILER=clang \
+          -DCMAKE_CXX_COMPILER=clang++ \
           -DSYSTEM_CLANG=ON
     # -DCMAKE_PREFIX_PATH=$LLVM_ROOT
     # make -j4

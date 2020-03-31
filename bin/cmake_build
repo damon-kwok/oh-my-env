@@ -5,7 +5,7 @@ SELF_DIR=$(dirname $(readlink -f $0))
 
 ome_cmake_build() {
     local oldir=`pwd`
-    echo "file-dir::$oldir"
+    echo "src-dir::$oldir"
     if [ -n $1 ]; then
         cd $1
     fi
@@ -13,13 +13,13 @@ ome_cmake_build() {
     echo "project-dir:$proj_root"
     if [ -f "$proj_root/CMakeLists.txt" ]; then
         echo $proj_root
-        mkdir -p $proj_root/build
-        cd $proj_root/build/
+        mkdir -p $proj_root/cmake_${OME_MAKE}_build
+        cd $proj_root/cmake_${OME_MAKE}_build/
 
         cmake .. -G "$OME_MAKE" \
               -DCMAKE_INSTALL_PREFIX=$OME_PREFIX \
               -DCMAKE_EXPORT_COMPILE_COMMANDS=1 \
-              -DCMAKE_CXX_STANDARD=11
+              -DCMAKE_CXX_STANDARD=17
         cmake --build . --use-stderr --config Release #--target install
         cd ..
         rm -rf ./compile_commands.json

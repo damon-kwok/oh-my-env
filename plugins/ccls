@@ -4,21 +4,23 @@ ccls_install() {
     ome_check_install "clang" "clang"
     github_upgrade MaskRay/ccls $OME_REPO/ccls 0
     github_upgrade Tencent/rapidjson $OME_REPO/ccls/third_party/rapidjson 0
-    # github_upgrade damon-kwok/ccls $OME_REPO/ccls
+
     mkdir -p $HOME/.ccls
     mkdir -p $OME_REPO/ccls/build
     cd $OME_REPO/ccls/build/
-    
+
     # -DCMAKE_CXX_STANDARD=17
-    # -DCMAKE_CXX_STANDARD_REQUIRED=ON 
+    # -DCMAKE_CXX_STANDARD_REQUIRED=ON
     # -DCMAKE_CXX_EXTENSIONS=OFF
     # -DCLANG_USE_BUNDLED_LIBC++=ON
-    # -DUSE_SHARED_LLVM=ON    
+    # -DUSE_SHARED_LLVM=ON
     cmake .. -G "$OME_MAKE" \
           -DCMAKE_INSTALL_PREFIX=$OME_PREFIX \
 	      -DCMAKE_EXPORT_COMPILE_COMMANDS=YES \
 	      -DCMAKE_BUILD_TYPE=Release \
           -DSYSTEM_CLANG=ON \
+          -DCMAKE_C_COMPILER=clang \
+          -DCMAKE_CXX_COMPILER=clang++ \
           -DCMAKE_CXX_STANDARD=17
     # -DCMAKE_PREFIX_PATH=$LLVM_ROOT
     # -DCMAKE_CXX_COMPILER=$LLVM_ROOT/bin/clang++
