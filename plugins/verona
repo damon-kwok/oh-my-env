@@ -9,7 +9,7 @@ verona_install() {
         mkdir -p vs_build
         cd vs_build
         cmake .. -G "Visual Studio 16 2019" -A x64
-        msbuild INSTALL.vcxproj /m /P:Configuration=Debug
+        msbuild INSTALL.vcxproj /m /P:Configuration=Release
     else
         mkdir -p build_ninja
         cd build_ninja
