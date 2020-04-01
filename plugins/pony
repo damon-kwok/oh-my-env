@@ -4,23 +4,38 @@ pony_install() {
     # curl --proto '=https' --tlsv1.2 -sSf https://raw.githubusercontent.com/ponylang/ponyup/latest-release/ponyup-init.sh | sh
     # ponyup update ponyc release
     # ponyup update ponyc nightly
-    github_upgrade ponylang/ponyc $OME_REPO/ponyc-git 0
-    cd $OME_REPO/ponyc-git
+    if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
+        local zipkg=ponyc-${PONY_VERSION}-x86_64-pc-windows-msvc.zip
+        cd $HOME/Downloads/
+        if [ ! -e "$HOME/Downloads/$zipkg" ]; then
+            local URL=https://dl.cloudsmith.io/public/ponylang/releases/raw/versions/${PONY_VERSION}/ponyc-x86_64-pc-windows-msvc.zip
+            wget $URL -O $HOME/Downloads/$zipkg
+        fi
+        if [ ! -d "$OME_REPO/ponyc-${PONY_VERSION}-bin" ]; then
+            mkdir -p $OME_REPO/ponyc-${PONY_VERSION}-bin
+            unzip ./$zipkg -d $OME_REPO/ponyc-${PONY_VERSION}-bin
+        fi
+    else
+        github_upgrade ponylang/ponyc $OME_REPO/ponyc-git 0
+        cd $OME_REPO/ponyc-git
 
-    make libs
-    make configure
-    make build
-    # make test
-    # sudo make install
+        make libs
+        make configure
+        make build
+        # make test
+        # sudo make install
+    fi
     pony_setenv
 
     github_upgrade ponylang/pony-stable $OME_REPO/pony-stable
     cd $OME_REPO/pony-stable
+    export PATH="C:\Program Files (x86)\Microsoft Visual Studio\2019\Preview\VC\Tools\MSVC\14.26.28720\bin\Hostx64\x64":$PATH
     make
     pony_setenv
 
     github_upgrade ponylang/corral $OME_REPO/corral
     cd corral
+    export PATH="C:\Program Files (x86)\Microsoft Visual Studio\2019\Preview\VC\Tools\MSVC\14.26.28720\bin\Hostx64\x64":$PATH
     make
     pony_setenv
 }
@@ -40,8 +55,19 @@ pony_info() {
 }
 
 pony_setenv() {
-    if [ -d "$OME_REPO/ponyc-git/build/release" ]; then
-        export PATH=$OME_REPO/ponyc-git/build/release:$PATH
+
+    if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
+        export PONY_BIN=$OME_REPO/ponyc-${PONY_VERSION}-bin/ponyc/bin
+        if [ -d "$PONY_BIN" ]; then
+            export PATH=$PONY_BIN:$PATH
+            export PATH=`cygpath -m $PONY_BIN`:$PATH
+            echo "pony: $PONY_BIN `cygpath -m $PONY_BIN`"
+        fi
+    else
+        export PONY_BIN=$OME_REPO/ponyc-git/build/release
+        if [ -d "$PONY_BIN" ]; then
+            export PATH=$OME_REPO/ponyc-git/build/release:$PATH
+        fi
     fi
 
     if [ -d "$OME_REPO/pony-stable/build/release" ]; then
