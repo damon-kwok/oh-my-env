@@ -1,19 +1,66 @@
 #!/usr/bin/env sh
 
+pony_deps() {
+    get_os_type
+    case $OME_OS in
+        # Linux
+        # $OS_DEBIAN) ;;
+        # $OS_UBUNTU) ;;
+        $OS_DEBIAN|$OS_UBUNTU) sudo apt install libz3-dev;;
+        # $OS_REDHAT) ;;
+        # $OS_FEDORA) ;;
+        $OS_REDHAT|$OS_FEDORA) sudo dnf install -y libz3-devel;;
+        $OS_ARCH) trizen -S z3;;
+        $OS_GENTOO) ;;
+        $OS_SUSE) ;;
+        $OS_SLACKWARE) ;;
+        $OS_NIXOS) ;;
+        $OS_VOID) ;;
+        $OS_ALPINE) ;;
+        $OS_MAGEIA) ;;
+        $OS_SLITAZ) ;;
+        $OS_GUIXSD) ;;
+        # Unix
+        $OS_MACOS) ;;
+        $OS_AIX) ;;
+        $OS_SOLARIS) ;;
+        $OS_FREEBSD) ;;
+        $OS_OPENBSD) ;;
+        $OS_NETBSD) ;;
+        $OS_DFBSD) ;;
+        # Windows
+        $OS_CYGWIN) ;;
+        $OS_MSYS2) ;;
+        # Other
+        $OS_UNKNOW) ;;
+    esac
+}
+
 pony_install() {
+    pony_deps
     # curl --proto '=https' --tlsv1.2 -sSf https://raw.githubusercontent.com/ponylang/ponyup/latest-release/ponyup-init.sh | sh
     # ponyup update ponyc release
     # ponyup update ponyc nightly
     if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
-        local zipkg=ponyc-${PONY_VERSION}-x86_64-pc-windows-msvc.zip
-        cd $HOME/Downloads/
-        if [ ! -e "$HOME/Downloads/$zipkg" ]; then
-            local URL=https://dl.cloudsmith.io/public/ponylang/releases/raw/versions/${PONY_VERSION}/ponyc-x86_64-pc-windows-msvc.zip
-            wget $URL -O $HOME/Downloads/$zipkg
-        fi
-        if [ ! -d "$OME_REPO/ponyc-${PONY_VERSION}-bin" ]; then
-            mkdir -p $OME_REPO/ponyc-${PONY_VERSION}-bin
-            unzip ./$zipkg -d $OME_REPO/ponyc-${PONY_VERSION}-bin
+        readp "pony: install with precompile?"
+        if [ $? -eq 1 ]; then
+            local zipkg=ponyc-${PONY_VERSION}-x86_64-pc-windows-msvc.zip
+            cd $HOME/Downloads/
+            if [ ! -e "$HOME/Downloads/$zipkg" ]; then
+                local URL=https://dl.cloudsmith.io/public/ponylang/releases/raw/versions/${PONY_VERSION}/ponyc-x86_64-pc-windows-msvc.zip
+                wget $URL -O $HOME/Downloads/$zipkg
+            fi
+            if [ ! -d "$OME_REPO/ponyc-${PONY_VERSION}-bin" ]; then
+                mkdir -p $OME_REPO/ponyc-${PONY_VERSION}-bin
+                unzip ./$zipkg -d $OME_REPO/ponyc-${PONY_VERSION}-bin
+            fi
+        else
+            github_upgrade ponylang/ponyc $OME_REPO/ponyc-git 0
+            cd $OME_REPO/ponyc-git
+
+            ./make.ps1 libs
+            ./make.ps1 configure
+            ./make.ps1 build
         fi
     else
         github_upgrade ponylang/ponyc $OME_REPO/ponyc-git 0
@@ -24,19 +71,20 @@ pony_install() {
         make build
         # make test
         # sudo make install
+        chmod +x $OME_REPO/ponyc-git/build/release/ponyc
     fi
     pony_setenv
 
     github_upgrade ponylang/pony-stable $OME_REPO/pony-stable
     cd $OME_REPO/pony-stable
-    export PATH="C:\Program Files (x86)\Microsoft Visual Studio\2019\Preview\VC\Tools\MSVC\14.26.28720\bin\Hostx64\x64":$PATH
     make
+    chmod +x $OME_REPO/pony-stable/build/release/*
     pony_setenv
 
     github_upgrade ponylang/corral $OME_REPO/corral
-    cd corral
-    export PATH="C:\Program Files (x86)\Microsoft Visual Studio\2019\Preview\VC\Tools\MSVC\14.26.28720\bin\Hostx64\x64":$PATH
+    cd $OME_REPO/corral
     make
+    chmod +x $OME_REPO/corral/build/release/*
     pony_setenv
 }
 
@@ -55,7 +103,6 @@ pony_info() {
 }
 
 pony_setenv() {
-
     if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
         export PONY_BIN=$OME_REPO/ponyc-${PONY_VERSION}-bin/ponyc/bin
         if [ -d "$PONY_BIN" ]; then
@@ -74,8 +121,8 @@ pony_setenv() {
         export PATH=$OME_REPO/pony-stable/build/release:$PATH
     fi
 
-    if [ -d "$OME_REPO/cprral/build/release" ]; then
-        export PATH=$OME_REPO/cprral/build/release:$PATH
+    if [ -d "$OME_REPO/corral/build/release" ]; then
+        export PATH=$OME_REPO/corral/build/release:$PATH
     fi
 }
 pony_setenv
