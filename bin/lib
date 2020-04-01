@@ -329,8 +329,12 @@ git_look_commit() {
     git show $hash
 }
 
-git_complete_upgrade() {
-    git fetch --unshallow origin
+git_history() {
+    git log -10 --format="[%h] %H" --stat
+}
+
+git_pull_complete() {
+    git pull --unshallow origin
 }
 
 svn_upgrade() {
