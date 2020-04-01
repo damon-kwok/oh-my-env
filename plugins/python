@@ -97,7 +97,7 @@ python_install() {
         echo "" >> $USERPROFILE/pip/pip.ini
         echo "[install]" >> $USERPROFILE/pip/pip.ini
         echo "trusted-host=mirrors.aliyun.com" >> $USERPROFILE/pip/pip.ini
-        # echo "install-option=--prefix=`cygpath -w ~/.local`" >> $USERPROFILE/pip/pip.ini
+        # echo "install-option=--prefix=`cygpath -m ~/.local`" >> $USERPROFILE/pip/pip.ini
     fi
 
     # if ! command -v pip3 >/dev/null 2>&1; then

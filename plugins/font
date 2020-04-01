@@ -15,7 +15,7 @@ font_install() {
     if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
         # cp -f ./JetBrainsMono-${JETBRINS_FONT_VERSION}/ttf/* "${USERPROFILE}/AppData/Local/Microsoft/Fonts/"
         echo "windows"
-        # echo A^|xcopy `cygpath -w ./JetBrainsMono-${JETBRINS_FONT_VERSION}/ttf/*` "${SYSTEMROOT}/Fonts/"
+        # echo A^|xcopy `cygpath -m ./JetBrainsMono-${JETBRINS_FONT_VERSION}/ttf/*` "${SYSTEMROOT}/Fonts/"
         # cp -f ./JetBrainsMono-${JETBRINS_FONT_VERSION}/ttf/* "${SYSTEMROOT}/Fonts/"
         cd "$HOME/Downloads/$pkgname"
         for file in `ls "$HOME/Downloads/$pkgname/ttf"`
@@ -29,7 +29,7 @@ font_install() {
 
                 # local REGPATH="\"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts\""
                 # REG ADD ${REGPATH} /v "\"${basename} (TrueType)\"" /t REG_SZ /d "\"${file}\"" /f
-                
+
             fi
         done
     else

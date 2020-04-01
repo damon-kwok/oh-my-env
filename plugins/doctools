@@ -55,15 +55,15 @@ doctools_install_tools() {
 
 doctools_install() {
     # gcc clang make m4 automake libtool pkg-config"
-    
+
     # libdn2 libuv libason-devel
-    # 
+    #
     # libgmime glibc
     # libiconv
     # sed awk grep tar zip unzip 7zip flex gawke bison bc mt
     # guile rush tramp libc scm screen
 
-    doctools_install_tools    
+    doctools_install_tools
 }
 
 doctools_uninstall() {
@@ -73,14 +73,6 @@ doctools_uninstall() {
 doctools_exist_p() {
     echo_error "'doctools_exist_p' not implemented"
 }
-
-# if [ "$OME_OS" == "$OS_MSYS2" ]; then
-#     # MAKE_TYPE="MSYS Makefiles"
-#     OME_MAKE="Ninja"
-# else
-#     OME_MAKE="Ninja"
-#     MAKE_PROG="make"
-# fi
 
 doctools_info() {
     echo_error ""

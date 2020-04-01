@@ -20,13 +20,13 @@ cclib_install_tools() {
                  libbison-dev libicu-dev libtidy-dev \
                  zlibc libzip-dev liblz4-dev liblzma-dev \
                  valgrind libatomic-ops-dev re2c
-            
+
             # AutoTrace
             readp "install AutoTrace?"
             if [ $? -eq 1 ]; then
                 # language dev
                 # sudo apt install -y libperl-dev python3-dev php-dev ruby-dev tcl-dev
-                
+
                 sudo apt install -y libmagickcore-dev libpstoedit-dev libgif-dev
                 github_upgrade libming/libming $OME_REPO/libming
                 cd $OME_REPO/libming/
@@ -39,7 +39,7 @@ cclib_install_tools() {
                 # --enable-tcl
                 # make test
                 make install
-                
+
                 github_upgrade autotrace/autotrace $OME_REPO/autotrace
                 cd $OME_REPO/autotrace/
                 ./autogen.sh
@@ -171,24 +171,24 @@ cclib_install_tools() {
 
 cclib_install() {
     # gcc clang make m4 automake libtool pkg-config"
-    
+
     # libdn2 libuv libason-devel
-    # 
+    #
     # libgmime glibc
     # libiconv
     # sed awk grep tar zip unzip 7zip flex gawke bison bc mt
     # guile rush tramp libc scm screen
 
     cclib_install_tools
-    
+
     readp "install C library?"
     if [ $? -eq 1 ]; then
-        cclib_install_c_library   
+        cclib_install_c_library
     fi
 
     readp "install C++ library?"
     if [ $? -eq 1 ]; then
-        cclib_install_cpp_library   
+        cclib_install_cpp_library
     fi
 }
 
@@ -200,14 +200,6 @@ cclib_exist_p() {
     echo_error "'cclib_exist_p' not implemented"
 }
 
-# if [ "$OME_OS" == "$OS_MSYS2" ]; then
-#     # MAKE_TYPE="MSYS Makefiles"
-#     OME_MAKE="Ninja"
-# else
-#     OME_MAKE="Ninja"
-#     MAKE_PROG="make"
-# fi
-
 cclib_info() {
     echo_error ""
 }
@@ -216,7 +208,7 @@ cclib_install_c_library() {
     readp "install libuv?"
     if [ $? -eq 1 ]; then
         github_upgrade libuv/libuv $OME_REPO/libuv
-        
+
         # mkdir -p $OME_PROJ/c/libuv/build
         # cd $OME_PROJ/c/libuv/build/
         # cmake .. -G "$OME_MAKE" \
@@ -237,10 +229,10 @@ cclib_install_cpp_library() {
     cclib_install_cxx_library google/snappy $OME_REPO/snappy 11
     cclib_install_cxx_library google/double-conversion $OME_REPO/double-conversion 11
     cclib_install_cxx_library google/glog $OME_REPO/glog 11
-    
+
     cclib_install_cxx_library pocoproject/poco $OME_REPO/poco 14
     cclib_install_cxx_library facebook/folly $OME_REPO/folly 14
-    
+
     readp "install boost?"
     if [ $? -eq 1 ]; then
         github_upgrade boostorg/boost $OME_REPO/boost 1 develop
@@ -271,4 +263,3 @@ cclib_install_cxx_library() {
         cmake --build . --use-stderr --config Release --target install
     fi
 }
-

@@ -136,8 +136,10 @@ ome_git_config() {
         tip "git global config"
         git config --global core.editor $EDITOR
         git config --global core.autocrlf false
-        git config --global core.safecrlf true
-        # git config --global core.safecrlf warn
+        # git config --global core.safecrlf true
+        git config --global core.safecrlf false
+
+        git config --global advice.addIgnoredFile false
 
         git config --global core.longpaths true
         # git config --system core.longpaths true
@@ -315,6 +317,17 @@ gitee_push_bigrepo() {
     fi
 }
 
+git_cancel_commit() {
+    local hash=`git log -2 --format="%H" | head -n 2 | tail -n 1`
+    echo $hash
+    git reset --mixed $hash
+}
+
+git_look_commit() {
+    local hash=`git log -2 --format="%H" | head -n 2 | tail -n 1`
+    echo $hash
+    git show $hash
+}
 
 git_complete_upgrade() {
     git fetch --unshallow origin
@@ -717,11 +730,11 @@ ome_check_install() {
 }
 
 ome_dev_path() {
-    local oldir=`pwd`
     if [ -d $1 ]; then
-        cd $1
-        local dir=`pwd`
-        export PATH=$dir/bin:$PATH
+        if [ "$OME_DEBUG_MODE" != "" ]; then
+            echo_kv "ome_dev_path" "$1/bin"
+        fi
+        export PATH=$1/bin:$PATH
         export MANPATH=$dir/share/man:$MANPATH
         export INFOPATH=$dir/share/info:$INFOPATH
         export LIBRARY_PATH=$dir/lib:$LIBRARY_PATH
@@ -736,7 +749,6 @@ ome_dev_path() {
         export C_INCLUDE_PATH=$dir/include:$C_INCLUDE_PATH
         export CPLUS_INCLUDE_PATH=$dir/include:$CPLUS_INCLUDE_PATH
     fi
-    cd $oldir
 }
 
 ome_def_ws() {

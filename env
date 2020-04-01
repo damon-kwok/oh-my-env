@@ -100,20 +100,6 @@ export OME_WS=$HOME/workspace
 export OME_BOOK=$HOME/book
 export OME_PROJ=$HOME/projects
 
-ome_add_path() {
-    local oldir=`pwd`
-    cd $1
-    local dir=`pwd`
-    export PATH=$dir:"$PATH"
-    if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
-        export PATH=`cygpath -m $dir`:"$PATH"
-    fi
-    cd $oldir
-}
-# export PATH=$OME_WS/bin:$OME_BIN:"$PATH"
-
-ome_add_path $OME_WS/bin
-ome_add_path $OME_BIN
 
 # Emacs
 #export ALTERNATE_EDITOR=""
@@ -138,13 +124,34 @@ export OME_EMACS_SNIPPET=$HOME/.oh-my-emacs/emacs-config/snippets
 # export LD_LIBRARY_PATH=/mingw64/lib:$LD_LIBRARY_PATH
 # export PKG_CONFIG_PATH=/mingw64/lib/pkgconfig:/mingw64/share/pkgconfig:$PKG_CONFIG_PATH
 # fi
+ome_add_path() {
+    local oldir=`pwd`
+    cd $1
+    local dir=`pwd`
+    export PATH=$dir:"$PATH"
+    if [ "$OME_DEBUG_MODE" != "" ]; then
+        echo_kv "ome_add_path" "$dir"
+    fi
+    # if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
+        # export PATH=`cygpath -m $dir`:"$PATH"
+        # if [ "$OME_DEBUG_MODE" != "" ]; then
+            # echo_kv "ome_add_path" "`cygpath -m $dir`"
+        # fi
+    # fi
+    cd $oldir
+}
+# export PATH=$OME_WS/bin:$OME_BIN:"$PATH"
+
+ome_add_path $OME_WS/bin
+ome_add_path $OME_BIN
+
 ome_dev_path $OME_PREFIX
 ome_dev_path $HOME/.local
 
-if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
-    ome_dev_path `cygpath -m $OME_PREFIX`
-    ome_dev_path `cygpath -m $HOME/.local`
-fi
+# if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
+    # ome_dev_path `cygpath -m $OME_PREFIX`
+    # ome_dev_path `cygpath -m $HOME/.local`
+# fi
 
 # alias
 if [ ! "$OME_OS" = "$OS_MACOS" ]; then
@@ -247,7 +254,8 @@ for plugin in $HOME/.oh-my-env/plugins/* ; do
         if [ "$OME_DEBUG_MODE" = "1" ]; then
             # time "$plugin"">/dev/null 2>&1
             tip "$plugin"
-            time `. $plugin`
+            # time `. $plugin`
+            . "$plugin"
         else
             . "$plugin"
         fi
