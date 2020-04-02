@@ -61,7 +61,6 @@ pony_setenv() {
         if [ -d "$PONY_BIN" ]; then
             export PATH=$PONY_BIN:$PATH
             export PATH=`cygpath -m $PONY_BIN`:$PATH
-            echo "pony: $PONY_BIN `cygpath -m $PONY_BIN`"
         fi
     else
         export PONY_BIN=$OME_REPO/ponyc-git/build/release
