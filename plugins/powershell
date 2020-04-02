@@ -2,7 +2,7 @@
 
 powershell_install() {
     # if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
-    # echo "zip:${POWERSHELL_ZIP}"
+    echo "zip:${POWERSHELL_ZIP}"
     local zipkg=${POWERSHELL_ZIP}
     cd $HOME/Downloads/
     if [ ! -e "$HOME/Downloads/$zipkg" ]; then
@@ -13,7 +13,12 @@ powershell_install() {
     fi
     if [ ! -d "$POWERSHELL_BIN" ]; then
         mkdir -p ${POWERSHELL_BIN}
-        unzip ./$zipkg -d ${POWERSHELL_BIN}
+        if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
+            unzip ./$zipkg -d ${POWERSHELL_BIN}
+        else
+            tar -zxvf ./$zipkg -C ${POWERSHELL_BIN}
+        fi
+        chmod +x ${POWERSHELL_BIN}/pwsh
     fi
     # fi
     powershell_setenv
