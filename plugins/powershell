@@ -1,19 +1,21 @@
 #!/usr/bin/env sh
 
 powershell_install() {
-    if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
-        local zipkg=${POWERSHELL_ZIP}
-        cd $HOME/Downloads/
-        if [ ! -e "$HOME/Downloads/$zipkg" ]; then
-            local URL0=https://github.com/PowerShell/PowerShell/releases/download
-            local URL=${URL0}/${POWERSHELL_VERSION}/${POWERSHELL_ZIP}
-            wget $URL -O $HOME/Downloads/$zipkg
-        fi
-        if [ ! -d "$POWERSHELL_BIN" ]; then
-            mkdir -p ${POWERSHELL_BIN}
-            unzip ./$zipkg -d ${POWERSHELL_BIN}
-        fi
+    # if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
+    # echo "zip:${POWERSHELL_ZIP}"
+    local zipkg=${POWERSHELL_ZIP}
+    cd $HOME/Downloads/
+    if [ ! -e "$HOME/Downloads/$zipkg" ]; then
+        local URL0=https://github.com/PowerShell/PowerShell/releases/download
+        local URL=${URL0}/v${POWERSHELL_VERSION}/${POWERSHELL_ZIP}
+        # echo "URL:$URL"
+        wget $URL -O $HOME/Downloads/$zipkg
     fi
+    if [ ! -d "$POWERSHELL_BIN" ]; then
+        mkdir -p ${POWERSHELL_BIN}
+        unzip ./$zipkg -d ${POWERSHELL_BIN}
+    fi
+    # fi
     powershell_setenv
 }
 
@@ -38,9 +40,9 @@ if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
 elif [ "$OME_OS" = "$OS_MACOS" ]; then
     export POWERSHELL_VERINFO=PowerShell-${POWERSHELL_VERSION}-osx-x64
     POWERSHELL_ZIP=${POWERSHELL_VERINFO}.tar.gz
-elif [ ! "$OME_OS" = "$FREEBSD" ]; then
+elif [ "$OME_OS" != "$FREEBSD" ]; then
     export POWERSHELL_VERINFO=PowerShell-${POWERSHELL_VERSION}-linux-x64
-    POWERSHELL_ZIP=${POWERSHELL_VERINFO}.tar.xz
+    POWERSHELL_ZIP=${POWERSHELL_VERINFO}.tar.gz
 fi
 export POWERSHELL_BIN=$OME_REPO/powershell-${POWERSHELL_VERSION}-bin
 powershell_setenv() {

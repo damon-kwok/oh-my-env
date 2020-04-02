@@ -2,7 +2,7 @@
 
 golang_getsrc_zip() {
     local zipkg="go${GOLANG_VERSION}.src.tar.gz"
-    echo "zipkg:$zipkg"
+    # echo "zipkg:$zipkg"
     mkdir -p $HOME/Downloads
     cd $HOME/Downloads/
     if [ ! -f $HOME/Downloads/$zipkg ]; then
