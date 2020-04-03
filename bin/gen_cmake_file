@@ -5,6 +5,7 @@ SELF_DIR=$(dirname $(readlink -f $0))
 
 ome_gen_cmake_file() {
     if [ "$1" != "" ]; then
+        echo "==> mkdir -p $1"
         mkdir -p $1
         cd $1
     fi
@@ -17,7 +18,7 @@ ome_gen_cmake_file() {
     if [ ! -f "$proj_root/CMakeLists.txt" ]; then
         echo "cmake_minimum_required(VERSION 3.2)" >> $proj_root/CMakeLists.txt
         echo "project(libexample)" >> $proj_root/CMakeLists.txt
-        
+
         echo "" >> $proj_root/CMakeLists.txt
         echo "if (UNIX)" >> $proj_root/CMakeLists.txt
         echo "SET (CMAKE_C_COMPILER             \"clang\")" >> $proj_root/CMakeLists.txt
@@ -26,7 +27,7 @@ ome_gen_cmake_file() {
         echo "SET (CMAKE_C_FLAGS_MINSIZEREL     \"-Os -DNDEBUG\")" >> $proj_root/CMakeLists.txt
         echo "SET (CMAKE_C_FLAGS_RELEASE        \"-O4 -DNDEBUG\")" >> $proj_root/CMakeLists.txt
         echo "SET (CMAKE_C_FLAGS_RELWITHDEBINFO \"-O2 -g\")" >> $proj_root/CMakeLists.txt
-        
+
         echo "" >> $proj_root/CMakeLists.txt
         echo "SET (CMAKE_CXX_COMPILER             \"clang++\")" >> $proj_root/CMakeLists.txt
         echo "SET (CMAKE_CXX_FLAGS                \"-Wall -std=gnu++17\")" >> $proj_root/CMakeLists.txt
@@ -34,20 +35,20 @@ ome_gen_cmake_file() {
         echo "SET (CMAKE_CXX_FLAGS_MINSIZEREL     \"-Os -DNDEBUG\")" >> $proj_root/CMakeLists.txt
         echo "SET (CMAKE_CXX_FLAGS_RELEASE        \"-O4 -DNDEBUG\")" >> $proj_root/CMakeLists.txt
         echo "SET (CMAKE_CXX_FLAGS_RELWITHDEBINFO \"-O2 -g\")" >> $proj_root/CMakeLists.txt
-        
+
         echo "" >> $proj_root/CMakeLists.txt
         echo "SET (CMAKE_AR      \"llvm-ar\")" >> $proj_root/CMakeLists.txt
         echo "SET (CMAKE_LINKER  \"lld\")" >> $proj_root/CMakeLists.txt
         echo "SET (CMAKE_NM      \"llvm-nm\")" >> $proj_root/CMakeLists.txt
         echo "SET (CMAKE_OBJDUMP \"llvm-objdump\")" >> $proj_root/CMakeLists.txt
         echo "SET (CMAKE_RANLIB  \"llvm-ranlib\")" >> $proj_root/CMakeLists.txt
-        
+
         echo "" >> $proj_root/CMakeLists.txt
         echo "# set(CMAKE_CXX_FLAGS \"\${CMAKE_CXX_FLAGS} -stdlib=libc++\")" >> $proj_root/CMakeLists.txt
         # -I/usr/include/libcxxabi
         echo "# set(CMAKE_LINKER_FLAGS \"\${CMAKE_LINKER_FLAGS} -stdlib=libc++ -lc++abi\")" >> $proj_root/CMakeLists.txt
         echo "endif(UNIX)" >> $proj_root/CMakeLists.txt
-        
+
         echo "" >> $proj_root/CMakeLists.txt
         echo "set(ROOT \${CMAKE_CURRENT_LIST_DIR})" >> $proj_root/CMakeLists.txt
 
@@ -59,7 +60,7 @@ ome_gen_cmake_file() {
         echo "# add_library(pro_a STATIC \${srcs})" >> $proj_root/CMakeLists.txt
         echo "# add_library(pro SHARED \${srcs})" >> $proj_root/CMakeLists.txt
         echo "# message(STATUS \${srcs})" >> $proj_root/CMakeLists.txt
-        
+
         echo "" >> $proj_root/CMakeLists.txt
         echo "add_executable(main \${srcs} \${hdrs})" >> $proj_root/CMakeLists.txt
         echo "target_link_libraries(main)" >> $proj_root/CMakeLists.txt
