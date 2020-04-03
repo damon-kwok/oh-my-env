@@ -58,9 +58,9 @@ pony_install() {
             github_upgrade ponylang/ponyc $OME_REPO/ponyc-git 0
             cd $OME_REPO/ponyc-git
 
-            ./make.ps1 libs
-            ./make.ps1 configure
-            ./make.ps1 build
+            # powershell -c ./make.ps1 libs
+            # powershell -c ./make.ps1 configure
+            powershell -c ./make.ps1 build
         fi
     else
         github_upgrade ponylang/ponyc $OME_REPO/ponyc-git 0
