@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-basedev_install_tools() {
+cc_install_tools() {
     get_os_type
     case $OME_OS in
         # Linux
@@ -85,7 +85,7 @@ basedev_install_tools() {
     esac
 }
 
-basedev_install() {
+cc_install() {
     # gcc clang make m4 automake pkg-config"
 
     # libdn2 libuv libason-devel
@@ -95,18 +95,18 @@ basedev_install() {
     # sed awk grep tar zip unzip 7zip flex gawke bison bc mt
     # guile rush tramp libc scm screen
 
-    basedev_install_tools
+    cc_install_tools
 }
 
-basedev_uninstall() {
-    echo_error "'basedev_uninstall' not implemented"
+cc_uninstall() {
+    echo_error "'cc_uninstall' not implemented"
 }
 
-basedev_exist_p() {
-    echo_error "'basedev_exist_p' not implemented"
+cc_exist_p() {
+    echo_error "'cc_exist_p' not implemented"
 }
 
-basedev_info() {
+cc_info() {
     # ome_get_version gcc "GCC_VERSION"
     # echo_kv "C/C++" "$GCC_VERSION|$CLANG_VERSION"
     # echo_kv "CTool" "pkg-config $PKGCONF_VERSION|$LIBTOOL_VERSION"

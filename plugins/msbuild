@@ -3,7 +3,8 @@
 msbuild_install() {
     github_upgrade Microsoft/msbuild $OME_REPO/msbuild
     cd $OME_REPO/msbuild
-    ./build.cmd
+    chmod +x ./build.sh
+    ./build.sh
 }
 
 msbuild_uninstall() {
