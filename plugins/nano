@@ -1,0 +1,26 @@
+#!/usr/bin/env sh
+
+nano_install() {
+    github_upgrade  serialhex/nano-highlight $OME_REPO/nano-highlight
+    # cat /usr/share/nano-syntax-highlighting/nanorc.sample | xargs -0 echo >> ~/.nanorc
+    cd $OME_REPO/nano-highlight
+    for file in `ls *.nanorc`
+    do
+        find_str "$file" ~/.nanorc
+        if [ $? -eq 0 ]; then
+            echo "include $OME_REPO/nano-highlight/$file" >> ~/.nanorc
+        fi
+    done
+}
+
+nano_uninstall() {
+    echo_error "'nano_uninstall' not implemented"
+}
+
+nano_exist_p() {
+    echo_error "'nano_exist_p' not implemented"
+}
+
+nano_info() {
+    echo_error ""
+}
