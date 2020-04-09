@@ -1,0 +1,27 @@
+#!/usr/bin/env sh
+
+hugo_install() {
+    ome_check_install "go" "golang"
+
+    git clone https://github.com/gohugoio/hugo.git
+    github_upgrade gohugoio/hugo $OME_REPO/hugo
+    cd $OME_REPO/hugo
+    go install
+
+    # github_upgrade  damon-kwok/pony-tutorial $OME_REPO/pony-tutorial
+    # cd $OME_REPO/pony-tutorial
+    # chmod +x ./build.bash
+    # ./build.bash
+}
+
+hugo_uninstall() {
+    echo_error "'hugo_uninstall' not implemented"
+}
+
+hugo_exist_p() {
+    echo_error "'hugo_exist_p' not implemented"
+}
+
+hugo_info() {
+    echo_error ""
+}
