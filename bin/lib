@@ -856,6 +856,6 @@ ome_httpserver() {
     local oldir=`pwd`
     cd $HOME/workspace/projects/nodejs/http_server
     npm update
-    node $HOME/workspace/projects/nodejs/http_server/index.js $OME_WS/projects/pony-tutorial/public
+    node $HOME/workspace/projects/nodejs/http_server/index.js $HOME/pony-tutorial/public
     cd $oldir
 }

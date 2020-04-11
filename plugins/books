@@ -2,11 +2,25 @@
 
 books_install() {
     ome_check_install "npm" "nodejs"
-    npm i -g vuepress
-    github_upgrade KaiserY/trpl-zh-cn $OME_REPO/trpl-zh-cn
-    cd $OME_REPO/trpl-zh-cn
-    vuepress build ./src
-    vuepress dev ./src
+    ome_check_install "hugo" "hugo"
+
+    # tip "pony-tutorial"
+    # github_upgrade KaiserY/trpl-zh-cn $OME_REPO/trpl-zh-cn
+    # cd $OME_REPO/trpl-zh-cn
+    # npm i -g vuepress
+    # vuepress build ./src
+    # vuepress dev ./src
+
+    tip "pony-tutorial"
+    github_upgrade damon-kwok/pony-tutorial-zh_CN $HOME/pony-tutorial
+
+    cd $HOME/pony-tutorial
+    hugo
+
+    # preview
+    # cd $HOME/workspace/projects/nodejs/http_server
+    # npm update
+    # node $HOME/workspace/projects/nodejs/http_server/index.js $HOME/pony-tutorial/public
 }
 
 books_uninstall() {
