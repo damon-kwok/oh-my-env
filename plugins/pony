@@ -86,6 +86,11 @@ pony_install() {
     make
     chmod +x $OME_REPO/corral/build/release/*
     pony_setenv
+
+    # github_upgrade damon-kwok/novitiate $OME_REPO/novitiate
+    # cd $OME_REPO/novitiate
+    # ponyc
+    # chmod +x novitiate
 }
 
 pony_uninstall() {
