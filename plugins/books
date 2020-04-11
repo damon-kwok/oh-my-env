@@ -1,0 +1,22 @@
+#!/usr/bin/env sh
+
+books_install() {
+    ome_check_install "npm" "nodejs"
+    npm i -g vuepress
+    github_upgrade KaiserY/trpl-zh-cn $OME_REPO/trpl-zh-cn
+    cd $OME_REPO/trpl-zh-cn
+    vuepress build ./src
+    vuepress dev ./src
+}
+
+books_uninstall() {
+    echo_error "'books_uninstall' not implemented"
+}
+
+books_exist_p() {
+    echo_error "'books_exist_p' not implemented"
+}
+
+books_info() {
+    echo_error ""
+}
