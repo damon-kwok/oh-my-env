@@ -13,8 +13,10 @@ rust_install() {
     tip "set rust install env:"
     mkdir -p $HOME/.rustup
     # https://github.com/rust-lang/rustup#environment-variables
-    export RUSTUP_DIST_SERVER=https://mirrors.ustc.edu.cn/rust-static
-    export RUSTUP_UPDATE_ROOT=https://mirrors.ustc.edu.cn/rust-static/rustup
+    # export RUSTUP_DIST_SERVER=https://mirrors.ustc.edu.cn/rust-static
+    # export RUSTUP_UPDATE_ROOT=https://mirrors.ustc.edu.cn/rust-static/rustup
+    export RUSTUP_DIST_SERVER=https://mirrors.tuna.tsinghua.edu.cn/rustup
+    export RUSTUP_UPDATE_ROOT=https://mirrors.tuna.tsinghua.edu.cn/rustup/rustup
     export RUSTUP_HOME=$HOME/.rustup
     export CARGO_HOME=$HOME/.cargo
 
@@ -27,11 +29,17 @@ rust_install() {
         mkdir -p $HOME/.cargo
         echo "[source.crates-io]" >> $HOME/.cargo/config
         echo 'registry = "https://github.com/rust-lang/crates.io-index"' >> $HOME/.cargo/config
-        echo "replace-with = 'ustc'" >> $HOME/.cargo/config
+
+        echo "replace-with = 'tuna'" >> $HOME/.cargo/config
         echo "" >> $HOME/.cargo/config
-        echo "[source.ustc]" >> $HOME/.cargo/config
-        #echo 'registry = "git://mirrors.ustc.edu.cn/crates.io-index"' >> $HOME/.cargo/config
-        echo 'registry = "https://mirrors.ustc.edu.cn/crates.io-index"' >> $HOME/.cargo/config
+        echo "[source.tuna]" >> $HOME/.cargo/config
+        echo "registry = 'https://mirrors.tuna.tsinghua.edu.cn/git/crates.io-index.git'" >> $HOME/.cargo/config
+
+        # echo "replace-with = 'ustc'" >> $HOME/.cargo/config
+        # echo "" >> $HOME/.cargo/config
+        # echo "[source.ustc]" >> $HOME/.cargo/config
+        # #echo "registry = "git://mirrors.ustc.edu.cn/crates.io-index"' >> $HOME/.cargo/config
+        # echo "registry = "https://mirrors.ustc.edu.cn/crates.io-index"' >> $HOME/.cargo/config
     fi
 
     tip "install rust"
@@ -44,8 +52,10 @@ rust_install() {
             rm -rf ./rustup-init.sh
 
             tip "wget https://sh.rustup.rs"
-            wget https://cdn.jsdelivr.net/gh/rust-lang-nursery/rustup.rs/rustup-init.sh
-            perl -pi -e 's|"https://static.rust-lang.org/rustup/dist"|"https://mirrors.ustc.edu.cn/rust-static/rustup"|g' ./rustup-init.sh
+            # wget https://cdn.jsdelivr.net/gh/rust-lang-nursery/rustup.rs/rustup-init.sh
+            # perl -pi -e 's|"https://static.rust-lang.org/rustup/dist"|"https://mirrors.ustc.edu.cn/rust-static/rustup"|g' ./rustup-init.sh
+            wget https://sh.rustup.rs/
+            perl -pi -e 's|"https://static.rust-lang.org/rustup/dist"|"https://mirrors.tuna.tsinghua.edu.cn/rustup/dist"|g' ./rustup-init.sh
 
             tip "rustup-init"
             chmod +x ./rustup-init.sh
@@ -144,10 +154,13 @@ rust_setenv() {
     #     fi
     # fi
 
-    export RUSTUP_DIST_SERVER=https://mirrors.ustc.edu.cn/rust-static
-    export RUSTUP_UPDATE_ROOT=https://mirrors.ustc.edu.cn/rust-static/rustup
+    # export RUSTUP_DIST_SERVER=https://mirrors.ustc.edu.cn/rust-static
+    # export RUSTUP_UPDATE_ROOT=https://mirrors.ustc.edu.cn/rust-static/rustup
+    export RUSTUP_DIST_SERVER=https://mirrors.tuna.tsinghua.edu.cn/rustup
+    export RUSTUP_UPDATE_ROOT=https://mirrors.tuna.tsinghua.edu.cn/rustup/rustup
     export RUSTUP_HOME=$HOME/.rustup
     export CARGO_HOME=$HOME/.cargo
+    export RUST_BACKTRACE=full  # 0 1 full
 
     if [ -f $HOME/.cargo/env ]; then
         . $HOME/.cargo/env
