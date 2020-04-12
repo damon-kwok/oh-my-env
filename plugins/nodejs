@@ -76,7 +76,9 @@ nodejs_install_download() {
         if [ ! -f $HOME/Downloads/$zipkg ]; then
             # https://nodejs.org/dist/v12.14.1/node-v12.14.1-darwin-x64.tar.gz
             #wget https://nodejs.org/dist/latest-v${NODEJS_MAJOR_VERSION}.x/$zipkg
-            wget https://nodejs.org/dist/v${NODEJS_VERSION}/$zipkg
+            # https://npm.taobao.org/mirrors/node/v12.16.2/node-v12.16.2-win-x86.zip
+            # wget https://nodejs.org/dist/v${NODEJS_VERSION}/$zipkg
+            wget https://npm.taobao.org/mirrors/node/v${NODEJS_VERSION}/$zipkg
         fi
         #if [ ! -d $OME_REPO/$NODEJS_VERINFO ]; then
         echo "unzip:$zipkg"
