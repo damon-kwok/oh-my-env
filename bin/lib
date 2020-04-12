@@ -856,6 +856,11 @@ ome_httpserver() {
     local oldir=`pwd`
     cd $HOME/workspace/projects/nodejs/http_server
     npm update
-    node $HOME/workspace/projects/nodejs/http_server/index.js $HOME/pony-tutorial
     cd $oldir
+    if [ -n "$1" ]; then
+        node $HOME/workspace/projects/nodejs/http_server/index.js $1
+    else
+        node $HOME/workspace/projects/nodejs/http_server/index.js $HOME/pony-tutorial
+    fi
+
 }
