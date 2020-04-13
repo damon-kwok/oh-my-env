@@ -405,6 +405,7 @@ ome_parse() {
             app_wizard $ARG1 $ARG2
             ;;
         "look"|"check")
+            xdg-open "https://ziglang.org/download/"
             xdg-open "https://nim-lang.org/install_windows.html"
             xdg-open "https://sdkman.io/sdks#leiningen"
             xdg-open "https://clojure.org/guides/getting_started#_installation_on_linux"
