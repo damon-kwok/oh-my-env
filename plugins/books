@@ -13,6 +13,7 @@ books_install() {
 
     tip "pony-tutorial"
     github_upgrade damon-kwok/pony-tutorial-zh_CN $HOME/pony-tutorial
+    github_upgrade damon-kwok/pony-tutorial $HOME/pony-tutorial-en
 
     cd $HOME/pony-tutorial
     hugo

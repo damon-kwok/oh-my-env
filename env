@@ -226,7 +226,7 @@ export PYTHON2_VERSION=2.7.17
 export PYTHON3_VERSION=3.8.2
 export RUBY_VERSION=2.7.1
 # export PHP_VERSION=5.6.39
-export PHP_VERSION=7.4.4
+export PHP_VERSION=7.4.5
 
 # export JAVA_VERSION=11.0.6.hs-adpt
 export JAVA_VERSION=20.0.0.r11-grl
@@ -251,7 +251,7 @@ export NODEJS_VERSION=12.16.2
 export NIM_VERSION=1.2.0
 # export PONY_VERSION=0.33.2
 export PONY_VERSION=git
-export ZIG_VERSION=0.5.0+b8796be79
+export ZIG_VERSION=zig-0.6.0+487231136
 
 # Other
 export JETBRINS_FONT_VERSION=1.0.3

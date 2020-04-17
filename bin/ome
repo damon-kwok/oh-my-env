@@ -405,6 +405,13 @@ ome_parse() {
             app_wizard $ARG1 $ARG2
             ;;
         "look"|"check")
+            xdg-open "http://mirror.bit.edu.cn/cygwin/x86_64/release/cygutils/"
+            xdg-open "http://mirror.bit.edu.cn/cygwin/x86_64/release/popt/"
+            xdg-open "https://github.com/mongodb/mongo-c-driver/releases"
+            xdg-open "https://github.com/mongodb/mongo-cxx-driver/releases"
+            xdg-open "http://ftp.gnome.org/pub/gnome/sources/gmime/"
+            xdg-open "https://sourceforge.net/p/isync/isync/commit_browser"
+
             xdg-open "https://ziglang.org/download/"
             xdg-open "https://nim-lang.org/install_windows.html"
             xdg-open "https://sdkman.io/sdks#leiningen"
