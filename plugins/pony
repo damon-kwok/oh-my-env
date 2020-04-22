@@ -108,22 +108,27 @@ pony_info() {
 }
 
 pony_setenv() {
-    if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
-        if [ -d "$OME_REPO/ponyc-${PONY_VERSION}-bin/ponyc" ]; then
-            export PONY_BIN=$OME_REPO/ponyc-${PONY_VERSION}-bin/ponyc/bin
-        else
-            export PONY_BIN=$OME_REPO/ponyc-${PONY_VERSION}-bin/bin
-        fi
+    # if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
+    #     if [ -d "$OME_REPO/ponyc-${PONY_VERSION}-bin/ponyc" ]; then
+    #         export PONY_BIN=$OME_REPO/ponyc-${PONY_VERSION}-bin/ponyc/bin
+    #     else
+    #         export PONY_BIN=$OME_REPO/ponyc-${PONY_VERSION}-bin/bin
+    #     fi
 
-        if [ -d "$PONY_BIN" ]; then
-            export PATH=$PONY_BIN:$PATH
-            export PATH=`cygpath -m $PONY_BIN`:$PATH
-        fi
-    else
-        export PONY_BIN=$OME_REPO/ponyc-git/build/release
-        if [ -d "$PONY_BIN" ]; then
-            export PATH=$OME_REPO/ponyc-git/build/release:$PATH
-        fi
+    #     if [ -d "$PONY_BIN" ]; then
+    #         export PATH=$PONY_BIN:$PATH
+    #         export PATH=`cygpath -m $PONY_BIN`:$PATH
+    #     fi
+    # else
+    #     export PONY_BIN=$OME_REPO/ponyc-git/build/install
+    #     if [ -d "$PONY_BIN" ]; then
+    #         export PATH=$PONY_BIN:$PATH
+    #     fi
+    # fi
+
+    export PONY_BIN=$OME_REPO/ponyc-git/build/install/bin
+    if [ -d "$PONY_BIN" ]; then
+        export PATH=$PONY_BIN:$PATH
     fi
 
     if [ -d "$OME_REPO/pony-stable/build/release" ]; then
