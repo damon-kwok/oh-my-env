@@ -91,6 +91,11 @@ pony_install() {
     # cd $OME_REPO/novitiate
     # ponyc
     # chmod +x novitiate
+
+    readp "install ponylang doc tools ?"
+    if [ $? -eq 1 ]; then
+        pip3 install --prefix $OME_PREFIX -U mkdocs-ponylang
+    fi
 }
 
 pony_uninstall() {
