@@ -53,16 +53,16 @@ stack_install_download() {
         if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
             local pkgver=stack-${STACK_VERSION}-windows-x86_64
             local zipkg=$pkgver.zip
-            
+
             if [ ! -d $OME_REPO/$pkgver ]; then
                 mkdir -p ~/Downloads
                 cd ~/Downloads/
-                
+
                 if [ ! -f $HOME/Downloads/$zipkg ]; then
                     # wget https://nodejs.org/dist/latest-v${STACK_MAJOR_VERSION}.x/$zipkg
                     wget -c https://github.com/commercialhaskell/stack/releases/download/v${STACK_VERSION}/$zipkg
                 fi
-                
+
                 # if [ ! -d $OME_REPO/$pkgver ]; then
                 unzip ./$zipkg -d $OME_REPO/stack
                 cd $OME_REPO/stack/
@@ -76,7 +76,7 @@ stack_install_download() {
             }
             curl -sSL https://get.haskellstack.org/ | sh
             # or
-            # wget -qO- https://get.haskellstack.org/ | sh    
+            # wget -qO- https://get.haskellstack.org/ | sh
         fi
     fi
 }
@@ -89,15 +89,16 @@ install_haskell_language_server() {
 
     # 1
     stack update
-    stack setup 8.6.5
+    # stack setup 8.6.5
+    stack setup 8.8.3
     # 2
     # hoogle generate
     # 3
-    # stack build --stack-yaml=stack-8.8.1.yaml
-    stack build --stack-yaml=stack-8.6.5.yaml
+    stack build --stack-yaml=stack-8.8.3.yaml
+    # stack build --stack-yaml=stack-8.6.5.yaml
     # 4
-    # stack install --stack-yaml=stack-8.8.1.yaml
-    stack install --stack-yaml=stack-8.6.5.yaml
+    stack install --stack-yaml=stack-8.8.3.yaml
+    # stack install --stack-yaml=stack-8.6.5.yaml
 }
 
 install_haskell_ghcide() {
@@ -129,7 +130,7 @@ haskell_install()
 
     tip "stack update"
     stack update
-    
+
     tip "stack upgrade"
     # stack upgrade
     github_upgrade  commercialhaskell/stack $OME_REPO/stack-git
@@ -138,18 +139,18 @@ haskell_install()
     stack install
     haskell_setenv
 
-    
+
     tip "stack install tool"
     # stack install ormolu --resolver ghc-8.8.1
-    stack install hoogle alex happy hlint hscpp brittany ghc-lib-parser
+    stack install hoogle alex happy hlint #hscpp brittany ghc-lib-parser
     readp "execute hoogle generate?"
     if [ $? -eq 1 ]; then
         hoogle generate --haskell
     fi
-    
+
     tip "install build system: shake"
     stack install shake
-    
+
     tip "install haskell language server"
     install_haskell_language_server
     install_haskell_ghcide

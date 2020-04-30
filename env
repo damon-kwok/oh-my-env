@@ -220,7 +220,7 @@ export MAKE_PROG="make"
 
 # Language II
 export ERLANG_VERSION=22.3
-export STACK_VERSION=2.3.0.1
+export STACK_VERSION=2.3.1
 export GHC_VERSION=8.8.3
 export PYTHON2_VERSION=2.7.17
 export PYTHON3_VERSION=3.8.2
