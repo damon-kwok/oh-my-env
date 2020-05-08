@@ -1,18 +1,18 @@
 #!/usr/bin/env sh
 
 fortran_install() {
-    ome_check_install "pip3" "python"
-    pip3 install --user -U fortran-language-server
+  ome_check_install "pip3" "python"
+  pip3 install --user -U fortran-language-server
 }
 
 fortran_uninstall() {
-    echo_error "'fortran_uninstall' not implemented"
+  echo_error "'fortran_uninstall' not implemented"
 }
 
 fortran_exist_p() {
-    echo_error "'fortran_exist_p' not implemented"
+  echo_error "'fortran_exist_p' not implemented"
 }
 
 fortran_info() {
-    echo_error ""
+  echo_error ""
 }

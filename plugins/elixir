@@ -1,64 +1,64 @@
 #!/usr/bin/env sh
 
 elixir_install_language_server() {
-    github_upgrade elixir-lsp/elixir-ls $OME_REPO/elixir-ls
-    cd $OME_REPO/elixir-ls/
-    HEX_MIRROR=https://hexpm.upyun.com mix deps.get
-    HEX_MIRROR=https://hexpm.upyun.com mix compile
-    HEX_MIRROR=https://hexpm.upyun.com mix elixir_ls.release -o $OME_PREFIX/elixier-ls-release
+  github_upgrade elixir-lsp/elixir-ls $OME_REPO/elixir-ls
+  cd $OME_REPO/elixir-ls/
+  HEX_MIRROR=https://hexpm.upyun.com mix deps.get
+  HEX_MIRROR=https://hexpm.upyun.com mix compile
+  HEX_MIRROR=https://hexpm.upyun.com mix elixir_ls.release -o $OME_PREFIX/elixier-ls-release
 }
 
 elixir_install_kiex() {
-    curl -sSL https://raw.githubusercontent.com/taylor/kiex/master/install | bash -s
-    test -s "$HOME/.kiex/scripts/kiex" && source "$HOME/.kiex/scripts/kiex"
+  curl -sSL https://raw.githubusercontent.com/taylor/kiex/master/install | bash -s
+  test -s "$HOME/.kiex/scripts/kiex" && source "$HOME/.kiex/scripts/kiex"
 }
 
 elixir_install_git() {
-    ome_check_install "erl" "erlang"
-    github_upgrade elixir-lang/elixir $OME_REPO/elixir
-    cd $OME_REPO/elixir
-    make
-    make test
-    elixir_setenv
-    # Shall I install rebar3? (if running non-interactively, use "mix local.rebar --force") [Yn]
-    HEX_MIRROR="https://hexpm.upyun.com" mix local.rebar --force
-    HEX_MIRROR="https://hexpm.upyun.com" mix hex.config mirror_url https://hexpm.upyun.com
+  ome_check_install "erl" "erlang"
+  github_upgrade elixir-lang/elixir $OME_REPO/elixir
+  cd $OME_REPO/elixir
+  make
+  make test
+  elixir_setenv
+  # Shall I install rebar3? (if running non-interactively, use "mix local.rebar --force") [Yn]
+  HEX_MIRROR="https://hexpm.upyun.com" mix local.rebar --force
+  HEX_MIRROR="https://hexpm.upyun.com" mix hex.config mirror_url https://hexpm.upyun.com
 }
 
 elixir_install() {
-    tip "install elixir(git)"
-    # elixir_install_kiex
-    elixir_install_git
+  tip "install elixir(git)"
+  # elixir_install_kiex
+  elixir_install_git
 
-    tip "install elixir language server"
-    elixir_install_language_server
+  tip "install elixir language server"
+  elixir_install_language_server
 }
 
 
 elixir_uninstall() {
-    echo_error "'elixir_uninstall' not implemented"
+  echo_error "'elixir_uninstall' not implemented"
 }
 
 elixir_exist_p() {
-    echo_error "'elixir_exist_p' not implemented"
+  echo_error "'elixir_exist_p' not implemented"
 }
 
 elixir_info() {
-    if [ "`command -v elixir`" != "" ]; then
-        ome_show "Erlang" "`elixir --version 2>&1 | head -n 1 | cut -d ' ' -f 1-3`"
-        ome_show "Elixir" "`elixir --version 2>&1 | tail -n 1 | cut -d ' ' -f 1-3`"
-    fi
+  if [ "`command -v elixir`" != "" ]; then
+    ome_show "Erlang" "`elixir --version 2>&1 | head -n 1 | cut -d ' ' -f 1-3`"
+    ome_show "Elixir" "`elixir --version 2>&1 | tail -n 1 | cut -d ' ' -f 1-3`"
+  fi
 
 }
 
 elixir_setenv() {
-    if [ -d "$OME_REPO/elixir/bin" ]; then
-        export PATH=$OME_REPO/elixir/bin:$PATH
-        test -s "$HOME/.kiex/scripts/kiex" && source "$HOME/.kiex/scripts/kiex"
-    fi
+  if [ -d "$OME_REPO/elixir/bin" ]; then
+    export PATH=$OME_REPO/elixir/bin:$PATH
+    test -s "$HOME/.kiex/scripts/kiex" && source "$HOME/.kiex/scripts/kiex"
+  fi
 
-    if [ -d "$OME_PREFIX/elixier-ls-release" ]; then
-        export PATH=$OME_PREFIX/elixier-ls-release:$PATH
-    fi
+  if [ -d "$OME_PREFIX/elixier-ls-release" ]; then
+    export PATH=$OME_PREFIX/elixier-ls-release:$PATH
+  fi
 }
 elixir_setenv

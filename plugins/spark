@@ -1,21 +1,21 @@
 #!/usr/bin/env sh
 
 spark_install() {
-    github_upgrade apache/spark $OME_REPO/spark
-    cd $OME_REPO/spark/
-    mvn compile
-    mvn package
-    cd $olddir
+  github_upgrade apache/spark $OME_REPO/spark
+  cd $OME_REPO/spark/
+  mvn compile
+  mvn package
+  cd $olddir
 }
 
 spark_uninstall() {
-    echo_error "'spark_uninstall' not implemented"
+  echo_error "'spark_uninstall' not implemented"
 }
 
 spark_exist_p() {
-    echo_error "'spark_exist_p' not implemented"
+  echo_error "'spark_exist_p' not implemented"
 }
 
 spark_info() {
-    echo_error ""
+  echo_error ""
 }

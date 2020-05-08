@@ -1,184 +1,184 @@
 #!/usr/bin/env sh
 
 stack_install_bin() {
-    # https://docs.haskellstack.org/en/stable/install_and_upgrade/#installupgrade
-    get_os_type
-    case $OME_OS in
-        # Linux
-        # $OS_DEBIAN) ;;
-        # $OS_UBUNTU) ;;
-        $OS_DEBIAN|$OS_UBUNTU) sudo apt install haskell-stack;;
-        # $OS_REDHAT) ;;
-        # $OS_FEDORA) ;;
-        $OS_REDHAT|$OS_FEDORA)
-            sudo dnf copr enable petersen/stack
-            # sudo yum install stack
-            ;;
-        $OS_ARCH) sudo pacman -S statck;;
-        $OS_GENTOO) ;;
-        $OS_SUSE)
-            # openSUSE Leap
-            sudo zypper ar http://download.opensuse.org/repositories/devel:/languages:/haskell/openSUSE_Leap_42.1/devel:languages:haskell.repo
-            # SUSE Linux Enterprise 12
-            # sudo zypper ar http://download.opensuse.org/repositories/devel:/languages:/haskell/SLE_12/devel:languages:haskell.repo
-            sudo zypper in stack
-            ;;
-        $OS_SLACKWARE) ;;
-        $OS_NIXOS) ;;
-        $OS_VOID) ;;
-        $OS_ALPINE) ;;
-        $OS_MAGEIA) ;;
-        $OS_SLITAZ) ;;
-        $OS_GUIXSD) ;;
-        # Unix
-        $OS_MACOS) ;;
-        $OS_AIX) ;;
-        $OS_SOLARIS) ;;
-        $OS_FREEBSD) ;;
-        $OS_OPENBSD) ;;
-        $OS_NETBSD) ;;
-        $OS_DFBSD) ;;
-        # Windows
-        $OS_CYGWIN) ;;
-        $OS_MSYS2) ;;
-        # Other
-        $OS_UNKNOW) ;;
-    esac
+  # https://docs.haskellstack.org/en/stable/install_and_upgrade/#installupgrade
+  get_os_type
+  case $OME_OS in
+    # Linux
+    # $OS_DEBIAN) ;;
+    # $OS_UBUNTU) ;;
+    $OS_DEBIAN|$OS_UBUNTU) sudo apt install haskell-stack;;
+    # $OS_REDHAT) ;;
+    # $OS_FEDORA) ;;
+    $OS_REDHAT|$OS_FEDORA)
+      sudo dnf copr enable petersen/stack
+      # sudo yum install stack
+      ;;
+    $OS_ARCH) sudo pacman -S statck;;
+    $OS_GENTOO) ;;
+    $OS_SUSE)
+      # openSUSE Leap
+      sudo zypper ar http://download.opensuse.org/repositories/devel:/languages:/haskell/openSUSE_Leap_42.1/devel:languages:haskell.repo
+      # SUSE Linux Enterprise 12
+      # sudo zypper ar http://download.opensuse.org/repositories/devel:/languages:/haskell/SLE_12/devel:languages:haskell.repo
+      sudo zypper in stack
+      ;;
+    $OS_SLACKWARE) ;;
+    $OS_NIXOS) ;;
+    $OS_VOID) ;;
+    $OS_ALPINE) ;;
+    $OS_MAGEIA) ;;
+    $OS_SLITAZ) ;;
+    $OS_GUIXSD) ;;
+    # Unix
+    $OS_MACOS) ;;
+    $OS_AIX) ;;
+    $OS_SOLARIS) ;;
+    $OS_FREEBSD) ;;
+    $OS_OPENBSD) ;;
+    $OS_NETBSD) ;;
+    $OS_DFBSD) ;;
+    # Windows
+    $OS_CYGWIN) ;;
+    $OS_MSYS2) ;;
+    # Other
+    $OS_UNKNOW) ;;
+  esac
 
 }
 
 stack_install_download() {
-    if [ "`command -v stack`" = "" ]; then
-        # if [ "$OME_OS" = "$OS_CYGWIN" ]; then
-        if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
-            local pkgver=stack-${STACK_VERSION}-windows-x86_64
-            local zipkg=$pkgver.zip
+  if [ "`command -v stack`" = "" ]; then
+    # if [ "$OME_OS" = "$OS_CYGWIN" ]; then
+    if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
+      local pkgver=stack-${STACK_VERSION}-windows-x86_64
+      local zipkg=$pkgver.zip
 
-            if [ ! -d $OME_REPO/$pkgver ]; then
-                mkdir -p ~/Downloads
-                cd ~/Downloads/
+      if [ ! -d $OME_REPO/$pkgver ]; then
+        mkdir -p ~/Downloads
+        cd ~/Downloads/
 
-                if [ ! -f $HOME/Downloads/$zipkg ]; then
-                    # wget https://nodejs.org/dist/latest-v${STACK_MAJOR_VERSION}.x/$zipkg
-                    wget -c https://github.com/commercialhaskell/stack/releases/download/v${STACK_VERSION}/$zipkg
-                fi
-
-                # if [ ! -d $OME_REPO/$pkgver ]; then
-                unzip ./$zipkg -d $OME_REPO/stack
-                cd $OME_REPO/stack/
-                chmod +x ./*
-                haskell_setenv
-                # fi
-            fi
-        else
-            arch1() {
-                echo `uname -m`
-            }
-            curl -sSL https://get.haskellstack.org/ | sh
-            # or
-            # wget -qO- https://get.haskellstack.org/ | sh
+        if [ ! -f $HOME/Downloads/$zipkg ]; then
+          # wget https://nodejs.org/dist/latest-v${STACK_MAJOR_VERSION}.x/$zipkg
+          wget -c https://github.com/commercialhaskell/stack/releases/download/v${STACK_VERSION}/$zipkg
         fi
+
+        # if [ ! -d $OME_REPO/$pkgver ]; then
+        unzip ./$zipkg -d $OME_REPO/stack
+        cd $OME_REPO/stack/
+        chmod +x ./*
+        haskell_setenv
+        # fi
+      fi
+    else
+      arch1() {
+        echo `uname -m`
+      }
+      curl -sSL https://get.haskellstack.org/ | sh
+      # or
+      # wget -qO- https://get.haskellstack.org/ | sh
     fi
+  fi
 }
 
 install_haskell_language_server() {
-    # https://github.com/haskell/haskell-ide-engine/blob/master/docs/Build.md
-    github_upgrade haskell/haskell-ide-engine $OME_REPO/haskell-ide-engine
-    cd $OME_REPO/haskell-ide-engine/
-    # stack ./install.hs help
+  # https://github.com/haskell/haskell-ide-engine/blob/master/docs/Build.md
+  github_upgrade haskell/haskell-ide-engine $OME_REPO/haskell-ide-engine
+  cd $OME_REPO/haskell-ide-engine/
+  # stack ./install.hs help
 
-    # 1
-    stack update
-    # stack setup 8.6.5
-    stack setup 8.8.3
-    # 2
-    # hoogle generate
-    # 3
-    stack build --stack-yaml=stack-8.8.3.yaml
-    # stack build --stack-yaml=stack-8.6.5.yaml
-    # 4
-    stack install --stack-yaml=stack-8.8.3.yaml
-    # stack install --stack-yaml=stack-8.6.5.yaml
+  # 1
+  stack update
+  # stack setup 8.6.5
+  stack setup 8.8.3
+  # 2
+  # hoogle generate
+  # 3
+  stack build --stack-yaml=stack-8.8.3.yaml
+  # stack build --stack-yaml=stack-8.6.5.yaml
+  # 4
+  stack install --stack-yaml=stack-8.8.3.yaml
+  # stack install --stack-yaml=stack-8.6.5.yaml
 }
 
 install_haskell_ghcide() {
-    github_upgrade digital-asset/ghcide $OME_REPO/ghcide
-    cd $OME_REPO/ghcide
-    stack setup 8.8.3
-    stack install --stack-yaml=stack88.yaml
+  github_upgrade digital-asset/ghcide $OME_REPO/ghcide
+  cd $OME_REPO/ghcide
+  stack setup 8.8.3
+  stack install --stack-yaml=stack88.yaml
 }
 
 haskell_install()
 {
-    stack_install_download
-    # stack_install_bin
+  stack_install_download
+  # stack_install_bin
 
-    readp "stack: use china mirror?"
-    if [ $? -eq 1 ]; then
-        if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
-            mkdir -p ${APPDATA}/local/bin/
-            mkdir -p ${APPDATA}/local/lib/
-            mkdir -p ${APPDATA}/stack/
-            cp -f $OME_ROOT/conf/stack/config.yaml ${APPDATA}/stack/
-        else
-            mkdir -p ~/.local/bin/
-            mkdir -p ~/.local/lib/
-            mkdir -p ~/.stack
-            cp -f $OME_ROOT/conf/stack/config.yaml ~/.stack/
-        fi
+  readp "stack: use china mirror?"
+  if [ $? -eq 1 ]; then
+    if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
+      mkdir -p ${APPDATA}/local/bin/
+      mkdir -p ${APPDATA}/local/lib/
+      mkdir -p ${APPDATA}/stack/
+      cp -f $OME_ROOT/conf/stack/config.yaml ${APPDATA}/stack/
+    else
+      mkdir -p ~/.local/bin/
+      mkdir -p ~/.local/lib/
+      mkdir -p ~/.stack
+      cp -f $OME_ROOT/conf/stack/config.yaml ~/.stack/
     fi
+  fi
 
-    tip "stack update"
-    stack update
+  tip "stack update"
+  stack update
 
-    tip "stack upgrade"
-    # stack upgrade
-    github_upgrade  commercialhaskell/stack $OME_REPO/stack-git
-    cd $OME_REPO/stack-git
-    stack setup
-    stack install
-    haskell_setenv
+  tip "stack upgrade"
+  # stack upgrade
+  github_upgrade  commercialhaskell/stack $OME_REPO/stack-git
+  cd $OME_REPO/stack-git
+  stack setup
+  stack install
+  haskell_setenv
 
 
-    tip "stack install tool"
-    # stack install ormolu --resolver ghc-8.8.1
-    stack install hoogle alex happy hlint #hscpp brittany ghc-lib-parser
-    readp "execute hoogle generate?"
-    if [ $? -eq 1 ]; then
-        hoogle generate --haskell
-    fi
+  tip "stack install tool"
+  # stack install ormolu --resolver ghc-8.8.1
+  stack install hoogle alex happy hlint #hscpp brittany ghc-lib-parser
+  readp "execute hoogle generate?"
+  if [ $? -eq 1 ]; then
+    hoogle generate --haskell
+  fi
 
-    tip "install build system: shake"
-    stack install shake
+  tip "install build system: shake"
+  stack install shake
 
-    tip "install haskell language server"
-    install_haskell_language_server
-    install_haskell_ghcide
+  tip "install haskell language server"
+  install_haskell_language_server
+  install_haskell_ghcide
 }
 
 haskell_uninstall() {
-    echo_error "'haskell_uninstall' not implemented"
+  echo_error "'haskell_uninstall' not implemented"
 }
 
 haskell_exist_p() {
-    echo_error "'haskell_exist_p' not implemented"
+  echo_error "'haskell_exist_p' not implemented"
 }
 
 haskell_info() {
-    if [ "`command -v stack`" != "" ]; then
-        ome_show "Haskell" "stack `stack --version 2>&1 | head -n 1 | cut -d ' ' -f 1-3`"
-    fi
+  if [ "`command -v stack`" != "" ]; then
+    ome_show "Haskell" "stack `stack --version 2>&1 | head -n 1 | cut -d ' ' -f 1-3`"
+  fi
 }
 
 haskell_setenv() {
-    if [ -d "$OME_REPO/stack" ]; then
-        export PATH=$PATH:$OME_REPO/stack
+  if [ -d "$OME_REPO/stack" ]; then
+    export PATH=$PATH:$OME_REPO/stack
+  fi
+  if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
+    local WIN_PATH=`cygpath "${APPDATA}/local/bin"`
+    if [ -d "$WIN_PATH" ]; then
+      export PATH="$WIN_PATH":"$PATH"
     fi
-    if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
-        local WIN_PATH=`cygpath "${APPDATA}/local/bin"`
-        if [ -d "$WIN_PATH" ]; then
-            export PATH="$WIN_PATH":"$PATH"
-        fi
-    fi
+  fi
 }
 haskell_setenv

@@ -1,23 +1,23 @@
 #!/usr/bin/env sh
 
 boost_install() {
-    # git clone --recursive https://github.com/boostorg/boost.git
-    github_upgrade boostorg/boost $OME_REPO/boost 1 develop
-    cd $OME_REPO/boost/
-    # git checkout develop # or whatever branch you want to use
-    ./bootstrap.sh
-    ./b2 headers
-    ./b2 install --prefix=$OME_PREFIX
+  # git clone --recursive https://github.com/boostorg/boost.git
+  github_upgrade boostorg/boost $OME_REPO/boost 1 develop
+  cd $OME_REPO/boost/
+  # git checkout develop # or whatever branch you want to use
+  ./bootstrap.sh
+  ./b2 headers
+  ./b2 install --prefix=$OME_PREFIX
 }
 
 boost_uninstall() {
-    echo_error "'boost_uninstall' not implemented"
+  echo_error "'boost_uninstall' not implemented"
 }
 
 boost_exist_p() {
-    echo_error "'boost_exist_p' not implemented"
+  echo_error "'boost_exist_p' not implemented"
 }
 
 boost_info() {
-    echo_error ""
+  echo_error ""
 }

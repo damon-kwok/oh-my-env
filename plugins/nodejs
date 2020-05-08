@@ -1,186 +1,186 @@
 #!/usr/bin/env sh
 
 nodejs_install_n() {
-    local oldir=`pwd`
-    tip "n_install"
-    if [ ! -f $HOME/n/bin/n ]; then
-        curl -L https://git.io/n_install | sh
-    fi
+  local oldir=`pwd`
+  tip "n_install"
+  if [ ! -f $HOME/n/bin/n ]; then
+    curl -L https://git.io/n_install | sh
+  fi
 
-    export N_PREFIX="$HOME/.n"; [[ :$PATH: = *":$N_PREFIX/bin:"* ]] || PATH+=":$N_PREFIX/bin"
-    n-update
-    # n latest
-    # n stable
-    n lts
+  export N_PREFIX="$HOME/.n"; [[ :$PATH: = *":$N_PREFIX/bin:"* ]] || PATH+=":$N_PREFIX/bin"
+  n-update
+  # n latest
+  # n stable
+  n lts
 
-    find_str "N-INSTALL" ~/.bashrc
-    if [ $? -eq 0 ]; then
-        echo "" >> ~/.bashrc
-        echo "# N-INSTALL" >> ~/.bashrc
-        echo "export N_PREFIX=\"\$HOME/n\"; [[ :\$PATH: = *\":\$N_PREFIX/bin:\"* ]] || PATH+=\":\$N_PREFIX/bin\"" \
-             >> ~/.bashrc
-    fi
-    cd $oldir
+  find_str "N-INSTALL" ~/.bashrc
+  if [ $? -eq 0 ]; then
+    echo "" >> ~/.bashrc
+    echo "# N-INSTALL" >> ~/.bashrc
+    echo "export N_PREFIX=\"\$HOME/n\"; [[ :\$PATH: = *\":\$N_PREFIX/bin:\"* ]] || PATH+=\":\$N_PREFIX/bin\"" \
+         >> ~/.bashrc
+  fi
+  cd $oldir
 }
 
 nodejs_install_nvm() {
-    tip "install nvm + nodejs"
+  tip "install nvm + nodejs"
 
-    find_str "NVM_DIR" ~/.bashrc
-    if [ $? -eq 0 ]; then
-        echo '' >> ~/.bashrc
-        echo '# NVM' >> ~/.bashrc
-        echo 'export NVM_DIR="$HOME/.nvm"' >> ~/.bashrc
-        echo '[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> ~/.bashrc
-        echo '[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"' >> ~/.bashrc
-        . $HOME/.bashrc
-    fi
+  find_str "NVM_DIR" ~/.bashrc
+  if [ $? -eq 0 ]; then
+    echo '' >> ~/.bashrc
+    echo '# NVM' >> ~/.bashrc
+    echo 'export NVM_DIR="$HOME/.nvm"' >> ~/.bashrc
+    echo '[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> ~/.bashrc
+    echo '[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"' >> ~/.bashrc
+    . $HOME/.bashrc
+  fi
 
-    find_str "NVM_DIR" ~/.profile
-    if [ $? -eq 0 ]; then
-        echo '' >> ~/.profile
-        echo '# NVM' >> ~/.profile
-        echo 'export NVM_DIR="$HOME/.nvm"' >> ~/.profile
-        echo '[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> ~/.profile
-        echo '[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"' >> ~/.profile
-        . $HOME/.profile
-    fi
+  find_str "NVM_DIR" ~/.profile
+  if [ $? -eq 0 ]; then
+    echo '' >> ~/.profile
+    echo '# NVM' >> ~/.profile
+    echo 'export NVM_DIR="$HOME/.nvm"' >> ~/.profile
+    echo '[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> ~/.profile
+    echo '[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"' >> ~/.profile
+    . $HOME/.profile
+  fi
 
-    # curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash
-    local NVM_DIR="$HOME/.nvm"
-    # if command -v nvm >/dev/null 2>&1; then
-    if [ ! -d $NVM_DIR ]; then
-        git clone https://github.com/creationix/nvm.git "$NVM_DIR"
-        cd "$NVM_DIR"
-        git checkout `git describe --abbrev=0 --tags --match "v[0-9]*" $(git rev-list --tags --max-count=1)`
-    else
-        cd "$NVM_DIR"
-        git fetch --tags origin
-        git checkout `git describe --abbrev=0 --tags --match "v[0-9]*" $(git rev-list --tags --max-count=1)`
-    fi
+  # curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash
+  local NVM_DIR="$HOME/.nvm"
+  # if command -v nvm >/dev/null 2>&1; then
+  if [ ! -d $NVM_DIR ]; then
+    git clone https://github.com/creationix/nvm.git "$NVM_DIR"
+    cd "$NVM_DIR"
+    git checkout `git describe --abbrev=0 --tags --match "v[0-9]*" $(git rev-list --tags --max-count=1)`
+  else
+    cd "$NVM_DIR"
+    git fetch --tags origin
+    git checkout `git describe --abbrev=0 --tags --match "v[0-9]*" $(git rev-list --tags --max-count=1)`
+  fi
 
-    \. "$NVM_DIR/nvm.sh"
+  \. "$NVM_DIR/nvm.sh"
 
-    # nvm install node # lastest version
-    nvm install --lts=dubnium
-    nvm use --lts=dubnium
+  # nvm install node # lastest version
+  nvm install --lts=dubnium
+  nvm use --lts=dubnium
 }
 
 nodejs_install_download() {
-    # echo_warning "please download form: https://nodejs.org/en/download"
-    # https://nodejs.org/dist
-    if [ ! -d $OME_REPO/$NODEJS_VERINFO ]; then
-        local zipkg=$NODEJS_VERSION_ZIP
-        mkdir -p ~/Downloads
-        cd ~/Downloads/
-        if [ ! -f $HOME/Downloads/$zipkg ]; then
-            # https://nodejs.org/dist/v12.14.1/node-v12.14.1-darwin-x64.tar.gz
-            #wget https://nodejs.org/dist/latest-v${NODEJS_MAJOR_VERSION}.x/$zipkg
-            # https://npm.taobao.org/mirrors/node/v12.16.2/node-v12.16.2-win-x86.zip
-            # wget https://nodejs.org/dist/v${NODEJS_VERSION}/$zipkg
-            wget https://npm.taobao.org/mirrors/node/v${NODEJS_VERSION}/$zipkg
-        fi
-        #if [ ! -d $OME_REPO/$NODEJS_VERINFO ]; then
-        echo "unzip:$zipkg"
-        if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
-            unzip ./$zipkg -d $OME_REPO
-        elif [ "$OME_OS" = "$OS_MACOS" ]; then
-            tar -zcvf ./$zipkg -C $OME_REPO
-            chmod +x ${NODEJS_BIN}/*
-        else
-            tar -xvf ./$zipkg -C $OME_REPO
-            chmod +x ${NODEJS_BIN}/*
-        fi
-        # fi
-        nodejs_setenv
-    else
-        echo "nodejs `node --version` is already installed!"
+  # echo_warning "please download form: https://nodejs.org/en/download"
+  # https://nodejs.org/dist
+  if [ ! -d $OME_REPO/$NODEJS_VERINFO ]; then
+    local zipkg=$NODEJS_VERSION_ZIP
+    mkdir -p ~/Downloads
+    cd ~/Downloads/
+    if [ ! -f $HOME/Downloads/$zipkg ]; then
+      # https://nodejs.org/dist/v12.14.1/node-v12.14.1-darwin-x64.tar.gz
+      #wget https://nodejs.org/dist/latest-v${NODEJS_MAJOR_VERSION}.x/$zipkg
+      # https://npm.taobao.org/mirrors/node/v12.16.2/node-v12.16.2-win-x86.zip
+      # wget https://nodejs.org/dist/v${NODEJS_VERSION}/$zipkg
+      wget https://npm.taobao.org/mirrors/node/v${NODEJS_VERSION}/$zipkg
     fi
+    #if [ ! -d $OME_REPO/$NODEJS_VERINFO ]; then
+    echo "unzip:$zipkg"
+    if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
+      unzip ./$zipkg -d $OME_REPO
+    elif [ "$OME_OS" = "$OS_MACOS" ]; then
+      tar -zcvf ./$zipkg -C $OME_REPO
+      chmod +x ${NODEJS_BIN}/*
+    else
+      tar -xvf ./$zipkg -C $OME_REPO
+      chmod +x ${NODEJS_BIN}/*
+    fi
+    # fi
+    nodejs_setenv
+  else
+    echo "nodejs `node --version` is already installed!"
+  fi
 }
 
 nodejs_install() {
-    local oldir=`pwd`
+  local oldir=`pwd`
 
-    # if [ "$OME_OS" = "$OS_MSYS2" ]; then
-    # pacman -S mingw-w64-x86_64-nodejs
-    # elif [ "$OME_OS" = "$OS_CYGWIN" ]; then
-    # nodejs_install_download
-    # else
-    # nodejs_install_nvm # nodejs_install_n
-    # fi
-    if [ "$OME_OS" = "$OS_FREEBSD" ]; then
-        sudo pkg install node12 npm-node12
-    else
-        nodejs_install_download
-    fi
+  # if [ "$OME_OS" = "$OS_MSYS2" ]; then
+  # pacman -S mingw-w64-x86_64-nodejs
+  # elif [ "$OME_OS" = "$OS_CYGWIN" ]; then
+  # nodejs_install_download
+  # else
+  # nodejs_install_nvm # nodejs_install_n
+  # fi
+  if [ "$OME_OS" = "$OS_FREEBSD" ]; then
+    sudo pkg install node12 npm-node12
+  else
+    nodejs_install_download
+  fi
 
-    readp "npm: use china mirror?"
-    if [ $? -eq 1 ]; then
-        tip "use cnpm source"
-        # npm config set registry https://registry.npmjs.org/   #raw source
-        npm config set registry https://registry.npm.taobao.org #aliyun source
-        npm config get registry
+  readp "npm: use china mirror?"
+  if [ $? -eq 1 ]; then
+    tip "use cnpm source"
+    # npm config set registry https://registry.npmjs.org/   #raw source
+    npm config set registry https://registry.npm.taobao.org #aliyun source
+    npm config get registry
 
-        # cnpm
-        npm install -g cnpm --registry=https://registry.npm.taobao.org
-    fi
+    # cnpm
+    npm install -g cnpm --registry=https://registry.npm.taobao.org
+  fi
 
-    # if [ "$OME_OS" != "$OS_CYGWIN" ]; then
-    # tip "update npm"
-    # npm install -g npm
-    # fi
+  # if [ "$OME_OS" != "$OS_CYGWIN" ]; then
+  # tip "update npm"
+  # npm install -g npm
+  # fi
 
-    # tip "npm update -g"
-    # npm update -g
+  # tip "npm update -g"
+  # npm update -g
 
 
-    if [ "`command -v ncu`" = "" ]; then
-        tip "install npm-check-updates"
-        npm install -g npm-check-updates
-    fi
+  if [ "`command -v ncu`" = "" ]; then
+    tip "install npm-check-updates"
+    npm install -g npm-check-updates
+  fi
 
-    if [ "`command -v grunt`" = "" ]; then
-        tip "install grunt-cli"
-        npm install -g grunt-cli
-    fi
+  if [ "`command -v grunt`" = "" ]; then
+    tip "install grunt-cli"
+    npm install -g grunt-cli
+  fi
 
-    if [ "`command -v gulp`" = "" ]; then
-        tip "install gulp"
-        npm install -g gulp
-    fi
+  if [ "`command -v gulp`" = "" ]; then
+    tip "install gulp"
+    npm install -g gulp
+  fi
 
-    if [ "`command -v yarn`" = "" ]; then
-        tip "install yarn"
-        # curl -o- -L https://yarnpkg.com/install.sh | bash
-        npm install -g yarn
-    fi
+  if [ "`command -v yarn`" = "" ]; then
+    tip "install yarn"
+    # curl -o- -L https://yarnpkg.com/install.sh | bash
+    npm install -g yarn
+  fi
 
-    cd $oldir
+  cd $oldir
 }
 
 nodejs_info() {
-    # ome_show "Nodejs" "$NODEJS_VERSION | `ome_fetch_version npm`"
-    ome_show "Nodejs" "node `ome_fetch_version node` | npm `ome_fetch_version npm`"
+  # ome_show "Nodejs" "$NODEJS_VERSION | `ome_fetch_version npm`"
+  ome_show "Nodejs" "node `ome_fetch_version node` | npm `ome_fetch_version npm`"
 }
 
 if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
-    export NODEJS_VERINFO=node-v${NODEJS_VERSION}-win-x64
-    NODEJS_VERSION_ZIP=${NODEJS_VERINFO}.zip
-    export PATH="$OME_REPO/$NODEJS_VERINFO":"$PATH"
+  export NODEJS_VERINFO=node-v${NODEJS_VERSION}-win-x64
+  NODEJS_VERSION_ZIP=${NODEJS_VERINFO}.zip
+  export PATH="$OME_REPO/$NODEJS_VERINFO":"$PATH"
 elif [ "$OME_OS" = "$OS_MACOS" ]; then
-    export NODEJS_VERINFO=node-v${NODEJS_VERSION}-darwin-x64
-    NODEJS_VERSION_ZIP=${NODEJS_VERINFO}.tar.gz
-    export PATH="$OME_REPO/$NODEJS_VERINFO/bin":"$PATH"
+  export NODEJS_VERINFO=node-v${NODEJS_VERSION}-darwin-x64
+  NODEJS_VERSION_ZIP=${NODEJS_VERINFO}.tar.gz
+  export PATH="$OME_REPO/$NODEJS_VERINFO/bin":"$PATH"
 elif [ ! "$OME_OS" = "$FREEBSD" ]; then
-    export NODEJS_VERINFO=node-v${NODEJS_VERSION}-linux-x64
-    NODEJS_VERSION_ZIP=${NODEJS_VERINFO}.tar.xz
-    export PATH="$OME_REPO/$NODEJS_VERINFO/bin":"$PATH"
+  export NODEJS_VERINFO=node-v${NODEJS_VERSION}-linux-x64
+  NODEJS_VERSION_ZIP=${NODEJS_VERINFO}.tar.xz
+  export PATH="$OME_REPO/$NODEJS_VERINFO/bin":"$PATH"
 fi
 export NODEJS_BIN=$OME_REPO/$NODEJS_VERINFO/bin
 nodejs_setenv() {
-    if [ -d "$NODEJS_BIN" ]; then
-        export PATH="$NODEJS_BIN":"$PATH"
-    fi
+  if [ -d "$NODEJS_BIN" ]; then
+    export PATH="$NODEJS_BIN":"$PATH"
+  fi
 }
 
 # https://nodejs.org/dist/v12.14.1/node-v12.14.1-darwin-x64.tar.gz
@@ -193,13 +193,13 @@ nodejs_setenv() {
 # export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 
 npm_publish_settings() {
-    if [ ! -f $HOME/.npmrc2 ]; then
-        read -p "please input your email with npm:" email
-        read -p "please input your username with npm:" username
-        read -sp "please input your password with npm:" password
-        local auth=`echo "$username:$password" | base64`
-        echo ""
-        echo "_auth=\"$auth\"" >> $HOME/.npmrc
-        echo "email=$email" >> $HOME/.npmrc
-    fi
+  if [ ! -f $HOME/.npmrc2 ]; then
+    read -p "please input your email with npm:" email
+    read -p "please input your username with npm:" username
+    read -sp "please input your password with npm:" password
+    local auth=`echo "$username:$password" | base64`
+    echo ""
+    echo "_auth=\"$auth\"" >> $HOME/.npmrc
+    echo "email=$email" >> $HOME/.npmrc
+  fi
 }

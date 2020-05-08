@@ -1,67 +1,67 @@
 #!/usr/bin/env sh
 
 goto_define() {
-    . $OME_REPO/goto/goto.sh
+  . $OME_REPO/goto/goto.sh
 
-    tip "update goto alias"
-    goto -u ome > /dev/null 2>&1
-    goto -r ome $OME_ROOT > /dev/null 2>&1
+  tip "update goto alias"
+  goto -u ome > /dev/null 2>&1
+  goto -r ome $OME_ROOT > /dev/null 2>&1
 
-    goto -u emacs > /dev/null 2>&1
-    goto -r emacs $OME_EMACS > /dev/null 2>&1
+  goto -u emacs > /dev/null 2>&1
+  goto -r emacs $OME_EMACS > /dev/null 2>&1
 
-    goto -u emacs.d > /dev/null 2>&1
-    goto -r emacs.d $HOME/.emacs.d/ > /dev/null 2>&1
+  goto -u emacs.d > /dev/null 2>&1
+  goto -r emacs.d $HOME/.emacs.d/ > /dev/null 2>&1
 
-    goto -u prefix > /dev/null 2>&1
-    goto -r prefix $OME_PREFIX > /dev/null 2>&1
+  goto -u prefix > /dev/null 2>&1
+  goto -r prefix $OME_PREFIX > /dev/null 2>&1
 
-    goto -u repo > /dev/null 2>&1
-    goto -r repo $OME_REPO > /dev/null 2>&1
+  goto -u repo > /dev/null 2>&1
+  goto -r repo $OME_REPO > /dev/null 2>&1
 
-    goto -u plugin > /dev/null 2>&1
-    goto -r plugin $OME_ROOT/plugins/ > /dev/null 2>&1
-    
+  goto -u plugin > /dev/null 2>&1
+  goto -r plugin $OME_ROOT/plugins/ > /dev/null 2>&1
 
-    goto -u ws > /dev/null 2>&1
-    goto -r ws $OME_WS > /dev/null 2>&1
 
-    goto -u book > /dev/null 2>&1
-    goto -r book $OME_BOOK > /dev/null 2>&1
+  goto -u ws > /dev/null 2>&1
+  goto -r ws $OME_WS > /dev/null 2>&1
 
-    goto -u proj > /dev/null 2>&1
-    goto -r proj $OME_PROJ > /dev/null 2>&1
+  goto -u book > /dev/null 2>&1
+  goto -r book $OME_BOOK > /dev/null 2>&1
 
-    goto -u hello > /dev/null 2>&1
-    goto -r hello $OME_WS/hello > /dev/null 2>&1
+  goto -u proj > /dev/null 2>&1
+  goto -r proj $OME_PROJ > /dev/null 2>&1
 
-    goto -u pkgs > /dev/null 2>&1
-    goto -r pkgs $HOME/.emacs.d/pkgs/ > /dev/null 2>&1
+  goto -u hello > /dev/null 2>&1
+  goto -r hello $OME_WS/hello > /dev/null 2>&1
 
-    goto -l
+  goto -u pkgs > /dev/null 2>&1
+  goto -r pkgs $HOME/.emacs.d/pkgs/ > /dev/null 2>&1
+
+  goto -l
 }
 
 goto_install() {
-    github_upgrade iridakos/goto $OME_REPO/goto
-    cd $OME_REPO/goto
-    chmod +x ./*.sh
+  github_upgrade iridakos/goto $OME_REPO/goto
+  cd $OME_REPO/goto
+  chmod +x ./*.sh
 
-    goto_define
+  goto_define
 }
 
 goto_uninstall() {
-    echo_error "'goto_uninstall' not implemented"
+  echo_error "'goto_uninstall' not implemented"
 }
 
 goto_exist_p() {
-    echo_error "'goto_exist_p' not implemented"
+  echo_error "'goto_exist_p' not implemented"
 }
 
 goto_info() {
-    echo_error ""
+  echo_error ""
 }
 
 if [ -d $OME_REPO/goto ]; then
-    . $OME_REPO/goto/goto.sh
-    # goto_define
+  . $OME_REPO/goto/goto.sh
+  # goto_define
 fi

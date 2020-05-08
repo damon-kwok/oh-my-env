@@ -1,79 +1,79 @@
 #!/usr/bin/env sh
 
 doctools_install_tools() {
-    get_os_type
-    case $OME_OS in
-        # Linux
-        # $OS_DEBIAN) ;;
-        # $OS_UBUNTU) ;;
-        $OS_DEBIAN|$OS_UBUNTU)
-                sudo apt install texinfo doxygen fop asciidoc xmlto docbook2x imagemagick ghostscript
+  get_os_type
+  case $OME_OS in
+    # Linux
+    # $OS_DEBIAN) ;;
+    # $OS_UBUNTU) ;;
+    $OS_DEBIAN|$OS_UBUNTU)
+      sudo apt install texinfo doxygen fop asciidoc xmlto docbook2x imagemagick ghostscript
 
-            ;;
-        # $OS_REDHAT) ;;
-        # $OS_FEDORA) ;;
-        $OS_REDHAT|$OS_FEDORA)
-            sudo yum install texinfo doxygen fop asciidoc xmlto docbook2x ImageMagick ghostscript
-            ;;
-        $OS_ARCH)
-            sudo pacman -S texinfo doxygen fop asciidoc xmlto docbook2x imagemagick ghostscript
-            ;;
-        $OS_GENTOO) ;;
-        $OS_SUSE)
-            sudo zypper install texinfo doxygen fop asciidoc xmlto docbook2X imagemagick ghostscript
-            ;;
-        $OS_SLACKWARE) ;;
-        $OS_NIXOS) ;;
-        $OS_VOID) ;;
-        $OS_ALPINE) ;;
-        $OS_MAGEIA) ;;
-        $OS_SLITAZ) ;;
-        $OS_GUIXSD) ;;
-        # Unix
-        $OS_MACOS)
-            brew install swig cppunit
-            ;;
-        $OS_AIX) ;;
-        $OS_SOLARIS) ;;
-        $OS_FREEBSD)
-            sudo pkg install texinfo doxygen fop asciidoc xmlto docbook2X imagemagick ghostscript
-            ;;
-        $OS_OPENBSD) ;;
-        $OS_NETBSD) ;;
-        $OS_DFBSD) ;;
-        # Windows
-        $OS_CYGWIN)
-            apt install texinfo doxygen fop asciidoc xmlto docbook2X imagemagick ghostscript
-            ;;
-        $OS_MSYS2)
-            pacman -S texinfo doxygen fop asciidoc xmlto docbook2X mingw-w64-x86_64-imagemagick mingw-w64-x86_64-ghostscript
-            ;;
-        # Other
-        $OS_UNKNOW) ;;
-    esac
+      ;;
+    # $OS_REDHAT) ;;
+    # $OS_FEDORA) ;;
+    $OS_REDHAT|$OS_FEDORA)
+      sudo yum install texinfo doxygen fop asciidoc xmlto docbook2x ImageMagick ghostscript
+      ;;
+    $OS_ARCH)
+      sudo pacman -S texinfo doxygen fop asciidoc xmlto docbook2x imagemagick ghostscript
+      ;;
+    $OS_GENTOO) ;;
+    $OS_SUSE)
+      sudo zypper install texinfo doxygen fop asciidoc xmlto docbook2X imagemagick ghostscript
+      ;;
+    $OS_SLACKWARE) ;;
+    $OS_NIXOS) ;;
+    $OS_VOID) ;;
+    $OS_ALPINE) ;;
+    $OS_MAGEIA) ;;
+    $OS_SLITAZ) ;;
+    $OS_GUIXSD) ;;
+    # Unix
+    $OS_MACOS)
+      brew install swig cppunit
+      ;;
+    $OS_AIX) ;;
+    $OS_SOLARIS) ;;
+    $OS_FREEBSD)
+      sudo pkg install texinfo doxygen fop asciidoc xmlto docbook2X imagemagick ghostscript
+      ;;
+    $OS_OPENBSD) ;;
+    $OS_NETBSD) ;;
+    $OS_DFBSD) ;;
+    # Windows
+    $OS_CYGWIN)
+      apt install texinfo doxygen fop asciidoc xmlto docbook2X imagemagick ghostscript
+      ;;
+    $OS_MSYS2)
+      pacman -S texinfo doxygen fop asciidoc xmlto docbook2X mingw-w64-x86_64-imagemagick mingw-w64-x86_64-ghostscript
+      ;;
+    # Other
+    $OS_UNKNOW) ;;
+  esac
 }
 
 doctools_install() {
-    # gcc clang make m4 automake libtool pkg-config"
+  # gcc clang make m4 automake libtool pkg-config"
 
-    # libdn2 libuv libason-devel
-    #
-    # libgmime glibc
-    # libiconv
-    # sed awk grep tar zip unzip 7zip flex gawke bison bc mt
-    # guile rush tramp libc scm screen
+  # libdn2 libuv libason-devel
+  #
+  # libgmime glibc
+  # libiconv
+  # sed awk grep tar zip unzip 7zip flex gawke bison bc mt
+  # guile rush tramp libc scm screen
 
-    doctools_install_tools
+  doctools_install_tools
 }
 
 doctools_uninstall() {
-    echo_error "'doctools_uninstall' not implemented"
+  echo_error "'doctools_uninstall' not implemented"
 }
 
 doctools_exist_p() {
-    echo_error "'doctools_exist_p' not implemented"
+  echo_error "'doctools_exist_p' not implemented"
 }
 
 doctools_info() {
-    echo_error ""
+  echo_error ""
 }

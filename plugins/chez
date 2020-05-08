@@ -1,101 +1,101 @@
 #!/usr/bin/env sh
 
 chez_deps() {
-    get_os_type
-    case $OME_OS in
-        # Linux
-        # $OS_DEBIAN) ;;
-        # $OS_UBUNTU) ;;
-        $OS_DEBIAN|$OS_UBUNTU) sudo apt install guile-dev;;
-        # $OS_REDHAT) ;;
-        # $OS_FEDORA) ;;
-        $OS_REDHAT|$OS_FEDORA) sudo dnf install guile-devel;;
-        $OS_ARCH) trizen -S guile-devel;;
-        $OS_GENTOO) ;;
-        $OS_SUSE) sudo zypper install guile-devel;;
-        $OS_SLACKWARE) ;;
-        $OS_NIXOS) ;;
-        $OS_VOID) ;;
-        $OS_ALPINE) ;;
-        $OS_MAGEIA) ;;
-        $OS_SLITAZ) ;;
-        $OS_GUIXSD) ;;
-        # Unix
-        $OS_MACOS) ;;
-        $OS_AIX) ;;
-        $OS_SOLARIS) ;;
-        $OS_FREEBSD) ;;
-        $OS_OPENBSD) ;;
-        $OS_NETBSD) ;;
-        $OS_DFBSD) ;;
-        # Windows
-        $OS_CYGWIN) apt install guile;;
-        $OS_MSYS2) pacman -S guile libguile-devel;;
-        # Other
-        $OS_UNKNOW) ;;
-    esac
+  get_os_type
+  case $OME_OS in
+    # Linux
+    # $OS_DEBIAN) ;;
+    # $OS_UBUNTU) ;;
+    $OS_DEBIAN|$OS_UBUNTU) sudo apt install guile-dev;;
+    # $OS_REDHAT) ;;
+    # $OS_FEDORA) ;;
+    $OS_REDHAT|$OS_FEDORA) sudo dnf install guile-devel;;
+    $OS_ARCH) trizen -S guile-devel;;
+    $OS_GENTOO) ;;
+    $OS_SUSE) sudo zypper install guile-devel;;
+    $OS_SLACKWARE) ;;
+    $OS_NIXOS) ;;
+    $OS_VOID) ;;
+    $OS_ALPINE) ;;
+    $OS_MAGEIA) ;;
+    $OS_SLITAZ) ;;
+    $OS_GUIXSD) ;;
+    # Unix
+    $OS_MACOS) ;;
+    $OS_AIX) ;;
+    $OS_SOLARIS) ;;
+    $OS_FREEBSD) ;;
+    $OS_OPENBSD) ;;
+    $OS_NETBSD) ;;
+    $OS_DFBSD) ;;
+    # Windows
+    $OS_CYGWIN) apt install guile;;
+    $OS_MSYS2) pacman -S guile libguile-devel;;
+    # Other
+    $OS_UNKNOW) ;;
+  esac
 
 }
 chez_install() {
-    github_upgrade cisco/ChezScheme $OME_REPO/ChezScheme
-    cd $OME_REPO/ChezScheme
+  github_upgrade cisco/ChezScheme $OME_REPO/ChezScheme
+  cd $OME_REPO/ChezScheme
 	#--installprefix=$OME_PREFIX
-    ./configure --help
+  ./configure --help
 
-    if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
-	    rm -rf ./Makefile
-	    rm -rf ./a6nt
-    fi
+  if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
+	  rm -rf ./Makefile
+	  rm -rf ./a6nt
+  fi
 
-    ./configure --installprefix=$OME_PREFIX
-    #--temproot=$HOME/chez
-    if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
-	    cd a6nt/c
-        ./make.bat
-        cd ..
-    fi
-    make
-    # make install
-    chez_setenv
+  ./configure --installprefix=$OME_PREFIX
+  #--temproot=$HOME/chez
+  if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
+	  cd a6nt/c
+    ./make.bat
+    cd ..
+  fi
+  make
+  # make install
+  chez_setenv
 
-    tip "isntall package manager:akku"
-    github_upgrade weinholt/akku $OME_REPO/akku
-    cd $OME_REPO/akku
-    chmod +x bootstrap
-    ./bootstrap
-    ./configure --prefix=$OME_PREFIX
-    make install
+  tip "isntall package manager:akku"
+  github_upgrade weinholt/akku $OME_REPO/akku
+  cd $OME_REPO/akku
+  chmod +x bootstrap
+  ./bootstrap
+  ./configure --prefix=$OME_PREFIX
+  make install
 
-    # tip "install Raven:"
-    # github_upgrade guenchi/Raven $OME_REPO/Raven
-    # chmod +x $OME_REPO/Raven/raven.sc
-    # cp -f $OME_REPO/Raven/raven.sc $OME_REPO/Raven/raven
-    # chmod +x $OME_REPO/Raven/raven
-    # # ln -s $OME_REPO/Raven/raven.sc $OME_PREFIX/bin/raven
-    # chez_setenv
+  # tip "install Raven:"
+  # github_upgrade guenchi/Raven $OME_REPO/Raven
+  # chmod +x $OME_REPO/Raven/raven.sc
+  # cp -f $OME_REPO/Raven/raven.sc $OME_REPO/Raven/raven
+  # chmod +x $OME_REPO/Raven/raven
+  # # ln -s $OME_REPO/Raven/raven.sc $OME_PREFIX/bin/raven
+  # chez_setenv
 }
 
 chez_uninstall() {
-    echo_error "'chez_uninstall' not implemented"
+  echo_error "'chez_uninstall' not implemented"
 }
 
 chez_exist_p() {
-    echo_error "'chez_exist_p' not implemented"
+  echo_error "'chez_exist_p' not implemented"
 }
 
 chez_info() {
-    if [ "`command -v scheme`" != "" ]; then
-        ome_show "Scheme" "ChezScheme `ome_fetch_version scheme`"
-    fi
+  if [ "`command -v scheme`" != "" ]; then
+    ome_show "Scheme" "ChezScheme `ome_fetch_version scheme`"
+  fi
 }
 
 chez_setenv() {
-    if [ -d "$OME_REPO/ChezScheme/a6nt/bin/a6nt" ]; then
-        export PATH=$OME_REPO/ChezScheme/a6nt/bin/a6nt:$PATH
-    fi
+  if [ -d "$OME_REPO/ChezScheme/a6nt/bin/a6nt" ]; then
+    export PATH=$OME_REPO/ChezScheme/a6nt/bin/a6nt:$PATH
+  fi
 
-    if [ -d "$OME_REPO/Raven" ]; then
-        export PATH=$OME_REPO/Raven:$PATH
-    fi
+  if [ -d "$OME_REPO/Raven" ]; then
+    export PATH=$OME_REPO/Raven:$PATH
+  fi
 }
 chez_setenv

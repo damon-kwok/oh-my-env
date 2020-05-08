@@ -1,65 +1,65 @@
 #!/usr/bin/env sh
 
 texlive_install() {
-    # tip "install deps"
-    # sudo apt install imagemagick ghostscript
-    
-    # install by iso
-    # wget https://mirrors.tuna.tsinghua.edu.cn/CTAN/systems/texlive/Images/texlive.iso
-    # sudo apt install perl-tk
-    
-    # install by network
-    if [ ! -d $HOME/.texlive/2018/ ]; then
-        cd $HOME
-        wget https://mirrors.tuna.tsinghua.edu.cn/CTAN/systems/texlive/tlnet/install-tl-unx.tar.gz
-        tar -zxvf install-tl-unx.tar.gz
-        cd ./install-tl-2018*
-        export TEXLIVE_INSTALL_PREFIX=$HOME/.texlive
-        ./install-tl -gui=perltk -location https://mirrors.tuna.tsinghua.edu.cn/CTAN/systems/texlive/tlnet/
-    fi
+  # tip "install deps"
+  # sudo apt install imagemagick ghostscript
 
-    tip "set texlive env"
-    #{
-    export TEXLIVE_BIN=$HOME/.texlive/2018/bin/x86_64-linux
-    export TEXLIVE_MAN=$HOME/.texlive/2018/texmf-dist/doc/man
-    export TEXLIVE_INFO=$HOME/.texlive/2018/texmf-dist/doc/info
-    export PATH=$TEXLIVE_BIN:$PATH
-    export MANPATH=$TEXLIVE_MAN:$MANPATH
-    export INFOPATH=$TEXLIVE_INFO:$INFOPATH
-    #}
+  # install by iso
+  # wget https://mirrors.tuna.tsinghua.edu.cn/CTAN/systems/texlive/Images/texlive.iso
+  # sudo apt install perl-tk
 
-    tip "install tlmgr"
-    local pkg=update-tlmgr-latest.sh
-    cd $HOME/Downloads/
-    # if [ ! -f "$HOME/Downloads/$pkg" ]; then
-        wget mirror.ctan.org/systems/texlive/tlnet/update-tlmgr-latest.sh
-    # fi
-    
-    chmod +x $HOME/Documents/$pkg
-    ./$pkg
+  # install by network
+  if [ ! -d $HOME/.texlive/2018/ ]; then
+    cd $HOME
+    wget https://mirrors.tuna.tsinghua.edu.cn/CTAN/systems/texlive/tlnet/install-tl-unx.tar.gz
+    tar -zxvf install-tl-unx.tar.gz
+    cd ./install-tl-2018*
+    export TEXLIVE_INSTALL_PREFIX=$HOME/.texlive
+    ./install-tl -gui=perltk -location https://mirrors.tuna.tsinghua.edu.cn/CTAN/systems/texlive/tlnet/
+  fi
 
-    tip "upgrade"
-    tlmgr update --all
+  tip "set texlive env"
+  #{
+  export TEXLIVE_BIN=$HOME/.texlive/2018/bin/x86_64-linux
+  export TEXLIVE_MAN=$HOME/.texlive/2018/texmf-dist/doc/man
+  export TEXLIVE_INFO=$HOME/.texlive/2018/texmf-dist/doc/info
+  export PATH=$TEXLIVE_BIN:$PATH
+  export MANPATH=$TEXLIVE_MAN:$MANPATH
+  export INFOPATH=$TEXLIVE_INFO:$INFOPATH
+  #}
+
+  tip "install tlmgr"
+  local pkg=update-tlmgr-latest.sh
+  cd $HOME/Downloads/
+  # if [ ! -f "$HOME/Downloads/$pkg" ]; then
+  wget mirror.ctan.org/systems/texlive/tlnet/update-tlmgr-latest.sh
+  # fi
+
+  chmod +x $HOME/Documents/$pkg
+  ./$pkg
+
+  tip "upgrade"
+  tlmgr update --all
 }
 
 texlive_uninstall() {
-    echo_error "'texlive_uninstall' not implemented"
+  echo_error "'texlive_uninstall' not implemented"
 }
 
 texlive_exist_p() {
-    echo_error "'texlive_exist_p' not implemented"
+  echo_error "'texlive_exist_p' not implemented"
 }
 
 texlive_info() {
-    echo_error ""
+  echo_error ""
 }
 
 # texlive
 if [ -d $HOME/.texlive ]; then
-    export TEXLIVE_BIN=$HOME/.texlive/2018/bin/x86_64-linux
-    export TEXLIVE_MAN=$HOME/.texlive/2018/texmf-dist/doc/man
-    export TEXLIVE_INFO=$HOME/.texlive/2018/texmf-dist/doc/info
-    export PATH=$TEXLIVE_BIN:$PATH
-    export MANPATH=$TEXLIVE_MAN:$MANPATH
-    export INFOPATH=$TEXLIVE_INFO:$INFOPATH
+  export TEXLIVE_BIN=$HOME/.texlive/2018/bin/x86_64-linux
+  export TEXLIVE_MAN=$HOME/.texlive/2018/texmf-dist/doc/man
+  export TEXLIVE_INFO=$HOME/.texlive/2018/texmf-dist/doc/info
+  export PATH=$TEXLIVE_BIN:$PATH
+  export MANPATH=$TEXLIVE_MAN:$MANPATH
+  export INFOPATH=$TEXLIVE_INFO:$INFOPATH
 fi

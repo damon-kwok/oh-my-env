@@ -1,19 +1,19 @@
 #!/usr/bin/env sh
 
 neofetch_install() {
-    github_upgrade dylanaraps/neofetch $OME_REPO/neofetch
-    cd $OME_REPO/neofetch
-    make PREFIX=$OME_PREFOX install
+  github_upgrade dylanaraps/neofetch $OME_REPO/neofetch
+  cd $OME_REPO/neofetch
+  make PREFIX=$OME_PREFOX install
 }
 
 neofetch_uninstall() {
-    echo_error "neofetch_uninstall not implemented"
+  echo_error "neofetch_uninstall not implemented"
 }
 
 neofetch_exist_p() {
-    echo_error "neofetch_uninstall not implemented"
+  echo_error "neofetch_uninstall not implemented"
 }
 
 neofetch_info() {
-    echo_error ""
+  echo_error ""
 }

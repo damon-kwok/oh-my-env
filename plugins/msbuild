@@ -1,20 +1,20 @@
 #!/usr/bin/env sh
 
 msbuild_install() {
-    github_upgrade Microsoft/msbuild $OME_REPO/msbuild
-    cd $OME_REPO/msbuild
-    chmod +x ./build.sh
-    ./build.sh
+  github_upgrade Microsoft/msbuild $OME_REPO/msbuild
+  cd $OME_REPO/msbuild
+  chmod +x ./build.sh
+  ./build.sh
 }
 
 msbuild_uninstall() {
-    echo_error "'msbuild_uninstall' not implemented"
+  echo_error "'msbuild_uninstall' not implemented"
 }
 
 msbuild_exist_p() {
-    echo_error "'msbuild_exist_p' not implemented"
+  echo_error "'msbuild_exist_p' not implemented"
 }
 
 msbuild_info() {
-    echo_error ""
+  echo_error ""
 }

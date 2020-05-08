@@ -1,32 +1,32 @@
 #!/usr/bin/env sh
 
 janet_install() {
-    github_upgrade janet-lang/janet $OME_REPO/janet
-    cd $OME_REPO/janet
-    make clean
-    make
-    # make test
-    # make repl
-    janet_setenv
+  github_upgrade janet-lang/janet $OME_REPO/janet
+  cd $OME_REPO/janet
+  make clean
+  make
+  # make test
+  # make repl
+  janet_setenv
 }
 
 janet_uninstall() {
-    echo_error "'janet_uninstall' not implemented"
+  echo_error "'janet_uninstall' not implemented"
 }
 
 janet_exist_p() {
-    echo_error "'janet_exist_p' not implemented"
+  echo_error "'janet_exist_p' not implemented"
 }
 
 janet_info() {
-    if [ "`command -v janet`" != "" ]; then
-        ome_show "Janet" "`janet -v`"
-    fi
+  if [ "`command -v janet`" != "" ]; then
+    ome_show "Janet" "`janet -v`"
+  fi
 }
 
 janet_setenv() {
-    if [ -e "$OME_REPO/janet/build/janet" ]; then
-        export PATH=$OME_REPO/janet/build:$PATH
-    fi
+  if [ -e "$OME_REPO/janet/build/janet" ]; then
+    export PATH=$OME_REPO/janet/build:$PATH
+  fi
 }
 janet_setenv

@@ -1,72 +1,72 @@
 #!/usr/bin/env sh
 
 sogou_arch_install() {
-    trizen -S qtwebkit-bin fcitx-im fcitx-configtool fcitx-sogoupinyin
+  trizen -S qtwebkit-bin fcitx-im fcitx-configtool fcitx-sogoupinyin
 
-    if [ ! -e $HOME/.xprofile ]; then
-        echo "export GTK_IM_MODULE=fcitx" >> $HOME/.xprofile
-        echo "export QT_IM_MODULE=fcitx" >> $HOME/.xprofile
-        echo "export XMODIFIERS=\"@im=fcitx\"" >> $HOME/.xprofile
-        echo "fcitx -d -r --enable sogou-qimpanel" >> $HOME/.xprofile
-    fi
+  if [ ! -e $HOME/.xprofile ]; then
+    echo "export GTK_IM_MODULE=fcitx" >> $HOME/.xprofile
+    echo "export QT_IM_MODULE=fcitx" >> $HOME/.xprofile
+    echo "export XMODIFIERS=\"@im=fcitx\"" >> $HOME/.xprofile
+    echo "fcitx -d -r --enable sogou-qimpanel" >> $HOME/.xprofile
+  fi
 }
 
 sogou_ubuntu_install () {
-    if [ ! -f $HOME/Downloads/sogoupinyin_2.2.0.0108_amd64.deb ]; then
-        #curl -O http://cdn2.ime.sogou.com/dl/index/1524572264/sogoupinyin_2.2.0.0108_amd64.deb?st=82X4cdqzv85LoI-o_GHzrQ&e=1536661455&fn=sogoupinyin_2.2.0.0108_amd64.deb
-        curl -O http://cdn2.ime.sogou.com/dl/index/1524572264/sogoupinyin_2.2.0.0108_amd64.deb?st=6EKJ-QquFZM0_P-0-vjv4g&e=1542685529&fn=sogoupinyin_2.2.0.0108_amd64.deb
-        #wget http://cdn2.ime.sogou.com/dl/index/1524572264/sogoupinyin_2.2.0.0108_amd64.deb?st=82X4cdqzv85LoI-o_GHzrQ&e=1536661455&fn=sogoupinyin_2.2.0.0108_amd64.deb
-    fi
-    cd $HOME/Downloads/
-    sudo dpkg -i ./sogoupinyin_2.2.0.0108_amd64.deb
-    sudo apt install -f -y
-    sudo dpkg -i ./sogoupinyin_2.2.0.0108_amd64.deb
+  if [ ! -f $HOME/Downloads/sogoupinyin_2.2.0.0108_amd64.deb ]; then
+    #curl -O http://cdn2.ime.sogou.com/dl/index/1524572264/sogoupinyin_2.2.0.0108_amd64.deb?st=82X4cdqzv85LoI-o_GHzrQ&e=1536661455&fn=sogoupinyin_2.2.0.0108_amd64.deb
+    curl -O http://cdn2.ime.sogou.com/dl/index/1524572264/sogoupinyin_2.2.0.0108_amd64.deb?st=6EKJ-QquFZM0_P-0-vjv4g&e=1542685529&fn=sogoupinyin_2.2.0.0108_amd64.deb
+    #wget http://cdn2.ime.sogou.com/dl/index/1524572264/sogoupinyin_2.2.0.0108_amd64.deb?st=82X4cdqzv85LoI-o_GHzrQ&e=1536661455&fn=sogoupinyin_2.2.0.0108_amd64.deb
+  fi
+  cd $HOME/Downloads/
+  sudo dpkg -i ./sogoupinyin_2.2.0.0108_amd64.deb
+  sudo apt install -f -y
+  sudo dpkg -i ./sogoupinyin_2.2.0.0108_amd64.deb
 }
 
 sogou_install() {
-    get_os_type
-    case $OME_OS in
-        # Linux
-        # $OS_DEBIAN) ;;
-        # $OS_UBUNTU) ;;
-        $OS_DEBIAN|$OS_UBUNTU) sogou_ubuntu_install;;
-        # $OS_REDHAT) ;;
-        # $OS_FEDORA) ;;
-        $OS_REDHAT|$OS_FEDORA) ;;
-        $OS_ARCH) sogou_arch_install;;
-        $OS_GENTOO) ;;
-        $OS_SUSE) ;;
-        $OS_SLACKWARE) ;;
-        $OS_NIXOS) ;;
-        $OS_VOID) ;;
-        $OS_ALPINE) ;;
-        $OS_MAGEIA) ;;
-        $OS_SLITAZ) ;;
-        $OS_GUIXSD) ;;
-        # Unix
-        $OS_MACOS) ;;
-        $OS_AIX) ;;
-        $OS_SOLARIS) ;;
-        $OS_FREEBSD) ;;
-        $OS_OPENBSD) ;;
-        $OS_NETBSD) ;;
-        $OS_DFBSD) ;;
-        # Windows
-        $OS_CYGWIN) ;;
-        $OS_MSYS2) ;;
-        # Other
-        $OS_UNKNOW) ;;
-    esac
+  get_os_type
+  case $OME_OS in
+    # Linux
+    # $OS_DEBIAN) ;;
+    # $OS_UBUNTU) ;;
+    $OS_DEBIAN|$OS_UBUNTU) sogou_ubuntu_install;;
+    # $OS_REDHAT) ;;
+    # $OS_FEDORA) ;;
+    $OS_REDHAT|$OS_FEDORA) ;;
+    $OS_ARCH) sogou_arch_install;;
+    $OS_GENTOO) ;;
+    $OS_SUSE) ;;
+    $OS_SLACKWARE) ;;
+    $OS_NIXOS) ;;
+    $OS_VOID) ;;
+    $OS_ALPINE) ;;
+    $OS_MAGEIA) ;;
+    $OS_SLITAZ) ;;
+    $OS_GUIXSD) ;;
+    # Unix
+    $OS_MACOS) ;;
+    $OS_AIX) ;;
+    $OS_SOLARIS) ;;
+    $OS_FREEBSD) ;;
+    $OS_OPENBSD) ;;
+    $OS_NETBSD) ;;
+    $OS_DFBSD) ;;
+    # Windows
+    $OS_CYGWIN) ;;
+    $OS_MSYS2) ;;
+    # Other
+    $OS_UNKNOW) ;;
+  esac
 }
 
 sogou_uninstall() {
-    echo_error "'sogou_uninstall' not implemented"
+  echo_error "'sogou_uninstall' not implemented"
 }
 
 sogou_exist_p() {
-    echo_error "'sogou_exist_p' not implemented"
+  echo_error "'sogou_exist_p' not implemented"
 }
 
 sogou_info() {
-    echo_error ""
+  echo_error ""
 }

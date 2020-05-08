@@ -1,175 +1,175 @@
 #!/usr/bin/env sh
 
 golang_getsrc_zip() {
-    local zipkg="go${GOLANG_VERSION}.src.tar.gz"
-    # echo "zipkg:$zipkg"
-    mkdir -p $HOME/Downloads
-    cd $HOME/Downloads/
-    if [ ! -f $HOME/Downloads/$zipkg ]; then
-        wget https://dl.google.com/go/$zipkg
-    fi
-    if [ ! -d $OME_REPO/go ]; then
-        tar xvzf $zipkg -C $OME_REPO/
-    fi
+  local zipkg="go${GOLANG_VERSION}.src.tar.gz"
+  # echo "zipkg:$zipkg"
+  mkdir -p $HOME/Downloads
+  cd $HOME/Downloads/
+  if [ ! -f $HOME/Downloads/$zipkg ]; then
+    wget https://dl.google.com/go/$zipkg
+  fi
+  if [ ! -d $OME_REPO/go ]; then
+    tar xvzf $zipkg -C $OME_REPO/
+  fi
 }
 
 golang_getsrc_git() {
-    tip "compile golang-git:master"
-    github_upgrade golang/go $OME_REPO/go
-    cd $OME_REPO/go/src
+  tip "compile golang-git:master"
+  github_upgrade golang/go $OME_REPO/go
+  cd $OME_REPO/go/src
 }
 
 golang_install_download() {
-    if [ ! -f $OME_REPO/go/bin/go ] || [ ! "`go version | cut -d ' ' -f 3`" = "go${GOLANG_VERSION}" ]; then
-        local zipkg=go${GOLANG_VERSION}.windows-amd64.zip
-        mkdir -p ~/Downloads
-        cd ~/Downloads/
-        if [ ! -f $HOME/Downloads/$zipkg ]; then
-            rm -rf $OME_REPO/go/
-            wget https://dl.google.com/go/$zipkg
-        fi
-        unzip ./$zipkg -d $OME_REPO
+  if [ ! -f $OME_REPO/go/bin/go ] || [ ! "`go version | cut -d ' ' -f 3`" = "go${GOLANG_VERSION}" ]; then
+    local zipkg=go${GOLANG_VERSION}.windows-amd64.zip
+    mkdir -p ~/Downloads
+    cd ~/Downloads/
+    if [ ! -f $HOME/Downloads/$zipkg ]; then
+      rm -rf $OME_REPO/go/
+      wget https://dl.google.com/go/$zipkg
     fi
-    cd $OME_REPO/go/bin/
-    chmod +x ./*
+    unzip ./$zipkg -d $OME_REPO
+  fi
+  cd $OME_REPO/go/bin/
+  chmod +x ./*
 
-    cd $OME_REPO/go/pkg/tool/windows_amd64/
-    chmod +x ./*
-    cd ~
+  cd $OME_REPO/go/pkg/tool/windows_amd64/
+  chmod +x ./*
+  cd ~
 
-    golang_setenv
+  golang_setenv
 }
 
 golang_install_build() {
-    export CGO_ENABLED=0
+  export CGO_ENABLED=0
+  unset GOROOT
+  unset GOBIN
+  mkdir -p $OME_REPO/go_bootstrap
+
+  # bootstrap get src
+  # github_upgrade golang/go $OME_REPO/go_bootstrap/go 1 "release-branch.go1.4"
+  if [ ! -d $OME_REPO/go_bootstrap/go/ ]; then
+    if [ ! -f ~/Downloads/go1.4.3.src.tar.gz ]; then
+      cd ~/Downloads/
+      wget https://dl.google.com/go/go1.4.3.src.tar.gz
+    fi
+    # tar -zxvf ~/workspace/res/go1.4.3.src.tar.gz  -C $OME_REPO/go_bootstrap/
+    tar -zxvf ~/Downloads/go1.4.3.src.tar.gz  -C $OME_REPO/go_bootstrap/
+  fi
+
+  # bootstrap build
+  if [ ! -f $OME_REPO/go_bootstrap/go/bin/go ]; then
+    cd $OME_REPO/go_bootstrap/go/src
+    if [ "$OME_OS" = "$OS_MSYS2" ] || [ "$OME_OS" = "$OS_CYGWIN" ]; then
+      chmod +x ./make.bat
+      ./make.bat
+    else
+      chmod +x ./*.bash
+      # ./all.bash
+      ./make.bash
+    fi
+  fi
+
+  # golang build
+  if [ ! -d $OME_REPO/go/ ] || [ ! "`go version | cut -d ' ' -f 3`" = "go${GOLANG_VERSION}" ]; then
+    tip "set GOROOT_BOOTSTRAP"
+    export GOROOT_BOOTSTRAP=$OME_REPO/go_bootstrap/go
     unset GOROOT
-    unset GOBIN
-    mkdir -p $OME_REPO/go_bootstrap
+    unset GOROOT_FINAL
 
-    # bootstrap get src
-    # github_upgrade golang/go $OME_REPO/go_bootstrap/go 1 "release-branch.go1.4"
-    if [ ! -d $OME_REPO/go_bootstrap/go/ ]; then
-        if [ ! -f ~/Downloads/go1.4.3.src.tar.gz ]; then
-            cd ~/Downloads/
-            wget https://dl.google.com/go/go1.4.3.src.tar.gz
-        fi
-        # tar -zxvf ~/workspace/res/go1.4.3.src.tar.gz  -C $OME_REPO/go_bootstrap/
-        tar -zxvf ~/Downloads/go1.4.3.src.tar.gz  -C $OME_REPO/go_bootstrap/
+    tip "compile golang-$GOLANG_VERSION"
+    # golang_getsrc_git
+    golang_getsrc_zip
+    cd $OME_REPO/go/src/
+
+    if [ "$OME_OS" = "$OS_MSYS2" ] || [ "$OME_OS" = "$OS_CYGWIN" ]; then
+      chmod +x ./make.bat
+      ./make.bat
+    else
+      chmod +x ./*.bash
+      # ./all.bash
+      ./make.bash
     fi
 
-    # bootstrap build
-    if [ ! -f $OME_REPO/go_bootstrap/go/bin/go ]; then
-        cd $OME_REPO/go_bootstrap/go/src
-        if [ "$OME_OS" = "$OS_MSYS2" ] || [ "$OME_OS" = "$OS_CYGWIN" ]; then
-            chmod +x ./make.bat
-            ./make.bat
-        else
-            chmod +x ./*.bash
-            # ./all.bash
-            ./make.bash
-        fi
-    fi
-
-    # golang build
-    if [ ! -d $OME_REPO/go/ ] || [ ! "`go version | cut -d ' ' -f 3`" = "go${GOLANG_VERSION}" ]; then
-        tip "set GOROOT_BOOTSTRAP"
-        export GOROOT_BOOTSTRAP=$OME_REPO/go_bootstrap/go
-        unset GOROOT
-        unset GOROOT_FINAL
-
-        tip "compile golang-$GOLANG_VERSION"
-        # golang_getsrc_git
-        golang_getsrc_zip
-        cd $OME_REPO/go/src/
-
-        if [ "$OME_OS" = "$OS_MSYS2" ] || [ "$OME_OS" = "$OS_CYGWIN" ]; then
-            chmod +x ./make.bat
-            ./make.bat
-        else
-            chmod +x ./*.bash
-            # ./all.bash
-            ./make.bash
-        fi
-
-        golang_setenv
-    fi
+    golang_setenv
+  fi
 }
 golang_install() {
-    if [ "$OME_OS" = "$OS_MSYS2" ] || [ "$OME_OS" = "$OS_CYGWIN" ]; then
-        golang_install_download
-    else
-        # golang_getsrc_git
-        golang_getsrc_zip
-        golang_install_build
-    fi
+  if [ "$OME_OS" = "$OS_MSYS2" ] || [ "$OME_OS" = "$OS_CYGWIN" ]; then
+    golang_install_download
+  else
+    # golang_getsrc_git
+    golang_getsrc_zip
+    golang_install_build
+  fi
 
-    tip "install go language server (gopls)"
-    go get -u golang.org/x/tools/gopls@latest
+  tip "install go language server (gopls)"
+  go get -u golang.org/x/tools/gopls@latest
 
-    tip "install gocode"
-    go get -u github.com/mdempsky/gocode
+  tip "install gocode"
+  go get -u github.com/mdempsky/gocode
 
-    tip "install REPL (gomacro)"
-    go get -u github.com/cosmos72/gomacro
+  tip "install REPL (gomacro)"
+  go get -u github.com/cosmos72/gomacro
 
-    # !!! obsolete !!!
-    # {
-    #     tip "install go language server (go-langserver)"
-    #     go get -u github.com/sourcegraph/go-langserver
+  # !!! obsolete !!!
+  # {
+  #     tip "install go language server (go-langserver)"
+  #     go get -u github.com/sourcegraph/go-langserver
 
-    #     tip "install go language server (bingo)"
-    #     github_upgrade saibing/bingo $OME_REPO/bingo
-    #     cd $OME_REPO/bingo/
-    #     GO111MODULE=on go install
+  #     tip "install go language server (bingo)"
+  #     github_upgrade saibing/bingo $OME_REPO/bingo
+  #     cd $OME_REPO/bingo/
+  #     GO111MODULE=on go install
 
-    #     tip "install godef"
-    #     go get -u github.com/rogpeppe/godef
+  #     tip "install godef"
+  #     go get -u github.com/rogpeppe/godef
 
-    #     tip "install dep"
-    #     go get -u github.com/golang/dep/cmd/dep
+  #     tip "install dep"
+  #     go get -u github.com/golang/dep/cmd/dep
 
-    #     tip "install gom"
-    #     go get -u github.com/mattn/gom
+  #     tip "install gom"
+  #     go get -u github.com/mattn/gom
 
-    #     tip "install vgo"
-    #     go get -u github.com/golang/vgo
+  #     tip "install vgo"
+  #     go get -u github.com/golang/vgo
 
-    #     tip "install golang/tool"
-    #     go get -u github.com/golang/tools/cmd/godoc
+  #     tip "install golang/tool"
+  #     go get -u github.com/golang/tools/cmd/godoc
 
-    #     tip "install machinery"
-    #     go get -u github.com/RichardKnop/machinery/v1
-    # }
+  #     tip "install machinery"
+  #     go get -u github.com/RichardKnop/machinery/v1
+  # }
 }
 
 golang_uninstall() {
-    echo_error "'golang_uninstall' not implemented"
+  echo_error "'golang_uninstall' not implemented"
 }
 
 golang_exist_p() {
-    echo_error "'golang_exist_p' not implemented"
+  echo_error "'golang_exist_p' not implemented"
 }
 
 golang_info() {
-    if [ "`command -v go`" != "" ]; then
-        ome_show "Golang" "`go version` | GO111MODULE=$GO111MODULE | CGO_ENABLED=$CGO_ENABLED"
-    fi
+  if [ "`command -v go`" != "" ]; then
+    ome_show "Golang" "`go version` | GO111MODULE=$GO111MODULE | CGO_ENABLED=$CGO_ENABLED"
+  fi
 }
 # Golang
 # export GOROOT_BOOTSTRAP=$OME_REPO/go
 # export GOOS=linux
 # export GOARCH=amd64
 golang_setenv() {
-    if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
-        export CGO_ENABLED=0
-    else
-        export CGO_ENABLED=1
-    fi
-    export GOROOT=$OME_REPO/go
-    export GOPATH=$OME_PREFIX/goprojects
-    export GOBIN=$GOPATH/bin
-    export PATH=$GOROOT/bin:$GOBIN:$PATH
-    export GO111MODULE=on
+  if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
+    export CGO_ENABLED=0
+  else
+    export CGO_ENABLED=1
+  fi
+  export GOROOT=$OME_REPO/go
+  export GOPATH=$OME_PREFIX/goprojects
+  export GOBIN=$GOPATH/bin
+  export PATH=$GOROOT/bin:$GOBIN:$PATH
+  export GO111MODULE=on
 }
 golang_setenv
 # If you live in China and may not be able to download golang.org/x/dependency

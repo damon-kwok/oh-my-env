@@ -1,65 +1,65 @@
 #!/usr/bin/env sh
 
 roswell_install() {
+  if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
+    if [ ! -d $OME_REPO/roswell ]; then
+      local zipkg=Roswell-x86_64.zip
+      mkdir -p ~/Downloads
+      cd ~/Downloads/
+      if [ ! -f $HOME/Downloads/$zipkg ]; then
+        wget "https://ci.appveyor.com/api/projects/snmsts/roswell-en89n/artifacts/Roswell-x86_64.zip?branch=master&job=Environment%3A%20MSYS2_ARCH%3Dx86_64,%20MSYS2_BITS%3D64,%20MSYSTEM%3DMINGW64,%20METHOD%3Dcross" -O Roswell-x86_64.zip
+      fi
+      unzip ./$zipkg -d $OME_REPO
+      cd $OME_REPO/roswell
+      chmod +x ./ros
+      export PATH="$OME_REPO/roswell:$PATH"
+    fi
+  else
+    # sudo apt-get -y install git build-essential automake libcurl4-openssl-dev;
+    github_upgrade roswell/roswell $OME_REPO/roswell
+    cd $OME_REPO/roswell/
+    echo "sh bootstrap"
+    bash bootstrap
+    echo "./configure --prefix=$OME_PREFIX"
+    ./configure --prefix=$OME_PREFIX
+    echo "make install"
+    make install
+  fi
+
+  readp "roswell: use china mirror?"
+  if [ $? -eq 1 ]; then
     if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
-        if [ ! -d $OME_REPO/roswell ]; then
-            local zipkg=Roswell-x86_64.zip
-            mkdir -p ~/Downloads
-            cd ~/Downloads/
-            if [ ! -f $HOME/Downloads/$zipkg ]; then
-                wget "https://ci.appveyor.com/api/projects/snmsts/roswell-en89n/artifacts/Roswell-x86_64.zip?branch=master&job=Environment%3A%20MSYS2_ARCH%3Dx86_64,%20MSYS2_BITS%3D64,%20MSYSTEM%3DMINGW64,%20METHOD%3Dcross" -O Roswell-x86_64.zip
-            fi
-            unzip ./$zipkg -d $OME_REPO
-            cd $OME_REPO/roswell
-            chmod +x ./ros
-            export PATH="$OME_REPO/roswell:$PATH"
-        fi
+      gitee_upgrade_bigrepo damon-kwok/roswell-caches $USERPROFILE/.roswell/archives/ 1
     else
-        # sudo apt-get -y install git build-essential automake libcurl4-openssl-dev;
-        github_upgrade roswell/roswell $OME_REPO/roswell
-        cd $OME_REPO/roswell/
-        echo "sh bootstrap"
-        bash bootstrap
-        echo "./configure --prefix=$OME_PREFIX"
-        ./configure --prefix=$OME_PREFIX
-        echo "make install"
-        make install
+      gitee_upgrade_bigrepo damon-kwok/roswell-caches $HOME/.roswell/archives/ 1
     fi
+  fi
 
-    readp "roswell: use china mirror?"
-    if [ $? -eq 1 ]; then
-        if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
-            gitee_upgrade_bigrepo damon-kwok/roswell-caches $USERPROFILE/.roswell/archives/ 1
-        else
-            gitee_upgrade_bigrepo damon-kwok/roswell-caches $HOME/.roswell/archives/ 1
-        fi
-    fi
+  tip "lisp install"
+  ros install sbcl-bin/$SBCL_VERSION
+  #ros use sbcl/system
+  #ros setup
 
-    tip "lisp install"
-    ros install sbcl-bin/$SBCL_VERSION
-    #ros use sbcl/system
-    #ros setup
-
-    # tip "install clack"
-    # ros install clack
+  # tip "install clack"
+  # ros install clack
 }
 
 roswell_uninstall() {
-    echo_error "'roswell_uninstall' not implemented"
+  echo_error "'roswell_uninstall' not implemented"
 }
 
 roswell_exist_p() {
-    echo_error "'roswell_exist_p' not implemented"
+  echo_error "'roswell_exist_p' not implemented"
 }
 
 roswell_info() {
-    # if [ -d $HOME/.roswell/ ]; then
-    if [ "`command -v ros`" != "" ]; then
-        ome_show "Roswell" "`ome_fetch_version ros` | `ros run -- --version`"
-    fi
-    # fi
+  # if [ -d $HOME/.roswell/ ]; then
+  if [ "`command -v ros`" != "" ]; then
+    ome_show "Roswell" "`ome_fetch_version ros` | `ros run -- --version`"
+  fi
+  # fi
 }
 
 if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
-    export PATH=$OME_REPO/roswell:$PATH
+  export PATH=$OME_REPO/roswell:$PATH
 fi

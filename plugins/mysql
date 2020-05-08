@@ -1,74 +1,74 @@
 #!/usr/bin/env sh
 
 mysql_install() {
-    get_os_type
-    case $OME_OS in
-        # Linux
-        # $OS_DEBIAN) ;;
-        # $OS_UBUNTU) ;;
-        $OS_DEBIAN|$OS_UBUNTU)
-            sudo apt install libssl-dev
-            ;;
-        # $OS_REDHAT) ;;
-        # $OS_FEDORA) ;;
-        $OS_REDHAT|$OS_FEDORA)
-            sudo yum install openssl openssl-devel
-            ;;
-        $OS_ARCH) ;;
-        $OS_GENTOO) ;;
-        $OS_SUSE) ;;
-        $OS_SLACKWARE) ;;
-        $OS_NIXOS) ;;
-        $OS_VOID) ;;
-        $OS_ALPINE) ;;
-        $OS_MAGEIA) ;;
-        $OS_SLITAZ) ;;
-        # Unix
-        $OS_MACOS) ;;
-        $OS_AIX) ;;
-        $OS_SOLARIS) ;;
-        $OS_FREEBSD) ;;
-        $OS_OPENBSD) ;;
-        # Windows
-        $OS_CYGWIN) ;;
-        $OS_MSYS2) ;;
-        # Other
-        $OS_UNKNOW) ;;
-    esac
+  get_os_type
+  case $OME_OS in
+    # Linux
+    # $OS_DEBIAN) ;;
+    # $OS_UBUNTU) ;;
+    $OS_DEBIAN|$OS_UBUNTU)
+      sudo apt install libssl-dev
+      ;;
+    # $OS_REDHAT) ;;
+    # $OS_FEDORA) ;;
+    $OS_REDHAT|$OS_FEDORA)
+      sudo yum install openssl openssl-devel
+      ;;
+    $OS_ARCH) ;;
+    $OS_GENTOO) ;;
+    $OS_SUSE) ;;
+    $OS_SLACKWARE) ;;
+    $OS_NIXOS) ;;
+    $OS_VOID) ;;
+    $OS_ALPINE) ;;
+    $OS_MAGEIA) ;;
+    $OS_SLITAZ) ;;
+    # Unix
+    $OS_MACOS) ;;
+    $OS_AIX) ;;
+    $OS_SOLARIS) ;;
+    $OS_FREEBSD) ;;
+    $OS_OPENBSD) ;;
+    # Windows
+    $OS_CYGWIN) ;;
+    $OS_MSYS2) ;;
+    # Other
+    $OS_UNKNOW) ;;
+  esac
 
-    # https://codeload.github.com/mysql/mysql-server/zip/mysql-8.0.12
-    # http://mirrors.neusoft.edu.cn/mariadb//mariadb-10.3.10/source/mariadb-10.3.10.tar.gz
-    github_upgrade mysql/mysql-server $OME_REPO/mysql-server
+  # https://codeload.github.com/mysql/mysql-server/zip/mysql-8.0.12
+  # http://mirrors.neusoft.edu.cn/mariadb//mariadb-10.3.10/source/mariadb-10.3.10.tar.gz
+  github_upgrade mysql/mysql-server $OME_REPO/mysql-server
 
-    tip "add mysql user"
-    groupadd mysql
-    useradd -r -g mysql -s /bin/false mysql
+  tip "add mysql user"
+  groupadd mysql
+  useradd -r -g mysql -s /bin/false mysql
 
-    tip "create install and data dir"
-    mkdir -p /usr/local/mysql
-    mkdir -p /data/mysql
+  tip "create install and data dir"
+  mkdir -p /usr/local/mysql
+  mkdir -p /data/mysql
 
-    tip "compile"
-    mkdir -p $OME_REPO/mysql-server/build
-    cd $OME_REPO/mysql-server/build/
-    
-    cmake .. -G "$OME_MAKE" \
-          -DCMAKE_INSTALL_PREFIX=/usr/local/mysql \
-          -DMYSQL_DATADIR=/usr/local/mysql/data \
-          -DSYSCONFDIR=/etc \
-          -DMYSQL_TCP_PORT=3306 \
-          -DWITH_BOOST=/usr/local/mysql-8.0.11/boost
-    make  && make install
+  tip "compile"
+  mkdir -p $OME_REPO/mysql-server/build
+  cd $OME_REPO/mysql-server/build/
+
+  cmake .. -G "$OME_MAKE" \
+        -DCMAKE_INSTALL_PREFIX=/usr/local/mysql \
+        -DMYSQL_DATADIR=/usr/local/mysql/data \
+        -DSYSCONFDIR=/etc \
+        -DMYSQL_TCP_PORT=3306 \
+        -DWITH_BOOST=/usr/local/mysql-8.0.11/boost
+  make  && make install
 }
 
 mysql_uninstall() {
-    echo_error "'mysql_uninstall' not implemented"
+  echo_error "'mysql_uninstall' not implemented"
 }
 
 mysql_exist_p() {
-    echo_error "'mysql_exist_p' not implemented"
+  echo_error "'mysql_exist_p' not implemented"
 }
 
 mysql_info() {
-    echo_error ""
+  echo_error ""
 }

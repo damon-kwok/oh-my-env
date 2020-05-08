@@ -1,80 +1,80 @@
 #!/usr/bin/env sh
 
 git_install() {
-    get_os_type
-    case $OME_OS in
-        # Linux
-        # $OS_DEBIAN) ;;
-        # $OS_UBUNTU) ;;
-        $OS_DEBIAN|$OS_UBUNTU)
-            sudo apt install libcurl4-openssl-dev libexpat-dev gettext-dev
-            # texinfo asciidoc xmlto docbook2x
-            ;;
-        # $OS_REDHAT) ;;
-        # $OS_FEDORA) ;;
-        $OS_REDHAT|$OS_FEDORA)
-            sudo yum install openssl-devel curl-devel expat-devel gettext-devel
-            # texinfo asciidoc xmlto docbook2x
-            ;;
-        $OS_ARCH)
-            sudo pacman -S libcurl-devel libexpat-devel gettext-devel
-            # texinfo asciidoc xmlto docbook2x
-            ;;
-        $OS_GENTOO) ;;
-        $OS_SUSE) ;;
-        $OS_SLACKWARE) ;;
-        $OS_NIXOS) ;;
-        $OS_VOID) ;;
-        $OS_ALPINE) ;;
-        $OS_MAGEIA) ;;
-        $OS_SLITAZ) ;;
-        # Unix
-        $OS_MACOS) ;;
-        $OS_AIX) ;;
-        $OS_SOLARIS) ;;
-        $OS_FREEBSD) ;;
-        $OS_OPENBSD) ;;
-        # Windows
-        $OS_CYGWIN)
-            apt install libcurl-devel libexpat-devel gettext-devel
-            # texinfo asciidoc xmlto docbook2X
-            ;;
-        $OS_MSYS2) ;;
-        # Other
-        $OS_UNKNOW) ;;
-    esac
+  get_os_type
+  case $OME_OS in
+    # Linux
+    # $OS_DEBIAN) ;;
+    # $OS_UBUNTU) ;;
+    $OS_DEBIAN|$OS_UBUNTU)
+      sudo apt install libcurl4-openssl-dev libexpat-dev gettext-dev
+      # texinfo asciidoc xmlto docbook2x
+      ;;
+    # $OS_REDHAT) ;;
+    # $OS_FEDORA) ;;
+    $OS_REDHAT|$OS_FEDORA)
+      sudo yum install openssl-devel curl-devel expat-devel gettext-devel
+      # texinfo asciidoc xmlto docbook2x
+      ;;
+    $OS_ARCH)
+      sudo pacman -S libcurl-devel libexpat-devel gettext-devel
+      # texinfo asciidoc xmlto docbook2x
+      ;;
+    $OS_GENTOO) ;;
+    $OS_SUSE) ;;
+    $OS_SLACKWARE) ;;
+    $OS_NIXOS) ;;
+    $OS_VOID) ;;
+    $OS_ALPINE) ;;
+    $OS_MAGEIA) ;;
+    $OS_SLITAZ) ;;
+    # Unix
+    $OS_MACOS) ;;
+    $OS_AIX) ;;
+    $OS_SOLARIS) ;;
+    $OS_FREEBSD) ;;
+    $OS_OPENBSD) ;;
+    # Windows
+    $OS_CYGWIN)
+      apt install libcurl-devel libexpat-devel gettext-devel
+      # texinfo asciidoc xmlto docbook2X
+      ;;
+    $OS_MSYS2) ;;
+    # Other
+    $OS_UNKNOW) ;;
+  esac
 
-    local ver=2.19.1
-    local pkg=git-$ver
-    local zip=$pkg.tar.gz
-    if [ ! -f $OME_PREFIX/bin/git ]; then
-        cd $HOME/Downloads/
-        if [ ! -f "$HOME/Downloads/$zip" ]; then
-            wget https://mirrors.edge.kernel.org/pub/software/scm/git/$zip
-        fi
-        
-        if [ ! -d $HOME/Downloads/$pkg/ ]; then
-            tar xvzf $zip
-        fi
-
-        cd $HOME/Downloads/$pkg/
-
-        # without doc
-        make prefix=$OME_PREFIX install
-
-        # with doc, need: texinfo asciidoc xmlto docbook2x        
-        # make prefix=$OME_PREFIX install install-doc install-html install-info
+  local ver=2.19.1
+  local pkg=git-$ver
+  local zip=$pkg.tar.gz
+  if [ ! -f $OME_PREFIX/bin/git ]; then
+    cd $HOME/Downloads/
+    if [ ! -f "$HOME/Downloads/$zip" ]; then
+      wget https://mirrors.edge.kernel.org/pub/software/scm/git/$zip
     fi
+
+    if [ ! -d $HOME/Downloads/$pkg/ ]; then
+      tar xvzf $zip
+    fi
+
+    cd $HOME/Downloads/$pkg/
+
+    # without doc
+    make prefix=$OME_PREFIX install
+
+    # with doc, need: texinfo asciidoc xmlto docbook2x
+    # make prefix=$OME_PREFIX install install-doc install-html install-info
+  fi
 }
 
 git_uninstall() {
-    echo_error "'git_uninstall' not implemented"
+  echo_error "'git_uninstall' not implemented"
 }
 
 git_exist_p() {
-    echo_error "'git_exist_p' not implemented"
+  echo_error "'git_exist_p' not implemented"
 }
 
 git_info() {
-    echo_error ""
+  echo_error ""
 }

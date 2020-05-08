@@ -1,58 +1,58 @@
 #!/usr/bin/env sh
 
 redis_install() {
-    
-    local ver=stable
-    local pkg=redis-$ver
-    local zip=$pkg.tar.gz
-    if [ ! -f $OME_PREFIX/bin/redis-server ]; then
-        cd $HOME/Downloads/
-        if [ ! -f "$HOME/Downloads/$zip" ]; then
-            wget http://download.redis.io/$zip
-        fi
-        
-        if [ ! -d $HOME/Downloads/$pkg/ ]; then
-            tar xvzf $zip
-        fi
 
-        if [ "$OME_OS" = "$OS_CYGWIN" ]; then
-            tip "jemalloc"
-            cd $HOME/Downloads/$pkg/deps/jemalloc/
-            ./configure
-            make
-            
-            tip "linenoise"
-            cd $HOME/Downloads/$pkg/deps/linenoise/
-            make
-            
-            tip "lua"
-            apt install libreadline-devel
-            cd $HOME/Downloads/$pkg/deps/lua/
-            make linux
-            
-            tip "hiredis"
-            cd $HOME/Downloads/$pkg/deps/hiredis/
-            make
-
-            tip "redis"
-            cd $HOME/Downloads/$pkg/
-            make PREFIX=$OME_PREFIX install
-        else
-            tip "redis"
-            cd $HOME/Downloads/$pkg/
-            make PREFIX=$OME_PREFIX install
-        fi
+  local ver=stable
+  local pkg=redis-$ver
+  local zip=$pkg.tar.gz
+  if [ ! -f $OME_PREFIX/bin/redis-server ]; then
+    cd $HOME/Downloads/
+    if [ ! -f "$HOME/Downloads/$zip" ]; then
+      wget http://download.redis.io/$zip
     fi
+
+    if [ ! -d $HOME/Downloads/$pkg/ ]; then
+      tar xvzf $zip
+    fi
+
+    if [ "$OME_OS" = "$OS_CYGWIN" ]; then
+      tip "jemalloc"
+      cd $HOME/Downloads/$pkg/deps/jemalloc/
+      ./configure
+      make
+
+      tip "linenoise"
+      cd $HOME/Downloads/$pkg/deps/linenoise/
+      make
+
+      tip "lua"
+      apt install libreadline-devel
+      cd $HOME/Downloads/$pkg/deps/lua/
+      make linux
+
+      tip "hiredis"
+      cd $HOME/Downloads/$pkg/deps/hiredis/
+      make
+
+      tip "redis"
+      cd $HOME/Downloads/$pkg/
+      make PREFIX=$OME_PREFIX install
+    else
+      tip "redis"
+      cd $HOME/Downloads/$pkg/
+      make PREFIX=$OME_PREFIX install
+    fi
+  fi
 }
 
 redis_uninstall() {
-    echo_error "'redis_uninstall' not implemented"
+  echo_error "'redis_uninstall' not implemented"
 }
 
 redis_exist_p() {
-    echo_error "'redis_exist_p' not implemented"
+  echo_error "'redis_exist_p' not implemented"
 }
 
 redis_info() {
-    echo_error ""
+  echo_error ""
 }

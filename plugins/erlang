@@ -1,231 +1,231 @@
 #!/usr/bin/env sh
 
 erlang_install_git() {
-    # git clone https://github.com/erlang/otp.git
-    github_upgrade erlang/otp $OME_REPO/erlang_otp
-    cd $OME_REPO/erlang_otp
-    ./otp_build autoconf
-    # ./configure --prefix=$HOME/.erlang_otp
-    ./configure --prefix=$OME_PREFIX
-    make install
+  # git clone https://github.com/erlang/otp.git
+  github_upgrade erlang/otp $OME_REPO/erlang_otp
+  cd $OME_REPO/erlang_otp
+  ./otp_build autoconf
+  # ./configure --prefix=$HOME/.erlang_otp
+  ./configure --prefix=$OME_PREFIX
+  make install
 
-    # get_os_type
-    # case $OME_OS in
-    # $OS_UNKNOW) ;;
-    # $OS_MACOS)
-    # brew install openssl
-    # ;;
-    # $OS_CYGWIN) ;;
-    # $OS_MSYS2) ;;
-    # $OS_ARCH)
-    # sudo pacman -S libssl-devel
-    # ;;
-    # $OS_DEBIAN|$OS_UBUNTU)
-    # sudo apt install libssl-dev
-    # ;;
-    # $OS_REDHAT|$OS_FEDORA)
-    # sudo yum install openssl-devel
-    # ;;
-    # $OS_FREEBSD) ;;
-    # esac
+  # get_os_type
+  # case $OME_OS in
+  # $OS_UNKNOW) ;;
+  # $OS_MACOS)
+  # brew install openssl
+  # ;;
+  # $OS_CYGWIN) ;;
+  # $OS_MSYS2) ;;
+  # $OS_ARCH)
+  # sudo pacman -S libssl-devel
+  # ;;
+  # $OS_DEBIAN|$OS_UBUNTU)
+  # sudo apt install libssl-dev
+  # ;;
+  # $OS_REDHAT|$OS_FEDORA)
+  # sudo yum install openssl-devel
+  # ;;
+  # $OS_FREEBSD) ;;
+  # esac
 }
 
 erlang_install_zip() {
-    if [ "`command -v erl`" = "" ]; then
-        # local zipkg=otp-OTP-${ERLANG_VERSION}.zip
-        local zipkg=otp_src_${ERLANG_VERSION}.tar.gz
-        # echo "zipkg:$zipkg"
-        mkdir -p $HOME/Downloads
-        cd $HOME/Downloads/
-        if [ ! -f $HOME/Downloads/$zipkg ]; then
-            # https://codeload.github.com/erlang/otp/zip/OTP-21.1.4
-            # wget https://codeload.github.com/erlang/otp/zip/OTP-${ERLANG_VERSION}
-            wget http://erlang.org/download/otp_src_${ERLANG_VERSION}.tar.gz
-        fi
-        # if [ ! -d $HOME/Downloads/otp-OTP-$ERLANG_VERSION/ ]; then
-        if [ ! -d $HOME/Downloads/otp_src_$ERLANG_VERSION/ ]; then
-            # unzip ./$zipkg
-            tar -zxvf $zipkg
-        fi
-        # cd $HOME/Downloads/otp-OTP-$ERLANG_VERSION/
-        cd $HOME/Downloads/otp_src_$ERLANG_VERSION/
-        ./otp_build autoconf
-        # ./configure --prefix=$HOME/.erlang_otp
-        # ./configure --prefix=$OME_PREFIX
-        ./configure CFLAGS="-fPIC -mcmodel=large -O2 -g" --prefix=$HOME/.erlang_otp
-        if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
-            sed -i 's/HAVE_MALLOPT/HAVE_NOT_MALLOPT/g' erts/x86_64-pc-msys/config.h
-            sed -i 's/HAVE_PPOLL/HAVE_NOT_PPOLL/g' erts/x86_64-pc-msys/config.h
-            sed -i 's/HAVE_GETIFADDRS/HAVE_NOT_GETIFADDRS/g' erts/x86_64-pc-msys/config.h
-            sed -i 's/HAVE_WCWIDTH/HAVE_NOT_WCWIDTH/g' erts/x86_64-pc-msys/config.h
-            sed -i 's/ERTS_HAVE_OS_PHYSICAL_MEMORY_RESERVATION/ERTS_HAVE_NOT_OS_PHYSICAL_MEMORY_RESERVATION/g' erts/emulator/sys/common/erl_mmap.h
-            sed -i 's/ipi_spec_dst/ipi_addr/g' erts/emulator/nifs/common/socket_nif.c
-        fi
-        make
-        # make install
+  if [ "`command -v erl`" = "" ]; then
+    # local zipkg=otp-OTP-${ERLANG_VERSION}.zip
+    local zipkg=otp_src_${ERLANG_VERSION}.tar.gz
+    # echo "zipkg:$zipkg"
+    mkdir -p $HOME/Downloads
+    cd $HOME/Downloads/
+    if [ ! -f $HOME/Downloads/$zipkg ]; then
+      # https://codeload.github.com/erlang/otp/zip/OTP-21.1.4
+      # wget https://codeload.github.com/erlang/otp/zip/OTP-${ERLANG_VERSION}
+      wget http://erlang.org/download/otp_src_${ERLANG_VERSION}.tar.gz
     fi
+    # if [ ! -d $HOME/Downloads/otp-OTP-$ERLANG_VERSION/ ]; then
+    if [ ! -d $HOME/Downloads/otp_src_$ERLANG_VERSION/ ]; then
+      # unzip ./$zipkg
+      tar -zxvf $zipkg
+    fi
+    # cd $HOME/Downloads/otp-OTP-$ERLANG_VERSION/
+    cd $HOME/Downloads/otp_src_$ERLANG_VERSION/
+    ./otp_build autoconf
+    # ./configure --prefix=$HOME/.erlang_otp
+    # ./configure --prefix=$OME_PREFIX
+    ./configure CFLAGS="-fPIC -mcmodel=large -O2 -g" --prefix=$HOME/.erlang_otp
+    if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
+      sed -i 's/HAVE_MALLOPT/HAVE_NOT_MALLOPT/g' erts/x86_64-pc-msys/config.h
+      sed -i 's/HAVE_PPOLL/HAVE_NOT_PPOLL/g' erts/x86_64-pc-msys/config.h
+      sed -i 's/HAVE_GETIFADDRS/HAVE_NOT_GETIFADDRS/g' erts/x86_64-pc-msys/config.h
+      sed -i 's/HAVE_WCWIDTH/HAVE_NOT_WCWIDTH/g' erts/x86_64-pc-msys/config.h
+      sed -i 's/ERTS_HAVE_OS_PHYSICAL_MEMORY_RESERVATION/ERTS_HAVE_NOT_OS_PHYSICAL_MEMORY_RESERVATION/g' erts/emulator/sys/common/erl_mmap.h
+      sed -i 's/ipi_spec_dst/ipi_addr/g' erts/emulator/nifs/common/socket_nif.c
+    fi
+    make
+    # make install
+  fi
 }
 
 erlang_install_kerl() {
-    tip "install kerl"
-    cd $OME_PREFIX/bin/
-    curl -O https://raw.githubusercontent.com/kerl/kerl/master/kerl
-    chmod +x ./kerl
+  tip "install kerl"
+  cd $OME_PREFIX/bin/
+  curl -O https://raw.githubusercontent.com/kerl/kerl/master/kerl
+  chmod +x ./kerl
 
-    tip "kerl update"
-    kerl update releases
-    kerl list releases
-    
-    tip "build $ERLANG_VERSION"
-    if [ -d $HOME/.kerl/builds/${ERLANG_VERSION} ]; then
-        readp "${ERLANG_VERSION} is builded, delete?"
-        if [ $? -eq 1 ]; then
-            kerl delete build ${ERLANG_VERSION}
-        fi
+  tip "kerl update"
+  kerl update releases
+  kerl list releases
+
+  tip "build $ERLANG_VERSION"
+  if [ -d $HOME/.kerl/builds/${ERLANG_VERSION} ]; then
+    readp "${ERLANG_VERSION} is builded, delete?"
+    if [ $? -eq 1 ]; then
+      kerl delete build ${ERLANG_VERSION}
     fi
+  fi
 
-    # 1) build form src
-    if [ -f $HOME/Downloads/otp_src_${ERLANG_VERSION}.tar.gz ]; then
-        readp "erlang: use china mirror?"
-        if [ $? -eq 1 ]; then
-            echo "erlang use cache:"
-            mkdir -p $HOME/.kerl/archives/
-            cp -f $HOME/Downloads/otp_src_${ERLANG_VERSION}.tar.gz $HOME/.kerl/archives/
-        fi
+  # 1) build form src
+  if [ -f $HOME/Downloads/otp_src_${ERLANG_VERSION}.tar.gz ]; then
+    readp "erlang: use china mirror?"
+    if [ $? -eq 1 ]; then
+      echo "erlang use cache:"
+      mkdir -p $HOME/.kerl/archives/
+      cp -f $HOME/Downloads/otp_src_${ERLANG_VERSION}.tar.gz $HOME/.kerl/archives/
     fi
+  fi
 
-    kerl build $ERLANG_VERSION
+  kerl build $ERLANG_VERSION
 
-    # 2) build form github fork
-    # tip "kerl build form a github fork"
-    # export KERL_BUILD_BACKEND=git
-    # export OTP_GITHUB_URL="https://github.com/basho/otp"
-    # kerl update releases
+  # 2) build form github fork
+  # tip "kerl build form a github fork"
+  # export KERL_BUILD_BACKEND=git
+  # export OTP_GITHUB_URL="https://github.com/basho/otp"
+  # kerl update releases
 
-    # 3) kerl build form github
-    # tip "kerl build form github"
-    # kerl build git "https://github.com/erlang/otp.git --depth=1" dev ${ERLANG_VERSION}
+  # 3) kerl build form github
+  # tip "kerl build form github"
+  # kerl build git "https://github.com/erlang/otp.git --depth=1" dev ${ERLANG_VERSION}
 
-    tip "kerl install otp_${ERLANG_VERSION}"
-    local dir=$OME_REPO/otp_${ERLANG_VERSION}
+  tip "kerl install otp_${ERLANG_VERSION}"
+  local dir=$OME_REPO/otp_${ERLANG_VERSION}
 
-    if [ -d $dir ]; then
-        readp "${ERLANG_VERSION} is installed, delete?"
-        if [ $? -eq 1 ]; then
-            kerl_deactivate
-            kerl delete installation $OME_REPO/otp_${ERLANG_VERSION}
-        fi
+  if [ -d $dir ]; then
+    readp "${ERLANG_VERSION} is installed, delete?"
+    if [ $? -eq 1 ]; then
+      kerl_deactivate
+      kerl delete installation $OME_REPO/otp_${ERLANG_VERSION}
     fi
-    
-    if [ ! -d $dir ]; then
-        kerl install ${ERLANG_VERSION} $OME_REPO/otp_${ERLANG_VERSION}
-    fi
+  fi
 
-    tip "kerl_setenv"
-    kerl_setenv
+  if [ ! -d $dir ]; then
+    kerl install ${ERLANG_VERSION} $OME_REPO/otp_${ERLANG_VERSION}
+  fi
 
-    tip "kerl status"
-    kerl status
+  tip "kerl_setenv"
+  kerl_setenv
+
+  tip "kerl status"
+  kerl status
 }
 
 kerl_setenv() {
-    if [ -f $OME_REPO/otp_${ERLANG_VERSION}/activate ]; then
-        . $OME_REPO/otp_${ERLANG_VERSION}/activate
-    fi
+  if [ -f $OME_REPO/otp_${ERLANG_VERSION}/activate ]; then
+    . $OME_REPO/otp_${ERLANG_VERSION}/activate
+  fi
 }
 
 erlenv_install() {
-    github_upgrade talentdeficit/erlenv $HOME/.erlenv
+  github_upgrade talentdeficit/erlenv $HOME/.erlenv
 
-    tip "erlenv_setenv"
-    erlenv_setenv
+  tip "erlenv_setenv"
+  erlenv_setenv
 }
 
 erlang_install() {
-    if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
-        if [ ! -d "$OME_REPO/erl10.7" ]; then
-            cd ~/Downloads/
-            unzip ./otp-${ERLANG_VERSION}-win-x86_64.zip -d $OME_REPO
-            erlang_setenv
-        else
-            # local REBAR_VERINFO=`rebar3 --version | head -n 1 | cut -d ' ' -f 4-`
-            local REBAR_VERINFO="Erlang/OTP ${ERLANG_VERSION}"
-            echo "$REBAR_VERINFO is already installed!"
-        fi
+  if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
+    if [ ! -d "$OME_REPO/erl10.7" ]; then
+      cd ~/Downloads/
+      unzip ./otp-${ERLANG_VERSION}-win-x86_64.zip -d $OME_REPO
+      erlang_setenv
     else
-        # erlang_install_git
-        # erlang_install_zip
-        erlang_install_kerl
+      # local REBAR_VERINFO=`rebar3 --version | head -n 1 | cut -d ' ' -f 4-`
+      local REBAR_VERINFO="Erlang/OTP ${ERLANG_VERSION}"
+      echo "$REBAR_VERINFO is already installed!"
     fi
+  else
+    # erlang_install_git
+    # erlang_install_zip
+    erlang_install_kerl
+  fi
 
-    # tip "install rebar3 for erlang(download)"
-    # cd $OME_PREFIX/bin/
-    # wget https://s3.amazonaws.com/rebar3/rebar3 && chmod +x rebar3
-    # rebar3 local upgrade DEBUG=1
-    # cd $OME_ROOT/bin/
-    # chmod +x ./rebar3
+  # tip "install rebar3 for erlang(download)"
+  # cd $OME_PREFIX/bin/
+  # wget https://s3.amazonaws.com/rebar3/rebar3 && chmod +x rebar3
+  # rebar3 local upgrade DEBUG=1
+  # cd $OME_ROOT/bin/
+  # chmod +x ./rebar3
 
-    tip "install rebar3 for erlang(git)"
-    github_upgrade erlang/rebar3 $OME_REPO/rebar3
-    cd $OME_REPO/rebar3/
-    chmod +x ./bootstrap
-    CDN="https://hexpm.upyun.com/tarballs" ./bootstrap
-    cp -f ./rebar3 $OME_PREFIX/bin/rebar
-    cp -f ./rebar3 $OME_PREFIX/bin/rebar3
-    cp -f ./rebar.config $OME_PREFIX/bin/
-    chmod +x $OME_PREFIX/bin/rebar3
-    echo "{rebar_packages_cdn, \"https://hexpm.upyun.com\"}." >> $OME_PREFIX/bin/rebar.config 
-    rebar3 --version
+  tip "install rebar3 for erlang(git)"
+  github_upgrade erlang/rebar3 $OME_REPO/rebar3
+  cd $OME_REPO/rebar3/
+  chmod +x ./bootstrap
+  CDN="https://hexpm.upyun.com/tarballs" ./bootstrap
+  cp -f ./rebar3 $OME_PREFIX/bin/rebar
+  cp -f ./rebar3 $OME_PREFIX/bin/rebar3
+  cp -f ./rebar.config $OME_PREFIX/bin/
+  chmod +x $OME_PREFIX/bin/rebar3
+  echo "{rebar_packages_cdn, \"https://hexpm.upyun.com\"}." >> $OME_PREFIX/bin/rebar.config
+  rebar3 --version
 
-    # tip "rebar3 local upgrade"
-    # if [ "$OME_OS" != "$OS_CYGWIN" ] && [ "$OME_OS" != "$OS_MSYS2" ]; then
-    # rebar3 local upgrade DEBUG=1
-    # fi
-    tip "rebar3 update"
-    CDN="https://hexpm.upyun.com" rebar3 update
-    tip "rebar3 upgrade"
-    CDN="https://hexpm.upyun.com" rebar3 upgrade
+  # tip "rebar3 local upgrade"
+  # if [ "$OME_OS" != "$OS_CYGWIN" ] && [ "$OME_OS" != "$OS_MSYS2" ]; then
+  # rebar3 local upgrade DEBUG=1
+  # fi
+  tip "rebar3 update"
+  CDN="https://hexpm.upyun.com" rebar3 update
+  tip "rebar3 upgrade"
+  CDN="https://hexpm.upyun.com" rebar3 upgrade
 }
 
 erlang_uninstall() {
-    echo_error "'erlang_uninstall' not implemented"
+  echo_error "'erlang_uninstall' not implemented"
 }
 
 erlang_exist_p() {
-    echo_error "'erlang_exist_p' not implemented"
+  echo_error "'erlang_exist_p' not implemented"
 }
 
 erlang_info() {
-    echo ""
-    # ome_show "Erlang" "`ome_fetch_version rebar3`"
+  echo ""
+  # ome_show "Erlang" "`ome_fetch_version rebar3`"
 }
 erlenv_setenv() {
-    if [ -d $HOME/.erlenv/ ]; then
-        export PATH=$HOME/.erlenv/bin:$PATH
-        eval "$(erlenv init -)"
-    fi
+  if [ -d $HOME/.erlenv/ ]; then
+    export PATH=$HOME/.erlenv/bin:$PATH
+    eval "$(erlenv init -)"
+  fi
 }
 
 kerl_setenv
 
 hex_pulish_settings() {
-    echo ""
+  echo ""
 }
 
 erlang_setenv() {
-    if [ -d $OME_REPO/erl10.7/ ]; then
-        export PATH=$OME_REPO/erl10.7/bin:$OME_REPO/erl10.7/erts-10.7/bin:$PATH
-        local bindir=`cygpath -m $OME_REPO/erl10.7/erts-10.7/bin`
-        local rootdir=`cygpath -m $OME_REPO/erl10.7`
-        echo "[erlang]" > $OME_REPO/erl10.7/bin/erl.ini
-        echo "Bindir=${bindir//'/'/'\\'}" >> $OME_REPO/erl10.7/bin/erl.ini
-        echo "Progname=erl" >> $OME_REPO/erl10.7/bin/erl.ini
-        echo "Rootdir=${rootdir//'/'/'\\'}" >> $OME_REPO/erl10.7/bin/erl.ini
+  if [ -d $OME_REPO/erl10.7/ ]; then
+    export PATH=$OME_REPO/erl10.7/bin:$OME_REPO/erl10.7/erts-10.7/bin:$PATH
+    local bindir=`cygpath -m $OME_REPO/erl10.7/erts-10.7/bin`
+    local rootdir=`cygpath -m $OME_REPO/erl10.7`
+    echo "[erlang]" > $OME_REPO/erl10.7/bin/erl.ini
+    echo "Bindir=${bindir//'/'/'\\'}" >> $OME_REPO/erl10.7/bin/erl.ini
+    echo "Progname=erl" >> $OME_REPO/erl10.7/bin/erl.ini
+    echo "Rootdir=${rootdir//'/'/'\\'}" >> $OME_REPO/erl10.7/bin/erl.ini
 
-        echo "[erlang]" > $OME_REPO/erl10.7/erts-10.7/bin/erl.ini
-        echo "Bindir=${bindir//'/'/'\\'}" >> $OME_REPO/erl10.7/erts-10.7/bin/erl.ini
-        echo "Progname=erl" >> $OME_REPO/erl10.7/erts-10.7/bin/erl.ini
-        echo "Rootdir=${rootdir//'/'/'\\'}" >> $OME_REPO/erl10.7/erts-10.7/bin/erl.ini
-    fi
+    echo "[erlang]" > $OME_REPO/erl10.7/erts-10.7/bin/erl.ini
+    echo "Bindir=${bindir//'/'/'\\'}" >> $OME_REPO/erl10.7/erts-10.7/bin/erl.ini
+    echo "Progname=erl" >> $OME_REPO/erl10.7/erts-10.7/bin/erl.ini
+    echo "Rootdir=${rootdir//'/'/'\\'}" >> $OME_REPO/erl10.7/erts-10.7/bin/erl.ini
+  fi
 }
 erlang_setenv

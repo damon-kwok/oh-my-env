@@ -1,39 +1,39 @@
 #!/usr/bin/env sh
 
 tar_install() {
-    # local ver=latest
-    local ver=1.30
-    local pkg=tar-$ver
-    local zip=$pkg.tar.gz
-    # if [ ! -f $HOME/bin/tar ]; then
-        cd $HOME/Downloads/
-        if [ ! -f "$HOME/Downloads/$zip" ]; then
-            wget https://ftp.gnu.org/gnu/tar/$zip
-            # wget https://ftp.gnu.org/gnu/tar/tar-latest.tar.gz
-        fi
-        
-        if [ ! -d $HOME/Downloads/$pkg/ ]; then
-            tar xvzf $zip
-        fi
-        
-        # cd $HOME/Downloads/$pkg/
-        cd $HOME/Downloads/$pkg
-        FORCE_UNSAFE_CONFIGURE=1
-        export FORCE_UNSAFE_CONFIGURE
-        ./configure --prefix=$OME_PREFIX
-        make -j4
-        make install
-    # fi
+  # local ver=latest
+  local ver=1.30
+  local pkg=tar-$ver
+  local zip=$pkg.tar.gz
+  # if [ ! -f $HOME/bin/tar ]; then
+  cd $HOME/Downloads/
+  if [ ! -f "$HOME/Downloads/$zip" ]; then
+    wget https://ftp.gnu.org/gnu/tar/$zip
+    # wget https://ftp.gnu.org/gnu/tar/tar-latest.tar.gz
+  fi
+
+  if [ ! -d $HOME/Downloads/$pkg/ ]; then
+    tar xvzf $zip
+  fi
+
+  # cd $HOME/Downloads/$pkg/
+  cd $HOME/Downloads/$pkg
+  FORCE_UNSAFE_CONFIGURE=1
+  export FORCE_UNSAFE_CONFIGURE
+  ./configure --prefix=$OME_PREFIX
+  make -j4
+  make install
+  # fi
 }
 
 tar_uninstall() {
-    echo_error "'tar_uninstall' not implemented"
+  echo_error "'tar_uninstall' not implemented"
 }
 
 tar_exist_p() {
-    echo_error "'tar_exist_p' not implemented"
+  echo_error "'tar_exist_p' not implemented"
 }
 
 tar_info() {
-    echo_error ""
+  echo_error ""
 }

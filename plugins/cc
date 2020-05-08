@@ -1,122 +1,122 @@
 #!/usr/bin/env sh
 
 cc_install_tools() {
-    get_os_type
-    case $OME_OS in
-        # Linux
-        # $OS_DEBIAN) ;;
-        # $OS_UBUNTU) ;;
-        $OS_DEBIAN|$OS_UBUNTU)
-            sudo apt install -y build-essential \
-                 cmake make ninja-build meson-build \
-                 autogen automake autoconf libtool libtool-bin \
-                 pkg-config
-            ;;
-        # $OS_REDHAT) ;;
-        # $OS_FEDORA) ;;
-        $OS_REDHAT|$OS_FEDORA)
-            sudo yum groupinstall -y "Development Tools"
-            sudo yum install -y gcc gcc-c++ cmake make ninja-build meson-build \
-                 autogen automake autoconf libtool \
-                 pkg-config
-            ;;
-        $OS_ARCH)
-            trizen -S base-devel cmake make ninja meson \
-                   autogen automake autoconf libtool \
-                   pkg-config
-            ;;
-        $OS_GENTOO) ;;
-        $OS_SUSE)
-            # sudo zypper refresh
-            # sudo zypper update
-            # zypper info -t pattern devel_basis
-            sudo zypper install -t pattern devel_basis
-            sudo zypper install cmake make ninja meson \
-                 autogen automake autoconf libtool \
-                 pkg-config
-            ;;
-        $OS_SLACKWARE) ;;
-        $OS_NIXOS) ;;
-        $OS_VOID) ;;
-        $OS_ALPINE) ;;
-        $OS_MAGEIA) ;;
-        $OS_SLITAZ) ;;
-        $OS_GUIXSD) ;;
-        # Unix
-        $OS_MACOS)
-            brew install gcc-core gcc-g++ \
-                 cmake make ninja meson \
-                 autogen automake autoconf libtool \
-                 pkg-config
-            ;;
-        $OS_AIX) ;;
-        $OS_SOLARIS) ;;
-        $OS_FREEBSD)
-            sudo pkg install gcc cmake gmake ninja meson \
-                 autogen automake autoconf libtool \
-                 pkgconf
-            ;;
-        $OS_OPENBSD) ;;
-        $OS_NETBSD) ;;
-        $OS_DFBSD) ;;
-        # Windows
-        $OS_CYGWIN)
-            apt install gcc-core gcc-g++ \
-                cmake make ninja meson \
-                autogen automake autoconf libtool \
-                pkg-config
-            ;;
-        $OS_MSYS2)
-            pacman -S mingw-w64-x86_64-gcc mingw-w64-x86_64-gcc-libs mingw-w64-x86_64-glib2 mingw-w64-x86_64-nasm \
-                   mingw-w64-x86_64-cmake mingw-w64-x86_64-extra-cmake-modules \
-                   mingw-w64-x86_64-make mingw-w64-x86_64-ninja mingw-w64-x86_64-meson \
-                   mingw-w64-x86_64-libtool mingw-w64-x86_64-pkg-config
+  get_os_type
+  case $OME_OS in
+    # Linux
+    # $OS_DEBIAN) ;;
+    # $OS_UBUNTU) ;;
+    $OS_DEBIAN|$OS_UBUNTU)
+      sudo apt install -y build-essential \
+           cmake make ninja-build meson-build \
+           autogen automake autoconf libtool libtool-bin \
+           pkg-config
+      ;;
+    # $OS_REDHAT) ;;
+    # $OS_FEDORA) ;;
+    $OS_REDHAT|$OS_FEDORA)
+      sudo yum groupinstall -y "Development Tools"
+      sudo yum install -y gcc gcc-c++ cmake make ninja-build meson-build \
+           autogen automake autoconf libtool \
+           pkg-config
+      ;;
+    $OS_ARCH)
+      trizen -S base-devel cmake make ninja meson \
+             autogen automake autoconf libtool \
+             pkg-config
+      ;;
+    $OS_GENTOO) ;;
+    $OS_SUSE)
+      # sudo zypper refresh
+      # sudo zypper update
+      # zypper info -t pattern devel_basis
+      sudo zypper install -t pattern devel_basis
+      sudo zypper install cmake make ninja meson \
+           autogen automake autoconf libtool \
+           pkg-config
+      ;;
+    $OS_SLACKWARE) ;;
+    $OS_NIXOS) ;;
+    $OS_VOID) ;;
+    $OS_ALPINE) ;;
+    $OS_MAGEIA) ;;
+    $OS_SLITAZ) ;;
+    $OS_GUIXSD) ;;
+    # Unix
+    $OS_MACOS)
+      brew install gcc-core gcc-g++ \
+           cmake make ninja meson \
+           autogen automake autoconf libtool \
+           pkg-config
+      ;;
+    $OS_AIX) ;;
+    $OS_SOLARIS) ;;
+    $OS_FREEBSD)
+      sudo pkg install gcc cmake gmake ninja meson \
+           autogen automake autoconf libtool \
+           pkgconf
+      ;;
+    $OS_OPENBSD) ;;
+    $OS_NETBSD) ;;
+    $OS_DFBSD) ;;
+    # Windows
+    $OS_CYGWIN)
+      apt install gcc-core gcc-g++ \
+          cmake make ninja meson \
+          autogen automake autoconf libtool \
+          pkg-config
+      ;;
+    $OS_MSYS2)
+      pacman -S mingw-w64-x86_64-gcc mingw-w64-x86_64-gcc-libs mingw-w64-x86_64-glib2 mingw-w64-x86_64-nasm \
+             mingw-w64-x86_64-cmake mingw-w64-x86_64-extra-cmake-modules \
+             mingw-w64-x86_64-make mingw-w64-x86_64-ninja mingw-w64-x86_64-meson \
+             mingw-w64-x86_64-libtool mingw-w64-x86_64-pkg-config
 
-            # pacman -S base-devel msys2-devel gcc gcc-libs glib2-devel \
-                   # cmake make ninja meson \
-                   # autogen automake autoconf libtool \
-                   # pkg-config
-            # cross
-            # pacman -S mingw-w64-cross-gcc mingw-w64-x86_64-pdcurses
-            # mingw-w64-x86_64-python2 mingw-w64-x86_64-python2-pip
-            # mingw-w64-x86_64-python3 mingw-w64-x86_64-python3-pip
-            # mingw-w64-x86_64-emacs mingw-w64-x86_64-ttf-dejavu
-            ;;
-        # Other
-        $OS_UNKNOW) ;;
-    esac
+      # pacman -S base-devel msys2-devel gcc gcc-libs glib2-devel \
+        # cmake make ninja meson \
+        # autogen automake autoconf libtool \
+        # pkg-config
+      # cross
+      # pacman -S mingw-w64-cross-gcc mingw-w64-x86_64-pdcurses
+      # mingw-w64-x86_64-python2 mingw-w64-x86_64-python2-pip
+      # mingw-w64-x86_64-python3 mingw-w64-x86_64-python3-pip
+      # mingw-w64-x86_64-emacs mingw-w64-x86_64-ttf-dejavu
+      ;;
+    # Other
+    $OS_UNKNOW) ;;
+  esac
 }
 
 cc_install() {
-    # gcc clang make m4 automake pkg-config"
+  # gcc clang make m4 automake pkg-config"
 
-    # libdn2 libuv libason-devel
-    #
-    # libgmime glibc
-    # libiconv
-    # sed awk grep tar zip unzip 7zip flex gawke bison bc mt
-    # guile rush tramp libc scm screen
+  # libdn2 libuv libason-devel
+  #
+  # libgmime glibc
+  # libiconv
+  # sed awk grep tar zip unzip 7zip flex gawke bison bc mt
+  # guile rush tramp libc scm screen
 
-    cc_install_tools
+  cc_install_tools
 }
 
 cc_uninstall() {
-    echo_error "'cc_uninstall' not implemented"
+  echo_error "'cc_uninstall' not implemented"
 }
 
 cc_exist_p() {
-    echo_error "'cc_exist_p' not implemented"
+  echo_error "'cc_exist_p' not implemented"
 }
 
 cc_info() {
-    # ome_get_version gcc "GCC_VERSION"
-    # echo_kv "C/C++" "$GCC_VERSION|$CLANG_VERSION"
-    # echo_kv "CTool" "pkg-config $PKGCONF_VERSION|$LIBTOOL_VERSION"
-    # echo_kv "Make" "$MAKE_VERSION|$AUTOMAKE_VERSION|$AUTOCONF_VERSION"
+  # ome_get_version gcc "GCC_VERSION"
+  # echo_kv "C/C++" "$GCC_VERSION|$CLANG_VERSION"
+  # echo_kv "CTool" "pkg-config $PKGCONF_VERSION|$LIBTOOL_VERSION"
+  # echo_kv "Make" "$MAKE_VERSION|$AUTOMAKE_VERSION|$AUTOCONF_VERSION"
 
-    ome_show "Make" "`ome_fetch_version make` | `ome_fetch_version cmake` | Ninja `ome_fetch_version ninja` | Meson `ome_fetch_version meson`"
-    ome_show "GCC" "`ome_fetch_version gcc`"
-    ome_show "Clang" "`ome_fetch_version clang`"
-    # ome_show "Auto" "`ome_fetch_version autogen` | `ome_fetch_version automake` | `ome_fetch_version autoconf`"
-    # ome_show "CTool" "pkg-config `ome_fetch_version pkg-config` | `ome_fetch_version libtool`" #`ome_fetch_version m4` |
+  ome_show "Make" "`ome_fetch_version make` | `ome_fetch_version cmake` | Ninja `ome_fetch_version ninja` | Meson `ome_fetch_version meson`"
+  ome_show "GCC" "`ome_fetch_version gcc`"
+  ome_show "Clang" "`ome_fetch_version clang`"
+  # ome_show "Auto" "`ome_fetch_version autogen` | `ome_fetch_version automake` | `ome_fetch_version autoconf`"
+  # ome_show "CTool" "pkg-config `ome_fetch_version pkg-config` | `ome_fetch_version libtool`" #`ome_fetch_version m4` |
 }

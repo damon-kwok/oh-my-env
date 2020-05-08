@@ -4,377 +4,382 @@ SELF_DIR=$(dirname $(readlink -f $0))
 . $SELF_DIR/../env
 
 ome_app_wizard() {
-    local oldir=`pwd`
-    local proj_lang=$1
-    local proj_root=$2
+  local oldir=`pwd`
+  local proj_lang=$1
+  local proj_root=$2
 
-    if [ "$proj_lang" == "" ]; then
-        tip "what do you need?"
-        echo "    --------------------------"
-        echo "    0)  C (cmake)"
-        echo "    1)  C++ (cmake)"
-        echo "    2)  Clojure (fullstack:lein+luminus)"
-        echo "    3)  Clojure (fullstack:lein+hoplon)"
-        echo "    4)  Clojure (fullstack:lein+fulcro)"
-        echo "    5)  ClojureScript (fullstack:shadow-cljs)"
-        echo "    6)  ClojureScript (browser:lein+figwheel)"
-        echo "    7)  CommonLisp (roswell)"
-        echo "    8)  Crystal"
-        echo "    9)  Erlang (rebar3)"
-        echo "    10) Elixir (mix)"
-        echo "    11) Golang (dep)"
-        echo "    12) Groovy (gradle)"
-        echo "    13) Haskell (stack)"
-        echo "    14) Java (gradle)"
-        echo "    15) Kotlin (gradle)"
-        echo "    16) Nim (nimble)"
-        echo "    17) Nodejs (grunt)"
-        echo "    18) Nodejs (gulp)"
-        echo "    19) OCaml (ohai)"
-        echo "    20) OCaml-BuckleScript (bsb-native)"
-        echo "    21) Perl"
-        echo "    22) PHP (Composer)"
-        echo "    23) Python (pipenv)"
-        echo "    24) Python (poetry)"
-        echo "    25) Python (hatch)"
-        echo "    26) Reason (ohai)"
-        echo "    27) Reason-BuckleScript (bsb-native)"
-        echo "    28) Ruby (rbenv)"
-        echo "    29) Rust (cargo)"
-        echo "    30) Scala (gradle)"
-        echo "    31) Swift (SPM)"
-        echo "    32) Pony"
-        # echo "    32) .net"
-        echo "    --------------------------"
-        echo "    r) return"
-        echo "    q) quit"
+  if [ "$proj_lang" == "" ]; then
+    tip "what do you need?"
+    echo "    --------------------------"
+    echo "    0)  C (cmake)"
+    echo "    1)  C++ (cmake)"
+    echo "    2)  Clojure (fullstack:lein+luminus)"
+    echo "    3)  Clojure (fullstack:lein+hoplon)"
+    echo "    4)  Clojure (fullstack:lein+fulcro)"
+    echo "    5)  ClojureScript (fullstack:shadow-cljs)"
+    echo "    6)  ClojureScript (browser:lein+figwheel)"
+    echo "    7)  CommonLisp (roswell)"
+    echo "    8)  Crystal"
+    echo "    9)  Erlang (rebar3)"
+    echo "    10) Elixir (mix)"
+    echo "    11) Golang (dep)"
+    echo "    12) Groovy (gradle)"
+    echo "    13) Haskell (stack)"
+    echo "    14) Java (gradle)"
+    echo "    15) Kotlin (gradle)"
+    echo "    16) Nim (nimble)"
+    echo "    17) Nodejs (grunt)"
+    echo "    18) Nodejs (gulp)"
+    echo "    19) OCaml (ohai)"
+    echo "    20) OCaml-BuckleScript (bsb-native)"
+    echo "    21) Perl"
+    echo "    22) PHP (Composer)"
+    echo "    23) Python (pipenv)"
+    echo "    24) Python (poetry)"
+    echo "    25) Python (hatch)"
+    echo "    26) Reason (ohai)"
+    echo "    27) Reason-BuckleScript (bsb-native)"
+    echo "    28) Ruby (rbenv)"
+    echo "    29) Rust (cargo)"
+    echo "    30) Scala (gradle)"
+    echo "    31) Swift (SPM)"
+    echo "    32) Pony"
+    # echo "    32) .net"
+    echo "    --------------------------"
+    echo "    r) return"
+    echo "    q) quit"
 
-        read -p "please enter your choice:" proj_lang
-        if [ "$proj_lang" == "q" ] || [ "$proj_lang" == "r" ]; then
-            return 0
-        fi
+    read -p "please enter your choice:" proj_lang
+    if [ "$proj_lang" == "q" ] || [ "$proj_lang" == "r" ]; then
+      return 0
     fi
+  fi
 
-    if [ "$proj_root" == "" ]; then
-        read -p "please enter project root directory:" proj_root
-    fi
+  if [ "$proj_root" == "" ]; then
+    read -p "please enter project root directory:" proj_root
+  fi
 
-    local proj_name=`basename $2`
-    local proj_ws=`dirname $2`
+  local proj_name=`basename $2`
+  local proj_ws=`dirname $2`
 
 
-    if [ -d $proj_root ]; then
-        echo "'$proj_root' already exist!"
-        cd $oldir
-        exit
-    fi
-
-    mkdir -p $proj_ws
-    cd $proj_ws
-    proj_ws=`pwd`
-    case "$proj_lang" in
-        "0"|"c"|"C"|"cc"|"CC")
-            gen_cmake_file $proj_root "c" "0"
-            cd $proj_root
-            echo ".git/" >> .gitignore
-            echo "build/" >> .gitignore
-            echo "compile_commands.json" >> .gitignore
-            gen_clang_format
-            # $EDITOR "CMakeLists.txt"
-            # mkdir -p src
-            $EDITOR "src/main.c"
-            ;;
-        "1"|"c++"|"C++"|"cpp"|"CPP"|"cxx"|"CXX")
-            gen_cmake_file $proj_root "cpp" "0"
-            cd $proj_root
-            echo ".git/" >> .gitignore
-            echo "build/" >> .gitignore
-            echo "compile_commands.json" >> .gitignore
-            gen_clang_format
-            # $EDITOR "CMakeLists.txt"
-            # mkdir -p src
-            $EDITOR "src/main.cpp"
-            ;;
-        "luminus")
-            ome_check_install "lein" "clj"
-            lein new luminus $proj_name +reagent +swagger +h2
-            cd $proj_root
-            # local aa='[clj-commons/secretary "1.2.4"]'
-            # local bb='[org.flatland/ordered "1.5.7"] [clj-commons/secretary "1.2.4"]'
-            # sed -i 's#$aa#$bb#g' project.clj
-            $EDITOR "project.clj"
-            ;;
-        "2"|"clojure"|"clj"|"pedestal")
-            ome_check_install "lein" "clj"
-            lein new pedestal-service $proj_name +reagent +swagger +h2
-            cd $proj_root
-            $EDITOR "project.clj"
-            ;;
-        "3"|"hoplon")
-            ome_check_install "lein" "clj"
-            boot -d boot/new new -t hoplon -n $proj_name
-            cd $proj_root
-            $EDITOR "project.clj"
-            ;;
-        "4"|"fulcro")
-            ome_check_install "lein" "clj"
-            lein new fulcro $proj_name
-            cd $proj_root
-            $EDITOR "project.clj"
-            ;;
-        "5"|"clojurescript"|"cljs"|"shadow-cljs")
-            ome_check_install "npm" "nodejs"
-            npx create-cljs-project $proj_name
-            mkdir -p $proj_root/src/main/{server,client}
-            cd $proj_root
-            npm install shadow-cljs --save-dev
-            npm install express --save
-            echo "#!/usr/bin/env sh" >> repl.sh
-            echo "" >> repl.sh
-            echo "npx shadow-cljs node-repl" >> repl.sh
-            echo "# or" >> repl.sh
-            echo "# npx shadow-cljs browser-repl" >> repl.sh
-            # $EDITOR "shadow-cljs.edn"
-            cd src/main/server
-            wget https://raw.githubusercontent.com/damon-kwok/cljs-example/master/src/main/server/core.cljs
-            cd ../client/
-            wget https://raw.githubusercontent.com/damon-kwok/cljs-example/master/src/main/client/core.cljs
-            # $EDITOR "src/main/$proj_name/core.cljs"
-            $EDITOR "core.cljs"
-            ;;
-        "6"|"figwheel")
-            ome_check_install "lein" "clj"
-            lein new figwheel $proj_name -- --reagent
-            cd $proj_root
-            $EDITOR "project.clj"
-            ;;
-        "7"|"commonlisp"|"cl"|"roswell")
-            ome_check_install "ros" "roswell"
-            mkdir -p $proj_root
-            cd $proj_root
-            ros init main
-            $EDITOR "main.ros"
-            ;;
-        "8"|"crystall")
-            ome_check_install "crystal" "crystal"
-            ome install crystal
-            ;;
-        "9"|"erlang"|"erl"|"rebar"|"rebar3")
-            ome_check_install "erl" "erlang"
-            rebar3 new release $proj_name
-            cd $proj_root
-            $EDITOR "apps/${proj_name}/src/${proj_name}_app.erl"
-            ;;
-        "10"|"elixir"|"elx"|"ex")
-            ome_check_install "mix" "elixir"
-            mix new $proj_name
-            cd $proj_root
-            $EDITOR "lib/${proj_name}.ex"
-            ;;
-        "11"|"golang"|"go")
-            ome_check_install "go" "golang"
-            mkdir -p $proj_root
-            cd $proj_root
-            # dep init
-            # $EDITOR "Gopkg.toml"
-            go mod init $proj_name
-            # $EDITOR "go.mod"
-            $EDITOR "main.go"
-            ;;
-        "12"|"groovy")
-            ome_check_install "gradle" "jvm"
-            mkdir -p $proj_root
-            cd $proj_root
-            gradle init --type groovy-application --test-framework spock \
-                   --dsl groovy --project-name $proj_name --package $proj_name
-            $EDITOR "src/main/groovy/$proj_name/App.groovy"
-            ;;
-        "13"|"haskell"|"hs")
-            ome_check_install "stack" "haskell"
-            stack new $proj_name
-            cd $proj_root
-            $EDITOR "src/Main.hs"
-            ;;
-        "14"|"java")
-            ome_check_install "gradle" "jvm"
-            mkdir -p $proj_root
-            cd $proj_root
-            gradle init --type java-application --test-framework spock \
-                   --dsl kotlin --project-name $proj_name --package $proj_name
-            $EDITOR "src/main/java/$proj_name/App.java"
-            ;;
-        "15"|"kotlin"|"kt")
-            ome_check_install "gradle" "kotlin"
-            mkdir -p $proj_root
-            cd $proj_root
-            gradle init --type kotlin-application --test-framework kotlintest \
-                   --dsl kotlin --project-name $proj_name --package $proj_name
-            $EDITOR "src/main/kotlin/$proj_name/App.kt"
-            ;;
-        "16"|"nim")
-            ome_check_install "nimble" "nim"
-            nimble init $proj_name
-            cd $proj_root
-            $EDITOR "src/${proj_name}.nim"
-            ;;
-        "17"|"nodejs"|"npm")
-            ome_check_install "npm" "nodejs"
-            mkdir -p $proj_root
-            cd $proj_root
-            cp -r $OME_WS/projects/nodejs/https_server/* $proj_root
-            ncu -u --packageFile package.json
-            npm install
-            $EDITOR "package.json"
-            ;;
-        "17"|"nodejs-grunt"|"grunt")
-            ome_check_install "npm" "nodejs"
-            mkdir -p $proj_root
-            cd $proj_root
-            echo "module.exports = function(grunt) {" >> Gruntfile.js
-            echo "    // Do grunt-related things in here" >> Gruntfile.js
-            echo "};" >> Gruntfile.js
-            npm init
-            npm install grunt --save-dev
-            npm install grunt-contrib-jshint --save-dev
-            $EDITOR "Gruntfile.js"
-            ;;
-        "18"|"nodejs-gulp"|"gulp")
-            ome_check_install "npm" "nodejs"
-            mkdir -p $proj_root
-            cd $proj_root
-            echo "var gulp = require('gulp');" >> gulpfile.js
-            echo "gulp.task('default', function() {" >> gulpfile.js
-            echo "" >> gulpfile.js
-            echo "});" >> gulpfile.js
-            npm init
-            npm install gulp --save-dev
-            $EDITOR "gulpfile.js"
-            ;;
-        "19"|"ocaml"|"ml")
-            ome_check_install "opam" "ocaml"
-            ohai --ml --bin $proj_name
-            cd $proj_root
-            $EDITOR "lib/Main.ml"
-            ;;
-        "20"|"ocaml-bs"|"bs-ocaml")
-            ome_check_install "bsb" "ocaml"
-            bsb -init $proj_name -theme basic-reason
-            cd $proj_root
-            mv src/demo.ml src/${proj_name}.ml
-            $EDITOR "src/${proj_name}.ml"
-            ;;
-        "21"|"perl"|"pl")
-            ome_check_install "cpanm" "perl"
-            mkdir -p $proj_root
-            cd $proj_root
-            echo '#!/usr/bin/perl -w' >> ${proj_name}.pl
-            echo '# assume these two lines are in all subsequent examples' >> ${proj_name}.pl
-            echo 'use strict;' >> ${proj_name}.pl
-            echo 'use warnings;' >> ${proj_name}.pl
-            echo '' >> ${proj_name}.pl
-            echo '# Print a message.' >> ${proj_name}.pl
-            echo 'print "Hello, World!\n";' >> ${proj_name}.pl
-            chmod +x ./${proj_name}.pl
-            $EDITOR "${proj_name}.pl"
-            ;;
-        "22"|"php"|"composer")
-            ome_check_install "nimble" "nim"
-            php composer.phar create-project doctrine/orm $proj_name 1.0
-            cd $proj_root
-            $EDITOR "composer.json"
-            ;;
-        "23"|"python"|"py"|"pipenv")
-            ome_check_install "pipenv" "python"
-            mkdir -p $proj_root
-            cd $proj_root
-            # pipenv --three install
-
-            echo '#!/usr/bin/env python3' >> ${proj_name}.py
-            echo '# -*- coding: utf-8 -*-' >> ${proj_name}.py
-            echo '' >> ${proj_name}.py
-            echo 'import os' >> ${proj_name}.py
-            echo '' >> ${proj_name}.py
-            echo 'def main():' >> ${proj_name}.py
-            echo "    print('Hello World!')" >> ${proj_name}.py
-            echo '' >> ${proj_name}.py
-            echo 'if __name__ == "__main__":' >> ${proj_name}.py
-            echo '    main()' >> ${proj_name}.py
-            chmod +x ./${proj_name}.py
-            # $EDITOR "Pipfile"
-            $EDITOR ${proj_name}.py
-            ;;
-        "24"|"poetry")
-            ome_check_install "poetry" "python"
-            poetry new $proj_name
-            cd $proj_root
-            $EDITOR "pyproject.toml"
-            ;;
-        "25"|"hatch")
-            ome_check_install "hatch" "python"
-            hatch new $proj_name
-            cd $proj_root
-            $EDITOR "pyproject.toml"
-            ;;
-        "26"|"reason"|"re")
-            ome_check_install "opam" "ocaml"
-            ohai --bin $proj_name
-            cd $proj_root
-            $EDITOR "lib/Main.re"
-            ;;
-        "27"|"reason-bs"|"bs-reason")
-            ome_check_install "bsb" "ocaml"
-            bsb -init $proj_name -theme basic-reason
-            cd $proj_root
-            mv src/Demo.re src/${proj_name}.re
-            $EDITOR "src/${proj_name}.re"
-            ;;
-        "28"|"ruby"|"rb")
-            ome_check_install "bundle" "ruby"
-            mkdir -p $proj_root
-            cd $proj_root
-            bundle init
-            $EDITOR "Gemfile"
-            ;;
-        "29"|"rust"|"rs")
-            ome_check_install "cargo" "rust"
-            cargo new $proj_name --bin
-            cd $proj_root
-            # $EDITOR "Cargo.toml"
-            $EDITOR "src/main.rs"
-            ;;
-        "30"|"scala")
-            ome_check_install "gradle" "jvm"
-            mkdir -p $proj_root
-            cd $proj_root
-            gradle init --type scala-library --test-framework scalatest \
-                   --dsl kotlin --project-name $proj_name --package $proj_name
-            $EDITOR "src/main/scala/$proj_name/App.scala"
-            ;;
-        "31"|"swift")
-            ome_check_install "swift" "swift"
-            mkdir -p $proj_root
-            cd $proj_root
-            swift package init --type executable
-            $EDITOR "Sources/main.swift"
-            ;;
-        "32"|"pony")
-            ome_check_install "ponyc" "pony"
-            mkdir -p $proj_root
-            cd $proj_root
-            $EDITOR "main.pony"
-            ;;
-        "q") exit;;
-    esac
-    echo "root:$proj_root"
-    if [ -d "$proj_root" ]; then
-        cd $proj_root
-        cp -u $SELF_DIR/../conf/project/.editorconfig $proj_root
-        if [ ! -d "$proj_root/.git" ]; then
-            git init
-        fi
-        ome_show_dir
-    fi
-
+  if [ -d $proj_root ]; then
+    echo "'$proj_root' already exist!"
     cd $oldir
+    exit
+  fi
+
+  mkdir -p $proj_ws
+  cd $proj_ws
+  proj_ws=`pwd`
+  case "$proj_lang" in
+    "0"|"c"|"C"|"cc"|"CC")
+      gen_cmake_file $proj_root "c" "0"
+      cd $proj_root
+      echo ".git/" >> .gitignore
+      echo "build/" >> .gitignore
+      echo "compile_commands.json" >> .gitignore
+      gen_clang_format
+      # $EDITOR "CMakeLists.txt"
+      # mkdir -p src
+      $EDITOR "src/main.c"
+      ;;
+    "1"|"c++"|"C++"|"cpp"|"CPP"|"cxx"|"CXX")
+      gen_cmake_file $proj_root "cpp" "0"
+      cd $proj_root
+      echo ".git/" >> .gitignore
+      echo "build/" >> .gitignore
+      echo "compile_commands.json" >> .gitignore
+      gen_clang_format
+      # $EDITOR "CMakeLists.txt"
+      # mkdir -p src
+      $EDITOR "src/main.cpp"
+      ;;
+    "luminus")
+      ome_check_install "lein" "clj"
+      lein new luminus $proj_name +reagent +swagger +h2
+      cd $proj_root
+      # local aa='[clj-commons/secretary "1.2.4"]'
+      # local bb='[org.flatland/ordered "1.5.7"] [clj-commons/secretary "1.2.4"]'
+      # sed -i 's#$aa#$bb#g' project.clj
+      $EDITOR "project.clj"
+      ;;
+    "2"|"clojure"|"clj"|"pedestal")
+      ome_check_install "lein" "clj"
+      lein new pedestal-service $proj_name +reagent +swagger +h2
+      cd $proj_root
+      $EDITOR "project.clj"
+      ;;
+    "3"|"hoplon")
+      ome_check_install "lein" "clj"
+      boot -d boot/new new -t hoplon -n $proj_name
+      cd $proj_root
+      $EDITOR "project.clj"
+      ;;
+    "4"|"fulcro")
+      ome_check_install "lein" "clj"
+      lein new fulcro $proj_name
+      cd $proj_root
+      $EDITOR "project.clj"
+      ;;
+    "5"|"clojurescript"|"cljs"|"shadow-cljs")
+      ome_check_install "npm" "nodejs"
+      npx create-cljs-project $proj_name
+      mkdir -p $proj_root/src/main/{server,client}
+      cd $proj_root
+      npm install shadow-cljs --save-dev
+      npm install express --save
+      echo "#!/usr/bin/env sh" >> repl.sh
+      echo "" >> repl.sh
+      echo "npx shadow-cljs node-repl" >> repl.sh
+      echo "# or" >> repl.sh
+      echo "# npx shadow-cljs browser-repl" >> repl.sh
+      # $EDITOR "shadow-cljs.edn"
+      cd src/main/server
+      wget https://raw.githubusercontent.com/damon-kwok/cljs-example/master/src/main/server/core.cljs
+      cd ../client/
+      wget https://raw.githubusercontent.com/damon-kwok/cljs-example/master/src/main/client/core.cljs
+      # $EDITOR "src/main/$proj_name/core.cljs"
+      $EDITOR "core.cljs"
+      ;;
+    "6"|"figwheel")
+      ome_check_install "lein" "clj"
+      lein new figwheel $proj_name -- --reagent
+      cd $proj_root
+      $EDITOR "project.clj"
+      ;;
+    "7"|"commonlisp"|"cl"|"roswell")
+      ome_check_install "ros" "roswell"
+      mkdir -p $proj_root
+      cd $proj_root
+      ros init main
+      $EDITOR "main.ros"
+      ;;
+    "8"|"crystall")
+      ome_check_install "crystal" "crystal"
+      ome install crystal
+      ;;
+    "9"|"erlang"|"erl"|"rebar"|"rebar3")
+      ome_check_install "erl" "erlang"
+      rebar3 new release $proj_name
+      cd $proj_root
+      $EDITOR "apps/${proj_name}/src/${proj_name}_app.erl"
+      ;;
+    "10"|"elixir"|"elx"|"ex")
+      ome_check_install "mix" "elixir"
+      mix new $proj_name
+      cd $proj_root
+      $EDITOR "lib/${proj_name}.ex"
+      ;;
+    "11"|"golang"|"go")
+      ome_check_install "go" "golang"
+      mkdir -p $proj_root
+      cd $proj_root
+      # dep init
+      # $EDITOR "Gopkg.toml"
+      go mod init $proj_name
+      # $EDITOR "go.mod"
+      $EDITOR "main.go"
+      ;;
+    "12"|"groovy")
+      ome_check_install "gradle" "jvm"
+      mkdir -p $proj_root
+      cd $proj_root
+      gradle init --type groovy-application --test-framework spock \
+             --dsl groovy --project-name $proj_name --package $proj_name
+      $EDITOR "src/main/groovy/$proj_name/App.groovy"
+      ;;
+    "13"|"haskell"|"hs")
+      ome_check_install "stack" "haskell"
+      stack new $proj_name
+      cd $proj_root
+      $EDITOR "src/Main.hs"
+      ;;
+    "14"|"java")
+      ome_check_install "gradle" "jvm"
+      mkdir -p $proj_root
+      cd $proj_root
+      gradle init --type java-application --test-framework spock \
+             --dsl kotlin --project-name $proj_name --package $proj_name
+      $EDITOR "src/main/java/$proj_name/App.java"
+      ;;
+    "15"|"kotlin"|"kt")
+      ome_check_install "gradle" "kotlin"
+      mkdir -p $proj_root
+      cd $proj_root
+      gradle init --type kotlin-application --test-framework kotlintest \
+             --dsl kotlin --project-name $proj_name --package $proj_name
+      $EDITOR "src/main/kotlin/$proj_name/App.kt"
+      ;;
+    "16"|"nim")
+      ome_check_install "nimble" "nim"
+      nimble init $proj_name
+      cd $proj_root
+      $EDITOR "src/${proj_name}.nim"
+      ;;
+    "17"|"nodejs"|"npm")
+      ome_check_install "npm" "nodejs"
+      mkdir -p $proj_root
+      cd $proj_root
+      cp -r $OME_WS/projects/nodejs/https_server/* $proj_root
+      ncu -u --packageFile package.json
+      npm install
+      $EDITOR "package.json"
+      ;;
+    "17"|"nodejs-grunt"|"grunt")
+      ome_check_install "npm" "nodejs"
+      mkdir -p $proj_root
+      cd $proj_root
+      echo "module.exports = function(grunt) {" >> Gruntfile.js
+      echo "    // Do grunt-related things in here" >> Gruntfile.js
+      echo "};" >> Gruntfile.js
+      npm init
+      npm install grunt --save-dev
+      npm install grunt-contrib-jshint --save-dev
+      $EDITOR "Gruntfile.js"
+      ;;
+    "18"|"nodejs-gulp"|"gulp")
+      ome_check_install "npm" "nodejs"
+      mkdir -p $proj_root
+      cd $proj_root
+      echo "var gulp = require('gulp');" >> gulpfile.js
+      echo "gulp.task('default', function() {" >> gulpfile.js
+      echo "" >> gulpfile.js
+      echo "});" >> gulpfile.js
+      npm init
+      npm install gulp --save-dev
+      $EDITOR "gulpfile.js"
+      ;;
+    "19"|"ocaml"|"ml")
+      ome_check_install "opam" "ocaml"
+      ohai --ml --bin $proj_name
+      cd $proj_root
+      $EDITOR "lib/Main.ml"
+      ;;
+    "20"|"ocaml-bs"|"bs-ocaml")
+      ome_check_install "bsb" "ocaml"
+      bsb -init $proj_name -theme basic-reason
+      cd $proj_root
+      mv src/demo.ml src/${proj_name}.ml
+      $EDITOR "src/${proj_name}.ml"
+      ;;
+    "21"|"perl"|"pl")
+      ome_check_install "cpanm" "perl"
+      mkdir -p $proj_root
+      cd $proj_root
+      echo '#!/usr/bin/perl -w' >> ${proj_name}.pl
+      echo '# assume these two lines are in all subsequent examples' >> ${proj_name}.pl
+      echo 'use strict;' >> ${proj_name}.pl
+      echo 'use warnings;' >> ${proj_name}.pl
+      echo '' >> ${proj_name}.pl
+      echo '# Print a message.' >> ${proj_name}.pl
+      echo 'print "Hello, World!\n";' >> ${proj_name}.pl
+      chmod +x ./${proj_name}.pl
+      $EDITOR "${proj_name}.pl"
+      ;;
+    "22"|"php"|"composer")
+      ome_check_install "nimble" "nim"
+      php composer.phar create-project doctrine/orm $proj_name 1.0
+      cd $proj_root
+      $EDITOR "composer.json"
+      ;;
+    "23"|"python"|"py"|"pipenv")
+      ome_check_install "pipenv" "python"
+      mkdir -p $proj_root
+      cd $proj_root
+      # pipenv --three install
+
+      echo '#!/usr/bin/env python3' >> ${proj_name}.py
+      echo '# -*- coding: utf-8 -*-' >> ${proj_name}.py
+      echo '' >> ${proj_name}.py
+      echo 'import os' >> ${proj_name}.py
+      echo '' >> ${proj_name}.py
+      echo 'def main():' >> ${proj_name}.py
+      echo "    print('Hello World!')" >> ${proj_name}.py
+      echo '' >> ${proj_name}.py
+      echo 'if __name__ == "__main__":' >> ${proj_name}.py
+      echo '    main()' >> ${proj_name}.py
+      chmod +x ./${proj_name}.py
+      # $EDITOR "Pipfile"
+      $EDITOR ${proj_name}.py
+      ;;
+    "24"|"poetry")
+      ome_check_install "poetry" "python"
+      poetry new $proj_name
+      cd $proj_root
+      $EDITOR "pyproject.toml"
+      ;;
+    "25"|"hatch")
+      ome_check_install "hatch" "python"
+      hatch new $proj_name
+      cd $proj_root
+      $EDITOR "pyproject.toml"
+      ;;
+    "26"|"reason"|"re")
+      ome_check_install "opam" "ocaml"
+      ohai --bin $proj_name
+      cd $proj_root
+      $EDITOR "lib/Main.re"
+      ;;
+    "27"|"reason-bs"|"bs-reason")
+      ome_check_install "bsb" "ocaml"
+      bsb -init $proj_name -theme basic-reason
+      cd $proj_root
+      mv src/Demo.re src/${proj_name}.re
+      $EDITOR "src/${proj_name}.re"
+      ;;
+    "28"|"ruby"|"rb")
+      ome_check_install "bundle" "ruby"
+      mkdir -p $proj_root
+      cd $proj_root
+      bundle init
+      $EDITOR "Gemfile"
+      ;;
+    "29"|"rust"|"rs")
+      ome_check_install "cargo" "rust"
+      cargo new $proj_name --bin
+      cd $proj_root
+      # $EDITOR "Cargo.toml"
+      $EDITOR "src/main.rs"
+      ;;
+    "30"|"scala")
+      ome_check_install "gradle" "jvm"
+      mkdir -p $proj_root
+      cd $proj_root
+      gradle init --type scala-library --test-framework scalatest \
+             --dsl kotlin --project-name $proj_name --package $proj_name
+      $EDITOR "src/main/scala/$proj_name/App.scala"
+      ;;
+    "31"|"swift")
+      ome_check_install "swift" "swift"
+      mkdir -p $proj_root
+      cd $proj_root
+      swift package init --type executable
+      $EDITOR "Sources/main.swift"
+      ;;
+    "32"|"pony")
+      ome_check_install "ponyc" "pony"
+      mkdir -p $proj_root
+      cd $proj_root
+      $EDITOR "main.pony"
+      ;;
+    "q") exit;;
+  esac
+  echo "root:$proj_root"
+  if [ -d "$proj_root" ]; then
+    cd $proj_root
+    cp -u $SELF_DIR/../conf/project/.editorconfig $proj_root
+    if [ ! -d "$proj_root/.git" ]; then
+      git init
+    fi
+
+    if [ ! -e "$proj_root/.gitignore" ]; then
+      echo "" >> $proj_root/.gitignore
+    fi
+    $proj_root
+    ome_show_dir
+  fi
+
+  cd $oldir
 }
 ome_app_wizard $@

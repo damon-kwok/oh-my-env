@@ -4,213 +4,213 @@ mkdir -p $HOME/Downloads/
 
 
 toolchain_install() {
-    local oldir=`pwd`
-    ome_init
-    # core toolchain
-    ome_install cc golang rust nodejs jvm clj cljs roswell python
-    ome_install erlang elixir nim
+  local oldir=`pwd`
+  ome_init
+  # core toolchain
+  ome_install cc golang rust nodejs jvm clj cljs roswell python
+  ome_install erlang elixir nim
 
-    # extra toolchain
-    # cmake_install
-    # gyp_install
-    # waf_install
+  # extra toolchain
+  # cmake_install
+  # gyp_install
+  # waf_install
 
-    # ue4_install
+  # ue4_install
 
-    #haskell
-    # if [ ! -d "$HOME/.stack/" ]; then
-    # mkdir $HOME/.stack/
-    # cp $OME_ROOT/cache/bin/config.yaml $HOME/.stack/
-    # fi
-    # stack update
-    # stack upgrade
-    cd $oldir
+  #haskell
+  # if [ ! -d "$HOME/.stack/" ]; then
+  # mkdir $HOME/.stack/
+  # cp $OME_ROOT/cache/bin/config.yaml $HOME/.stack/
+  # fi
+  # stack update
+  # stack upgrade
+  cd $oldir
 }
 
 apt_dist_upgrade() {
-    local oldir=`pwd`
-    sudo apt update && sudo apt dist-upgrade && sudo apt autoremove && \
-	    rosdep update && bash-it update && \
-	    rebar3 local upgrade && lein upgrade && \
-	    cargo update && rustup component add rust-src && cargo install --force racer
+  local oldir=`pwd`
+  sudo apt update && sudo apt dist-upgrade && sudo apt autoremove && \
+	  rosdep update && bash-it update && \
+	  rebar3 local upgrade && lein upgrade && \
+	  cargo update && rustup component add rust-src && cargo install --force racer
 
-    toolchain_install
-    cd $oldir
+  toolchain_install
+  cd $oldir
 }
 
 blog_localserver() {
-    local oldir=`pwd`
-    cd $HOME/workspace/projects/nodejs/http_server
-    npm update
-    node $HOME/workspace/projects/nodejs/http_server/index.js $HOME/projects/me/blog
-    cd $oldir
+  local oldir=`pwd`
+  cd $HOME/workspace/projects/nodejs/http_server
+  npm update
+  node $HOME/workspace/projects/nodejs/http_server/index.js $HOME/projects/me/blog
+  cd $oldir
 }
 
 steam_on_freebsd() {
-    local oldir=`pwd`
-    # home: https://github.com/SteamOnFreeBSD/SteamOnFreeBSD
-    cd $HOME
-    if [ "$OME_OS" == "$OS_FREEBSD" ]; then
-        sudo pkg install deb2targz rpm2cpio doas
-        if [ ! -e /usr/local/etc/doas.conf ]; then
-	        touch /usr/local/etc/doas.conf
-	        sudo sh -c 'echo "permit nopass keepenv `whoami`" >> /usr/local/etc/doas.conf'
-        fi
-
-        if [ ! -e steam.deb ]; then
-	        fetch http://media.steampowered.com/client/installer/steam.deb
-        fi
-
-        deb2targz steam.deb
-        tar -zxvf steam.tar.gz -C /
-        # git clone https://github.com/SteamOnFreeBSD/SteamOnFreeBSD.git
-        github_upgrade SteamOnFreeBSD/SteamOnFreeBSD $HOME/SteamOnFreeBSD
-        cd $HOME/SteamOnFreeBSD
-
-        ./install_x86_64.sh
-        ./steamrun
+  local oldir=`pwd`
+  # home: https://github.com/SteamOnFreeBSD/SteamOnFreeBSD
+  cd $HOME
+  if [ "$OME_OS" == "$OS_FREEBSD" ]; then
+    sudo pkg install deb2targz rpm2cpio doas
+    if [ ! -e /usr/local/etc/doas.conf ]; then
+	    touch /usr/local/etc/doas.conf
+	    sudo sh -c 'echo "permit nopass keepenv `whoami`" >> /usr/local/etc/doas.conf'
     fi
-    cd $oldir
+
+    if [ ! -e steam.deb ]; then
+	    fetch http://media.steampowered.com/client/installer/steam.deb
+    fi
+
+    deb2targz steam.deb
+    tar -zxvf steam.tar.gz -C /
+    # git clone https://github.com/SteamOnFreeBSD/SteamOnFreeBSD.git
+    github_upgrade SteamOnFreeBSD/SteamOnFreeBSD $HOME/SteamOnFreeBSD
+    cd $HOME/SteamOnFreeBSD
+
+    ./install_x86_64.sh
+    ./steamrun
+  fi
+  cd $oldir
 }
 
 show_os() {
-    # /dev/null
-    if which apt-get > /dev/null 2>&1; then
-        echo "Debian/Ubuntu/Mint"
-    elif which dnf > /dev/null 2>&1; then
-        echo "Fedora/Redhat/CentOS"
-        sudo dnf install automake libcurl-devel
-    elif which yum > /dev/null 2>&1; then
-        echo "CentOS"
-        sudo yum install zlib-devel
-    elif which pkg > /dev/null 2>&1; then
-        echo "FreeBSD"
-    elif which trizen > /dev/null 2>&1; then
-        echo "ArchLinux/Manjaro"
-    elif which pacman > /dev/null 2>&1; then
-        echo "MSYS2"
-    elif which nin-shell > /dev/null 2>&1; then
-        echo "NixOS"
-    fi
+  # /dev/null
+  if which apt-get > /dev/null 2>&1; then
+    echo "Debian/Ubuntu/Mint"
+  elif which dnf > /dev/null 2>&1; then
+    echo "Fedora/Redhat/CentOS"
+    sudo dnf install automake libcurl-devel
+  elif which yum > /dev/null 2>&1; then
+    echo "CentOS"
+    sudo yum install zlib-devel
+  elif which pkg > /dev/null 2>&1; then
+    echo "FreeBSD"
+  elif which trizen > /dev/null 2>&1; then
+    echo "ArchLinux/Manjaro"
+  elif which pacman > /dev/null 2>&1; then
+    echo "MSYS2"
+  elif which nin-shell > /dev/null 2>&1; then
+    echo "NixOS"
+  fi
 
-    # Other Linux List: Alpine Slitaz Mageia Gentoo openSUSE Solaris(Solaris-OpenCSW:like windows-cygwin)
-    # https://git-scm.com/download/linux
+  # Other Linux List: Alpine Slitaz Mageia Gentoo openSUSE Solaris(Solaris-OpenCSW:like windows-cygwin)
+  # https://git-scm.com/download/linux
 }
 
 cinnamon_install() {
-    tip "cinnamon_install"
-    # https://launchpad.net/~embrosyn/+archive/ubuntu/cinnamon
-    sudo add-apt-repository -y ppa:embrosyn/cinnamon
-    sudo apt-get update
-    sudo apt install -y cinnamon
+  tip "cinnamon_install"
+  # https://launchpad.net/~embrosyn/+archive/ubuntu/cinnamon
+  sudo add-apt-repository -y ppa:embrosyn/cinnamon
+  sudo apt-get update
+  sudo apt install -y cinnamon
 
-    # bsd
-    sudo pkg install cinnamon cinnamon-desktop \
-         cinnamon-menus cinnamon-screensaver \
-         cinnamon-session \
-         cinnamon-settings-daemon \
-         cinnamon-translations
+  # bsd
+  sudo pkg install cinnamon cinnamon-desktop \
+       cinnamon-menus cinnamon-screensaver \
+       cinnamon-session \
+       cinnamon-settings-daemon \
+       cinnamon-translations
 }
 
 swapkey_init() {
-    readp "wayland mode?"
-    if [ $? -eq 1 ]; then
-        setxkbmap -option ctrl:swapcaps
-        find_str "setxkbmap" $HOME/.profile
-        if [ $? -eq 0 ]; then
-            echo "setxkbmap -option ctrl:swapcaps" >> $HOME/.profile
-        fi
-    else
-        if [ ! -e $HOME/.Xmodmap ]; then
-            echo "!" >> $HOME/.Xmodmap
-            echo "! Swap Caps_Lock and Control_R" >> $HOME/.Xmodmap
-            echo "!" >> $HOME/.Xmodmap
-            echo "remove Lock = Caps_Lock" >> $HOME/.Xmodmap
-            echo "remove Control = Control_R" >> $HOME/.Xmodmap
-            echo "keysym Control_R = Caps_Lock" >> $HOME/.Xmodmap
-            echo "keysym Caps_Lock = Control_R" >> $HOME/.Xmodmap
-            echo "add Lock = Caps_Lock" >> $HOME/.Xmodmap
-            echo "add Control = Control_R" >> $HOME/.Xmodmap
-        fi
-
-        find_str "xmodmap" $HOME/.xinitrc
-        if [ $? -eq 0 ]; then
-            echo "xmodmap $HOME/.Xmodmap" >> $HOME/.xinitrc
-        fi
-        xmodmap $HOME/.Xmodmap
+  readp "wayland mode?"
+  if [ $? -eq 1 ]; then
+    setxkbmap -option ctrl:swapcaps
+    find_str "setxkbmap" $HOME/.profile
+    if [ $? -eq 0 ]; then
+      echo "setxkbmap -option ctrl:swapcaps" >> $HOME/.profile
     fi
+  else
+    if [ ! -e $HOME/.Xmodmap ]; then
+      echo "!" >> $HOME/.Xmodmap
+      echo "! Swap Caps_Lock and Control_R" >> $HOME/.Xmodmap
+      echo "!" >> $HOME/.Xmodmap
+      echo "remove Lock = Caps_Lock" >> $HOME/.Xmodmap
+      echo "remove Control = Control_R" >> $HOME/.Xmodmap
+      echo "keysym Control_R = Caps_Lock" >> $HOME/.Xmodmap
+      echo "keysym Caps_Lock = Control_R" >> $HOME/.Xmodmap
+      echo "add Lock = Caps_Lock" >> $HOME/.Xmodmap
+      echo "add Control = Control_R" >> $HOME/.Xmodmap
+    fi
+
+    find_str "xmodmap" $HOME/.xinitrc
+    if [ $? -eq 0 ]; then
+      echo "xmodmap $HOME/.Xmodmap" >> $HOME/.xinitrc
+    fi
+    xmodmap $HOME/.Xmodmap
+  fi
 }
 
 xbindkey_install() {
-    sudo apt install xbindkeys dmenu
+  sudo apt install xbindkeys dmenu
 
-    # gen $HOME/.xbindkeysrc
-    # if [ ! -f $HOME/.xbindkeysrc ]; then
-    #   xbindkeys --defaults > $HOME/.xbindkeysrc
-    # fi
+  # gen $HOME/.xbindkeysrc
+  # if [ ! -f $HOME/.xbindkeysrc ]; then
+  #   xbindkeys --defaults > $HOME/.xbindkeysrc
+  # fi
 
-    # gen $HOME/.xbindkeysrc.scm
-    if [ ! -f $HOME/.xbindkeysrc.scm ]; then
-        xbindkeys --defaults-guile > $HOME/.xbindkeysrc.scm
-        echo "(xbindkey '(control alt e) \"dmenu_run\")" >> $HOME/.xbindkeysrc.scm
-    fi
+  # gen $HOME/.xbindkeysrc.scm
+  if [ ! -f $HOME/.xbindkeysrc.scm ]; then
+    xbindkeys --defaults-guile > $HOME/.xbindkeysrc.scm
+    echo "(xbindkey '(control alt e) \"dmenu_run\")" >> $HOME/.xbindkeysrc.scm
+  fi
 }
 
 grub_nomodeset() {
-    local bakname="grub-`date +%Y-%m-%d@%H-%M-%S`.cfg"
-    cp /boot/grub/grub.cfg $HOME/$bakname
-    sudo perl -pi -e 's|quiet splash|nomodeset|g' /boot/grub/grub.cfg
+  local bakname="grub-`date +%Y-%m-%d@%H-%M-%S`.cfg"
+  cp /boot/grub/grub.cfg $HOME/$bakname
+  sudo perl -pi -e 's|quiet splash|nomodeset|g' /boot/grub/grub.cfg
 }
 
 i3_install() {
-    local olddir=`pwd`
-    echo "i3_install"
-    # {i3-wm } roxterm
-    sudo apt install -y i3 i3status i3lock dmenu feh xcompmgr scrot alsa-utils xrandr arandr
-    cd $olddir
+  local olddir=`pwd`
+  echo "i3_install"
+  # {i3-wm } roxterm
+  sudo apt install -y i3 i3status i3lock dmenu feh xcompmgr scrot alsa-utils xrandr arandr
+  cd $olddir
 }
 
 i3_mod_config() {
-    local olddir=`pwd`
-    echo "i3_config"
-    cd $HOME/.config/i3/
-    perl -pi -e 's|mod+semicolon|mod+apostrophe|g' $HOME/.config/i3/config
-    perl -pi -e 's|mod+j|mod+semicolon|g' $HOME/.config/i3/config
-    perl -pi -e 's|mod+k|mod+slash|g' $HOME/.config/i3/config
-    perl -pi -e 's|mod+l|mod+bracketleft|g' $HOME/.config/i3/config
+  local olddir=`pwd`
+  echo "i3_config"
+  cd $HOME/.config/i3/
+  perl -pi -e 's|mod+semicolon|mod+apostrophe|g' $HOME/.config/i3/config
+  perl -pi -e 's|mod+j|mod+semicolon|g' $HOME/.config/i3/config
+  perl -pi -e 's|mod+k|mod+slash|g' $HOME/.config/i3/config
+  perl -pi -e 's|mod+l|mod+bracketleft|g' $HOME/.config/i3/config
 
-    perl -pi -e 's|mod+Shift+semicolon|mod+Shift+apostrophe|g' $HOME/.config/i3/config
-    perl -pi -e 's|mod+Shift+j|mod+Shift+semicolon|g' $HOME/.config/i3/config
-    perl -pi -e 's|mod+Shift+k|mod+Shift+slash|g' $HOME/.config/i3/config
-    perl -pi -e 's|mod+Shift+l|mod+Shift+bracketleft|g' $HOME/.config/i3/config
+  perl -pi -e 's|mod+Shift+semicolon|mod+Shift+apostrophe|g' $HOME/.config/i3/config
+  perl -pi -e 's|mod+Shift+j|mod+Shift+semicolon|g' $HOME/.config/i3/config
+  perl -pi -e 's|mod+Shift+k|mod+Shift+slash|g' $HOME/.config/i3/config
+  perl -pi -e 's|mod+Shift+l|mod+Shift+bracketleft|g' $HOME/.config/i3/config
 
-    cd $olddir
+  cd $olddir
 }
 
 arandr_run() {
-    xrandr --output DVI-D-0 --off \
-           --output HDMI-0 --off \
-           --output DP-5 --off \
-           --output DP-4 --mode 1920x1080 --pos 1920x0 --rotate left \
-           --output DP-3 --off \
-           --output DP-2 --mode 1920x1080 --pos 0x735 --rotate normal \
-           --output DP-1 --off \
-           --output DP-0 --off
+  xrandr --output DVI-D-0 --off \
+         --output HDMI-0 --off \
+         --output DP-5 --off \
+         --output DP-4 --mode 1920x1080 --pos 1920x0 --rotate left \
+         --output DP-3 --off \
+         --output DP-2 --mode 1920x1080 --pos 0x735 --rotate normal \
+         --output DP-1 --off \
+         --output DP-0 --off
 }
 
 arandr_load() {
-    . $HOME/.screenlayout/default.sh
+  . $HOME/.screenlayout/default.sh
 }
 
 wine_install() {
-    local olddir=`pwd`
-    tip "wine_install"
-    sudo dpkg --add-architecture i386
-    wget -nc https://dl.winehq.org/wine-builds/Release.key
-    sudo apt-key add Release.key
-    sudo apt-add-repository -y https://dl.winehq.org/wine-builds/ubuntu/
+  local olddir=`pwd`
+  tip "wine_install"
+  sudo dpkg --add-architecture i386
+  wget -nc https://dl.winehq.org/wine-builds/Release.key
+  sudo apt-key add Release.key
+  sudo apt-add-repository -y https://dl.winehq.org/wine-builds/ubuntu/
 
-    sudo apt update
-    sudo apt install -y -_install-recommends wine-stable
-    cd $olddir
+  sudo apt update
+  sudo apt install -y -_install-recommends wine-stable
+  cd $olddir
 }

@@ -1,214 +1,214 @@
 #!/usr/bin/env sh
 
 basedev_install_clang_format() {
-    pushd $HOME
-    gen_clang_format
-    popd
+  pushd $HOME
+  gen_clang_format
+  popd
 }
 
 basedev_install_clang_github() {
-    local llvmdir=$OME_REPO/llvm_project_gitee
-    # github_upgrade llvm/llvm-project $llvmdir
-    gitee_upgrade aNovaCean/llvm-project $llvmdir
-    cd $llvmdir/
-    mkdir -p $llvmdir/llvm_build
-    cd $llvmdir/llvm_build
+  local llvmdir=$OME_REPO/llvm_project_gitee
+  # github_upgrade llvm/llvm-project $llvmdir
+  gitee_upgrade aNovaCean/llvm-project $llvmdir
+  cd $llvmdir/
+  mkdir -p $llvmdir/llvm_build
+  cd $llvmdir/llvm_build
 
-    tip "compile"
-    # Can include any of:
-    # clang, clang-tools-extra, libcxx, libcxxabi, libunwind, lldb,
-    # compiler-rt, lld, polly, or debuginfo-tests.
-    # Debug, Release, RelWithDebInfo, and MinSizeRel. Default is Debug.
-    # -DCMAKE_ASM_COMPILER=yasm
-    # -DCMAKE_MAKE_PROGRAM=make
+  tip "compile"
+  # Can include any of:
+  # clang, clang-tools-extra, libcxx, libcxxabi, libunwind, lldb,
+  # compiler-rt, lld, polly, or debuginfo-tests.
+  # Debug, Release, RelWithDebInfo, and MinSizeRel. Default is Debug.
+  # -DCMAKE_ASM_COMPILER=yasm
+  # -DCMAKE_MAKE_PROGRAM=make
 
-    cmake $llvmdir -G "Unix Makefiles" \
-          -DLLVM_ENABLE_PROJECTS="clang-tools-extra;" \
-          -DCMAKE_INSTALL_PREFIX=$OME_PREFIX \
-          -DCMAKE_BUILD_TYPE=Release \
-          -DLLVM_ENABLE_ASSERTIONS=OFF \
-          -DCMAKE_C_COMPILER=gcc \
-          -DCMAKE_CXX_COMPILER=g++ \
-          -DCMAKE_CXX_STANDARD=17 \
-          -DCMAKE_CXX_STANDARD_REQUIRED=ON \
-          -DCMAKE_CXX_EXTENSIONS=ON \
-          -DLLVM_TARGET_ARCH="x86_64" \
-          -DLLVM_TARGETS_TO_BUILD="X86" \
-          -DLLVM_BUILD_DOCS=OFF \
-          -DLLVM_ENABLE_DOXYGEN=OFF \
-          -DLLVM_ENABLE_SPHINX=OFF \
-          -DLLVM_BUILD_LLVM_DYLIB=ON \
-          -DLLVM_OPTIMIZED_TABLEGEN=ON \
-          -DLLVM_INCLUDE_TESTS=OFF \
-          -DBUILD_SHARED_LIBS=ON \
-          ../llvm
-    # cmake --build . --use-stderr
-    # make -j8
-    cmake --build . --use-stderr --config Release --target install
+  cmake $llvmdir -G "Unix Makefiles" \
+        -DLLVM_ENABLE_PROJECTS="clang-tools-extra;" \
+        -DCMAKE_INSTALL_PREFIX=$OME_PREFIX \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DLLVM_ENABLE_ASSERTIONS=OFF \
+        -DCMAKE_C_COMPILER=gcc \
+        -DCMAKE_CXX_COMPILER=g++ \
+        -DCMAKE_CXX_STANDARD=17 \
+        -DCMAKE_CXX_STANDARD_REQUIRED=ON \
+        -DCMAKE_CXX_EXTENSIONS=ON \
+        -DLLVM_TARGET_ARCH="x86_64" \
+        -DLLVM_TARGETS_TO_BUILD="X86" \
+        -DLLVM_BUILD_DOCS=OFF \
+        -DLLVM_ENABLE_DOXYGEN=OFF \
+        -DLLVM_ENABLE_SPHINX=OFF \
+        -DLLVM_BUILD_LLVM_DYLIB=ON \
+        -DLLVM_OPTIMIZED_TABLEGEN=ON \
+        -DLLVM_INCLUDE_TESTS=OFF \
+        -DBUILD_SHARED_LIBS=ON \
+        ../llvm
+  # cmake --build . --use-stderr
+  # make -j8
+  cmake --build . --use-stderr --config Release --target install
 }
 
 basedev_install_clang_git() {
-    # if [ "$OME_OS" = "$OS_MSYS2" ]; then
-    # msys2_llvm_install
-    # else
+  # if [ "$OME_OS" = "$OS_MSYS2" ]; then
+  # msys2_llvm_install
+  # else
 
-    # 1.
-    local llvmdir=$OME_REPO/llvm
-    git_upgrade "https://git.llvm.org" "git/llvm" $llvmdir
-    git_upgrade "https://git.llvm.org" "git/clang" $llvmdir/tools/clang
-    git_upgrade "https://git.llvm.org" "git/clang-tools-extra" $llvmdir/tools/clang/tools/extra
-    git_upgrade "https://git.llvm.org" "git/lld" $llvmdir/tools/lld
-    git_upgrade "https://git.llvm.org" "git/lldb" $llvmdir/tools/lldb
-    git_upgrade "https://git.llvm.org" "git/polly" $llvmdir/tools/polly
-    git_upgrade "https://git.llvm.org" "git/compiler-rt" $llvmdir/projects/compiler-rt
-    git_upgrade "https://git.llvm.org" "git/openmp" $llvmdir/projects/openmp
-    git_upgrade "https://git.llvm.org" "git/libcxx" $llvmdir/projects/libcxx
-    git_upgrade "https://git.llvm.org" "git/libcxxabi" $llvmdir/projects/libcxxabi
-    #
-    # git_upgrade "https://git.llvm.org" "git/test-suite" $llvmdir/projects/test-suite
-    #
-    cd $llvmdir/
-    git config branch.master.rebase true
-    mkdir -p $llvmdir/../llvm_build
-    cd $llvmdir/../llvm_build/
-    #
-    tip "compile"
-    if [ "$OME_OS" = "$OS_MSYS2" ] || [ "$OME_OS" = "$OS_CYGWIN" ]; then
-        cmake $llvmdir -G "$OME_MAKE" \
-              -DCMAKE_INSTALL_PREFIX=$OME_PREFIX \
-              -DCMAKE_BUILD_TYPE=Release \
-              -DCMAKE_C_COMPILER=gcc \
-              -DCMAKE_CXX_COMPILER=g++ \
-              -DCMAKE_CXX_STANDARD=17 \
-              -DCMAKE_CXX_STANDARD_REQUIRED=OFF \
-              -DCMAKE_CXX_EXTENSIONS=OFF \
-              -DLLVM_TARGET_ARCH="host" \
-              -DLLVM_TARGETS_TO_BUILD="X86" \
-              -DLLVM_ENABLE_DOXYGEN=ON \
-              -DLLVM_ENABLE_SPHINX=ON \
-              -DLLVM_BUILD_LLVM_DYLIB=ON \
-              -DLLVM_OPTIMIZED_TABLEGEN=ON \
-              -DLLVM_INCLUDE_TESTS=OFF
-    else
-        cmake $llvmdir -G "$OME_MAKE" \
-              -DCMAKE_INSTALL_PREFIX=$OME_PREFIX \
-              -DCMAKE_BUILD_TYPE=Release \
-              -DLLVM_TARGET_ARCH="host" \
-              -DLLVM_TARGETS_TO_BUILD="X86" \
-              -DLLVM_ENABLE_DOXYGEN=ON \
-              -DLLVM_ENABLE_SPHINX=ON \
-              -DLLVM_BUILD_LLVM_DYLIB=ON \
-              -DLLVM_OPTIMIZED_TABLEGEN=ON \
-              -DLLVM_INCLUDE_TESTS=OFF
-    fi
+  # 1.
+  local llvmdir=$OME_REPO/llvm
+  git_upgrade "https://git.llvm.org" "git/llvm" $llvmdir
+  git_upgrade "https://git.llvm.org" "git/clang" $llvmdir/tools/clang
+  git_upgrade "https://git.llvm.org" "git/clang-tools-extra" $llvmdir/tools/clang/tools/extra
+  git_upgrade "https://git.llvm.org" "git/lld" $llvmdir/tools/lld
+  git_upgrade "https://git.llvm.org" "git/lldb" $llvmdir/tools/lldb
+  git_upgrade "https://git.llvm.org" "git/polly" $llvmdir/tools/polly
+  git_upgrade "https://git.llvm.org" "git/compiler-rt" $llvmdir/projects/compiler-rt
+  git_upgrade "https://git.llvm.org" "git/openmp" $llvmdir/projects/openmp
+  git_upgrade "https://git.llvm.org" "git/libcxx" $llvmdir/projects/libcxx
+  git_upgrade "https://git.llvm.org" "git/libcxxabi" $llvmdir/projects/libcxxabi
+  #
+  # git_upgrade "https://git.llvm.org" "git/test-suite" $llvmdir/projects/test-suite
+  #
+  cd $llvmdir/
+  git config branch.master.rebase true
+  mkdir -p $llvmdir/../llvm_build
+  cd $llvmdir/../llvm_build/
+  #
+  tip "compile"
+  if [ "$OME_OS" = "$OS_MSYS2" ] || [ "$OME_OS" = "$OS_CYGWIN" ]; then
+    cmake $llvmdir -G "$OME_MAKE" \
+          -DCMAKE_INSTALL_PREFIX=$OME_PREFIX \
+          -DCMAKE_BUILD_TYPE=Release \
+          -DCMAKE_C_COMPILER=gcc \
+          -DCMAKE_CXX_COMPILER=g++ \
+          -DCMAKE_CXX_STANDARD=17 \
+          -DCMAKE_CXX_STANDARD_REQUIRED=OFF \
+          -DCMAKE_CXX_EXTENSIONS=OFF \
+          -DLLVM_TARGET_ARCH="host" \
+          -DLLVM_TARGETS_TO_BUILD="X86" \
+          -DLLVM_ENABLE_DOXYGEN=ON \
+          -DLLVM_ENABLE_SPHINX=ON \
+          -DLLVM_BUILD_LLVM_DYLIB=ON \
+          -DLLVM_OPTIMIZED_TABLEGEN=ON \
+          -DLLVM_INCLUDE_TESTS=OFF
+  else
+    cmake $llvmdir -G "$OME_MAKE" \
+          -DCMAKE_INSTALL_PREFIX=$OME_PREFIX \
+          -DCMAKE_BUILD_TYPE=Release \
+          -DLLVM_TARGET_ARCH="host" \
+          -DLLVM_TARGETS_TO_BUILD="X86" \
+          -DLLVM_ENABLE_DOXYGEN=ON \
+          -DLLVM_ENABLE_SPHINX=ON \
+          -DLLVM_BUILD_LLVM_DYLIB=ON \
+          -DLLVM_OPTIMIZED_TABLEGEN=ON \
+          -DLLVM_INCLUDE_TESTS=OFF
+  fi
 
-    cmake --build . --use-stderr --config Release --target install -- -j4
+  cmake --build . --use-stderr --config Release --target install -- -j4
 
-    # cd $llvmdir/../libcxx/
-    # cmake $llvmdir/projects/libcxx -G "$OME_MAKE" \
-        # -DCMAKE_INSTALL_PREFIX=$OME_PREFIX \
-        # -DCMAKE_BUILD_TYPE=Release \
-        # -DLLVM_PATH=path/to/llvm \
-        # -DLIBCXX_CXX_ABI=libcxxabi \
-        # -DLIBCXX_CXX_ABI_INCLUDE_PATHS="$llvmdir/projects/libcxxabi/include"
-    # ninja -j4
-    # ninja install
-    # fi
+  # cd $llvmdir/../libcxx/
+  # cmake $llvmdir/projects/libcxx -G "$OME_MAKE" \
+    # -DCMAKE_INSTALL_PREFIX=$OME_PREFIX \
+    # -DCMAKE_BUILD_TYPE=Release \
+    # -DLLVM_PATH=path/to/llvm \
+    # -DLIBCXX_CXX_ABI=libcxxabi \
+    # -DLIBCXX_CXX_ABI_INCLUDE_PATHS="$llvmdir/projects/libcxxabi/include"
+  # ninja -j4
+  # ninja install
+  # fi
 }
 
 basedev_install_clang_bin() {
-    get_os_type
-    case $OME_OS in
-        # Linux
-        # $OS_DEBIAN) ;;
-        # $OS_UBUNTU) ;;
-        $OS_DEBIAN|$OS_UBUNTU)
-            sudo apt install -y llvm-dev clang libclang-dev clang-format \
-                 libc++-dev libc++abi-dev
-            ;;
-        # $OS_REDHAT) ;;
-        # $OS_FEDORA) ;;
-        $OS_REDHAT|$OS_FEDORA)
-            sudo yum install -y llvm-dev clang-dev clang-format \
-                 libc++-devel libc++abi-devel
-            ;;
-        $OS_ARCH)
-            trizen -S llvm-svn clang-svn lld-svn lldb-svn
-            ;;
-        $OS_GENTOO) ;;
-        $OS_SUSE)
-            sudo zypper install llvm-devel clang-devel clang-format \
-                 libc++-devel libc++abi-devel
-            ;;
-        $OS_SLACKWARE) ;;
-        $OS_NIXOS) ;;
-        $OS_VOID) ;;
-        $OS_ALPINE) ;;
-        $OS_MAGEIA) ;;
-        $OS_SLITAZ) ;;
-        $OS_GUIXSD) ;;
-        # Unix
-        $OS_MACOS)
-            brew install llvm-devel clang-devel clang-format \
-                 libc++-devel libc++abi-devel
-            ;;
-        $OS_AIX) ;;
-        $OS_SOLARIS) ;;
-        $OS_FREEBSD)
-            sudo pkg install llvm-devel clang-devel
-            local tmp1=`which clangd-devel`
-            local tmp2=`which clang-format-devel`
-            sudo cp -rf $tmp1 `dirname $tmp1`/clangd
-            sudo cp -rf $tmp2 `dirname $tmp2`/clang-format
-            #clang-format
-            #libc++-devel libc++abi-devel
-            ;;
-        $OS_OPENBSD) ;;
-        $OS_NETBSD) ;;
-        $OS_DFBSD) ;;
-        # Windows
-        $OS_CYGWIN)
-            apt install clang libclang-devel git-clang-format libc++-devel libc++abi-devel
-            ;;
-        $OS_MSYS2)
-            pacman -S mingw-w64-x86_64-llvm \
-                   mingw-w64-x86_64-clang \
-                   mingw-w64-x86_64-clang-analyzer \
-                   mingw-w64-x86_64-clang-tools-extra \
-                   mingw-w64-x86_64-compiler-rt \
-                   mingw-w64-x86_64-lld \
-                   mingw-w64-x86_64-polly \
-                   mingw-w64-x86_64-compiler-rt \
-                   mingw-w64-x86_64-libblocksruntime \
-                   mingw-w64-x86_64-libc++ \
-                   mingw-w64-x86_64-libc++abi
-            ;;
-        # Other
-        $OS_UNKNOW) ;;
-    esac
+  get_os_type
+  case $OME_OS in
+    # Linux
+    # $OS_DEBIAN) ;;
+    # $OS_UBUNTU) ;;
+    $OS_DEBIAN|$OS_UBUNTU)
+      sudo apt install -y llvm-dev clang libclang-dev clang-format \
+           libc++-dev libc++abi-dev
+      ;;
+    # $OS_REDHAT) ;;
+    # $OS_FEDORA) ;;
+    $OS_REDHAT|$OS_FEDORA)
+      sudo yum install -y llvm-dev clang-dev clang-format \
+           libc++-devel libc++abi-devel
+      ;;
+    $OS_ARCH)
+      trizen -S llvm-svn clang-svn lld-svn lldb-svn
+      ;;
+    $OS_GENTOO) ;;
+    $OS_SUSE)
+      sudo zypper install llvm-devel clang-devel clang-format \
+           libc++-devel libc++abi-devel
+      ;;
+    $OS_SLACKWARE) ;;
+    $OS_NIXOS) ;;
+    $OS_VOID) ;;
+    $OS_ALPINE) ;;
+    $OS_MAGEIA) ;;
+    $OS_SLITAZ) ;;
+    $OS_GUIXSD) ;;
+    # Unix
+    $OS_MACOS)
+      brew install llvm-devel clang-devel clang-format \
+           libc++-devel libc++abi-devel
+      ;;
+    $OS_AIX) ;;
+    $OS_SOLARIS) ;;
+    $OS_FREEBSD)
+      sudo pkg install llvm-devel clang-devel
+      local tmp1=`which clangd-devel`
+      local tmp2=`which clang-format-devel`
+      sudo cp -rf $tmp1 `dirname $tmp1`/clangd
+      sudo cp -rf $tmp2 `dirname $tmp2`/clang-format
+      #clang-format
+      #libc++-devel libc++abi-devel
+      ;;
+    $OS_OPENBSD) ;;
+    $OS_NETBSD) ;;
+    $OS_DFBSD) ;;
+    # Windows
+    $OS_CYGWIN)
+      apt install clang libclang-devel git-clang-format libc++-devel libc++abi-devel
+      ;;
+    $OS_MSYS2)
+      pacman -S mingw-w64-x86_64-llvm \
+             mingw-w64-x86_64-clang \
+             mingw-w64-x86_64-clang-analyzer \
+             mingw-w64-x86_64-clang-tools-extra \
+             mingw-w64-x86_64-compiler-rt \
+             mingw-w64-x86_64-lld \
+             mingw-w64-x86_64-polly \
+             mingw-w64-x86_64-compiler-rt \
+             mingw-w64-x86_64-libblocksruntime \
+             mingw-w64-x86_64-libc++ \
+             mingw-w64-x86_64-libc++abi
+      ;;
+    # Other
+    $OS_UNKNOW) ;;
+  esac
 
 }
 
 clang_install() {
-    readp "install clang by source?"
-    if [ $? -eq 1 ]; then
-        basedev_install_clang_github
-    else
-        basedev_install_clang_bin
-    fi
+  readp "install clang by source?"
+  if [ $? -eq 1 ]; then
+    basedev_install_clang_github
+  else
+    basedev_install_clang_bin
+  fi
 
-    tip "config: clang_format"
-    basedev_install_clang_format
+  tip "config: clang_format"
+  basedev_install_clang_format
 }
 
 clang_uninstall() {
-    echo_error "'clang_uninstall' not implemented"
+  echo_error "'clang_uninstall' not implemented"
 }
 
 clang_exist_p() {
-    echo_error "'clang_exist_p' not implemented"
+  echo_error "'clang_exist_p' not implemented"
 }
 
 clang_info() {
-    echo_error ""
+  echo_error ""
 }

@@ -1,37 +1,37 @@
 #!/usr/bin/env sh
 
 books_install() {
-    ome_check_install "npm" "nodejs"
-    ome_check_install "hugo" "hugo"
+  ome_check_install "npm" "nodejs"
+  ome_check_install "hugo" "hugo"
 
-    # tip "pony-tutorial"
-    # github_upgrade KaiserY/trpl-zh-cn $OME_REPO/trpl-zh-cn
-    # cd $OME_REPO/trpl-zh-cn
-    # npm i -g vuepress
-    # vuepress build ./src
-    # vuepress dev ./src
+  # tip "pony-tutorial"
+  # github_upgrade KaiserY/trpl-zh-cn $OME_REPO/trpl-zh-cn
+  # cd $OME_REPO/trpl-zh-cn
+  # npm i -g vuepress
+  # vuepress build ./src
+  # vuepress dev ./src
 
-    tip "pony-tutorial"
-    github_upgrade damon-kwok/pony-tutorial-zh_CN $HOME/pony-tutorial
-    github_upgrade damon-kwok/pony-tutorial $HOME/pony-tutorial-en
+  tip "pony-tutorial"
+  github_upgrade damon-kwok/pony-tutorial-zh_CN $HOME/pony-tutorial
+  github_upgrade damon-kwok/pony-tutorial $HOME/pony-tutorial-en
 
-    cd $HOME/pony-tutorial
-    hugo
+  cd $HOME/pony-tutorial
+  hugo
 
-    # preview
-    # cd $HOME/workspace/projects/nodejs/http_server
-    # npm update
-    # node $HOME/workspace/projects/nodejs/http_server/index.js $HOME/pony-tutorial/public
+  # preview
+  # cd $HOME/workspace/projects/nodejs/http_server
+  # npm update
+  # node $HOME/workspace/projects/nodejs/http_server/index.js $HOME/pony-tutorial/public
 }
 
 books_uninstall() {
-    echo_error "'books_uninstall' not implemented"
+  echo_error "'books_uninstall' not implemented"
 }
 
 books_exist_p() {
-    echo_error "'books_exist_p' not implemented"
+  echo_error "'books_exist_p' not implemented"
 }
 
 books_info() {
-    echo_error ""
+  echo_error ""
 }

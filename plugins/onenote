@@ -1,17 +1,17 @@
 #!/usr/bin/env sh
 
 onenote_install() {
-    echo_error "'onenote_install' not implemented"
+  echo_error "'onenote_install' not implemented"
 }
 
 onenote_uninstall() {
-    echo_error "'onenote_uninstall' not implemented"
+  echo_error "'onenote_uninstall' not implemented"
 }
 
 onenote_exist_p() {
-    echo_error "'onenote_exist_p' not implemented"
+  echo_error "'onenote_exist_p' not implemented"
 }
 
 onenote_info() {
-    echo_error ""
+  echo_error ""
 }

@@ -1,25 +1,25 @@
 #!/usr/bin/env sh
 
 pmccabe_install() {
-    github_upgrade datacom-teracom/pmccabe $OME_REPO/pmccabe
-    cd $OME_REPO/pmccabe/
-    make
-    
-    chmod +x $OME_REPO/pmccabe/pmccabe
-    chmod +x $OME_REPO/pmccabe/decomment
-    
-    cp -rf $OME_REPO/pmccabe/pmccabe $OME_PREFIX/bin/
-    cp -rf $OME_REPO/pmccabe/decomment $OME_PREFIX/bin/
+  github_upgrade datacom-teracom/pmccabe $OME_REPO/pmccabe
+  cd $OME_REPO/pmccabe/
+  make
+
+  chmod +x $OME_REPO/pmccabe/pmccabe
+  chmod +x $OME_REPO/pmccabe/decomment
+
+  cp -rf $OME_REPO/pmccabe/pmccabe $OME_PREFIX/bin/
+  cp -rf $OME_REPO/pmccabe/decomment $OME_PREFIX/bin/
 }
 
 pmccabe_uninstall() {
-    echo_error "'pmccabe_uninstall' not implemented"
+  echo_error "'pmccabe_uninstall' not implemented"
 }
 
 pmccabe_exist_p() {
-    echo_error "'pmccabe_exist_p' not implemented"
+  echo_error "'pmccabe_exist_p' not implemented"
 }
 
 pmccabe_info() {
-    echo_error ""
+  echo_error ""
 }

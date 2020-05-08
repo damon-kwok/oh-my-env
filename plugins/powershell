@@ -1,58 +1,58 @@
 #!/usr/bin/env sh
 
 powershell_install() {
-    # if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
-    echo "zip:${POWERSHELL_ZIP}"
-    local zipkg=${POWERSHELL_ZIP}
-    cd $HOME/Downloads/
-    if [ ! -e "$HOME/Downloads/$zipkg" ]; then
-        local URL0=https://github.com/PowerShell/PowerShell/releases/download
-        local URL=${URL0}/v${POWERSHELL_VERSION}/${POWERSHELL_ZIP}
-        # echo "URL:$URL"
-        wget $URL -O $HOME/Downloads/$zipkg
+  # if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
+  echo "zip:${POWERSHELL_ZIP}"
+  local zipkg=${POWERSHELL_ZIP}
+  cd $HOME/Downloads/
+  if [ ! -e "$HOME/Downloads/$zipkg" ]; then
+    local URL0=https://github.com/PowerShell/PowerShell/releases/download
+    local URL=${URL0}/v${POWERSHELL_VERSION}/${POWERSHELL_ZIP}
+    # echo "URL:$URL"
+    wget $URL -O $HOME/Downloads/$zipkg
+  fi
+  if [ ! -d "$POWERSHELL_BIN" ]; then
+    mkdir -p ${POWERSHELL_BIN}
+    if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
+      unzip ./$zipkg -d ${POWERSHELL_BIN}
+    else
+      tar -zxvf ./$zipkg -C ${POWERSHELL_BIN}
     fi
-    if [ ! -d "$POWERSHELL_BIN" ]; then
-        mkdir -p ${POWERSHELL_BIN}
-        if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
-            unzip ./$zipkg -d ${POWERSHELL_BIN}
-        else
-            tar -zxvf ./$zipkg -C ${POWERSHELL_BIN}
-        fi
-        chmod +x ${POWERSHELL_BIN}/pwsh
-    fi
-    # fi
-    powershell_setenv
+    chmod +x ${POWERSHELL_BIN}/pwsh
+  fi
+  # fi
+  powershell_setenv
 }
 
 powershell_uninstall() {
-    echo_error "'powershell_uninstall' not implemented"
+  echo_error "'powershell_uninstall' not implemented"
 }
 
 powershell_exist_p() {
-    echo_error "'powershell_exist_p' not implemented"
+  echo_error "'powershell_exist_p' not implemented"
 }
 
 powershell_info() {
-    echo_error ""
+  echo_error ""
 }
 # https://github.com/PowerShell/PowerShell/releases/download/
 #v7.1.0-preview.1/PowerShell-7.1.0-preview.1-win-x64.zip
 #v7.1.0-preview.1/powershell-7.1.0-preview.1-osx-x64.tar.gz
 #v7.1.0-preview.1/powershell-7.1.0-preview.1-linux-x64.tar.gz
 if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
-    export POWERSHELL_VERINFO=PowerShell-${POWERSHELL_VERSION}-win-x64
-    POWERSHELL_ZIP=${POWERSHELL_VERINFO}.zip
+  export POWERSHELL_VERINFO=PowerShell-${POWERSHELL_VERSION}-win-x64
+  POWERSHELL_ZIP=${POWERSHELL_VERINFO}.zip
 elif [ "$OME_OS" = "$OS_MACOS" ]; then
-    export POWERSHELL_VERINFO=PowerShell-${POWERSHELL_VERSION}-osx-x64
-    POWERSHELL_ZIP=${POWERSHELL_VERINFO}.tar.gz
+  export POWERSHELL_VERINFO=PowerShell-${POWERSHELL_VERSION}-osx-x64
+  POWERSHELL_ZIP=${POWERSHELL_VERINFO}.tar.gz
 elif [ "$OME_OS" != "$FREEBSD" ]; then
-    export POWERSHELL_VERINFO=PowerShell-${POWERSHELL_VERSION}-linux-x64
-    POWERSHELL_ZIP=${POWERSHELL_VERINFO}.tar.gz
+  export POWERSHELL_VERINFO=PowerShell-${POWERSHELL_VERSION}-linux-x64
+  POWERSHELL_ZIP=${POWERSHELL_VERINFO}.tar.gz
 fi
 export POWERSHELL_BIN=$OME_REPO/powershell-${POWERSHELL_VERSION}-bin
 powershell_setenv() {
-    if [ -d "$POWERSHELL_BIN" ]; then
-        export PATH="$POWERSHELL_BIN":"$PATH"
-    fi
+  if [ -d "$POWERSHELL_BIN" ]; then
+    export PATH="$POWERSHELL_BIN":"$PATH"
+  fi
 }
 powershell_setenv

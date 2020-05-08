@@ -1,185 +1,184 @@
 #!/usr/bin/env sh
 
 project_upgrade() {
-    # C
-    github_upgrade curl/curl $OME_PROJ/c/curl
-    mkdir -p $OME_PROJ/c/curl/build
-    cd $OME_PROJ/c/curl/build/
-    cmake .. -G "$OME_MAKE" \
-          -DCMAKE_INSTALL_PREFIX=$OME_PREFIX \
-          -DBUILD_SHARED_LIBS=0
-    cmake --build . --use-stderr --config Release --target install -- -j4
-    
-    github_upgrade libuv/libuv $OME_PROJ/c/libuv
-    github_upgrade nodejs/http-parser $OME_PROJ/c/http-parser
-    github_upgrade json-c/json-c $OME_PROJ/c/json-c
-    github_upgrade protobuf-c/protobuf-c $OME_PROJ/c/protobuf-c
-    github_upgrade Snaipe/libcsptr $OME_PROJ/c/libcsptr
+  # C
+  github_upgrade curl/curl $OME_PROJ/c/curl
+  mkdir -p $OME_PROJ/c/curl/build
+  cd $OME_PROJ/c/curl/build/
+  cmake .. -G "$OME_MAKE" \
+        -DCMAKE_INSTALL_PREFIX=$OME_PREFIX \
+        -DBUILD_SHARED_LIBS=0
+  cmake --build . --use-stderr --config Release --target install -- -j4
 
-    # github_upgrade nanomsg/nanomsg $OME_PROJ/c/nanomsg
-    # github_upgrade zeromq/libzmq $OME_PROJ/c/libzmq
-    github_upgrade libcheck/check $OME_PROJ/c/libcheck
-    github_upgrade lcm-proj/lcm $OME_PROJ/c/lcm
-    svn_upgrade svn://vcs.exim.org/pcre2/code/trunk $OME_PROJ/c/pcre2
-    github_upgrade Tencent/libco $OME_PROJ/c/libco
-    github_upgrade sheredom/utf8.h $OME_PROJ/c/utf8.h
-    
-    # C++
-    github_upgrade emilk/loguru $OME_PROJ/cpp/loguru
-    github_upgrade nodejs/http2 $OME_PROJ/cpp/http2
-    github_upgrade facebook/folly $OME_PROJ/cpp/folly
-    github_upgrade pocoproject/poco $OME_PROJ/cpp/poco
-    github_upgrade intel/tbb $OME_PROJ/cpp/tbb
-    github_upgrade Tencent/rapidjson $OME_PROJ/cpp/rapidjson
+  github_upgrade libuv/libuv $OME_PROJ/c/libuv
+  github_upgrade nodejs/http-parser $OME_PROJ/c/http-parser
+  github_upgrade json-c/json-c $OME_PROJ/c/json-c
+  github_upgrade protobuf-c/protobuf-c $OME_PROJ/c/protobuf-c
+  github_upgrade Snaipe/libcsptr $OME_PROJ/c/libcsptr
 
-    github_upgrade emweb/wt $OME_PROJ/cpp/wt
+  # github_upgrade nanomsg/nanomsg $OME_PROJ/c/nanomsg
+  # github_upgrade zeromq/libzmq $OME_PROJ/c/libzmq
+  github_upgrade libcheck/check $OME_PROJ/c/libcheck
+  github_upgrade lcm-proj/lcm $OME_PROJ/c/lcm
+  svn_upgrade svn://vcs.exim.org/pcre2/code/trunk $OME_PROJ/c/pcre2
+  github_upgrade Tencent/libco $OME_PROJ/c/libco
+  github_upgrade sheredom/utf8.h $OME_PROJ/c/utf8.h
 
-    # Java
-    github_upgrade emweb/jwt $OME_PROJ/java/jwt
-    
-    # C#
+  # C++
+  github_upgrade emilk/loguru $OME_PROJ/cpp/loguru
+  github_upgrade nodejs/http2 $OME_PROJ/cpp/http2
+  github_upgrade facebook/folly $OME_PROJ/cpp/folly
+  github_upgrade pocoproject/poco $OME_PROJ/cpp/poco
+  github_upgrade intel/tbb $OME_PROJ/cpp/tbb
+  github_upgrade Tencent/rapidjson $OME_PROJ/cpp/rapidjson
 
-    # Lisp
-    github_upgrade kanaka/mal $OME_PROJ/lisp/mal
+  github_upgrade emweb/wt $OME_PROJ/cpp/wt
 
-    # Clojure
-    github_upgrade apache/storm $OME_PROJ/clj/storm    
-    github_upgrade riemann/riemann $OME_PROJ/clj/riemann
-    github_upgrade ztellman/aleph $OME_PROJ/clj/aleph
-    github_upgrade ztellman/byte-streams $OME_PROJ/clj/byte-streams
-    github_upgrade ztellman/lamina $OME_PROJ/clj/lamina
-    github_upgrade ztellman/gloss $OME_PROJ/clj/gloss
-    github_upgrade ztellman/manifold $OME_PROJ/clj/manifold
-    
-    # Unity3d
-    github_upgrade arcadia-unity/arcadia $OME_PROJ/u3d/Arcadia
-    
-    # UE4
-    # https://github.com/EpicGames/UnrealEngine.git
-    github_upgrade EpicGames/UnrealEngine $OME_PROJ/ue4/UnrealEngine
-    
-    # Data
-    github_upgrade apache/thrift $OME_PROJ/data/thrift
-    github_upgrade apache/avro $OME_PROJ/data/avro
-    github_upgrade google/flatbuffers $OME_PROJ/data/flatbuffers
+  # Java
+  github_upgrade emweb/jwt $OME_PROJ/java/jwt
+
+  # C#
+
+  # Lisp
+  github_upgrade kanaka/mal $OME_PROJ/lisp/mal
+
+  # Clojure
+  github_upgrade apache/storm $OME_PROJ/clj/storm
+  github_upgrade riemann/riemann $OME_PROJ/clj/riemann
+  github_upgrade ztellman/aleph $OME_PROJ/clj/aleph
+  github_upgrade ztellman/byte-streams $OME_PROJ/clj/byte-streams
+  github_upgrade ztellman/lamina $OME_PROJ/clj/lamina
+  github_upgrade ztellman/gloss $OME_PROJ/clj/gloss
+  github_upgrade ztellman/manifold $OME_PROJ/clj/manifold
+
+  # Unity3d
+  github_upgrade arcadia-unity/arcadia $OME_PROJ/u3d/Arcadia
+
+  # UE4
+  # https://github.com/EpicGames/UnrealEngine.git
+  github_upgrade EpicGames/UnrealEngine $OME_PROJ/ue4/UnrealEngine
+
+  # Data
+  github_upgrade apache/thrift $OME_PROJ/data/thrift
+  github_upgrade apache/avro $OME_PROJ/data/avro
+  github_upgrade google/flatbuffers $OME_PROJ/data/flatbuffers
 }
 
 book_upgrade() {
-    # Book
-    # https://github.com/QianMo/Real-Time-Rendering-3rd-CN-Summary-Ebook
-    github_upgrade QianMo/Real-Time-Rendering-3rd-CN-Summary-Ebook $OME_BOOK/Real-Time-Rendering-3rd-CN-Summary-Ebook
-    # https://github.com/huangz1990/real-world-haskell-cn
-    github_upgrade huangz1990/real-world-haskell-cn $OME_BOOK/real-world-haskell-cn
+  # Book
+  # https://github.com/QianMo/Real-Time-Rendering-3rd-CN-Summary-Ebook
+  github_upgrade QianMo/Real-Time-Rendering-3rd-CN-Summary-Ebook $OME_BOOK/Real-Time-Rendering-3rd-CN-Summary-Ebook
+  # https://github.com/huangz1990/real-world-haskell-cn
+  github_upgrade huangz1990/real-world-haskell-cn $OME_BOOK/real-world-haskell-cn
 
-    # https://github.com/apachecn/storm-doc-zh/
-    github_upgrade apachecn/storm-doc-zh $OME_BOOK/storm-doc-zh
-    
-    # https://github.com/Windfarer/mal-zh
-    github_upgrade Windfarer/mal-zh $OME_BOOK/mal-zh
+  # https://github.com/apachecn/storm-doc-zh/
+  github_upgrade apachecn/storm-doc-zh $OME_BOOK/storm-doc-zh
 
-    github_upgrade norvig/paip-lisp $OME_BOOK/paip-lisp
+  # https://github.com/Windfarer/mal-zh
+  github_upgrade Windfarer/mal-zh $OME_BOOK/mal-zh
+
+  github_upgrade norvig/paip-lisp $OME_BOOK/paip-lisp
 
 }
 
 blog_push() {
-    local oldir=`pwd`
-    cd $OME_PROJ/me/blog
-    git_push
-    cd $oldir
+  local oldir=`pwd`
+  cd $OME_PROJ/me/blog
+  git_push
+  cd $oldir
 }
 
 ws_push() {
-    if [ -d $OME_WS ]; then
-        local oldir=`pwd`
-        cd $OME_WS
-        git status
-        readp "==>push workspace?"
-   	if [ $? -eq 1 ]; then
-            git_push
-        fi
-        cd $oldir
+  if [ -d $OME_WS ]; then
+    local oldir=`pwd`
+    cd $OME_WS
+    git status
+    readp "==>push workspace?"
+    if [ $? -eq 1 ]; then
+      git_push
     fi
+    cd $oldir
+  fi
 }
 
 oh_my_emacs_push() {
-    if [ -d $OME_WS ]; then
-        local oldir=`pwd`
-        cd $HOME/.oh-my-emacs/
-        git status
-        readp "==>push oh-my-emacs?"
-        if [ $? -eq 1 ]; then
-            git_push
-        fi
-        cd $oldir
+  if [ -d $OME_WS ]; then
+    local oldir=`pwd`
+    cd $HOME/.oh-my-emacs/
+    git status
+    readp "==>push oh-my-emacs?"
+    if [ $? -eq 1 ]; then
+      git_push
     fi
+    cd $oldir
+  fi
 }
 
 oh_my_env_push() {
-    local oldir=`pwd`
-    cd $HOME/.oh-my-env
-    git status
-    readp "==>push oh-my-env?"
-    if [ $? -eq 1 ]; then
-        git_push
-    fi
-    cd $oldir
+  local oldir=`pwd`
+  cd $HOME/.oh-my-env
+  git status
+  readp "==>push oh-my-env?"
+  if [ $? -eq 1 ]; then
+    git_push
+  fi
+  cd $oldir
 }
 
 ome_pull_proj() {
-    github_upgrade damon-kwok/damon-kwok.github.io $OME_PROJ/me/blog
-    
-    github_upgrade damon-kwok/awesome-package-manager $OME_PROJ/me/awesome-package-manager
-    github_upgrade damon-kwok/awesome-network-programming $OME_PROJ/me/awesome-network-programming
-    github_upgrade damon-kwok/awesome-web-scraping $OME_PROJ/me/awesome-web-scraping
-    github_upgrade damon-kwok/medusa $OME_PROJ/me/medusa
-    # github_upgrade damon-kwok/balisong $OME_PROJ/me/balisong
-    github_upgrade damon-kwok/data-bundle $OME_PROJ/me/data-bundle
-    github_upgrade damon-kwok/memrock $OME_PROJ/me/memrock
+  github_upgrade damon-kwok/damon-kwok.github.io $OME_PROJ/me/blog
 
-    github_upgrade damon-kwok/cljs-example $OME_PROJ/me/cljs-example
-    
-    github_upgrade damon-kwok/libknife $OME_PROJ/me/libknife    
-    # cd $OME_PROJ/c/libknife
-    # mkdir -p build
-    # cd build
-    # cmake ..
-    # make
+  github_upgrade damon-kwok/awesome-package-manager $OME_PROJ/me/awesome-package-manager
+  github_upgrade damon-kwok/awesome-network-programming $OME_PROJ/me/awesome-network-programming
+  github_upgrade damon-kwok/awesome-web-scraping $OME_PROJ/me/awesome-web-scraping
+  github_upgrade damon-kwok/medusa $OME_PROJ/me/medusa
+  # github_upgrade damon-kwok/balisong $OME_PROJ/me/balisong
+  github_upgrade damon-kwok/data-bundle $OME_PROJ/me/data-bundle
+  github_upgrade damon-kwok/memrock $OME_PROJ/me/memrock
+
+  github_upgrade damon-kwok/cljs-example $OME_PROJ/me/cljs-example
+
+  github_upgrade damon-kwok/libknife $OME_PROJ/me/libknife
+  # cd $OME_PROJ/c/libknife
+  # mkdir -p build
+  # cd build
+  # cmake ..
+  # make
 }
 
 ome_push_proj() {
-    local oldir=`pwd`
-    #################################
-    cd $OME_PROJ/me/blog
-    git_push
+  local oldir=`pwd`
+  #################################
+  cd $OME_PROJ/me/blog
+  git_push
 
-    cd $OME_PROJ/me/awesome-package-manager
-    git_push
+  cd $OME_PROJ/me/awesome-package-manager
+  git_push
 
-    cd $OME_PROJ/me/awesome-network-programming
-    git_push
+  cd $OME_PROJ/me/awesome-network-programming
+  git_push
 
-    cd $OME_PROJ/me/awesome-web-scraping
-    git_push
-    
-    cd $OME_PROJ/me/medusa
-    git_push
-    
-    cd $OME_PROJ/me/libknife
-    git_push
-    #################################
-    cd $oldir
+  cd $OME_PROJ/me/awesome-web-scraping
+  git_push
+
+  cd $OME_PROJ/me/medusa
+  git_push
+
+  cd $OME_PROJ/me/libknife
+  git_push
+  #################################
+  cd $oldir
 }
 
 emacsd_push() {
-    if [ -d $HOME/.emacs.d/ ]; then
-        local oldir=`pwd`
-        cd $HOME/.emacs.d/
-        git status
-        readp "==>push .emacs.d/?"
-        if [ $? -eq 1 ]; then
-            git_push
-        fi
-        cd $oldir
+  if [ -d $HOME/.emacs.d/ ]; then
+    local oldir=`pwd`
+    cd $HOME/.emacs.d/
+    git status
+    readp "==>push .emacs.d/?"
+    if [ $? -eq 1 ]; then
+      git_push
     fi
+    cd $oldir
+  fi
 }
-

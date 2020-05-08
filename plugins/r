@@ -1,8 +1,8 @@
 #!/usr/bin/env sh
 
 r_install() {
-get_os_type
-case $OME_OS in
+  get_os_type
+  case $OME_OS in
     # Linux
     # $OS_DEBIAN) ;;
     # $OS_UBUNTU) ;;
@@ -33,19 +33,18 @@ case $OME_OS in
     $OS_MSYS2) pacman -S r-base ;;
     # Other
     $OS_UNKNOW) ;;
-esac
+  esac
 
 }
 
 r_uninstall() {
-    echo_error "'r_uninstall' not implemented"
+  echo_error "'r_uninstall' not implemented"
 }
 
 r_exist_p() {
-    echo_error "'r_exist_p' not implemented"
+  echo_error "'r_exist_p' not implemented"
 }
 
 r_info() {
-    echo_error ""
+  echo_error ""
 }
-

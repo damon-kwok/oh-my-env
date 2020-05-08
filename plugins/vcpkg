@@ -1,33 +1,33 @@
 #!/usr/bin/env sh
 
 vcpkg_install() {
-    github_upgrade  microsoft/vcpkg $OME_REPO/vcpkg
-    cd $OME_REPO/vcpkg
-    chmod +x ./bootstrap-vcpkg.sh
-    if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
-        ./bootstrap-vcpkg.bat
-    else
-        ./bootstrap-vcpkg.sh
-    fi
-    vcpkg_setenv
+  github_upgrade  microsoft/vcpkg $OME_REPO/vcpkg
+  cd $OME_REPO/vcpkg
+  chmod +x ./bootstrap-vcpkg.sh
+  if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
+    ./bootstrap-vcpkg.bat
+  else
+    ./bootstrap-vcpkg.sh
+  fi
+  vcpkg_setenv
 }
 
 vcpkg_uninstall() {
-    echo_error "'vcpkg_uninstall' not implemented"
+  echo_error "'vcpkg_uninstall' not implemented"
 }
 
 vcpkg_exist_p() {
-    echo_error "'vcpkg_exist_p' not implemented"
+  echo_error "'vcpkg_exist_p' not implemented"
 }
 
 vcpkg_info() {
-    echo_error ""
+  echo_error ""
 }
 
 vcpkg_setenv() {
-    if [ -d "$OME_REPO/vcpkg" ]; then
-        # $OME_REPO/vcpkg
-        export PATH=$OME_REPO/vcpkg:$PATH
-    fi
+  if [ -d "$OME_REPO/vcpkg" ]; then
+    # $OME_REPO/vcpkg
+    export PATH=$OME_REPO/vcpkg:$PATH
+  fi
 }
 vcpkg_setenv

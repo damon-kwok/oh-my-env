@@ -1,31 +1,31 @@
 #!/usr/bin/env sh
 
 carp_setenv() {
-    if [ -d "$OME_REPO/carp" ]; then
-        export CARP_DIR=$OME_REPO/carp
-    fi
+  if [ -d "$OME_REPO/carp" ]; then
+    export CARP_DIR=$OME_REPO/carp
+  fi
 }
 carp_setenv
 carp_install() {
-    ome_check_install "stack" "haskell"
-    
-    github_upgrade carp-lang/Carp $OME_REPO/carp
-    export CARP_DIR=$OME_REPO/carp
-    cd $OME_REPO/carp/
-    stack setup
-    stack build
-    stack install
-    carp_setenv
+  ome_check_install "stack" "haskell"
+
+  github_upgrade carp-lang/Carp $OME_REPO/carp
+  export CARP_DIR=$OME_REPO/carp
+  cd $OME_REPO/carp/
+  stack setup
+  stack build
+  stack install
+  carp_setenv
 }
 
 carp_uninstall() {
-    echo_error "'carp_uninstall' not implemented"
+  echo_error "'carp_uninstall' not implemented"
 }
 
 carp_exist_p() {
-    echo_error "'carp_exist_p' not implemented"
+  echo_error "'carp_exist_p' not implemented"
 }
 
 carp_info() {
-    echo_error ""
+  echo_error ""
 }

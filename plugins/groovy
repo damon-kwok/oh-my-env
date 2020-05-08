@@ -1,38 +1,38 @@
 #!/usr/bin/env sh
 
 install_groovy_language_server() {
-    local oldir=`pwd`
-    tip "install_groovy_language_server"
-    github_upgrade palantir/language-servers $OME_REPO/groovy-language-servers
+  local oldir=`pwd`
+  tip "install_groovy_language_server"
+  github_upgrade palantir/language-servers $OME_REPO/groovy-language-servers
 
-    cd $OME_REPO/groovy-language-servers/
-    gradle build --stacktrace
-    
-    cd $oldir
+  cd $OME_REPO/groovy-language-servers/
+  gradle build --stacktrace
+
+  cd $oldir
 }
 
 
 groovy_install() {
-    ome_check_install "sdk" "jvm"
+  ome_check_install "sdk" "jvm"
 
-    #if ! command -v groovy >/dev/null 2>&1; then
-    if [ "`command -v groovy`" = "" ]; then
-        sdk install groovy $GROOVY_VERSION
-        sdk install grails $GRAILS_VERSION
-    fi
+  #if ! command -v groovy >/dev/null 2>&1; then
+  if [ "`command -v groovy`" = "" ]; then
+    sdk install groovy $GROOVY_VERSION
+    sdk install grails $GRAILS_VERSION
+  fi
 
-    # tip "install groovy language server"
-    install_groovy_language_server
+  # tip "install groovy language server"
+  install_groovy_language_server
 }
 
 groovy_uninstall() {
-    echo_error "'groovy_uninstall' not implemented"
+  echo_error "'groovy_uninstall' not implemented"
 }
 
 groovy_exist_p() {
-    echo_error "'groovy_exist_p' not implemented"
+  echo_error "'groovy_exist_p' not implemented"
 }
 
 groovy_info() {
-    echo_error ""
+  echo_error ""
 }

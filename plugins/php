@@ -1,163 +1,163 @@
 #!/usr/bin/env sh
 
 php_install_phpenv() {
-    get_os_type
-    case $OME_OS in
-        # Linux
-        # $OS_DEBIAN) ;;
-        # $OS_UBUNTU) ;;
-        $OS_DEBIAN|$OS_UBUNTU)
-        # sudo apt install php
-        ;;
-        # $OS_REDHAT) ;;
-        # $OS_FEDORA) ;;
-        $OS_REDHAT|$OS_FEDORA)
-            sudo yum install redhat-rpm-config
-            # sudo yumn install php
-            ;;
-        $OS_ARCH)
-            # sudo pacman -S php
-            ;;
-        $OS_GENTOO)
-            # sudo emerge php
-            ;;
-        $OS_SUSE) ;;
-        $OS_SLACKWARE) ;;
-        $OS_NIXOS) ;;
-        $OS_VOID) ;;
-        $OS_ALPINE) ;;
-        $OS_MAGEIA) ;;
-        $OS_SLITAZ) ;;
-        $OS_GUIXSD) ;;
-        # Unix
-        $OS_MACOS)
-        # brew install php
-        ;;
-        $OS_AIX) ;;
-        $OS_SOLARIS) ;;
-        $OS_FREEBSD)
-        # sudo pkg install php
-        ;;
-        $OS_OPENBSD) ;;
-        $OS_NETBSD) ;;
-        $OS_DFBSD) ;;
-        # Windows
-        $OS_CYGWIN)
-        # apt install php
-        ;;
-        $OS_MSYS2)
-            pacman -S php
-            ;;
-        # Other
-        $OS_UNKNOW) ;;
-    esac
+  get_os_type
+  case $OME_OS in
+    # Linux
+    # $OS_DEBIAN) ;;
+    # $OS_UBUNTU) ;;
+    $OS_DEBIAN|$OS_UBUNTU)
+    # sudo apt install php
+    ;;
+    # $OS_REDHAT) ;;
+    # $OS_FEDORA) ;;
+    $OS_REDHAT|$OS_FEDORA)
+      sudo yum install redhat-rpm-config
+      # sudo yumn install php
+      ;;
+    $OS_ARCH)
+      # sudo pacman -S php
+      ;;
+    $OS_GENTOO)
+      # sudo emerge php
+      ;;
+    $OS_SUSE) ;;
+    $OS_SLACKWARE) ;;
+    $OS_NIXOS) ;;
+    $OS_VOID) ;;
+    $OS_ALPINE) ;;
+    $OS_MAGEIA) ;;
+    $OS_SLITAZ) ;;
+    $OS_GUIXSD) ;;
+    # Unix
+    $OS_MACOS)
+    # brew install php
+    ;;
+    $OS_AIX) ;;
+    $OS_SOLARIS) ;;
+    $OS_FREEBSD)
+    # sudo pkg install php
+    ;;
+    $OS_OPENBSD) ;;
+    $OS_NETBSD) ;;
+    $OS_DFBSD) ;;
+    # Windows
+    $OS_CYGWIN)
+    # apt install php
+    ;;
+    $OS_MSYS2)
+      pacman -S php
+      ;;
+    # Other
+    $OS_UNKNOW) ;;
+  esac
 
-    tip "phpenv-installer"
-    curl -L https://raw.githubusercontent.com/phpenv/phpenv-installer/master/bin/phpenv-installer | sh
+  tip "phpenv-installer"
+  curl -L https://raw.githubusercontent.com/phpenv/phpenv-installer/master/bin/phpenv-installer | sh
 
-    tip "set phpenv env"
-    phpenv_setenv
+  tip "set phpenv env"
+  phpenv_setenv
 
-    tip "phpenv update"
-    phpenv update
+  tip "phpenv update"
+  phpenv update
 
-    tip "install php-$PHP_VERSION"
-    phpenv install $PHP_VERSION
-    phpenv global $PHP_VERSION
+  tip "install php-$PHP_VERSION"
+  phpenv install $PHP_VERSION
+  phpenv global $PHP_VERSION
 }
 
 php_install_phpbrew() {
-    if [ ! -f $OME_PREFIX/bin/phpbrew ]; then
-        tip "install phpbrew"
-        cd $OME_PREFIX/bin/
-        curl -L -O https://github.com/phpbrew/phpbrew/raw/master/phpbrew
-        chmod +x ./phpbrew
+  if [ ! -f $OME_PREFIX/bin/phpbrew ]; then
+    tip "install phpbrew"
+    cd $OME_PREFIX/bin/
+    curl -L -O https://github.com/phpbrew/phpbrew/raw/master/phpbrew
+    chmod +x ./phpbrew
 
-        tip "phpbrew init"
-        phpbrew init
-    fi
+    tip "phpbrew init"
+    phpbrew init
+  fi
 
-    tip "phpbrew set env"
-    phpbrew_setenv
+  tip "phpbrew set env"
+  phpbrew_setenv
 
-    tip "phpbrew self-update"
-    phpbrew self-update
+  tip "phpbrew self-update"
+  phpbrew self-update
 
-    tip "phpbrew update"
-    phpbrew update
+  tip "phpbrew update"
+  phpbrew update
 
-    tip "phpbrew install $PHP_VERSION"
-    phpbrew install $PHP_VERSION +default
-    phpbrew switch $PHP_VERSION
+  tip "phpbrew install $PHP_VERSION"
+  phpbrew install $PHP_VERSION +default
+  phpbrew switch $PHP_VERSION
 
-    tip "install composer"
-    # README: https://getcomposer.org/doc/faqs/how-to-install-composer-programmatically.md
-    wget https://raw.githubusercontent.com/composer/getcomposer.org/1b137f8bf6db3e79a38a5bc45324414a6b1f9df2/web/installer \
-         -O - -q | php -- --quiet
+  tip "install composer"
+  # README: https://getcomposer.org/doc/faqs/how-to-install-composer-programmatically.md
+  wget https://raw.githubusercontent.com/composer/getcomposer.org/1b137f8bf6db3e79a38a5bc45324414a6b1f9df2/web/installer \
+       -O - -q | php -- --quiet
 }
 
 php_install() {
-    php_install_phpenv
-    # php_install_phpbrew
+  php_install_phpenv
+  # php_install_phpbrew
 
-    tip "composer self-update"
-    php composer.phar self-update
+  tip "composer self-update"
+  php composer.phar self-update
 
 
-    # tip "install XPM"
-    # cd $OME_PREFIX/bin/
-    # curl 'http://eirt.science/xpm/installer/' > xpinstaller.php
-    # chmod +x ./xpinstaller.php
+  # tip "install XPM"
+  # cd $OME_PREFIX/bin/
+  # curl 'http://eirt.science/xpm/installer/' > xpinstaller.php
+  # chmod +x ./xpinstaller.php
 
-    # tip "XPM check --health"
-    # xpm check --health
+  # tip "XPM check --health"
+  # xpm check --health
 
-    tip "install php language server"
-    # https://github.com/felixfbecker/php-language-server#installation
-    composer require felixfbecker/language-server
-    composer run-script --working-dir=vendor/felixfbecker/language-server parse-stubs
+  tip "install php language server"
+  # https://github.com/felixfbecker/php-language-server#installation
+  composer require felixfbecker/language-server
+  composer run-script --working-dir=vendor/felixfbecker/language-server parse-stubs
 }
 
 php_uninstall() {
-    echo_error "'php_uninstall' not implemented"
+  echo_error "'php_uninstall' not implemented"
 }
 
 php_exist_p() {
-    echo_error "'php_exist_p' not implemented"
+  echo_error "'php_exist_p' not implemented"
 }
 
 php_info() {
-    if [ "`command -v php`" != "" ]; then
-        ome_show "PHP" "`ome_fetch_version php` | `ome_fetch_version composer`"
-    fi
+  if [ "`command -v php`" != "" ]; then
+    ome_show "PHP" "`ome_fetch_version php` | `ome_fetch_version composer`"
+  fi
 }
 
 php_edit_ini() {
-    if [ -f $HOME/.phpbrew/php/php-${PHP_VERSION}/etc/php.ini ]; then
-        em $HOME/.phpbrew/php/php-${PHP_VERSION}/etc/php.ini
-    fi
+  if [ -f $HOME/.phpbrew/php/php-${PHP_VERSION}/etc/php.ini ]; then
+    em $HOME/.phpbrew/php/php-${PHP_VERSION}/etc/php.ini
+  fi
 
-    if [ -f $HOME/.phpenv/versions/${PHP_VERSION}/etc/php.ini ]; then
-        em $HOME/.phpenv/versions/${PHP_VERSION}/etc/php.ini
-    fi
+  if [ -f $HOME/.phpenv/versions/${PHP_VERSION}/etc/php.ini ]; then
+    em $HOME/.phpenv/versions/${PHP_VERSION}/etc/php.ini
+  fi
 }
 
 # PHP_VERSION=7.4.2
 # PHP_VERSION=5.6.39
 phpenv_setenv() {
-    export PHPENV_ROOT="/home/damon/.phpenv"
-    if [ -d "${PHPENV_ROOT}" ]; then
-        export PATH="${PHPENV_ROOT}/bin:${PATH}"
-        eval "$(phpenv init -)"
-    fi
+  export PHPENV_ROOT="/home/damon/.phpenv"
+  if [ -d "${PHPENV_ROOT}" ]; then
+    export PATH="${PHPENV_ROOT}/bin:${PATH}"
+    eval "$(phpenv init -)"
+  fi
 }
 phpenv_setenv
 
 phpbrew_setenv() {
-    if [ -f "$HOME/.phpbrew/bashrc" ]; then
-        # export PHPBREW_SET_PROMPT=1
-        export PHPBREW_RC_ENABLE=1
-        . $HOME/.phpbrew/bashrc
-    fi
+  if [ -f "$HOME/.phpbrew/bashrc" ]; then
+    # export PHPBREW_SET_PROMPT=1
+    export PHPBREW_RC_ENABLE=1
+    . $HOME/.phpbrew/bashrc
+  fi
 }
 phpbrew_setenv

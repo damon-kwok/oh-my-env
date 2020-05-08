@@ -6,8 +6,8 @@ root = true
 # Unix-style newlines with a newline ending every file
 [*]
 indent_style                = space
-indent_size                 = 4
-tab_width                   = 4
+indent_size                 = 2
+tab_width                   = 2
 end_of_line                 = lf
 charset                     = utf-8
 trim_trailing_whitespace    = true
@@ -61,7 +61,7 @@ indent_style                = space
 indent_size                 = 2
 
 # Matches the exact files either package.json or .travis.yml
-[{package.json,.travis.yml,PKGBUILD,*.sh}]
+[{package.json,.travis.yml,PKGBUILD,*.sh, *.bat, *.ps1}]
 indent_style                = space
 indent_size                 = 2
 

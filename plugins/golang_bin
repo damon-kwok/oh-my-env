@@ -1,70 +1,70 @@
 #!/usr/bin/env sh
 
 golang_bin_install() {
-    get_os_type
-    case $OME_OS in
-        # Linux
-        # $OS_DEBIAN) ;;
-        # $OS_UBUNTU) ;;
-        $OS_DEBIAN|$OS_UBUNTU)
-            sudo apt install bison
-            ;;
-        # $OS_REDHAT) ;;
-        # $OS_FEDORA) ;;
-        $OS_REDHAT|$OS_FEDORA)
-            sudo yum install bison
-            ;;
-        $OS_ARCH)
-            sudo pacman -S bison
-            ;;
-        $OS_GENTOO) ;;
-        $OS_SUSE) ;;
-        $OS_SLACKWARE) ;;
-        $OS_NIXOS) ;;
-        $OS_VOID) ;;
-        $OS_ALPINE) ;;
-        $OS_MAGEIA) ;;
-        $OS_SLITAZ) ;;
-        # Unix
-        $OS_MACOS)
-            brew install bison
-            ;;
-        $OS_AIX) ;;
-        $OS_SOLARIS) ;;
-        $OS_FREEBSD)
-            sudo pkg install bison
-            ;;
-        $OS_OPENBSD) ;;
-        # Windows
-        $OS_CYGWIN)
-            apt install bison
-            ;;
-        $OS_MSYS2)
-            pacman -S bison
-            ;;
-        # Other
-        $OS_UNKNOW) ;;
-    esac
+  get_os_type
+  case $OME_OS in
+    # Linux
+    # $OS_DEBIAN) ;;
+    # $OS_UBUNTU) ;;
+    $OS_DEBIAN|$OS_UBUNTU)
+      sudo apt install bison
+      ;;
+    # $OS_REDHAT) ;;
+    # $OS_FEDORA) ;;
+    $OS_REDHAT|$OS_FEDORA)
+      sudo yum install bison
+      ;;
+    $OS_ARCH)
+      sudo pacman -S bison
+      ;;
+    $OS_GENTOO) ;;
+    $OS_SUSE) ;;
+    $OS_SLACKWARE) ;;
+    $OS_NIXOS) ;;
+    $OS_VOID) ;;
+    $OS_ALPINE) ;;
+    $OS_MAGEIA) ;;
+    $OS_SLITAZ) ;;
+    # Unix
+    $OS_MACOS)
+      brew install bison
+      ;;
+    $OS_AIX) ;;
+    $OS_SOLARIS) ;;
+    $OS_FREEBSD)
+      sudo pkg install bison
+      ;;
+    $OS_OPENBSD) ;;
+    # Windows
+    $OS_CYGWIN)
+      apt install bison
+      ;;
+    $OS_MSYS2)
+      pacman -S bison
+      ;;
+    # Other
+    $OS_UNKNOW) ;;
+  esac
 
-    # raw
-    # bash < <(curl -s -S -L https://raw.githubusercontent.com/moovweb/gvm/master/binscripts/gvm_installer)
+  # raw
+  # bash < <(curl -s -S -L https://raw.githubusercontent.com/moovweb/gvm/master/binscripts/gvm_installer)
 
-    # china
-    curl -s -S -L https://raw.githubusercontent.com/YMhao/gvm/master/binscripts/gvm_installer | sh
-    
-    . $HOME/.gvm/scripts/gvm
-    
-    gvm install go1.11
+  # china
+  curl -s -S -L https://raw.githubusercontent.com/YMhao/gvm/master/binscripts/gvm_installer | sh
+
+  . $HOME/.gvm/scripts/gvm
+
+  gvm install go1.11
 }
 
 golang_bin_uninstall() {
-    echo_error "'golang_bin_uninstall' not implemented"
+  echo_error "'golang_bin_uninstall' not implemented"
 }
 
 golang_bin_exist_p() {
-    echo_error "'golang_bin_exist_p' not implemented"
+  echo_error "'golang_bin_exist_p' not implemented"
 }
 
 golang_bin_info() {
-    echo_error ""
+  echo_error ""
 }

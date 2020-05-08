@@ -1,147 +1,147 @@
 #!/usr/bin/env sh
 
 pony_deps() {
-    get_os_type
-    case $OME_OS in
-        # Linux
-        # $OS_DEBIAN) ;;
-        # $OS_UBUNTU) ;;
-        $OS_DEBIAN|$OS_UBUNTU) sudo apt install libz3-dev;;
-        # $OS_REDHAT) ;;
-        # $OS_FEDORA) ;;
-        $OS_REDHAT|$OS_FEDORA) sudo dnf install -y libz3-devel;;
-        $OS_ARCH) trizen -S z3;;
-        $OS_GENTOO) ;;
-        $OS_SUSE) ;;
-        $OS_SLACKWARE) ;;
-        $OS_NIXOS) ;;
-        $OS_VOID) ;;
-        $OS_ALPINE) ;;
-        $OS_MAGEIA) ;;
-        $OS_SLITAZ) ;;
-        $OS_GUIXSD) ;;
-        # Unix
-        $OS_MACOS) ;;
-        $OS_AIX) ;;
-        $OS_SOLARIS) ;;
-        $OS_FREEBSD) ;;
-        $OS_OPENBSD) ;;
-        $OS_NETBSD) ;;
-        $OS_DFBSD) ;;
-        # Windows
-        $OS_CYGWIN) ;;
-        $OS_MSYS2) ;;
-        # Other
-        $OS_UNKNOW) ;;
-    esac
+  get_os_type
+  case $OME_OS in
+    # Linux
+    # $OS_DEBIAN) ;;
+    # $OS_UBUNTU) ;;
+    $OS_DEBIAN|$OS_UBUNTU) sudo apt install libz3-dev;;
+    # $OS_REDHAT) ;;
+    # $OS_FEDORA) ;;
+    $OS_REDHAT|$OS_FEDORA) sudo dnf install -y libz3-devel;;
+    $OS_ARCH) trizen -S z3;;
+    $OS_GENTOO) ;;
+    $OS_SUSE) ;;
+    $OS_SLACKWARE) ;;
+    $OS_NIXOS) ;;
+    $OS_VOID) ;;
+    $OS_ALPINE) ;;
+    $OS_MAGEIA) ;;
+    $OS_SLITAZ) ;;
+    $OS_GUIXSD) ;;
+    # Unix
+    $OS_MACOS) ;;
+    $OS_AIX) ;;
+    $OS_SOLARIS) ;;
+    $OS_FREEBSD) ;;
+    $OS_OPENBSD) ;;
+    $OS_NETBSD) ;;
+    $OS_DFBSD) ;;
+    # Windows
+    $OS_CYGWIN) ;;
+    $OS_MSYS2) ;;
+    # Other
+    $OS_UNKNOW) ;;
+  esac
 }
 
 pony_install() {
-    pony_deps
-    # curl --proto '=https' --tlsv1.2 -sSf https://raw.githubusercontent.com/ponylang/ponyup/latest-release/ponyup-init.sh | sh
-    # ponyup update ponyc release
-    # ponyup update ponyc nightly
-    if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
-        readp "pony: install with precompile?"
-        if [ $? -eq 1 ]; then
-            local zipkg=ponyc-${PONY_VERSION}-x86-64-pc-windows-msvc.zip
-            cd $HOME/Downloads/
-            if [ ! -e "$HOME/Downloads/$zipkg" ]; then
-                local URL=https://dl.cloudsmith.io/public/ponylang/releases/raw/versions/${PONY_VERSION}/ponyc-x86_64-pc-windows-msvc.zip
-                wget $URL -O $HOME/Downloads/$zipkg
-            fi
-            if [ ! -d "$OME_REPO/ponyc-${PONY_VERSION}-bin" ]; then
-                mkdir -p $OME_REPO/ponyc-${PONY_VERSION}-bin
-                unzip ./$zipkg -d $OME_REPO/ponyc-${PONY_VERSION}-bin
-            fi
-        else
-            github_upgrade ponylang/ponyc $OME_REPO/ponyc-git 0
-            cd $OME_REPO/ponyc-git
-
-            powershell -c ./make.ps1 libs
-            powershell -c ./make.ps1 configure
-            powershell -c ./make.ps1 build
-        fi
-    else
-        github_upgrade ponylang/ponyc $OME_REPO/ponyc-git 0
-        cd $OME_REPO/ponyc-git
-
-        make libs
-        make configure
-        make build
-        # make test
-        # sudo make install
-        chmod +x $OME_REPO/ponyc-git/build/release/ponyc
-    fi
-    pony_setenv
-
-    github_upgrade ponylang/pony-stable $OME_REPO/pony-stable
-    cd $OME_REPO/pony-stable
-    make
-    chmod +x $OME_REPO/pony-stable/build/release/*
-    pony_setenv
-
-    github_upgrade ponylang/corral $OME_REPO/corral
-    cd $OME_REPO/corral
-    make
-    chmod +x $OME_REPO/corral/build/release/*
-    pony_setenv
-
-    # github_upgrade damon-kwok/novitiate $OME_REPO/novitiate
-    # cd $OME_REPO/novitiate
-    # ponyc
-    # chmod +x novitiate
-
-    readp "install ponylang doc tools ?"
+  pony_deps
+  # curl --proto '=https' --tlsv1.2 -sSf https://raw.githubusercontent.com/ponylang/ponyup/latest-release/ponyup-init.sh | sh
+  # ponyup update ponyc release
+  # ponyup update ponyc nightly
+  if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
+    readp "pony: install with precompile?"
     if [ $? -eq 1 ]; then
-        pip3 install --prefix $OME_PREFIX -U mkdocs-ponylang
+      local zipkg=ponyc-${PONY_VERSION}-x86-64-pc-windows-msvc.zip
+      cd $HOME/Downloads/
+      if [ ! -e "$HOME/Downloads/$zipkg" ]; then
+        local URL=https://dl.cloudsmith.io/public/ponylang/releases/raw/versions/${PONY_VERSION}/ponyc-x86_64-pc-windows-msvc.zip
+        wget $URL -O $HOME/Downloads/$zipkg
+      fi
+      if [ ! -d "$OME_REPO/ponyc-${PONY_VERSION}-bin" ]; then
+        mkdir -p $OME_REPO/ponyc-${PONY_VERSION}-bin
+        unzip ./$zipkg -d $OME_REPO/ponyc-${PONY_VERSION}-bin
+      fi
+    else
+      github_upgrade ponylang/ponyc $OME_REPO/ponyc-git 0
+      cd $OME_REPO/ponyc-git
+
+      powershell -c ./make.ps1 libs
+      powershell -c ./make.ps1 configure
+      powershell -c ./make.ps1 build
     fi
+  else
+    github_upgrade ponylang/ponyc $OME_REPO/ponyc-git 0
+    cd $OME_REPO/ponyc-git
+
+    make libs
+    make configure
+    make build
+    # make test
+    # sudo make install
+    chmod +x $OME_REPO/ponyc-git/build/release/ponyc
+  fi
+  pony_setenv
+
+  github_upgrade ponylang/pony-stable $OME_REPO/pony-stable
+  cd $OME_REPO/pony-stable
+  make
+  chmod +x $OME_REPO/pony-stable/build/release/*
+  pony_setenv
+
+  github_upgrade ponylang/corral $OME_REPO/corral
+  cd $OME_REPO/corral
+  make
+  chmod +x $OME_REPO/corral/build/release/*
+  pony_setenv
+
+  # github_upgrade damon-kwok/novitiate $OME_REPO/novitiate
+  # cd $OME_REPO/novitiate
+  # ponyc
+  # chmod +x novitiate
+
+  readp "install ponylang doc tools ?"
+  if [ $? -eq 1 ]; then
+    pip3 install --prefix $OME_PREFIX -U mkdocs-ponylang
+  fi
 }
 
 pony_uninstall() {
-    echo_error "'pony_uninstall' not implemented"
+  echo_error "'pony_uninstall' not implemented"
 }
 
 pony_exist_p() {
-    echo_error "'pony_exist_p' not implemented"
+  echo_error "'pony_exist_p' not implemented"
 }
 
 pony_info() {
-    if [ "`command -v ponyc`" != "" ]; then
-        ome_show "Pony" "`ome_fetch_version ponyc`"
-    fi
+  if [ "`command -v ponyc`" != "" ]; then
+    ome_show "Pony" "`ome_fetch_version ponyc`"
+  fi
 }
 
 pony_setenv() {
-    # if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
-    #     if [ -d "$OME_REPO/ponyc-${PONY_VERSION}-bin/ponyc" ]; then
-    #         export PONY_BIN=$OME_REPO/ponyc-${PONY_VERSION}-bin/ponyc/bin
-    #     else
-    #         export PONY_BIN=$OME_REPO/ponyc-${PONY_VERSION}-bin/bin
-    #     fi
+  # if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
+  #     if [ -d "$OME_REPO/ponyc-${PONY_VERSION}-bin/ponyc" ]; then
+  #         export PONY_BIN=$OME_REPO/ponyc-${PONY_VERSION}-bin/ponyc/bin
+  #     else
+  #         export PONY_BIN=$OME_REPO/ponyc-${PONY_VERSION}-bin/bin
+  #     fi
 
-    #     if [ -d "$PONY_BIN" ]; then
-    #         export PATH=$PONY_BIN:$PATH
-    #         export PATH=`cygpath -m $PONY_BIN`:$PATH
-    #     fi
-    # else
-    #     export PONY_BIN=$OME_REPO/ponyc-git/build/install
-    #     if [ -d "$PONY_BIN" ]; then
-    #         export PATH=$PONY_BIN:$PATH
-    #     fi
-    # fi
+  #     if [ -d "$PONY_BIN" ]; then
+  #         export PATH=$PONY_BIN:$PATH
+  #         export PATH=`cygpath -m $PONY_BIN`:$PATH
+  #     fi
+  # else
+  #     export PONY_BIN=$OME_REPO/ponyc-git/build/install
+  #     if [ -d "$PONY_BIN" ]; then
+  #         export PATH=$PONY_BIN:$PATH
+  #     fi
+  # fi
 
-    export PONY_BIN=$OME_REPO/ponyc-git/build/install/bin
-    if [ -d "$PONY_BIN" ]; then
-        export PATH=$PONY_BIN:$PATH
-    fi
+  export PONY_BIN=$OME_REPO/ponyc-git/build/install/bin
+  if [ -d "$PONY_BIN" ]; then
+    export PATH=$PONY_BIN:$PATH
+  fi
 
-    if [ -d "$OME_REPO/pony-stable/build/release" ]; then
-        export PATH=$OME_REPO/pony-stable/build/release:$PATH
-    fi
+  if [ -d "$OME_REPO/pony-stable/build/release" ]; then
+    export PATH=$OME_REPO/pony-stable/build/release:$PATH
+  fi
 
-    if [ -d "$OME_REPO/corral/build/release" ]; then
-        export PATH=$OME_REPO/corral/build/release:$PATH
-    fi
+  if [ -d "$OME_REPO/corral/build/release" ]; then
+    export PATH=$OME_REPO/corral/build/release:$PATH
+  fi
 }
 pony_setenv

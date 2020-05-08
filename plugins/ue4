@@ -1,20 +1,20 @@
 #!/usr/bin/env sh
 
 ue4_install() {
-    github_ssh_upgrade EpicGames/UnrealEngine $OME_REPO/ue4/UnrealEngine 1 release
-    cd $OME_REPO/ue4/UnrealEngine/
-    ./Setup.sh
-    ./GenerateProjectFiles.sh
+  github_ssh_upgrade EpicGames/UnrealEngine $OME_REPO/ue4/UnrealEngine 1 release
+  cd $OME_REPO/ue4/UnrealEngine/
+  ./Setup.sh
+  ./GenerateProjectFiles.sh
 }
 
 ue4_uninstall() {
-    echo_error "'ue4_uninstall' not implemented"
+  echo_error "'ue4_uninstall' not implemented"
 }
 
 ue4_exist_p() {
-    echo_error "'ue4_exist_p' not implemented"
+  echo_error "'ue4_exist_p' not implemented"
 }
 
 ue4_info() {
-    echo_error ""
+  echo_error ""
 }

@@ -1,37 +1,37 @@
 #!/usr/bin/env sh
 
 verona_install() {
-    github_upgrade microsoft/verona $OME_REPO/verona
-    cd $OME_REPO/verona
+  github_upgrade microsoft/verona $OME_REPO/verona
+  cd $OME_REPO/verona
 
 
-    if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
-        mkdir -p vs_build
-        cd vs_build
-        cmake .. -G "Visual Studio 16 2019" -A x64
-        msbuild INSTALL.vcxproj /m /P:Configuration=Release
-    else
-        mkdir -p build_ninja
-        cd build_ninja
-        cmake .. -GNinja \
-              -DCMAKE_INSTALL_PREFIX=$OME_PREFIX/bin \
-              -DCMAKE_BUILD_TYPE=Release \
-              -DCMAKE_C_COMPILER=clang \
-              -DCMAKE_CXX_COMPILER=clang++
-    fi
+  if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
+    mkdir -p vs_build
+    cd vs_build
+    cmake .. -G "Visual Studio 16 2019" -A x64
+    msbuild INSTALL.vcxproj /m /P:Configuration=Release
+  else
+    mkdir -p build_ninja
+    cd build_ninja
+    cmake .. -GNinja \
+          -DCMAKE_INSTALL_PREFIX=$OME_PREFIX/bin \
+          -DCMAKE_BUILD_TYPE=Release \
+          -DCMAKE_C_COMPILER=clang \
+          -DCMAKE_CXX_COMPILER=clang++
+  fi
 
-    # cmake --build . --use-stderr --config Release --target install
-    ninja install
+  # cmake --build . --use-stderr --config Release --target install
+  ninja install
 }
 
 verona_uninstall() {
-    echo_error "'verona_uninstall' not implemented"
+  echo_error "'verona_uninstall' not implemented"
 }
 
 verona_exist_p() {
-    echo_error "'verona_exist_p' not implemented"
+  echo_error "'verona_exist_p' not implemented"
 }
 
 verona_info() {
-    echo_error ""
+  echo_error ""
 }

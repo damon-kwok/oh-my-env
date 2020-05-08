@@ -1,68 +1,68 @@
 #!/usr/bin/env sh
 
 cmake_install() {
-    get_os_type
-    case $OME_OS in
-        # Linux
-        # $OS_DEBIAN) ;;
-        # $OS_UBUNTU) ;;
-        $OS_DEBIAN|$OS_UBUNTU) ;;
-        # $OS_REDHAT) ;;
-        # $OS_FEDORA) ;;
-        $OS_REDHAT|$OS_FEDORA) ;;
-        $OS_ARCH) ;;
-        $OS_GENTOO) ;;
-        $OS_SUSE) ;;
-        $OS_SLACKWARE) ;;
-        $OS_NIXOS) ;;
-        $OS_VOID) ;;
-        $OS_ALPINE) ;;
-        $OS_MAGEIA) ;;
-        $OS_SLITAZ) ;;
-        $OS_GUIXSD) ;;
-        # Unix
-        $OS_MACOS) ;;
-        $OS_AIX) ;;
-        $OS_SOLARIS) ;;
-        $OS_FREEBSD) ;;
-        $OS_OPENBSD) ;;
-        $OS_NETBSD) ;;
-        $OS_DFBSD) ;;
-        # Windows
-        $OS_CYGWIN)
-            apt install libncurses-devel libuuid-devel
-            ;;
-        $OS_MSYS2) ;;
-        # Other
-        $OS_UNKNOW) ;;
-    esac
+  get_os_type
+  case $OME_OS in
+    # Linux
+    # $OS_DEBIAN) ;;
+    # $OS_UBUNTU) ;;
+    $OS_DEBIAN|$OS_UBUNTU) ;;
+    # $OS_REDHAT) ;;
+    # $OS_FEDORA) ;;
+    $OS_REDHAT|$OS_FEDORA) ;;
+    $OS_ARCH) ;;
+    $OS_GENTOO) ;;
+    $OS_SUSE) ;;
+    $OS_SLACKWARE) ;;
+    $OS_NIXOS) ;;
+    $OS_VOID) ;;
+    $OS_ALPINE) ;;
+    $OS_MAGEIA) ;;
+    $OS_SLITAZ) ;;
+    $OS_GUIXSD) ;;
+    # Unix
+    $OS_MACOS) ;;
+    $OS_AIX) ;;
+    $OS_SOLARIS) ;;
+    $OS_FREEBSD) ;;
+    $OS_OPENBSD) ;;
+    $OS_NETBSD) ;;
+    $OS_DFBSD) ;;
+    # Windows
+    $OS_CYGWIN)
+      apt install libncurses-devel libuuid-devel
+      ;;
+    $OS_MSYS2) ;;
+    # Other
+    $OS_UNKNOW) ;;
+  esac
 
-    git_upgrade "https://gitlab.kitware.com" "cmake/cmake" $OME_REPO/cmake
-    cd $OME_REPO/cmake/
+  git_upgrade "https://gitlab.kitware.com" "cmake/cmake" $OME_REPO/cmake
+  cd $OME_REPO/cmake/
 
-    # build cmake with bjam
-    ./bootstrap
-    ./configure --prefix=$OME_PREFIX
-    make -j10
-    make install
+  # build cmake with bjam
+  ./bootstrap
+  ./configure --prefix=$OME_PREFIX
+  make -j10
+  make install
 
-    # build cmake with cmake
-    # mkdir -p $OME_REPO/cmake/build
-    # cd $OME_REPO/cmake/build/
-    # cmake .. -G "$OME_MAKE" \
-        # -DCMAKE_INSTALL_PREFIX=$OME_PREFIX \
-	    # -DCMAKE_BUILD_TYPE=Release
-    # cmake --build . --use-stderr --config Release --target install
+  # build cmake with cmake
+  # mkdir -p $OME_REPO/cmake/build
+  # cd $OME_REPO/cmake/build/
+  # cmake .. -G "$OME_MAKE" \
+    # -DCMAKE_INSTALL_PREFIX=$OME_PREFIX \
+	  # -DCMAKE_BUILD_TYPE=Release
+  # cmake --build . --use-stderr --config Release --target install
 }
 
 cmake_uninstall() {
-    echo_error "'cmake_uninstall' not implemented"
+  echo_error "'cmake_uninstall' not implemented"
 }
 
 cmake_exist_p() {
-    echo_error "'cmake_exist_p' not implemented"
+  echo_error "'cmake_exist_p' not implemented"
 }
 
 cmake_info() {
-    echo_error ""
+  echo_error ""
 }

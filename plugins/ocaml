@@ -1,142 +1,142 @@
 #!/usr/bin/env sh
 
 ocaml_install() {
-    tip "install opam"
-    # if [ "$OME_OS" = "$OS_MSYS2" ]; then
-        # echo_error "'ocaml' does not support msys2"
-        # return
-    # fi
-    if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
+  tip "install opam"
+  # if [ "$OME_OS" = "$OS_MSYS2" ]; then
+  # echo_error "'ocaml' does not support msys2"
+  # return
+  # fi
+  if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
     # if [ "$OME_OS" = "$OS_CYGWIN" ]; then
-        # https://fdopen.github.io/opam-repository-mingw/installation/
-        if [ ! -f $HOME/Downloads/opam64.tar.xz ]; then
-            cd $HOME/Downloads/
-            wget https://github.com/fdopen/opam-repository-mingw/releases/download/0.0.0.2/opam64.tar.xz
-        fi
+    # https://fdopen.github.io/opam-repository-mingw/installation/
+    if [ ! -f $HOME/Downloads/opam64.tar.xz ]; then
+      cd $HOME/Downloads/
+      wget https://github.com/fdopen/opam-repository-mingw/releases/download/0.0.0.2/opam64.tar.xz
+    fi
 
-        if [ ! -d $HOME/Downloads/opam64/ ]; then
-            tar -xvf $HOME/Downloads/opam64.tar.xz -C $HOME/Downloads/
-        fi
+    if [ ! -d $HOME/Downloads/opam64/ ]; then
+      tar -xvf $HOME/Downloads/opam64.tar.xz -C $HOME/Downloads/
+    fi
 
-        bash $HOME/Downloads/opam64/install.sh --prefix $OME_PREFIX
-        tip "opam init"
-        opam init default "https://github.com/fdopen/opam-repository-mingw.git#opam2" -c "ocaml-variants.${OCAML_VERSION}+flambda+mingw64c" --disable-sandboxing --debug
+    bash $HOME/Downloads/opam64/install.sh --prefix $OME_PREFIX
+    tip "opam init"
+    opam init default "https://github.com/fdopen/opam-repository-mingw.git#opam2" -c "ocaml-variants.${OCAML_VERSION}+flambda+mingw64c" --disable-sandboxing --debug
 
-        tip "opam update"
-        opam update --debug
-        opam switch list-available
-        
-        tip "opam install ocaml-variants.${OCAML_VERSION}+mingw64c"
-        # opam switch install ${OCAML_VERSION}+flambda+mingw64c --debug
-        opam switch install ${OCAML_VERSION}+msvc64c --debug
-        #other
-        # opam switch create ${OCAML_VERSION}+flambda+mingw64c --empty && opam install ocaml-variants.${OCAML_VERSION}+flambda+mingw64c --debug
+    tip "opam update"
+    opam update --debug
+    opam switch list-available
 
-        tip "opam update"
-        opam update --debug
-    else
-        if [ ! "$OME_OS" = "$OS_FREEBSD" ]; then
-            # method 1: install pre-build
+    tip "opam install ocaml-variants.${OCAML_VERSION}+mingw64c"
+    # opam switch install ${OCAML_VERSION}+flambda+mingw64c --debug
+    opam switch install ${OCAML_VERSION}+msvc64c --debug
+    #other
+    # opam switch create ${OCAML_VERSION}+flambda+mingw64c --empty && opam install ocaml-variants.${OCAML_VERSION}+flambda+mingw64c --debug
+
+    tip "opam update"
+    opam update --debug
+  else
+    if [ ! "$OME_OS" = "$OS_FREEBSD" ]; then
+      # method 1: install pre-build
 			# http://opam.ocaml.org/doc/Install.html
 			# sh <(curl -sL https://raw.githubusercontent.com/ocaml/opam/master/shell/install.sh)
-            curl -sL https://raw.githubusercontent.com/ocaml/opam/master/shell/install.sh | sh
-            
-            # method 2: building
-            # github_upgrade ocaml/opam $OME_REPO/opam
-            # cd $OME_REPO/opam
-            # ./configure --prefix=$OME_PREFIX
-            # make install
-        fi
-        
-        tip "opam init"
-        opam init --debug
+      curl -sL https://raw.githubusercontent.com/ocaml/opam/master/shell/install.sh | sh
 
-        tip "opam update"
-        opam update --debug
-        opam switch list-available
-        
-        tip "opam switch install ${OCAML_VERSION}+flambda"
-        opam switch install ${OCAML_VERSION}+flambda --debug
-        # opam switch 4.11.0+trunk+flambda --debug
+      # method 2: building
+      # github_upgrade ocaml/opam $OME_REPO/opam
+      # cd $OME_REPO/opam
+      # ./configure --prefix=$OME_PREFIX
+      # make install
     fi
 
-    eval $(opam env)
-    #eval `opam env`
-    
-    # tip "install ohai"
-    # opam pin add ohai git+https://github.com/jaredly/ohai
+    tip "opam init"
+    opam init --debug
 
-    # tip "install ocamlbuild"
-    # opam pin add ocamlbuild --kind=git "https://github.com/ocaml/ocamlbuild.git#master"
+    tip "opam update"
+    opam update --debug
+    opam switch list-available
 
-    # tip "install dune"
-    # opam install dune
+    tip "opam switch install ${OCAML_VERSION}+flambda"
+    opam switch install ${OCAML_VERSION}+flambda --debug
+    # opam switch 4.11.0+trunk+flambda --debug
+  fi
 
-    # tip "install OASIS" #obsolete
-    # opam install oasis
-    
-    # tip "install merlin"
-    # opam install merlin
-    # opam user-setup install
+  eval $(opam env)
+  #eval `opam env`
 
-    if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
-        tip "install core_kernel"
-        opam install core_kernel
-    else
-        tip "install core"
-        opam install core
-    fi
-    
-    # readp "install ReasonML?"
-    # if [ $? -eq 1 ]; then
-        # ome_check_install "npm" "nodejs"
-        
-        # tip "install ReasonML"
-        # npm install -g yauzl
-        # npm install -g bsb-native
-        # npm install -g bs-platform
+  # tip "install ohai"
+  # opam pin add ohai git+https://github.com/jaredly/ohai
 
-        # tip "install reason project package manager: esy"
-        # npm install -g esy
+  # tip "install ocamlbuild"
+  # opam pin add ocamlbuild --kind=git "https://github.com/ocaml/ocamlbuild.git#master"
 
-        # tip "install ocaml language server"
-        # npm install -g ocaml-language-server
-    # fi
+  # tip "install dune"
+  # opam install dune
+
+  # tip "install OASIS" #obsolete
+  # opam install oasis
+
+  # tip "install merlin"
+  # opam install merlin
+  # opam user-setup install
+
+  if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
+    tip "install core_kernel"
+    opam install core_kernel
+  else
+    tip "install core"
+    opam install core
+  fi
+
+  # readp "install ReasonML?"
+  # if [ $? -eq 1 ]; then
+  # ome_check_install "npm" "nodejs"
+
+  # tip "install ReasonML"
+  # npm install -g yauzl
+  # npm install -g bsb-native
+  # npm install -g bs-platform
+
+  # tip "install reason project package manager: esy"
+  # npm install -g esy
+
+  # tip "install ocaml language server"
+  # npm install -g ocaml-language-server
+  # fi
 }
 
 ocaml_uninstall() {
-    echo_error "'ocaml_uninstall' not implemented"
+  echo_error "'ocaml_uninstall' not implemented"
 }
 
 ocaml_exist_p() {
-    echo_error "'ocaml_exist_p' not implemented"
+  echo_error "'ocaml_exist_p' not implemented"
 }
 
 ocaml_info() {
-    if [ "`command -v ocaml`" != "" ] || [ "`command -v opam`" != "" ]; then
-        ome_show "OCaml" "ocaml `ome_fetch_version ocaml` | opam `ome_fetch_version opam`"
-    fi
+  if [ "`command -v ocaml`" != "" ] || [ "`command -v opam`" != "" ]; then
+    ome_show "OCaml" "ocaml `ome_fetch_version ocaml` | opam `ome_fetch_version opam`"
+  fi
 }
 
 ocaml_setenv() {
-    # Ocaml: OPAM configuration
-    if [ -d $HOME/.opam/opam-init/ ]; then
-        case "$OME_SHELL" in
-            "zsh")
-	            . $HOME/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
-	            ;;
-            "bash"|"sh")
-	            . $HOME/.opam/opam-init/init.sh > /dev/null 2> /dev/null || true
-	            ;;
-            "csh")
-	            . $HOME/.opam/opam-init/init.csh > /dev/null 2> /dev/null || true
-	            ;;
-        esac
-    fi
-    
-    if [ "`command -v opam`" != "" ]; then
-        eval $(opam env)
-    fi
+  # Ocaml: OPAM configuration
+  if [ -d $HOME/.opam/opam-init/ ]; then
+    case "$OME_SHELL" in
+      "zsh")
+	      . $HOME/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
+	      ;;
+      "bash"|"sh")
+	      . $HOME/.opam/opam-init/init.sh > /dev/null 2> /dev/null || true
+	      ;;
+      "csh")
+	      . $HOME/.opam/opam-init/init.csh > /dev/null 2> /dev/null || true
+	      ;;
+    esac
+  fi
+
+  if [ "`command -v opam`" != "" ]; then
+    eval $(opam env)
+  fi
 
 }
 

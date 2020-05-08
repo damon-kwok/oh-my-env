@@ -1,29 +1,29 @@
 #!/usr/bin/env sh
 
 install_ceylon_language_server() {
-    echo ""
+  echo ""
 }
 
 ceylon_install() {
-    ome_check_install "sdk" "jvm"
+  ome_check_install "sdk" "jvm"
 
-    #if ! command -v ceylon >/dev/null 2>&1; then
-    if [ "`command -v ceylon`" = "" ]; then
-        sdk install ceylon $GROOVY_VERSION
-    fi
+  #if ! command -v ceylon >/dev/null 2>&1; then
+  if [ "`command -v ceylon`" = "" ]; then
+    sdk install ceylon $GROOVY_VERSION
+  fi
 
-    # tip "install ceylon language server"
-    install_ceylon_language_server
+  # tip "install ceylon language server"
+  install_ceylon_language_server
 }
 
 ceylon_uninstall() {
-    echo_error "'ceylon_uninstall' not implemented"
+  echo_error "'ceylon_uninstall' not implemented"
 }
 
 ceylon_exist_p() {
-    echo_error "'ceylon_exist_p' not implemented"
+  echo_error "'ceylon_exist_p' not implemented"
 }
 
 ceylon_info() {
-    echo_error ""
+  echo_error ""
 }

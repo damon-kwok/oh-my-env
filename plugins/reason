@@ -1,28 +1,28 @@
 #!/usr/bin/env sh
 
 reason_install() {
-    ome_check_install "npm" "nodejs"
-    
-    tip "install ReasonML"
-    npm install -g yauzl
-    npm install -g bsb-native
-    npm install -g bs-platform
+  ome_check_install "npm" "nodejs"
 
-    tip "install reason project package manager: esy"
-    npm install -g esy
+  tip "install ReasonML"
+  npm install -g yauzl
+  npm install -g bsb-native
+  npm install -g bs-platform
 
-    tip "install ocaml language server"
-    npm install -g ocaml-language-server
+  tip "install reason project package manager: esy"
+  npm install -g esy
+
+  tip "install ocaml language server"
+  npm install -g ocaml-language-server
 }
 
 reason_uninstall() {
-    echo_error "'reason_uninstall' not implemented"
+  echo_error "'reason_uninstall' not implemented"
 }
 
 reason_exist_p() {
-    echo_error "'reason_exist_p' not implemented"
+  echo_error "'reason_exist_p' not implemented"
 }
 
 reason_info() {
-    echo_error ""
+  echo_error ""
 }

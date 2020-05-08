@@ -1,26 +1,26 @@
 #!/usr/bin/env sh
 
 lcm_install() {
-    github_upgrade lcm-proj/lcm $OME_REPO/lcm
-    
-    mkdir -p cd $OME_REPO/lcm/build
-    cd $OME_REPO/lcm/build/
-    cmake .. -G "$OME_MAKE" \
-          -DCMAKE_INSTALL_PREFIX=$OME_PREFIX \
-          -DCMAKE_EXPORT_COMPILE_COMMANDS=1 \
-          -DCMAKE_CXX_STANDARD=11
+  github_upgrade lcm-proj/lcm $OME_REPO/lcm
 
-    cmake --build . --use-stderr --config Release --target install
+  mkdir -p cd $OME_REPO/lcm/build
+  cd $OME_REPO/lcm/build/
+  cmake .. -G "$OME_MAKE" \
+        -DCMAKE_INSTALL_PREFIX=$OME_PREFIX \
+        -DCMAKE_EXPORT_COMPILE_COMMANDS=1 \
+        -DCMAKE_CXX_STANDARD=11
+
+  cmake --build . --use-stderr --config Release --target install
 }
 
 lcm_uninstall() {
-    echo_error "'lcm_uninstall' not implemented"
+  echo_error "'lcm_uninstall' not implemented"
 }
 
 lcm_exist_p() {
-    echo_error "'lcm_exist_p' not implemented"
+  echo_error "'lcm_exist_p' not implemented"
 }
 
 lcm_info() {
-    echo_error ""
+  echo_error ""
 }

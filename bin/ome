@@ -8,484 +8,484 @@
 ################################################################################
 
 delete_elc() {
-    cd $OME_ROOT/emacs-config/modules
-    rm -rf *.elc
-    cd $OME_ROOT
+  cd $OME_ROOT/emacs-config/modules
+  rm -rf *.elc
+  cd $OME_ROOT
 }
 
 ome_package_list() {
-    local olddir=`pwd`
-    # tip "package list:"
-    # for plugin in $HOME/.oh-my-env/plugins/* ; do
-    # echo_success `basename $plugin`
-    # done
+  local olddir=`pwd`
+  # tip "package list:"
+  # for plugin in $HOME/.oh-my-env/plugins/* ; do
+  # echo_success `basename $plugin`
+  # done
 
-    cd $HOME/.oh-my-env/plugins/
-    ls
+  cd $HOME/.oh-my-env/plugins/
+  ls
 
-    cd $olddir
+  cd $olddir
 }
 
 ome_package_info() {
-    local olddir=`pwd`
-    # tip "package list"
-    # local index=0
+  local olddir=`pwd`
+  # tip "package list"
+  # local index=0
 
-    # strload=("-" "\\" "|" "/")
-    # strload[0]="-"
-    # strload[1]="\\"
-    # strload[2]="|"
-    # strload[3]="/"
+  # strload=("-" "\\" "|" "/")
+  # strload[0]="-"
+  # strload[1]="\\"
+  # strload[2]="|"
+  # strload[3]="/"
 
-    # echo -n -e "\033[?25l"  #隐藏光标
-    # echo_kv "OME" "OS:$OME_OS | Arch:$OME_ARCH | Shell:$OME_SHELL | PREFIX:$OME_PREFIX"
-    # echo_kv "VCS" "`git --version | head -n 1` | `svn --version | head -n 1`"
-    # echo_kv "Perl" "`perl -V | head -n 1 | cut -c 15-57`"
-    ome_show "SYSTEM" "OS:$OME_OS | Arch:$OME_ARCH | Shell:$OME_SHELL | EDITOR:$EDITOR"
-    ome_show "PREFIX" "$OME_PREFIX"
-    ome_show "VCS" "`ome_fetch_version git` | `ome_fetch_version svn`"
-    for plugin_file in $HOME/.oh-my-env/plugins/* ; do
-        if [ "$plugin_file" != "$HOME/.oh-my-env/plugins/README.org" ]; then
+  # echo -n -e "\033[?25l"  #隐藏光标
+  # echo_kv "OME" "OS:$OME_OS | Arch:$OME_ARCH | Shell:$OME_SHELL | PREFIX:$OME_PREFIX"
+  # echo_kv "VCS" "`git --version | head -n 1` | `svn --version | head -n 1`"
+  # echo_kv "Perl" "`perl -V | head -n 1 | cut -c 15-57`"
+  ome_show "SYSTEM" "OS:$OME_OS | Arch:$OME_ARCH | Shell:$OME_SHELL | EDITOR:$EDITOR"
+  ome_show "PREFIX" "$OME_PREFIX"
+  ome_show "VCS" "`ome_fetch_version git` | `ome_fetch_version svn`"
+  for plugin_file in $HOME/.oh-my-env/plugins/* ; do
+    if [ "$plugin_file" != "$HOME/.oh-my-env/plugins/README.org" ]; then
 
-            # local idx=$((index%4))
-            # echo -n -e "${strload[$idx]}"
-            # let index++
-            # let index=$index+1
-            # index=$((index+1))
-            local PLUGIN=`basename $plugin_file`
-            local FUNC_INFO="${PLUGIN}_info"
+      # local idx=$((index%4))
+      # echo -n -e "${strload[$idx]}"
+      # let index++
+      # let index=$index+1
+      # index=$((index+1))
+      local PLUGIN=`basename $plugin_file`
+      local FUNC_INFO="${PLUGIN}_info"
 
-            if [ "$OME_DEBUG_MODE" = "1" ]; then
-                echo_kv "$FUNC_INFO" "$plugin_file"
-            fi
-            $plugin_file > /dev/null 2>&1
-            eval "$FUNC_INFO > /dev/null 2>&1"
+      if [ "$OME_DEBUG_MODE" = "1" ]; then
+        echo_kv "$FUNC_INFO" "$plugin_file"
+      fi
+      $plugin_file > /dev/null 2>&1
+      eval "$FUNC_INFO > /dev/null 2>&1"
 
-            #. $plugin_file
-            #eval "$EVAL"
+      #. $plugin_file
+      #eval "$EVAL"
 
-            # sleep 0.2
-            # echo -n -e "\b\b"
-        fi
-    done
-    # echo -n -e "\033[?25h"  #显示光标
-    # echo -n -e "\b\c"
-    echo -e $OME_SHOW
-    cd $olddir
+      # sleep 0.2
+      # echo -n -e "\b\b"
+    fi
+  done
+  # echo -n -e "\033[?25h"  #显示光标
+  # echo -n -e "\b\c"
+  echo -e $OME_SHOW
+  cd $olddir
 }
 
 ome_eval() {
-    # . $OME_ROOT/bin/env
-    # SELF_DIR=$(dirname $(readlink -f $0))
-    # . $SELF_DIR/../env
+  # . $OME_ROOT/bin/env
+  # SELF_DIR=$(dirname $(readlink -f $0))
+  # . $SELF_DIR/../env
 
-    #echo "ome_eval:$@"
-    local FUNC="$1"
-    local PLUGIN="$2"
+  #echo "ome_eval:$@"
+  local FUNC="$1"
+  local PLUGIN="$2"
 
-    # local OPT_TYPE=$2
-    # local ARG1=$3
-    # local ARG2=$4
+  # local OPT_TYPE=$2
+  # local ARG1=$3
+  # local ARG2=$4
 
-    local EVAL="${PLUGIN}_${FUNC}"
-    title "$EVAL"
+  local EVAL="${PLUGIN}_${FUNC}"
+  title "$EVAL"
 
-    if [ -f "$OME_ROOT/plugins/$OME_OS/$PLUGIN" ]; then
-        . "$OME_ROOT/plugins/$OME_OS/$PLUGIN"
-        #echo "eval $EVAL"
-        eval "$EVAL"
-    elif [ -f "$OME_ROOT/plugins/$PLUGIN" ]; then
-        . "$OME_ROOT/plugins/$PLUGIN"
-        #echo "eval $EVAL"
-        eval "$EVAL"
-    else
-        echo_error "$PLUGIN is not exist!"
-    fi
+  if [ -f "$OME_ROOT/plugins/$OME_OS/$PLUGIN" ]; then
+    . "$OME_ROOT/plugins/$OME_OS/$PLUGIN"
+    #echo "eval $EVAL"
+    eval "$EVAL"
+  elif [ -f "$OME_ROOT/plugins/$PLUGIN" ]; then
+    . "$OME_ROOT/plugins/$PLUGIN"
+    #echo "eval $EVAL"
+    eval "$EVAL"
+  else
+    echo_error "$PLUGIN is not exist!"
+  fi
 }
 
 ome_install() {
-    ome_eval "install" "$1"
+  ome_eval "install" "$1"
 }
 
 ome_repl() {
-    echo ""
-    tip "what do you need?"
+  echo ""
+  tip "what do you need?"
 
-    # Language I
-    echo_lang1 "    e) EmacsLisp"
-    if [ "`command -v ros`" != "" ]; then
-        echo_lang1 "    1) CommonLisp (Roswell)"
-    fi
-    if [ "`command -v scheme`" != "" ]; then
-        echo_lang1 "    2) Scheme (ChezScheme)"
-    fi
+  # Language I
+  echo_lang1 "    e) EmacsLisp"
+  if [ "`command -v ros`" != "" ]; then
+    echo_lang1 "    1) CommonLisp (Roswell)"
+  fi
+  if [ "`command -v scheme`" != "" ]; then
+    echo_lang1 "    2) Scheme (ChezScheme)"
+  fi
 
-    # Language II
-    if [ "`command -v jshell`" != "" ]; then
-        echo_lang2 "    j) Java"
-    fi
-    if [ "`command -v python3`" != "" ]; then
-        echo_lang2 "    p) Python"
-    fi
-    # if [ "`command -v erl`" != "" ]; then
-        echo_lang2 "    e) Erlang"
-    # fi
-    if [ "`command -v stack`" != "" ]; then
-        echo_lang2 "    h) Haskell"
-    fi
-    if [ "`command -v ocaml`" != "" ]; then
-        echo_lang2 "    o) Ocaml"
-    fi
+  # Language II
+  if [ "`command -v jshell`" != "" ]; then
+    echo_lang2 "    j) Java"
+  fi
+  if [ "`command -v python3`" != "" ]; then
+    echo_lang2 "    p) Python"
+  fi
+  # if [ "`command -v erl`" != "" ]; then
+  echo_lang2 "    e) Erlang"
+  # fi
+  if [ "`command -v stack`" != "" ]; then
+    echo_lang2 "    h) Haskell"
+  fi
+  if [ "`command -v ocaml`" != "" ]; then
+    echo_lang2 "    o) Ocaml"
+  fi
 
-    # Language III
-    if [ "`command -v gomacro`" != "" ]; then
-        echo_lang3 "    g) Golang (gomacro)"
-    fi
-    if [ "`command -v lein`" != "" ]; then
-        echo_lang3 "    l) Clojure (Leiningen)"
-    fi
-    if [ "`command -v clj`" != "" ]; then
-        echo_lang3 "    c) Clojure (cli)"
-    fi
-    if [ "`command -v lumo`" != "" ]; then
-        echo_lang3 "    s) ClojureScript (lumo)"
-    fi
-    if [ "`command -v iex`" != "" ]; then
-        echo_lang3 "    i) Elixir (iex)"
-    fi
-    if [ "`command -v node`" != "" ]; then
-        echo_lang3 "    n) Nodejs"
-    fi
-    if [ "`command -v hy`" != "" ]; then
-        echo_lang3 "    H) Hylang"
-    fi
+  # Language III
+  if [ "`command -v gomacro`" != "" ]; then
+    echo_lang3 "    g) Golang (gomacro)"
+  fi
+  if [ "`command -v lein`" != "" ]; then
+    echo_lang3 "    l) Clojure (Leiningen)"
+  fi
+  if [ "`command -v clj`" != "" ]; then
+    echo_lang3 "    c) Clojure (cli)"
+  fi
+  if [ "`command -v lumo`" != "" ]; then
+    echo_lang3 "    s) ClojureScript (lumo)"
+  fi
+  if [ "`command -v iex`" != "" ]; then
+    echo_lang3 "    i) Elixir (iex)"
+  fi
+  if [ "`command -v node`" != "" ]; then
+    echo_lang3 "    n) Nodejs"
+  fi
+  if [ "`command -v hy`" != "" ]; then
+    echo_lang3 "    H) Hylang"
+  fi
 
-    # Language IV
-    if [ "`command -v carp`" != "" ]; then
-        echo_lang4 "    C) carp"
-    fi
-    if [ "`command -v gluon`" != "" ]; then
-        echo_lang4 "    g) Gluon"
-    fi
-    echo "    -------------------------"
-    echo "    q | C-c) exit"
+  # Language IV
+  if [ "`command -v carp`" != "" ]; then
+    echo_lang4 "    C) carp"
+  fi
+  if [ "`command -v gluon`" != "" ]; then
+    echo_lang4 "    g) Gluon"
+  fi
+  echo "    -------------------------"
+  echo "    q | C-c) exit"
 
-    read -p "please enter your choice:" item
-    case $item in
-        e) echo_success "abort elisp repl with C-d | (exit) | (quit)" && emacs -Q -nw --eval "(ielm)";;
-        1) echo_success "abort cl repl with (exit)" && ros run;;
-        2) echo_success "abort scheme repl with C-d" && scheme;;
+  read -p "please enter your choice:" item
+  case $item in
+    e) echo_success "abort elisp repl with C-d | (exit) | (quit)" && emacs -Q -nw --eval "(ielm)";;
+    1) echo_success "abort cl repl with (exit)" && ros run;;
+    2) echo_success "abort scheme repl with C-d" && scheme;;
 
-        j) echo_success "abort java repl with C-d" && jshell;;
-        p) echo_success "abort python repl with quit() | C-z ret" && python3;;
-        e) echo_success "abort erlang repl with C-c | C-g | q()." && erl;;
-        h) echo_success "abort haskell repl with C-d | :quit" && stack repl;;
-        o) echo_success "abort ocaml repl with C-c" && ocaml;;
+    j) echo_success "abort java repl with C-d" && jshell;;
+    p) echo_success "abort python repl with quit() | C-z ret" && python3;;
+    e) echo_success "abort erlang repl with C-c | C-g | q()." && erl;;
+    h) echo_success "abort haskell repl with C-d | :quit" && stack repl;;
+    o) echo_success "abort ocaml repl with C-c" && ocaml;;
 
-        g) echo_success "abort golang repl with C-d | :q" && gomacro;;
-        l) echo_success "abort lein repl with C-d | (exit) | (quit)" && lein repl;;
-        c) echo_success "abort clj-cli repl with C-c" && clj;;
-        s) echo_success "abort cljs repl with C-d | (exit) | (quit)" && lumo;;
-        i) echo_success "abort elixir repl with C-c" && iex;;
-        n) echo_success "abort node repl with C-d" && node;;
-        H) echo_success "abort node repl with C-d" && hy;;
+    g) echo_success "abort golang repl with C-d | :q" && gomacro;;
+    l) echo_success "abort lein repl with C-d | (exit) | (quit)" && lein repl;;
+    c) echo_success "abort clj-cli repl with C-c" && clj;;
+    s) echo_success "abort cljs repl with C-d | (exit) | (quit)" && lumo;;
+    i) echo_success "abort elixir repl with C-c" && iex;;
+    n) echo_success "abort node repl with C-d" && node;;
+    H) echo_success "abort node repl with C-d" && hy;;
 
-        C) echo_success "abort carp repl with C-c" && carp;;
-        G) echo_success "abort gluon repl with C-d | :q" && gluon -i;;
-        q|Q) exit;;
-        *) ome_repl;;
-    esac
+    C) echo_success "abort carp repl with C-c" && carp;;
+    G) echo_success "abort gluon repl with C-d | :q" && gluon -i;;
+    q|Q) exit;;
+    *) ome_repl;;
+  esac
 }
 
 ome_config() {
-    # title "ome config"
+  # title "ome config"
 
-    # tip "ldconfig"
-    # if [ ! -f "/etc/ld.so.conf.d/`whoami`.conf" ]; then
-    # sudo sh -c 'echo "$OME_PREFIX/lib" >> /etc/ld.so.conf.d/`whoami`.conf'
-    # sudo ldconfig
-    # fi
+  # tip "ldconfig"
+  # if [ ! -f "/etc/ld.so.conf.d/`whoami`.conf" ]; then
+  # sudo sh -c 'echo "$OME_PREFIX/lib" >> /etc/ld.so.conf.d/`whoami`.conf'
+  # sudo ldconfig
+  # fi
 
-    # tip "libtool"
-    # libtool --finish $OME_PREFIX/lib
+  # tip "libtool"
+  # libtool --finish $OME_PREFIX/lib
 
-    # tip "git config"
-    ome_git_config
+  # tip "git config"
+  ome_git_config
 }
 
 ome_pull() {
-    local oldir=`pwd`
-    # echo_kv "GIT PULL" "~/.oh-my_env/"
-    github_upgrade damon-kwok/oh-my-env $OME_ROOT/
-    chmod +x $OME_ROOT/bin/*
-    if [ "$OME_OS" = "$OS_MSYS2" ]; then
-        cp -f $OME_ROOT/desktop-extensions/msys2/*.bat /
-    elif [ "$OME_OS" = "$OS_CYGWIN" ]; then
-        cp -f $OME_ROOT/desktop-extensions/cygwin/*.bat /
-    fi
-    cp -f $OME_ROOT/conf/project/.editorconfig $OME_ROOT
-    cp -f $OME_ROOT/conf/project/.editorconfig $OME_EMACS
-    cp -f $OME_ROOT/conf/project/.editorconfig $OME_WS
+  local oldir=`pwd`
+  # echo_kv "GIT PULL" "~/.oh-my_env/"
+  github_upgrade damon-kwok/oh-my-env $OME_ROOT/
+  chmod +x $OME_ROOT/bin/*
+  if [ "$OME_OS" = "$OS_MSYS2" ]; then
+    cp -f $OME_ROOT/desktop-extensions/msys2/*.bat /
+  elif [ "$OME_OS" = "$OS_CYGWIN" ]; then
+    cp -f $OME_ROOT/desktop-extensions/cygwin/*.bat /
+  fi
+  cp -f $OME_ROOT/conf/project/.editorconfig $OME_ROOT
+  cp -f $OME_ROOT/conf/project/.editorconfig $OME_EMACS
+  cp -f $OME_ROOT/conf/project/.editorconfig $OME_WS
 
-    # ome_fix_dotfiles
-    # echo_kv "GIT PULL" "~/.oh_my_emacs/"
-    github_upgrade damon-kwok/oh-my-emacs $HOME/.oh-my-emacs/
+  # ome_fix_dotfiles
+  # echo_kv "GIT PULL" "~/.oh_my_emacs/"
+  github_upgrade damon-kwok/oh-my-emacs $HOME/.oh-my-emacs/
 
-    # echo_kv "GIT PULL" "~/.emacs.d/"
-    gitee_upgrade damon-kwok/emacs.d $HOME/.emacs.d/
-    cp -f $HOME/.oh-my-emacs/emacs-config/init.el $HOME/.emacs.d/
+  # echo_kv "GIT PULL" "~/.emacs.d/"
+  gitee_upgrade damon-kwok/emacs.d $HOME/.emacs.d/
+  cp -f $HOME/.oh-my-emacs/emacs-config/init.el $HOME/.emacs.d/
 
-    # tip "cache upgrade"
-    chmod +x $OME_ROOT/bin/git-hook
-    gitee_upgrade_bigrepo damon-kwok/other-caches $HOME/Downloads/
-    gitee_upgrade_bigrepo damon-kwok/sdkman-caches $HOME/.sdkman/archives/
-    if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
-        gitee_upgrade_bigrepo damon-kwok/roswell-caches $USERPROFILE/.roswell/archives/
-    else
-        gitee_upgrade_bigrepo damon-kwok/roswell-caches $HOME/.roswell/archives/
-    fi
+  # tip "cache upgrade"
+  chmod +x $OME_ROOT/bin/git-hook
+  gitee_upgrade_bigrepo damon-kwok/other-caches $HOME/Downloads/
+  gitee_upgrade_bigrepo damon-kwok/sdkman-caches $HOME/.sdkman/archives/
+  if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
+    gitee_upgrade_bigrepo damon-kwok/roswell-caches $USERPROFILE/.roswell/archives/
+  else
+    gitee_upgrade_bigrepo damon-kwok/roswell-caches $HOME/.roswell/archives/
+  fi
 
-    # echo_kv "GIT PULL" "~/wrokspace/"
-    gitee_upgrade damon-kwok/workspace $HOME/workspace/
+  # echo_kv "GIT PULL" "~/wrokspace/"
+  gitee_upgrade damon-kwok/workspace $HOME/workspace/
 
-    cd $oldir
+  cd $oldir
 }
 
 ome_push() {
-    echo_kv "git push" "~/oh-my-env/"
-    oh_my_env_push
+  echo_kv "git push" "~/oh-my-env/"
+  oh_my_env_push
 
-    echo_kv "git push" "~/.oh-my-emacs/"
-    oh_my_emacs_push
+  echo_kv "git push" "~/.oh-my-emacs/"
+  oh_my_emacs_push
 
-    echo_kv "git push" "~/.emacs.d/"
-    emacsd_push
+  echo_kv "git push" "~/.emacs.d/"
+  emacsd_push
 
-    readp "push cache?"
-    if [ $? -eq 1 ]; then
-        gitee_push_bigrepo $HOME/Downloads/
-        gitee_push_bigrepo $HOME/.sdkman/archives/
+  readp "push cache?"
+  if [ $? -eq 1 ]; then
+    gitee_push_bigrepo $HOME/Downloads/
+    gitee_push_bigrepo $HOME/.sdkman/archives/
 
-        if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
-            gitee_push_bigrepo $USERPROFILE/.roswell/archives/
-        else
-            gitee_push_bigrepo $HOME/.roswell/archives/
-        fi
+    if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
+      gitee_push_bigrepo $USERPROFILE/.roswell/archives/
+    else
+      gitee_push_bigrepo $HOME/.roswell/archives/
     fi
-    echo_kv "git push" "~/workspace/"
-    ws_push
+  fi
+  echo_kv "git push" "~/workspace/"
+  ws_push
 }
 
 ome_status() {
-    # env
-    if [ -d $HOME/.oh-my-env/ ]; then
-        echo_kv "git status" ".oh-my-env/"
-        cd $HOME/.oh-my-env/
-        git status
-    fi
+  # env
+  if [ -d $HOME/.oh-my-env/ ]; then
+    echo_kv "git status" ".oh-my-env/"
+    cd $HOME/.oh-my-env/
+    git status
+  fi
 
-    # emacs
-    if [ -d $HOME/.oh-my-emacs/ ]; then
-        echo_kv "git status" ".oh-my-emacs/"
-        cd $HOME/.oh-my-emacs/
-        git status
-    fi
+  # emacs
+  if [ -d $HOME/.oh-my-emacs/ ]; then
+    echo_kv "git status" ".oh-my-emacs/"
+    cd $HOME/.oh-my-emacs/
+    git status
+  fi
 
-    # cache
-    if [ -d $HOME/.emacs.d/ ]; then
-        echo_kv "git status" ".emacs.d/"
-        cd $HOME/.emacs.d/
-        git status
-    fi
+  # cache
+  if [ -d $HOME/.emacs.d/ ]; then
+    echo_kv "git status" ".emacs.d/"
+    cd $HOME/.emacs.d/
+    git status
+  fi
 
-    if [ -d $HOME/Downloads/ ]; then
-        echo_kv "git status" "~/Downloads/"
-        cd $HOME/Downloads/
-        git status
-    fi
+  if [ -d $HOME/Downloads/ ]; then
+    echo_kv "git status" "~/Downloads/"
+    cd $HOME/Downloads/
+    git status
+  fi
 
-    if [ -d $HOME/.sdkman/archives/ ]; then
-        echo_kv "git status" ".sdkman/archives/"
-        cd $HOME/.sdkman/archives/
-        git status
-    fi
+  if [ -d $HOME/.sdkman/archives/ ]; then
+    echo_kv "git status" ".sdkman/archives/"
+    cd $HOME/.sdkman/archives/
+    git status
+  fi
 
-    local dir=""
-    if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
-        dir=$USERPROFILE/.roswell/archives/
-    else
-        dir=$HOME/.roswell/archives/
-    fi
-    if [ -d $dir ]; then
-        echo_kv "git status" ".roswell/archives/"
-        cd $dir
-        git status
-    fi
+  local dir=""
+  if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
+    dir=$USERPROFILE/.roswell/archives/
+  else
+    dir=$HOME/.roswell/archives/
+  fi
+  if [ -d $dir ]; then
+    echo_kv "git status" ".roswell/archives/"
+    cd $dir
+    git status
+  fi
 
-    # worksapce
-    if [ -d $OME_WS ]; then
-        echo_kv "git status" "~/workspace/"
-        cd $OME_WS
-        git status
-    fi
+  # worksapce
+  if [ -d $OME_WS ]; then
+    echo_kv "git status" "~/workspace/"
+    cd $OME_WS
+    git status
+  fi
 }
 
 ome_help() {
-    echo "$OME_VERSION"
-    echo ""
-    echo "Usage: ome [OPTION]..."
-    echo "help                           display this help and exit"
-    echo "version                        output version information"
-    echo "doctor                         ceheck ome config"
-    echo ""
-    echo "init                           initialization"
-    #echo "config                         ome base config:git/gcc/clang"
-    echo "install   [plugin_name]        install plugin"
-    echo "uninstall [plugin_name]        uninstall plugin"
-    echo "plugin    [plugin name]        create/edit plugin"
-    echo "new [language] [project_name]  create project"
-    echo "repl                           show REPL menu"
-    echo "list                           list all plugins"
-    echo ""
-    echo "update, pull                   self update"
-    echo "commit, push                   commit your modify content"
-    echo "status                         git status:ome/workspace/emacs-config"
+  echo "$OME_VERSION"
+  echo ""
+  echo "Usage: ome [OPTION]..."
+  echo "help                           display this help and exit"
+  echo "version                        output version information"
+  echo "doctor                         ceheck ome config"
+  echo ""
+  echo "init                           initialization"
+  #echo "config                         ome base config:git/gcc/clang"
+  echo "install   [plugin_name]        install plugin"
+  echo "uninstall [plugin_name]        uninstall plugin"
+  echo "plugin    [plugin name]        create/edit plugin"
+  echo "new [language] [project_name]  create project"
+  echo "repl                           show REPL menu"
+  echo "list                           list all plugins"
+  echo ""
+  echo "update, pull                   self update"
+  echo "commit, push                   commit your modify content"
+  echo "status                         git status:ome/workspace/emacs-config"
 }
 
 ome_parse() {
-    local oldir=`pwd`
+  local oldir=`pwd`
 
-    local OPT_TYPE=$1
-    local ARG1=$2
-    local ARG2=$3
-    local ARGV=`echo $@ | cut -d ' ' -f 2-`
+  local OPT_TYPE=$1
+  local ARG1=$2
+  local ARG2=$3
+  local ARGV=`echo $@ | cut -d ' ' -f 2-`
 
-    case "$OPT_TYPE" in
-        "config")
-            ome_config
-            ;;
+  case "$OPT_TYPE" in
+    "config")
+      ome_config
+      ;;
 		"init"|"doctor"|"fix")
 			title "ome doctor"
-            ome_config
-	        . $OME_ROOT/install.sh install
-            ome_install "neofetch"
-            ome_install "goto"
-            ;;
-        "install"|"i")
-            for ARG in $ARGV; do
-                ome_eval "install" $ARG
-            done
-            ;;
-        "uninstall")
-            if [ "$ARG1" = "self" ]; then
-                . ../uninstall.sh
-            else
-                ome_eval "uninstall" $ARG1
-            fi
-            ;;
-        "repl")
-            ome_repl;;
-        "list")
-            ome_package_list
-            ;;
-        "open")
-            $EDITOR "$OME_ROOT/plugins/$ARG1"
-            ;;
-        "pull"|"update"|"upgrade")
-            ome_config
-            ome_pull
-            ;;
-        "push"|"commit")
-            ome_push
-            ;;
-        "status")
-            ome_status
-            ;;
-        "new")
-            app_wizard $ARG1 $ARG2
-            ;;
-        "look"|"check")
-            xdg-open "http://mirror.bit.edu.cn/cygwin/x86_64/release/cygutils/"
-            xdg-open "http://mirror.bit.edu.cn/cygwin/x86_64/release/popt/"
-            xdg-open "https://github.com/mongodb/mongo-c-driver/releases"
-            xdg-open "https://github.com/mongodb/mongo-cxx-driver/releases"
-            xdg-open "http://ftp.gnome.org/pub/gnome/sources/gmime/"
-            xdg-open "https://sourceforge.net/p/isync/isync/commit_browser"
+      ome_config
+	    . $OME_ROOT/install.sh install
+      ome_install "neofetch"
+      ome_install "goto"
+      ;;
+    "install"|"i")
+      for ARG in $ARGV; do
+        ome_eval "install" $ARG
+      done
+      ;;
+    "uninstall")
+      if [ "$ARG1" = "self" ]; then
+        . ../uninstall.sh
+      else
+        ome_eval "uninstall" $ARG1
+      fi
+      ;;
+    "repl")
+      ome_repl;;
+    "list")
+      ome_package_list
+      ;;
+    "open")
+      $EDITOR "$OME_ROOT/plugins/$ARG1"
+      ;;
+    "pull"|"update"|"upgrade")
+      ome_config
+      ome_pull
+      ;;
+    "push"|"commit")
+      ome_push
+      ;;
+    "status")
+      ome_status
+      ;;
+    "new")
+      app_wizard $ARG1 $ARG2
+      ;;
+    "look"|"check")
+      xdg-open "http://mirror.bit.edu.cn/cygwin/x86_64/release/cygutils/"
+      xdg-open "http://mirror.bit.edu.cn/cygwin/x86_64/release/popt/"
+      xdg-open "https://github.com/mongodb/mongo-c-driver/releases"
+      xdg-open "https://github.com/mongodb/mongo-cxx-driver/releases"
+      xdg-open "http://ftp.gnome.org/pub/gnome/sources/gmime/"
+      xdg-open "https://sourceforge.net/p/isync/isync/commit_browser"
 
-            xdg-open "https://ziglang.org/download/"
-            xdg-open "https://nim-lang.org/install_windows.html"
-            xdg-open "https://sdkman.io/sdks#leiningen"
-            xdg-open "https://clojure.org/guides/getting_started#_installation_on_linux"
-            xdg-open "https://nodejs.org/en/download/"
-            xdg-open "https://golang.google.cn/dl/"
-            xdg-open "https://www.erlang.org/downloads/"
-            xdg-open "https://www.python.org/downloads/"
-            xdg-open "https://www.ruby-lang.org/en/downloads/"
-            xdg-open "http://php.net/downloads.php"
-            xdg-open "https://github.com/commercialhaskell/stack/releases"
+      xdg-open "https://ziglang.org/download/"
+      xdg-open "https://nim-lang.org/install_windows.html"
+      xdg-open "https://sdkman.io/sdks#leiningen"
+      xdg-open "https://clojure.org/guides/getting_started#_installation_on_linux"
+      xdg-open "https://nodejs.org/en/download/"
+      xdg-open "https://golang.google.cn/dl/"
+      xdg-open "https://www.erlang.org/downloads/"
+      xdg-open "https://www.python.org/downloads/"
+      xdg-open "https://www.ruby-lang.org/en/downloads/"
+      xdg-open "http://php.net/downloads.php"
+      xdg-open "https://github.com/commercialhaskell/stack/releases"
 
-            xdg-open "https://github.com/cpp-pm/hunter/releases"
-            xdg-open "https://github.com/emacs-lsp/lsp-mode#supported-languages"
-            xdg-open "https://github.com/clojure/core.async"
-            xdg-open "https://clojars.org/reagent"
+      xdg-open "https://github.com/cpp-pm/hunter/releases"
+      xdg-open "https://github.com/emacs-lsp/lsp-mode#supported-languages"
+      xdg-open "https://github.com/clojure/core.async"
+      xdg-open "https://clojars.org/reagent"
 
-            # sdk list java
-            # sdk list maven
-            # sdk list gradle
-            # sdk list scala
-            # sdk list sbt
-            # sdk list kotlin
-            # sdk list groovy
-            ;;
-        "plugin")
-            $EDITOR $HOME/.oh-my-env/plugins/$ARG1
-            ;;
-        #        "test")
-        #            # spin
-        #            strload=("-" "\\" "|" "/")
-        #            echo -n -e "\033[?25l"  #隐藏光标
-        #            for i in `seq 100`
-        #            do
-        #                local idx=$(($i%4))
-        #                # echo -e "$i"
-        #                local vv=${strload[$idx]}
-        #                echo -n -e "$vv"
-        #                # sleep 0.05
-        #                echo -n -e "\b"
-        #            done
-        #            echo -n -e "\b"
-        #            echo -n -e "\033[?25h" #显示光标
-        #
-        #            # progress_bar
-        #            i=0
-        #            while [ $i -lt 50 ]
-        #            do
-        #                ((i++))
-        #                local radio=$((100/1000))
-        #                echo -ne "=>\033[s"
-        #                echo -ne "\033[40;50H"$((i*100*2/100))%"\033[u\033[1D"
-        #                sleep 0.05
-        #            done
-        #            echo ""
-        #            ;;
-        "version"|"--version"|"-v"|"-ver"|"ver"|"v")
-            echo "$OME_VERSION"
-            ome_package_info
-            ;;
-        "help"|"--help")
-            ome_help
-            ;;
-        *)
-            ome_help
-            ;;
-    esac
-    cd $oldir
+      # sdk list java
+      # sdk list maven
+      # sdk list gradle
+      # sdk list scala
+      # sdk list sbt
+      # sdk list kotlin
+      # sdk list groovy
+      ;;
+    "plugin")
+      $EDITOR $HOME/.oh-my-env/plugins/$ARG1
+      ;;
+    #        "test")
+    #            # spin
+    #            strload=("-" "\\" "|" "/")
+    #            echo -n -e "\033[?25l"  #隐藏光标
+    #            for i in `seq 100`
+    #            do
+    #                local idx=$(($i%4))
+    #                # echo -e "$i"
+    #                local vv=${strload[$idx]}
+    #                echo -n -e "$vv"
+    #                # sleep 0.05
+    #                echo -n -e "\b"
+    #            done
+    #            echo -n -e "\b"
+    #            echo -n -e "\033[?25h" #显示光标
+    #
+    #            # progress_bar
+    #            i=0
+    #            while [ $i -lt 50 ]
+    #            do
+    #                ((i++))
+    #                local radio=$((100/1000))
+    #                echo -ne "=>\033[s"
+    #                echo -ne "\033[40;50H"$((i*100*2/100))%"\033[u\033[1D"
+    #                sleep 0.05
+    #            done
+    #            echo ""
+    #            ;;
+    "version"|"--version"|"-v"|"-ver"|"ver"|"v")
+      echo "$OME_VERSION"
+      ome_package_info
+      ;;
+    "help"|"--help")
+      ome_help
+      ;;
+    *)
+      ome_help
+      ;;
+  esac
+  cd $oldir
 }
 readonly OME_VERSION="OME-2020.0325 copyleft 2020 damon-kwok"
 
 #echo $@
 if [[ "$@" == *"--debug"* ]]; then
-    export OME_DEBUG_MODE=1
+  export OME_DEBUG_MODE=1
 fi
 SELF_DIR=$(dirname $(readlink -f $0))
 . $SELF_DIR/../env

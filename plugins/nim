@@ -1,47 +1,47 @@
 #!/usr/bin/env sh
 
 nim_install() {
-    tip "install nim"
-    #if ! command -v nimble >/dev/null 2>&1; then
-    if [ "$OME_OS" = "$OS_CYGWIN" ]; then
-        # || [ "$OME_OS" = "$OS_MSYS2" ]; then
-        local pkgver=nim-${NIM_VERSION}_x64
-        local zipkg=$pkgver.zip
-        
-        if [ ! -d $OME_REPO/$pkgver ]; then
-            mkdir -p ~/Downloads
-            cd ~/Downloads/
-            
-            if [ ! -f $HOME/Downloads/$zipkg ]; then
-                # wget https://nodejs.org/dist/latest-v${STACK_MAJOR_VERSION}.x/$zipkg
-                wget -c https://nim-lang.org/download/$zipkg
-            fi
-            
-            # if [ ! -d $OME_REPO/$pkgver ]; then
-            unzip ./$zipkg -d $OME_REPO/nim
-            cd $OME_REPO/nim/
-            chmod +x ./*
-            # fi
-        fi
-	elif [ "`command -v nimble`" = "" ]; then
-        # if test nimble = "" ; then
-        curl https://nim-lang.org/choosenim/init.sh -sSf | sh
+  tip "install nim"
+  #if ! command -v nimble >/dev/null 2>&1; then
+  if [ "$OME_OS" = "$OS_CYGWIN" ]; then
+    # || [ "$OME_OS" = "$OS_MSYS2" ]; then
+    local pkgver=nim-${NIM_VERSION}_x64
+    local zipkg=$pkgver.zip
+
+    if [ ! -d $OME_REPO/$pkgver ]; then
+      mkdir -p ~/Downloads
+      cd ~/Downloads/
+
+      if [ ! -f $HOME/Downloads/$zipkg ]; then
+        # wget https://nodejs.org/dist/latest-v${STACK_MAJOR_VERSION}.x/$zipkg
+        wget -c https://nim-lang.org/download/$zipkg
+      fi
+
+      # if [ ! -d $OME_REPO/$pkgver ]; then
+      unzip ./$zipkg -d $OME_REPO/nim
+      cd $OME_REPO/nim/
+      chmod +x ./*
+      # fi
     fi
-    nimble update
+	elif [ "`command -v nimble`" = "" ]; then
+    # if test nimble = "" ; then
+    curl https://nim-lang.org/choosenim/init.sh -sSf | sh
+  fi
+  nimble update
 }
 
 nim_uninstall() {
-    echo_error "'nim_uninstall' not implemented"
+  echo_error "'nim_uninstall' not implemented"
 }
 
 nim_exist_p() {
-    echo_error "'nim_exist_p' not implemented"
+  echo_error "'nim_exist_p' not implemented"
 }
 
 nim_info() {
-    if [ "`command -v nim`" != "" ]; then
-        ome_show "Nim" "`ome_fetch_version nim` | `ome_fetch_version nimble`"
-    fi
+  if [ "`command -v nim`" != "" ]; then
+    ome_show "Nim" "`ome_fetch_version nim` | `ome_fetch_version nimble`"
+  fi
 }
 
 # Nim-lang

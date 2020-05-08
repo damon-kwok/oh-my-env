@@ -1,86 +1,86 @@
 #!/usr/bin/env sh
 
 dotnet_install() {
-    mono_install
-    omnisharp_install
-    fsharp_install
+  mono_install
+  omnisharp_install
+  fsharp_install
 }
 
 dotnet_uninstall() {
-    echo_error "'dotnet_uninstall' not implemented"
+  echo_error "'dotnet_uninstall' not implemented"
 }
 
 dotnet_exist_p() {
-    echo_error "'dotnet_exist_p' not implemented"
+  echo_error "'dotnet_exist_p' not implemented"
 }
 
 mono_install() {
-    # sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 3FA7E0328081BFF6A14DA29AA6A19B38D3D831EF
-    # sudo apt install apt-transport-https
-    # echo "deb https://download.mono-project.com/repo/ubuntu stable-xenial main" \
-        # | sudo tee /etc/apt/sources.list.d/mono-official-stable.list
-    # sudo apt update
-    # sudo apt install mono-devel msbuild fsharp
+  # sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 3FA7E0328081BFF6A14DA29AA6A19B38D3D831EF
+  # sudo apt install apt-transport-https
+  # echo "deb https://download.mono-project.com/repo/ubuntu stable-xenial main" \
+    # | sudo tee /etc/apt/sources.list.d/mono-official-stable.list
+  # sudo apt update
+  # sudo apt install mono-devel msbuild fsharp
 
-    get_os_type
-    case $OME_OS in
-        # Linux
-        # $OS_DEBIAN) ;;
-        # $OS_UBUNTU) ;;
-        $OS_DEBIAN|$OS_UBUNTU)
-            sudo apt install mono-devel
-            ;;
-        # $OS_REDHAT) ;;
-        # $OS_FEDORA) ;;
-        $OS_REDHAT|$OS_FEDORA)
-            sudo yumn install mono-devel
-            ;;
-        $OS_ARCH) ;;
-        $OS_GENTOO) ;;
-        $OS_SUSE) ;;
-        $OS_SLACKWARE) ;;
-        $OS_NIXOS) ;;
-        $OS_VOID) ;;
-        $OS_ALPINE) ;;
-        $OS_MAGEIA) ;;
-        $OS_SLITAZ) ;;
-        $OS_GUIXSD) ;;
-        # Unix
-        $OS_MACOS) ;;
-        $OS_AIX) ;;
-        $OS_SOLARIS) ;;
-        $OS_FREEBSD) ;;
-        $OS_OPENBSD) ;;
-        $OS_NETBSD) ;;
-        $OS_DFBSD) ;;
-        # Windows
-        $OS_CYGWIN) ;;
-        $OS_MSYS2)
-        pacman -S mingw-w64-x86_64-mono;;
-        # Other
-        $OS_UNKNOW) ;;
-    esac
+  get_os_type
+  case $OME_OS in
+    # Linux
+    # $OS_DEBIAN) ;;
+    # $OS_UBUNTU) ;;
+    $OS_DEBIAN|$OS_UBUNTU)
+      sudo apt install mono-devel
+      ;;
+    # $OS_REDHAT) ;;
+    # $OS_FEDORA) ;;
+    $OS_REDHAT|$OS_FEDORA)
+      sudo yumn install mono-devel
+      ;;
+    $OS_ARCH) ;;
+    $OS_GENTOO) ;;
+    $OS_SUSE) ;;
+    $OS_SLACKWARE) ;;
+    $OS_NIXOS) ;;
+    $OS_VOID) ;;
+    $OS_ALPINE) ;;
+    $OS_MAGEIA) ;;
+    $OS_SLITAZ) ;;
+    $OS_GUIXSD) ;;
+    # Unix
+    $OS_MACOS) ;;
+    $OS_AIX) ;;
+    $OS_SOLARIS) ;;
+    $OS_FREEBSD) ;;
+    $OS_OPENBSD) ;;
+    $OS_NETBSD) ;;
+    $OS_DFBSD) ;;
+    # Windows
+    $OS_CYGWIN) ;;
+    $OS_MSYS2)
+      pacman -S mingw-w64-x86_64-mono;;
+    # Other
+    $OS_UNKNOW) ;;
+  esac
 
 }
 
 fsharp_install() {
-    # github_upgrade fsharp/fsharp $OME_REPO/fsharp
-    # cd $OME_REPO/fsharp
-    # make -j4
-    
-    github_upgrade georgewfraser/fsharp-language-server $OME_REPO/fsharp-language-server
-    cd $OME_REPO/fsharp-language-server
-    npm install
-    mono build -c Release
+  # github_upgrade fsharp/fsharp $OME_REPO/fsharp
+  # cd $OME_REPO/fsharp
+  # make -j4
+
+  github_upgrade georgewfraser/fsharp-language-server $OME_REPO/fsharp-language-server
+  cd $OME_REPO/fsharp-language-server
+  npm install
+  mono build -c Release
 }
 
 omnisharp_install() {
-    github_upgrade OmniSharp/omnisharp-roslyn $OME_REPO/omnisharp-roslyn
-    cd $OME_REPO/omnisharp-roslyn
-    chmod +x ./build.sh
-    ./build.sh
+  github_upgrade OmniSharp/omnisharp-roslyn $OME_REPO/omnisharp-roslyn
+  cd $OME_REPO/omnisharp-roslyn
+  chmod +x ./build.sh
+  ./build.sh
 }
 
 dotnet_info() {
-    echo_error ""
+  echo_error ""
 }

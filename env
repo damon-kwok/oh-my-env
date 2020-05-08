@@ -44,45 +44,45 @@ export OME_SHELL="`basename $SHELL`"
 
 # case "`uname -o`" in
 case "`uname -s`" in
-    "GNU/Linux" | "Linux")
-        if [ "$(uname -o)" = Android ]; then
-            export OME_OS=$OS_ANDROID
-        elif [ "`command -v yum`" != "" ]; then
-            os=`cat /etc/system-release | head -n 1 | cut -d ' ' -f 1`
-            if [ "$os" = "CentOS" ] || [ "$os" = "RedHat" ]; then
-                export OME_OS=$OS_REDHAT
-            else
-                export OME_OS=$OS_FEDORA
-            fi
-            # elif [ "`command -v yum`" != "" ]; then
-        elif [ "`command -v zypper`" != "" ]; then
-            export OME_OS=$OS_SUSE
-        elif [ "`command -v nix`" != "" ]; then
-            export OME_OS=$OS_NIXOS
-        elif [ "`command -v guix`" != "" ]; then
-            export OME_OS=$OS_GUIXSD
-        elif [ "lsb_release" != "" ]; then
-            case "`lsb_release -is`" in
-                "Debian")
-                    export OME_OS=$OS_DEBIAN;;
-                "Ubuntu"|"elementary"|"LinuxMint")
-                    export OME_OS="$OS_UBUNTU";;
-                "ManjaroLinux"|"Arch")
-                    export OME_OS=$OS_ARCH;;
-                *)
-                    export OME_OS="`lsb_release -is`";;
-            esac
-        else
-            export OME_OS=$OS_UNKNOW
-        fi
-        ;;
-    CYGWIN*) export OME_OS=$OS_CYGWIN;;
-    MINGW* | MSYS*) export OME_OS=$OS_MSYS2;;
-    FreeBSD) export OME_OS=$OS_FREEBSD;;
-    DragonFly) export OME_OS=$OS_DFBSD;;
-    NetBSD) export OME_OS=$OS_NETBSD;;
-    Darwin) export OME_OS=$OS_MACOS;;
-    *) export OME_OS=$OS_UNKNOW;;
+  "GNU/Linux" | "Linux")
+    if [ "$(uname -o)" = Android ]; then
+      export OME_OS=$OS_ANDROID
+    elif [ "`command -v yum`" != "" ]; then
+      os=`cat /etc/system-release | head -n 1 | cut -d ' ' -f 1`
+      if [ "$os" = "CentOS" ] || [ "$os" = "RedHat" ]; then
+        export OME_OS=$OS_REDHAT
+      else
+        export OME_OS=$OS_FEDORA
+      fi
+      # elif [ "`command -v yum`" != "" ]; then
+    elif [ "`command -v zypper`" != "" ]; then
+      export OME_OS=$OS_SUSE
+    elif [ "`command -v nix`" != "" ]; then
+      export OME_OS=$OS_NIXOS
+    elif [ "`command -v guix`" != "" ]; then
+      export OME_OS=$OS_GUIXSD
+    elif [ "lsb_release" != "" ]; then
+      case "`lsb_release -is`" in
+        "Debian")
+          export OME_OS=$OS_DEBIAN;;
+        "Ubuntu"|"elementary"|"LinuxMint")
+          export OME_OS="$OS_UBUNTU";;
+        "ManjaroLinux"|"Arch")
+          export OME_OS=$OS_ARCH;;
+        *)
+          export OME_OS="`lsb_release -is`";;
+      esac
+    else
+      export OME_OS=$OS_UNKNOW
+    fi
+    ;;
+  CYGWIN*) export OME_OS=$OS_CYGWIN;;
+  MINGW* | MSYS*) export OME_OS=$OS_MSYS2;;
+  FreeBSD) export OME_OS=$OS_FREEBSD;;
+  DragonFly) export OME_OS=$OS_DFBSD;;
+  NetBSD) export OME_OS=$OS_NETBSD;;
+  Darwin) export OME_OS=$OS_MACOS;;
+  *) export OME_OS=$OS_UNKNOW;;
 esac
 
 ################################################################################
@@ -125,20 +125,20 @@ export OME_EMACS_SNIPPET=$HOME/.oh-my-emacs/emacs-config/snippets
 # export PKG_CONFIG_PATH=/mingw64/lib/pkgconfig:/mingw64/share/pkgconfig:$PKG_CONFIG_PATH
 # fi
 ome_add_path() {
-    local oldir=`pwd`
-    cd $1
-    local dir=`pwd`
-    export PATH=$dir:"$PATH"
-    if [ "$OME_DEBUG_MODE" != "" ]; then
-        echo_kv "ome_add_path" "$dir"
-    fi
-    # if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
-        # export PATH=`cygpath -m $dir`:"$PATH"
-        # if [ "$OME_DEBUG_MODE" != "" ]; then
-            # echo_kv "ome_add_path" "`cygpath -m $dir`"
-        # fi
-    # fi
-    cd $oldir
+  local oldir=`pwd`
+  cd $1
+  local dir=`pwd`
+  export PATH=$dir:"$PATH"
+  if [ "$OME_DEBUG_MODE" != "" ]; then
+    echo_kv "ome_add_path" "$dir"
+  fi
+  # if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
+  # export PATH=`cygpath -m $dir`:"$PATH"
+  # if [ "$OME_DEBUG_MODE" != "" ]; then
+  # echo_kv "ome_add_path" "`cygpath -m $dir`"
+  # fi
+  # fi
+  cd $oldir
 }
 # export PATH=$OME_WS/bin:$OME_BIN:"$PATH"
 
@@ -149,13 +149,13 @@ ome_dev_path $OME_PREFIX
 ome_dev_path $HOME/.local
 
 # if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
-    # ome_dev_path `cygpath -m $OME_PREFIX`
-    # ome_dev_path `cygpath -m $HOME/.local`
+# ome_dev_path `cygpath -m $OME_PREFIX`
+# ome_dev_path `cygpath -m $HOME/.local`
 # fi
 
 # alias
 if [ ! "$OME_OS" = "$OS_MACOS" ]; then
-    alias ls='ls --color'
+  alias ls='ls --color'
 fi
 alias wget='wget -c'
 alias omecd='f(){ cd $OME_ROOT/$1; ls; unset -f f; }; f'
@@ -164,15 +164,15 @@ alias emcd='f(){ cd $OME_EMACS/$1; ls; unset -f f; }; f'
 alias repocd='f(){ cd $OME_REPO/$1; ls; unset -f f; }; f'
 
 if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
-    export LANG=en_US.UTF-8
+  export LANG=en_US.UTF-8
 fi
 
 if [ "$OME_OS" = "$OS_MSYS2" ]; then
-    export MSYS="winsymlinks:lnk"
+  export MSYS="winsymlinks:lnk"
 fi
 
 if [ "$OME_OS" = "$OS_DEBIAN" ] || [ "$OME_OS" = "$OS_UBUNTU" ]; then
-    alias apt-dist-upgrade='f(){ sudo apt update && sudo apt dist-upgrade; unset -f f; }; f'
+  alias apt-dist-upgrade='f(){ sudo apt update && sudo apt dist-upgrade; unset -f f; }; f'
 fi
 
 # editor
@@ -186,30 +186,30 @@ export XLIB_SKIP_ARGB_VISUALS=1
 
 # FIX for macOS
 if [ "$OME_OS" = "$OS_MACOS" ]; then
-    # FIX: "readlink: illegal option -- f"   https://blog.csdn.net/libing_zeng/article/details/82953038
-    export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
-    alias readlink=greadlink
+  # FIX: "readlink: illegal option -- f"   https://blog.csdn.net/libing_zeng/article/details/82953038
+  export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
+  alias readlink=greadlink
 
-    # FIX: bashrc https://blog.csdn.net/liu510817387/article/details/8126719
-    if [ ! -f $HOME/.bash_profile ]; then
-        echo 'if [ "${BASH-no}" != "no" ]; then' > $HOME/.bash_profile
-        echo '    [ -r ~/.bashrc ] && . ~/.bashrc' >> $HOME/.bash_profile
-        echo 'fi' >> $HOME/.bash_profile
-    fi
+  # FIX: bashrc https://blog.csdn.net/liu510817387/article/details/8126719
+  if [ ! -f $HOME/.bash_profile ]; then
+    echo 'if [ "${BASH-no}" != "no" ]; then' > $HOME/.bash_profile
+    echo '    [ -r ~/.bashrc ] && . ~/.bashrc' >> $HOME/.bash_profile
+    echo 'fi' >> $HOME/.bash_profile
+  fi
 
-    if [ ! -f $HOME/.bashrc ]; then
-        echo "# bashrc" > $HOME/.bashrc
-    fi
+  if [ ! -f $HOME/.bashrc ]; then
+    echo "# bashrc" > $HOME/.bashrc
+  fi
 fi
 
 # FIX `xdg-open' for MSYS2
 if [ "$OME_OS" = "$OS_MSYS2" ]; then
-    if [ "`command -v xdg-open`" = "" ]; then
-        echo '#!/usr/bin/env sh' > /usr/bin/xdg-open
-        echo "" >> /usr/bin/xdg-open
-        echo 'cygstart $@' >> /usr/bin/xdg-open
-        chmod +x /usr/bin/xdg-open
-    fi
+  if [ "`command -v xdg-open`" = "" ]; then
+    echo '#!/usr/bin/env sh' > /usr/bin/xdg-open
+    echo "" >> /usr/bin/xdg-open
+    echo 'cygstart $@' >> /usr/bin/xdg-open
+    chmod +x /usr/bin/xdg-open
+  fi
 fi
 
 # lang
@@ -258,21 +258,21 @@ export JETBRINS_FONT_VERSION=1.0.3
 export POWERSHELL_VERSION=7.1.0-preview.1
 
 if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
-    export SBCL_VERSION=2.0.2
+  export SBCL_VERSION=2.0.2
 else
-    export SBCL_VERSION=2.0.2
+  export SBCL_VERSION=2.0.2
 fi
 ################################################################################
 # load plugins
 for plugin in $HOME/.oh-my-env/plugins/* ; do
-    if [ ! -d "$plugin" ] && [ "$plugin" != "$HOME/.oh-my-env/plugins/README.org" ]; then
-        if [ "$OME_DEBUG_MODE" = "1" ]; then
-            # time "$plugin"">/dev/null 2>&1
-            tip "$plugin"
-            # time `. $plugin`
-            . "$plugin"
-        else
-            . "$plugin"
-        fi
+  if [ ! -d "$plugin" ] && [ "$plugin" != "$HOME/.oh-my-env/plugins/README.org" ]; then
+    if [ "$OME_DEBUG_MODE" = "1" ]; then
+      # time "$plugin"">/dev/null 2>&1
+      tip "$plugin"
+      # time `. $plugin`
+      . "$plugin"
+    else
+      . "$plugin"
     fi
+  fi
 done

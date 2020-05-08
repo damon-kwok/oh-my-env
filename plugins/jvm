@@ -1,231 +1,231 @@
 #!/usr/bin/env sh
 
 install_java_language_server() {
-    local oldir=`pwd`
-    tip "install java language server(eclipse.jdt.ls)"
-    local del_force=$1
-    if [ "$del_force" = "1" ]; then
-        rm -rf ~/Downloads/jdt-language-server-latest.tar.gz
-        rm -rf ~/.emacs.d/eclipse.jdt.ls/server/
-    fi
+  local oldir=`pwd`
+  tip "install java language server(eclipse.jdt.ls)"
+  local del_force=$1
+  if [ "$del_force" = "1" ]; then
+    rm -rf ~/Downloads/jdt-language-server-latest.tar.gz
+    rm -rf ~/.emacs.d/eclipse.jdt.ls/server/
+  fi
 
-    if [ ! -d ~/.emacs.d/eclipse.jdt.ls/server/ ]; then
-        mkdir -p ~/.emacs.d/eclipse.jdt.ls/server/
-        if [ ! -f ~/Downloads/jdt-language-server-latest.tar.gz ]; then
-            # wget http://mirror.switch.ch/eclipse/jdtls/snapshots/jdt-language-server-latest.tar.gz  \
-                # -O ~/Downloads/jdt-language-server-latest.tar.gz
-            wget http://download.eclipse.org/jdtls/snapshots/jdt-language-server-latest.tar.gz -O \
-                 ~/Downloads/jdt-language-server-latest.tar.gz
-        fi
-        tar xf ~/Downloads/jdt-language-server-latest.tar.gz -C ~/.emacs.d/eclipse.jdt.ls/server/
+  if [ ! -d ~/.emacs.d/eclipse.jdt.ls/server/ ]; then
+    mkdir -p ~/.emacs.d/eclipse.jdt.ls/server/
+    if [ ! -f ~/Downloads/jdt-language-server-latest.tar.gz ]; then
+      # wget http://mirror.switch.ch/eclipse/jdtls/snapshots/jdt-language-server-latest.tar.gz  \
+        # -O ~/Downloads/jdt-language-server-latest.tar.gz
+      wget http://download.eclipse.org/jdtls/snapshots/jdt-language-server-latest.tar.gz -O \
+           ~/Downloads/jdt-language-server-latest.tar.gz
     fi
-    cd $oldir
+    tar xf ~/Downloads/jdt-language-server-latest.tar.gz -C ~/.emacs.d/eclipse.jdt.ls/server/
+  fi
+  cd $oldir
 }
 
 jvm_install_sdkman() {
-    tip "install sdkman"
-    #if ! command -v sdk >/dev/null 2>&1; then
-    if [ "`command -v sdk`" = "" ]; then
-        curl -s "https://get.sdkman.io" | sh
-        . $HOME/.sdkman/bin/sdkman-init.sh
-        sdk update
-    fi
+  tip "install sdkman"
+  #if ! command -v sdk >/dev/null 2>&1; then
+  if [ "`command -v sdk`" = "" ]; then
+    curl -s "https://get.sdkman.io" | sh
+    . $HOME/.sdkman/bin/sdkman-init.sh
+    sdk update
+  fi
 
-    # write config
-    find_str "SDKMAN_DIR" ~/.bashrc
-    if [ $? -eq 0 ]; then
-        echo "" >> ~/.bashrc
-        echo "#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!" >> ~/.bashrc
-        echo 'export SDKMAN_DIR=\$HOME/.sdkman\' >> ~/.bashrc
-        echo '[[ -s \$HOME/.sdkman/bin/sdkman-init.sh ]] && . \$HOME/.sdkman/bin/sdkman-init.sh' >> ~/.bashrc
-    fi
+  # write config
+  find_str "SDKMAN_DIR" ~/.bashrc
+  if [ $? -eq 0 ]; then
+    echo "" >> ~/.bashrc
+    echo "#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!" >> ~/.bashrc
+    echo 'export SDKMAN_DIR=\$HOME/.sdkman\' >> ~/.bashrc
+    echo '[[ -s \$HOME/.sdkman/bin/sdkman-init.sh ]] && . \$HOME/.sdkman/bin/sdkman-init.sh' >> ~/.bashrc
+  fi
 
-    find_str "SDKMAN_DIR" ~/.zshrc
-    if [ $? -eq 0 ]; then
-        echo "" >> ~/.zshrc
-        echo "#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!" >> ~/.zshrc
-        echo 'export SDKMAN_DIR=\$HOME/.sdkman\' >> ~/.zshrc
-        echo '[[ -s \$HOME/.sdkman/bin/sdkman-init.sh ]] && . \$HOME/.sdkman/bin/sdkman-init.sh' >> ~/.zshrc
-    fi
+  find_str "SDKMAN_DIR" ~/.zshrc
+  if [ $? -eq 0 ]; then
+    echo "" >> ~/.zshrc
+    echo "#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!" >> ~/.zshrc
+    echo 'export SDKMAN_DIR=\$HOME/.sdkman\' >> ~/.zshrc
+    echo '[[ -s \$HOME/.sdkman/bin/sdkman-init.sh ]] && . \$HOME/.sdkman/bin/sdkman-init.sh' >> ~/.zshrc
+  fi
 
-    find_str "SDKMAN_DIR" ~/.shrc
-    if [ $? -eq 0 ]; then
-        echo "" >> ~/.shrc
-        echo "#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!" >> ~/.shrc
-        echo 'export SDKMAN_DIR=\$HOME/.sdkman\' >> ~/.shrc
-        echo '[[ -s \$HOME/.sdkman/bin/sdkman-init.sh ]] && . \$HOME/.sdkman/bin/sdkman-init.sh' >> ~/.shrc
-    fi
+  find_str "SDKMAN_DIR" ~/.shrc
+  if [ $? -eq 0 ]; then
+    echo "" >> ~/.shrc
+    echo "#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!" >> ~/.shrc
+    echo 'export SDKMAN_DIR=\$HOME/.sdkman\' >> ~/.shrc
+    echo '[[ -s \$HOME/.sdkman/bin/sdkman-init.sh ]] && . \$HOME/.sdkman/bin/sdkman-init.sh' >> ~/.shrc
+  fi
 
-    readp "sdkman: use china mirror?"
-    if [ $? -eq 1 ]; then
-        gitee_upgrade_bigrepo damon-kwok/sdkman-caches $HOME/.sdkman/archives/ 1
-        # project=damon-kwok/sdkman-caches
-        # repo=$HOME/.sdkman/archives/
-        # gitee_upgrade $project $repo
-        # git-hook $repo pull
-    fi
+  readp "sdkman: use china mirror?"
+  if [ $? -eq 1 ]; then
+    gitee_upgrade_bigrepo damon-kwok/sdkman-caches $HOME/.sdkman/archives/ 1
+    # project=damon-kwok/sdkman-caches
+    # repo=$HOME/.sdkman/archives/
+    # gitee_upgrade $project $repo
+    # git-hook $repo pull
+  fi
 
-    readp "sdk upgrade?"
-    if [ $? -eq 1 ]; then
-        tip "sdkman update"
-        sdk update
+  readp "sdk upgrade?"
+  if [ $? -eq 1 ]; then
+    tip "sdkman update"
+    sdk update
 
-        tip "sdkman self update"
-        sdk selfupdate force
+    tip "sdkman self update"
+    sdk selfupdate force
 
-        tip "sdkman upgrade"
-        sdk upgrade
-    fi
+    tip "sdkman upgrade"
+    sdk upgrade
+  fi
 
-    #if ! command -v javac >/dev/null 2>&1; then
-    if [ "`command -v javac`" = "" ]; then
-        sdk install java $JAVA_VERSION
-    fi
-    #if ! command -v kotlinc >/dev/null 2>&1; then
-    # if [ "`command -v kotlinc`" = "" ]; then
-    # sdk install kotlin $KOTLIN_VERSION
-    # fi
-    #if ! command -v scalac >/dev/null 2>&1; then
-    # if [ "`command -v scalac`" = "" ]; then
-    # sdk install scala $SCALA_VERSION
-    # fi
-    #if ! command -v groovy >/dev/null 2>&1; then
-    # if [ "`command -v groovy`" = "" ]; then
-    # sdk install groovy $GROOVY_VERSION
-    # fi
+  #if ! command -v javac >/dev/null 2>&1; then
+  if [ "`command -v javac`" = "" ]; then
+    sdk install java $JAVA_VERSION
+  fi
+  #if ! command -v kotlinc >/dev/null 2>&1; then
+  # if [ "`command -v kotlinc`" = "" ]; then
+  # sdk install kotlin $KOTLIN_VERSION
+  # fi
+  #if ! command -v scalac >/dev/null 2>&1; then
+  # if [ "`command -v scalac`" = "" ]; then
+  # sdk install scala $SCALA_VERSION
+  # fi
+  #if ! command -v groovy >/dev/null 2>&1; then
+  # if [ "`command -v groovy`" = "" ]; then
+  # sdk install groovy $GROOVY_VERSION
+  # fi
 
-    if [ "`command -v ant`" = "" ]; then
-        sdk install ant $ANT_VERSION
-    fi
+  if [ "`command -v ant`" = "" ]; then
+    sdk install ant $ANT_VERSION
+  fi
 
-    #if ! command -v mvn >/dev/null 2>&1; then
-    if [ "`command -v mvn`" = "" ]; then
-        sdk install maven $MAVEN_VERSION
-    fi
+  #if ! command -v mvn >/dev/null 2>&1; then
+  if [ "`command -v mvn`" = "" ]; then
+    sdk install maven $MAVEN_VERSION
+  fi
 
-    readp "maven: use china morrir?"
-    if [ $? -eq 1 ]; then
-        cp -f $OME_ROOT/conf/maven/settings.xml $HOME/.sdkman/candidates/maven/current/conf/
-    fi
+  readp "maven: use china morrir?"
+  if [ $? -eq 1 ]; then
+    cp -f $OME_ROOT/conf/maven/settings.xml $HOME/.sdkman/candidates/maven/current/conf/
+  fi
 
-    #if ! command -v gradle >/dev/null 2>&1; then
-    if [ "`command -v gradle`" = "" ]; then
-        sdk install gradle $GRADLE_VERSION
-    fi
+  #if ! command -v gradle >/dev/null 2>&1; then
+  if [ "`command -v gradle`" = "" ]; then
+    sdk install gradle $GRADLE_VERSION
+  fi
 
-    #if ! command -v sbt >/dev/null 2>&1; then
-    # if [ "`command -v sbt`" = "" ]; then
-    # sdk install sbt $SBT_VERSION
-    # fi
+  #if ! command -v sbt >/dev/null 2>&1; then
+  # if [ "`command -v sbt`" = "" ]; then
+  # sdk install sbt $SBT_VERSION
+  # fi
 
-    #tip "install java language server"
-    install_java_language_server
+  #tip "install java language server"
+  install_java_language_server
 
-    # tip "install kotlin language server"
-    # install_kotlin_language_server
+  # tip "install kotlin language server"
+  # install_kotlin_language_server
 
-    # tip "install groovy language server"
-    # install_groovy_language_server
+  # tip "install groovy language server"
+  # install_groovy_language_server
 
-    # tip "install scala language server"
-    # install_scala_language_server
+  # tip "install scala language server"
+  # install_scala_language_server
 }
 
 jvm_install_download() {
-    get_os_type
-    case $OME_OS in
-        # Linux
-        # $OS_DEBIAN) ;;
-        # $OS_UBUNTU) ;;
-        $OS_DEBIAN|$OS_UBUNTU)
-            sudo apt install openjdk13
-            ;;
-        # $OS_REDHAT) ;;
-        # $OS_FEDORA) ;;
-        $OS_REDHAT|$OS_FEDORA)
-            sudo yum install java-latest-openjdk
-            ;;
-        $OS_ARCH)
-            sudo pacman -S openjdk13
-            ;;
-        $OS_GENTOO) ;;
-        $OS_SUSE)
-            sudo zypper install openjdk13
-            ;;
-        $OS_SLACKWARE) ;;
-        $OS_NIXOS) ;;
-        $OS_VOID) ;;
-        $OS_ALPINE) ;;
-        $OS_MAGEIA) ;;
-        $OS_SLITAZ) ;;
-        $OS_GUIXSD) ;;
-        # Unix
-        $OS_MACOS)
-            brew install openjdk13
-            ;;
-        $OS_AIX) ;;
-        $OS_SOLARIS) ;;
-        $OS_FREEBSD)
-            sudo pkg install openjdk13
-            ;;
-        $OS_OPENBSD) ;;
-        $OS_NETBSD) ;;
-        $OS_DFBSD) ;;
-        # Windows
-        $OS_CYGWIN) ;;
-        $OS_MSYS2) ;;
-        # Other
-        $OS_UNKNOW) ;;
-    esac
+  get_os_type
+  case $OME_OS in
+    # Linux
+    # $OS_DEBIAN) ;;
+    # $OS_UBUNTU) ;;
+    $OS_DEBIAN|$OS_UBUNTU)
+      sudo apt install openjdk13
+      ;;
+    # $OS_REDHAT) ;;
+    # $OS_FEDORA) ;;
+    $OS_REDHAT|$OS_FEDORA)
+      sudo yum install java-latest-openjdk
+      ;;
+    $OS_ARCH)
+      sudo pacman -S openjdk13
+      ;;
+    $OS_GENTOO) ;;
+    $OS_SUSE)
+      sudo zypper install openjdk13
+      ;;
+    $OS_SLACKWARE) ;;
+    $OS_NIXOS) ;;
+    $OS_VOID) ;;
+    $OS_ALPINE) ;;
+    $OS_MAGEIA) ;;
+    $OS_SLITAZ) ;;
+    $OS_GUIXSD) ;;
+    # Unix
+    $OS_MACOS)
+      brew install openjdk13
+      ;;
+    $OS_AIX) ;;
+    $OS_SOLARIS) ;;
+    $OS_FREEBSD)
+      sudo pkg install openjdk13
+      ;;
+    $OS_OPENBSD) ;;
+    $OS_NETBSD) ;;
+    $OS_DFBSD) ;;
+    # Windows
+    $OS_CYGWIN) ;;
+    $OS_MSYS2) ;;
+    # Other
+    $OS_UNKNOW) ;;
+  esac
 }
 
 jvm_install() {
-    jvm_install_sdkman
+  jvm_install_sdkman
 
-    # if [ "$OME_OS" = "$OS_FREEBSD" ]; then
-    # jvm_install_download
-    # else
-    # jvm_install_sdkman
-    # fi
+  # if [ "$OME_OS" = "$OS_FREEBSD" ]; then
+  # jvm_install_download
+  # else
+  # jvm_install_sdkman
+  # fi
 }
 
 jvm_uninstall() {
-    echo_error "'jvm_uninstall' not implemented"
+  echo_error "'jvm_uninstall' not implemented"
 }
 
 jvm_exist_p() {
-    echo_error "'jvm_exist_p' not implemented"
+  echo_error "'jvm_exist_p' not implemented"
 }
 
 # ome login info
 sdkman_info() {
-    local item=$1
-    local key=$1
-    if [ -n "$2" ]; then
-        local key=$2
-    fi
+  local item=$1
+  local key=$1
+  if [ -n "$2" ]; then
+    local key=$2
+  fi
 
-    if [ -d $HOME/.sdkman/candidates/$item ]; then
-        echo "$key:`ls -D $HOME/.sdkman/candidates/$item|head -n 1`"
-    else
-        echo "$key: !miss!"
-    fi
+  if [ -d $HOME/.sdkman/candidates/$item ]; then
+    echo "$key:`ls -D $HOME/.sdkman/candidates/$item|head -n 1`"
+  else
+    echo "$key: !miss!"
+  fi
 }
 
 jvm_info() {
-    if [ "`command -v java`" != "" ]; then
-        ome_show "Java" "`java -version 2>&1 | head -n 1`|`sdkman_info ant Ant`|`sdkman_info maven Maven`|`sdkman_info gradle Gradle`"
-    fi
-    if [ "`command -v kotlin`" != "" ]; then
-        ome_show "Kotlin" "`sdkman_info kotlin Kotlin` | `sdkman_info gradle Gradle`"
-    fi
-    if [ "`command -v scala`" != "" ]; then
-        ome_show "Scala" "`sdkman_info scala Scala` | `sdkman_info sbt SBT`"
-    fi
-    if [ "`command -v groovy`" != "" ]; then
-        ome_show "Groovy" "`sdkman_info groovy Groovy` | `sdkman_info gradle Gradle`"
-    fi
-    if [ "`command -v ceylon`" != "" ]; then
-        ome_show "Ceylon" "`sdkman_info ceylon Ceylon`"
-    fi
+  if [ "`command -v java`" != "" ]; then
+    ome_show "Java" "`java -version 2>&1 | head -n 1`|`sdkman_info ant Ant`|`sdkman_info maven Maven`|`sdkman_info gradle Gradle`"
+  fi
+  if [ "`command -v kotlin`" != "" ]; then
+    ome_show "Kotlin" "`sdkman_info kotlin Kotlin` | `sdkman_info gradle Gradle`"
+  fi
+  if [ "`command -v scala`" != "" ]; then
+    ome_show "Scala" "`sdkman_info scala Scala` | `sdkman_info sbt SBT`"
+  fi
+  if [ "`command -v groovy`" != "" ]; then
+    ome_show "Groovy" "`sdkman_info groovy Groovy` | `sdkman_info gradle Gradle`"
+  fi
+  if [ "`command -v ceylon`" != "" ]; then
+    ome_show "Ceylon" "`sdkman_info ceylon Ceylon`"
+  fi
 }

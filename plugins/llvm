@@ -1,253 +1,253 @@
 #!/usr/bin/env sh
 
 msys2_llvm_install() {
-    pacman -S mingw-w64-x86_64-llvm \
-           mingw-w64-x86_64-clang \
-           mingw-w64-x86_64-clang-analyzer \
-           mingw-w64-x86_64-clang-tools-extra \
-           mingw-w64-x86_64-compiler-rt \
-           mingw-w64-x86_64-lld \
-           mingw-w64-x86_64-polly \
-           mingw-w64-x86_64-compiler-rt \
-           mingw-w64-x86_64-libblocksruntime \
-           mingw-w64-x86_64-libc++ \
-           mingw-w64-x86_64-libc++abi
+  pacman -S mingw-w64-x86_64-llvm \
+         mingw-w64-x86_64-clang \
+         mingw-w64-x86_64-clang-analyzer \
+         mingw-w64-x86_64-clang-tools-extra \
+         mingw-w64-x86_64-compiler-rt \
+         mingw-w64-x86_64-lld \
+         mingw-w64-x86_64-polly \
+         mingw-w64-x86_64-compiler-rt \
+         mingw-w64-x86_64-libblocksruntime \
+         mingw-w64-x86_64-libc++ \
+         mingw-w64-x86_64-libc++abi
 }
 
 llvm_install() {
-    tip "install deps"
-    get_os_type
-    case $OME_OS in
-        # Linux
-        # $OS_DEBIAN) ;;
-        # $OS_UBUNTU) ;;
-        $OS_DEBIAN|$OS_UBUNTU)
-            sudo apt install swig doxygen xdot libxml2-dev libedit-dev libpython-dev
-            ;;
-        # $OS_REDHAT) ;;
-        # $OS_FEDORA) ;;
-        $OS_REDHAT|$OS_FEDORA)
-            sudo yum install install swig doxygen libxml2-devel libedit-devel
-            ;;
-        $OS_ARCH)
-            sudo pacman -S swig doxygen xdot libxml2 libedit
-            ;;
-        $OS_GENTOO) ;;
-        $OS_SUSE)
-            sudo zypper install swig doxygen libxml2-devel libedit-devel python-devel
-            ;;
-        $OS_SLACKWARE) ;;
-        $OS_NIXOS) ;;
-        $OS_VOID) ;;
-        $OS_ALPINE) ;;
-        $OS_MAGEIA) ;;
-        $OS_SLITAZ) ;;
-        $OS_GUIXSD) ;;
-        # Unix
-        $OS_MACOS)
-            brew install swig doxygen libxml2
-            ;;
-        $OS_AIX) ;;
-        $OS_SOLARIS) ;;
-        $OS_FREEBSD)
-            sudo pkg install swig30 doxygen libxml2
-            ;;
-        $OS_OPENBSD) ;;
-        $OS_NETBSD) ;;
-        $OS_DFBSD) ;;
-        # Windows
-        $OS_CYGWIN)
-            apt install swig doxygen libxml2-devel libedit-devel
-            ;;
-        $OS_MSYS2) ;;
-        # Other
-        $OS_UNKNOW) ;;
-    esac
+  tip "install deps"
+  get_os_type
+  case $OME_OS in
+    # Linux
+    # $OS_DEBIAN) ;;
+    # $OS_UBUNTU) ;;
+    $OS_DEBIAN|$OS_UBUNTU)
+      sudo apt install swig doxygen xdot libxml2-dev libedit-dev libpython-dev
+      ;;
+    # $OS_REDHAT) ;;
+    # $OS_FEDORA) ;;
+    $OS_REDHAT|$OS_FEDORA)
+      sudo yum install install swig doxygen libxml2-devel libedit-devel
+      ;;
+    $OS_ARCH)
+      sudo pacman -S swig doxygen xdot libxml2 libedit
+      ;;
+    $OS_GENTOO) ;;
+    $OS_SUSE)
+      sudo zypper install swig doxygen libxml2-devel libedit-devel python-devel
+      ;;
+    $OS_SLACKWARE) ;;
+    $OS_NIXOS) ;;
+    $OS_VOID) ;;
+    $OS_ALPINE) ;;
+    $OS_MAGEIA) ;;
+    $OS_SLITAZ) ;;
+    $OS_GUIXSD) ;;
+    # Unix
+    $OS_MACOS)
+      brew install swig doxygen libxml2
+      ;;
+    $OS_AIX) ;;
+    $OS_SOLARIS) ;;
+    $OS_FREEBSD)
+      sudo pkg install swig30 doxygen libxml2
+      ;;
+    $OS_OPENBSD) ;;
+    $OS_NETBSD) ;;
+    $OS_DFBSD) ;;
+    # Windows
+    $OS_CYGWIN)
+      apt install swig doxygen libxml2-devel libedit-devel
+      ;;
+    $OS_MSYS2) ;;
+    # Other
+    $OS_UNKNOW) ;;
+  esac
 
-    if [ "$OME_OS" = "$OS_MSYS2" ]; then
-        msys2_llvm_install
+  if [ "$OME_OS" = "$OS_MSYS2" ]; then
+    msys2_llvm_install
+  else
+    local llvmdir=$OME_REPO/llvm
+    git_upgrade "https://git.llvm.org" "git/llvm" $llvmdir
+    git_upgrade "https://git.llvm.org" "git/clang" $llvmdir/tools/clang
+    git_upgrade "https://git.llvm.org" "git/clang-tools-extra" $llvmdir/tools/clang/tools/extra
+    git_upgrade "https://git.llvm.org" "git/lld" $llvmdir/tools/lld
+    git_upgrade "https://git.llvm.org" "git/lldb" $llvmdir/tools/lldb
+    git_upgrade "https://git.llvm.org" "git/polly" $llvmdir/tools/polly
+    git_upgrade "https://git.llvm.org" "git/compiler-rt" $llvmdir/projects/compiler-rt
+    git_upgrade "https://git.llvm.org" "git/openmp" $llvmdir/projects/openmp
+    git_upgrade "https://git.llvm.org" "git/libcxx" $llvmdir/projects/libcxx
+    git_upgrade "https://git.llvm.org" "git/libcxxabi" $llvmdir/projects/libcxxabi
+    #
+    # git_upgrade "https://git.llvm.org" "git/test-suite" $llvmdir/projects/test-suite
+    cd $llvmdir/
+    git config branch.master.rebase true
+
+    mkdir -p $llvmdir/../llvm_build
+    cd $llvmdir/../llvm_build/
+
+	  tip "compile"
+    if [ "$OME_OS" = "$OS_MSYS2" ] || [ "$OME_OS" = "$OS_CYGWIN" ]; then
+      cmake $llvmdir -G "$OME_MAKE" \
+	          -DCMAKE_INSTALL_PREFIX=$OME_PREFIX \
+		        -DCMAKE_BUILD_TYPE=Release \
+            -DCMAKE_C_COMPILER=gcc \
+            -DCMAKE_CXX_COMPILER=g++ \
+	          -DCMAKE_CXX_STANDARD=14 \
+	          -DCMAKE_CXX_STANDARD_REQUIRED=OFF \
+	          -DCMAKE_CXX_EXTENSIONS=OFF \
+            -DLLVM_TARGET_ARCH="host" \
+            -DLLVM_TARGETS_TO_BUILD="X86" \
+            -DLLVM_ENABLE_DOXYGEN=ON \
+            -DLLVM_ENABLE_SPHINX=ON \
+            -DLLVM_BUILD_LLVM_DYLIB=ON \
+            -DLLVM_OPTIMIZED_TABLEGEN=ON \
+	          -DLLVM_INCLUDE_TESTS=OFF
     else
-        local llvmdir=$OME_REPO/llvm
-        git_upgrade "https://git.llvm.org" "git/llvm" $llvmdir
-        git_upgrade "https://git.llvm.org" "git/clang" $llvmdir/tools/clang
-        git_upgrade "https://git.llvm.org" "git/clang-tools-extra" $llvmdir/tools/clang/tools/extra
-        git_upgrade "https://git.llvm.org" "git/lld" $llvmdir/tools/lld
-        git_upgrade "https://git.llvm.org" "git/lldb" $llvmdir/tools/lldb
-        git_upgrade "https://git.llvm.org" "git/polly" $llvmdir/tools/polly
-        git_upgrade "https://git.llvm.org" "git/compiler-rt" $llvmdir/projects/compiler-rt
-        git_upgrade "https://git.llvm.org" "git/openmp" $llvmdir/projects/openmp
-        git_upgrade "https://git.llvm.org" "git/libcxx" $llvmdir/projects/libcxx
-        git_upgrade "https://git.llvm.org" "git/libcxxabi" $llvmdir/projects/libcxxabi
-        #
-        # git_upgrade "https://git.llvm.org" "git/test-suite" $llvmdir/projects/test-suite
-        cd $llvmdir/
-        git config branch.master.rebase true
-        
-        mkdir -p $llvmdir/../llvm_build
-        cd $llvmdir/../llvm_build/
-
-	    tip "compile"
-        if [ "$OME_OS" = "$OS_MSYS2" ] || [ "$OME_OS" = "$OS_CYGWIN" ]; then
-            cmake $llvmdir -G "$OME_MAKE" \
-	              -DCMAKE_INSTALL_PREFIX=$OME_PREFIX \
-		          -DCMAKE_BUILD_TYPE=Release \
-                  -DCMAKE_C_COMPILER=gcc \
-                  -DCMAKE_CXX_COMPILER=g++ \
-	              -DCMAKE_CXX_STANDARD=14 \
-	              -DCMAKE_CXX_STANDARD_REQUIRED=OFF \
-	              -DCMAKE_CXX_EXTENSIONS=OFF \
-                  -DLLVM_TARGET_ARCH="host" \
-                  -DLLVM_TARGETS_TO_BUILD="X86" \
-                  -DLLVM_ENABLE_DOXYGEN=ON \
-                  -DLLVM_ENABLE_SPHINX=ON \
-                  -DLLVM_BUILD_LLVM_DYLIB=ON \
-                  -DLLVM_OPTIMIZED_TABLEGEN=ON \
-	              -DLLVM_INCLUDE_TESTS=OFF
-        else
-            cmake $llvmdir -G "$OME_MAKE" \
-	              -DCMAKE_INSTALL_PREFIX=$OME_PREFIX \
-                  -DCMAKE_BUILD_TYPE=Release \
-                  -DLLVM_TARGET_ARCH="host" \
-                  -DLLVM_TARGETS_TO_BUILD="X86" \
-                  -DLLVM_ENABLE_DOXYGEN=ON \
-                  -DLLVM_ENABLE_SPHINX=OFF \
-                  -DLLVM_BUILD_LLVM_DYLIB=ON \
-                  -DLLVM_OPTIMIZED_TABLEGEN=ON \
-	              -DLLVM_INCLUDE_TESTS=OFF
-        fi
-
-        cmake --build . --use-stderr --config Release --target install -- -j4
-
-        # cd $llvmdir/../libcxx/
-        # cmake $llvmdir/projects/libcxx -G "$OME_MAKE" \
-              # -DCMAKE_INSTALL_PREFIX=$OME_PREFIX \
-              # -DCMAKE_BUILD_TYPE=Release \
-              # -DLLVM_PATH=path/to/llvm \
-              # -DLIBCXX_CXX_ABI=libcxxabi \
-              # -DLIBCXX_CXX_ABI_INCLUDE_PATHS="$llvmdir/projects/libcxxabi/include"
-        # ninja -j4
-        # ninja install
+      cmake $llvmdir -G "$OME_MAKE" \
+	          -DCMAKE_INSTALL_PREFIX=$OME_PREFIX \
+            -DCMAKE_BUILD_TYPE=Release \
+            -DLLVM_TARGET_ARCH="host" \
+            -DLLVM_TARGETS_TO_BUILD="X86" \
+            -DLLVM_ENABLE_DOXYGEN=ON \
+            -DLLVM_ENABLE_SPHINX=OFF \
+            -DLLVM_BUILD_LLVM_DYLIB=ON \
+            -DLLVM_OPTIMIZED_TABLEGEN=ON \
+	          -DLLVM_INCLUDE_TESTS=OFF
     fi
 
-    # config: clang_format
-    cc_install_clang_format
+    cmake --build . --use-stderr --config Release --target install -- -j4
+
+    # cd $llvmdir/../libcxx/
+    # cmake $llvmdir/projects/libcxx -G "$OME_MAKE" \
+      # -DCMAKE_INSTALL_PREFIX=$OME_PREFIX \
+      # -DCMAKE_BUILD_TYPE=Release \
+      # -DLLVM_PATH=path/to/llvm \
+      # -DLIBCXX_CXX_ABI=libcxxabi \
+      # -DLIBCXX_CXX_ABI_INCLUDE_PATHS="$llvmdir/projects/libcxxabi/include"
+    # ninja -j4
+    # ninja install
+  fi
+
+  # config: clang_format
+  cc_install_clang_format
 }
 
 llvm_uninstall() {
-    echo_error "'llvm_uninstall' not implemented"
+  echo_error "'llvm_uninstall' not implemented"
 }
 
 llvm_exist_p() {
-    echo_error "'llvm_exist_p' not implemented"
+  echo_error "'llvm_exist_p' not implemented"
 }
 
 cc_install_clang_format() {
-    local oldir=`pwd`
-    if [ ! -e ~/.clang-format ]; then
-        #echo "Language: Cpp" >> ~/.clang-format
-        echo "# 基于哪个配置文件" >> ~/.clang-format
-        echo "BasedOnStyle: LLVM" >> ~/.clang-format
-        echo "# BreakBeforeBraces: Attach" >> ~/.clang-format
-        echo "BreakBeforeBraces: Attach" >> ~/.clang-format
-        echo "# 指针的*的挨着哪边" >> ~/.clang-format
-        echo "PointerAlignment: Right" >> ~/.clang-format
-        echo "# 缩进宽度" >> ~/.clang-format
-        echo "IndentWidth: 4" >> ~/.clang-format
-        echo "# tab的宽度" >> ~/.clang-format
-        echo "TabWidth: 4" >> ~/.clang-format
-        echo "# 使用Tab" >> ~/.clang-format
-        echo "UseTab: Never" >> ~/.clang-format
-        echo "# 行长度限制" >> ~/.clang-format
-        echo "ColumnLimit: 80" >> ~/.clang-format
+  local oldir=`pwd`
+  if [ ! -e ~/.clang-format ]; then
+    #echo "Language: Cpp" >> ~/.clang-format
+    echo "# 基于哪个配置文件" >> ~/.clang-format
+    echo "BasedOnStyle: LLVM" >> ~/.clang-format
+    echo "# BreakBeforeBraces: Attach" >> ~/.clang-format
+    echo "BreakBeforeBraces: Attach" >> ~/.clang-format
+    echo "# 指针的*的挨着哪边" >> ~/.clang-format
+    echo "PointerAlignment: Right" >> ~/.clang-format
+    echo "# 缩进宽度" >> ~/.clang-format
+    echo "IndentWidth: 4" >> ~/.clang-format
+    echo "# tab的宽度" >> ~/.clang-format
+    echo "TabWidth: 4" >> ~/.clang-format
+    echo "# 使用Tab" >> ~/.clang-format
+    echo "UseTab: Never" >> ~/.clang-format
+    echo "# 行长度限制" >> ~/.clang-format
+    echo "ColumnLimit: 80" >> ~/.clang-format
 
-        echo "# 模板声明单独一行" >> ~/.clang-format
-        echo "AlwaysBreakTemplateDeclarations: true" >> ~/.clang-format
-        echo "# 连续的空行保留几行" >> ~/.clang-format
-        echo "MaxEmptyLinesToKeep: 1" >> ~/.clang-format
-        echo "# 在 @property 后面添加空格, @property (readonly) 而不是 @property(readonly)." >> ~/.clang-format
-        echo "ObjCSpaceAfterProperty: true" >> ~/.clang-format
-        echo "# OC block后面的缩进" >> ~/.clang-format
-        echo "ObjCBlockIndentWidth: 4" >> ~/.clang-format
-        echo "# 是否允许短方法单行" >> ~/.clang-format
-        echo "AllowShortFunctionsOnASingleLine: true" >> ~/.clang-format
-        echo "# 是否允许短if单行 If true, if (a) return; 可以放到同一行" >> ~/.clang-format
-        echo "AllowShortIfStatementsOnASingleLine: true" >> ~/.clang-format
-        echo "# 注释对齐" >> ~/.clang-format
-        echo "AlignTrailingComments: true" >> ~/.clang-format
-        echo "# 换行的时候对齐操作符" >> ~/.clang-format
-        echo "# AlignOperands: true" >> ~/.clang-format
-        echo "# 中括号两边空格 [] " >> ~/.clang-format
-        echo "SpacesInSquareBrackets: false" >> ~/.clang-format
-        echo "# 小括号两边添加空格" >> ~/.clang-format
-        echo "SpacesInParentheses : false" >> ~/.clang-format
-        echo "# 多行声明语句按照=对齐" >> ~/.clang-format
-        echo "AlignConsecutiveDeclarations: true" >> ~/.clang-format
-        echo "# 连续的赋值语句以 = 为中心对齐" >> ~/.clang-format
-        echo "AlignConsecutiveAssignments: true" >> ~/.clang-format
-        echo "# 等号两边的空格" >> ~/.clang-format
-        echo "SpaceBeforeAssignmentOperators: true" >> ~/.clang-format
-        echo "# 容器类的空格 例如 OC的字典" >> ~/.clang-format
-        echo "SpacesInContainerLiterals: true" >> ~/.clang-format
-        echo "# 缩进" >> ~/.clang-format
-        echo "IndentWrappedFunctionNames: true" >> ~/.clang-format
-        echo "# 在block从空行开始" >> ~/.clang-format
-        echo "KeepEmptyLinesAtTheStartOfBlocks: true" >> ~/.clang-format
-        echo "# 在构造函数初始化时按逗号断行，并以冒号对齐" >> ~/.clang-format
-        echo "BreakConstructorInitializersBeforeComma: true" >> ~/.clang-format
-        echo "# 函数参数换行" >> ~/.clang-format
-        echo "AllowAllParametersOfDeclarationOnNextLine: true" >> ~/.clang-format
-        echo "# 括号后添加空格" >> ~/.clang-format
-        echo "SpaceAfterCStyleCast: true" >> ~/.clang-format
-        
-        echo "" >> ~/.clang-format
-        echo "---" >> ~/.clang-format
-        echo "Language: JavaScript" >> ~/.clang-format
-        echo "# Use 100 columns for JS." >> ~/.clang-format
-        echo "ColumnLimit: 0" >> ~/.clang-nformat
-    fi
-    cd $oldir
+    echo "# 模板声明单独一行" >> ~/.clang-format
+    echo "AlwaysBreakTemplateDeclarations: true" >> ~/.clang-format
+    echo "# 连续的空行保留几行" >> ~/.clang-format
+    echo "MaxEmptyLinesToKeep: 1" >> ~/.clang-format
+    echo "# 在 @property 后面添加空格, @property (readonly) 而不是 @property(readonly)." >> ~/.clang-format
+    echo "ObjCSpaceAfterProperty: true" >> ~/.clang-format
+    echo "# OC block后面的缩进" >> ~/.clang-format
+    echo "ObjCBlockIndentWidth: 4" >> ~/.clang-format
+    echo "# 是否允许短方法单行" >> ~/.clang-format
+    echo "AllowShortFunctionsOnASingleLine: true" >> ~/.clang-format
+    echo "# 是否允许短if单行 If true, if (a) return; 可以放到同一行" >> ~/.clang-format
+    echo "AllowShortIfStatementsOnASingleLine: true" >> ~/.clang-format
+    echo "# 注释对齐" >> ~/.clang-format
+    echo "AlignTrailingComments: true" >> ~/.clang-format
+    echo "# 换行的时候对齐操作符" >> ~/.clang-format
+    echo "# AlignOperands: true" >> ~/.clang-format
+    echo "# 中括号两边空格 [] " >> ~/.clang-format
+    echo "SpacesInSquareBrackets: false" >> ~/.clang-format
+    echo "# 小括号两边添加空格" >> ~/.clang-format
+    echo "SpacesInParentheses : false" >> ~/.clang-format
+    echo "# 多行声明语句按照=对齐" >> ~/.clang-format
+    echo "AlignConsecutiveDeclarations: true" >> ~/.clang-format
+    echo "# 连续的赋值语句以 = 为中心对齐" >> ~/.clang-format
+    echo "AlignConsecutiveAssignments: true" >> ~/.clang-format
+    echo "# 等号两边的空格" >> ~/.clang-format
+    echo "SpaceBeforeAssignmentOperators: true" >> ~/.clang-format
+    echo "# 容器类的空格 例如 OC的字典" >> ~/.clang-format
+    echo "SpacesInContainerLiterals: true" >> ~/.clang-format
+    echo "# 缩进" >> ~/.clang-format
+    echo "IndentWrappedFunctionNames: true" >> ~/.clang-format
+    echo "# 在block从空行开始" >> ~/.clang-format
+    echo "KeepEmptyLinesAtTheStartOfBlocks: true" >> ~/.clang-format
+    echo "# 在构造函数初始化时按逗号断行，并以冒号对齐" >> ~/.clang-format
+    echo "BreakConstructorInitializersBeforeComma: true" >> ~/.clang-format
+    echo "# 函数参数换行" >> ~/.clang-format
+    echo "AllowAllParametersOfDeclarationOnNextLine: true" >> ~/.clang-format
+    echo "# 括号后添加空格" >> ~/.clang-format
+    echo "SpaceAfterCStyleCast: true" >> ~/.clang-format
+
+    echo "" >> ~/.clang-format
+    echo "---" >> ~/.clang-format
+    echo "Language: JavaScript" >> ~/.clang-format
+    echo "# Use 100 columns for JS." >> ~/.clang-format
+    echo "ColumnLimit: 0" >> ~/.clang-nformat
+  fi
+  cd $oldir
 }
 
 llvm_info() {
-    echo_error ""
+  echo_error ""
 }
 
 
-        # mkdir -p $llvmdir/../{build,clang,libcxx,libcxxabi,lldb,compiler-rt,lld,polly,debuginfo-tests}
-        # mkdir -p $llvmdir/build
-        # cd $llvmdir/../build/
-        #	   -DCMAKE_CXX_COMPILER=g++.exe
-	    #	   -DCMAKE_CXX_FLAGS="-std=c++11"
-	    #	   -DCXX_STANDARD=11
-	    #	   -DCMAKE_CXX_STANDARD=11
-	    #	   -DCMAKE_CXX_STANDARD_REQUIRED=ON
-	    #	   -DCMAKE_CXX_EXTENSIONS=OFF
-        #      -DCMAKE_MAKE_PROGRAM=mingw32-make
-	    #      -DCMAKE_BUILD_TYPE=Release
-        #      -DCMAKE_CXX_STANDARD_REQUIRED=ON
-        #      -DLLVM_ENABLE_TERMINFO=0
-        # -DPYTHON_INCLUDE_DIR=$(python3 -c "from distutils.sysconfig import get_python_inc; print(get_python_inc())")
-        # -DPYTHON_LIBRARY=$(python3 -c "import distutils.sysconfig as sysconfig; print(sysconfig.get_config_var('LIBDIR'))")
+# mkdir -p $llvmdir/../{build,clang,libcxx,libcxxabi,lldb,compiler-rt,lld,polly,debuginfo-tests}
+# mkdir -p $llvmdir/build
+# cd $llvmdir/../build/
+#	   -DCMAKE_CXX_COMPILER=g++.exe
+#	   -DCMAKE_CXX_FLAGS="-std=c++11"
+#	   -DCXX_STANDARD=11
+#	   -DCMAKE_CXX_STANDARD=11
+#	   -DCMAKE_CXX_STANDARD_REQUIRED=ON
+#	   -DCMAKE_CXX_EXTENSIONS=OFF
+#      -DCMAKE_MAKE_PROGRAM=mingw32-make
+#      -DCMAKE_BUILD_TYPE=Release
+#      -DCMAKE_CXX_STANDARD_REQUIRED=ON
+#      -DLLVM_ENABLE_TERMINFO=0
+# -DPYTHON_INCLUDE_DIR=$(python3 -c "from distutils.sysconfig import get_python_inc; print(get_python_inc())")
+# -DPYTHON_LIBRARY=$(python3 -c "import distutils.sysconfig as sysconfig; print(sysconfig.get_config_var('LIBDIR'))")
 
-        # elif [ "$OME_OS" = "$OS_UBUNTU" ]; then
-        #     cmake $llvmdir -G "$OME_MAKE" \
-	    #           -DCMAKE_INSTALL_PREFIX=$OME_PREFIX \
-        #           -DCMAKE_BUILD_TYPE=Release \
-        #           -DLLVM_TARGET_ARCH="host" \
-        #           -DLLVM_TARGETS_TO_BUILD="X86" \
-        #           -DLLVM_ENABLE_DOXYGEN=ON \
-        #           -DLLVM_ENABLE_SPHINX=ON \
-        #           -DLLVM_BUILD_LLVM_DYLIB=ON \
-        #           -DLLVM_OPTIMIZED_TABLEGEN=ON \
-	    #           -DLLVM_INCLUDE_TESTS=OFF \
-        #           -DLLVM_ENABLE_PROJECTS="all" \
-        #           -DLIBCXXABI_LIBCXX_INCLUDES="$llvmdir/projects/libcxxabi/src" \
-        #           -DLLDB_DISABLE_LIBEDIT=1 \
-        #           -DLLDB_DISABLE_CURSES=1 \
-        #           -DLLDB_DISABLE_PYTHON=1
+# elif [ "$OME_OS" = "$OS_UBUNTU" ]; then
+#     cmake $llvmdir -G "$OME_MAKE" \
+	#           -DCMAKE_INSTALL_PREFIX=$OME_PREFIX \
+  #           -DCMAKE_BUILD_TYPE=Release \
+  #           -DLLVM_TARGET_ARCH="host" \
+  #           -DLLVM_TARGETS_TO_BUILD="X86" \
+  #           -DLLVM_ENABLE_DOXYGEN=ON \
+  #           -DLLVM_ENABLE_SPHINX=ON \
+  #           -DLLVM_BUILD_LLVM_DYLIB=ON \
+  #           -DLLVM_OPTIMIZED_TABLEGEN=ON \
+	#           -DLLVM_INCLUDE_TESTS=OFF \
+  #           -DLLVM_ENABLE_PROJECTS="all" \
+  #           -DLIBCXXABI_LIBCXX_INCLUDES="$llvmdir/projects/libcxxabi/src" \
+  #           -DLLDB_DISABLE_LIBEDIT=1 \
+  #           -DLLDB_DISABLE_CURSES=1 \
+  #           -DLLDB_DISABLE_PYTHON=1
 
-                  # -DLLDB_DISABLE_LIBEDIT=1 \
-                  # -DLLDB_DISABLE_CURSES=1 \
-                  # -DLLDB_DISABLE_PYTHON=1
-                  # -DLLVM_ENABLE_ASSERTIONS=ON \
-                  # -DCMAKE_ASM_COMPILER=nasm \
+# -DLLDB_DISABLE_LIBEDIT=1 \
+  # -DLLDB_DISABLE_CURSES=1 \
+  # -DLLDB_DISABLE_PYTHON=1
+# -DLLVM_ENABLE_ASSERTIONS=ON \
+  # -DCMAKE_ASM_COMPILER=nasm \

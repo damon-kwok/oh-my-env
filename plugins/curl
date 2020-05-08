@@ -1,65 +1,65 @@
 #!/usr/bin/env sh
 
 curl_install() {
-    get_os_type
-    case $OME_OS in
-        # Linux
-        # $OS_DEBIAN) ;;
-        # $OS_UBUNTU) ;;
-        $OS_DEBIAN|$OS_UBUNTU)
-            sudo apt install libssl-dev libmbedtls-dev libssh-dev libssh2-1-dev libz-dev
-            ;;
-        # $OS_REDHAT) ;;
-        # $OS_FEDORA) ;;
-        $OS_REDHAT|$OS_FEDORA) ;;
-        $OS_ARCH) ;;
-        $OS_GENTOO) ;;
-        $OS_SUSE) ;;
-        $OS_SLACKWARE) ;;
-        $OS_NIXOS) ;;
-        $OS_VOID) ;;
-        $OS_ALPINE) ;;
-        $OS_MAGEIA) ;;
-        $OS_SLITAZ) ;;
-        $OS_GUIXSD) ;;
-        # Unix
-        $OS_MACOS) ;;
-        $OS_AIX) ;;
-        $OS_SOLARIS) ;;
-        $OS_FREEBSD) ;;
-        $OS_OPENBSD) ;;
-        $OS_NETBSD) ;;
-        $OS_DFBSD) ;;
-        # Windows
-        $OS_CYGWIN) ;;
-        $OS_MSYS2) ;;
-        # Other
-        $OS_UNKNOW) ;;
-    esac
+  get_os_type
+  case $OME_OS in
+    # Linux
+    # $OS_DEBIAN) ;;
+    # $OS_UBUNTU) ;;
+    $OS_DEBIAN|$OS_UBUNTU)
+      sudo apt install libssl-dev libmbedtls-dev libssh-dev libssh2-1-dev libz-dev
+      ;;
+    # $OS_REDHAT) ;;
+    # $OS_FEDORA) ;;
+    $OS_REDHAT|$OS_FEDORA) ;;
+    $OS_ARCH) ;;
+    $OS_GENTOO) ;;
+    $OS_SUSE) ;;
+    $OS_SLACKWARE) ;;
+    $OS_NIXOS) ;;
+    $OS_VOID) ;;
+    $OS_ALPINE) ;;
+    $OS_MAGEIA) ;;
+    $OS_SLITAZ) ;;
+    $OS_GUIXSD) ;;
+    # Unix
+    $OS_MACOS) ;;
+    $OS_AIX) ;;
+    $OS_SOLARIS) ;;
+    $OS_FREEBSD) ;;
+    $OS_OPENBSD) ;;
+    $OS_NETBSD) ;;
+    $OS_DFBSD) ;;
+    # Windows
+    $OS_CYGWIN) ;;
+    $OS_MSYS2) ;;
+    # Other
+    $OS_UNKNOW) ;;
+  esac
 
-    github_upgrade curl/curl $OME_PROJ/c/curl
-    mkdir -p $OME_PROJ/c/curl/build
-    cd $OME_PROJ/c/curl/build/
-    cmake .. -G "$OME_MAKE" \
+  github_upgrade curl/curl $OME_PROJ/c/curl
+  mkdir -p $OME_PROJ/c/curl/build
+  cd $OME_PROJ/c/curl/build/
+  cmake .. -G "$OME_MAKE" \
 	      -DCMAKE_INSTALL_PREFIX=$OME_PREFIX \
-          -DCMAKE_INSTALL_BINDIR=$OME_PREFIX/bin \
-          -DCMAKE_USE_WINSSL=OFF \
-          -DCMAKE_USE_DARWINSSL=OFF \
-          -DCMAKE_USE_OPENSSL=ON \
-          -DCMAKE_USE_MBEDTLS=ON \
-          -DBUILD_SHARED_LIBS=0
+        -DCMAKE_INSTALL_BINDIR=$OME_PREFIX/bin \
+        -DCMAKE_USE_WINSSL=OFF \
+        -DCMAKE_USE_DARWINSSL=OFF \
+        -DCMAKE_USE_OPENSSL=ON \
+        -DCMAKE_USE_MBEDTLS=ON \
+        -DBUILD_SHARED_LIBS=0
 
-    cmake --build . --use-stderr --config Release --target install -- -j4
+  cmake --build . --use-stderr --config Release --target install -- -j4
 }
 
 curl_uninstall() {
-    echo_error "'libcurl_uninstall' not implemented"
+  echo_error "'libcurl_uninstall' not implemented"
 }
 
 curl_exist_p() {
-    echo_error "'libcurl_exist_p' not implemented"
+  echo_error "'libcurl_exist_p' not implemented"
 }
 
 curl_info() {
-    echo_error ""
+  echo_error ""
 }

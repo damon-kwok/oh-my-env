@@ -36,7 +36,7 @@ set ZIP_HOME=%DIR_CACHE%\apps-zip
 set PATH=%DIR_CACHE%\bin;%PATH%
 
 rem if not exist %DIR_CACHE% (
-   rem mkdir %DIR_CACHE%
+rem mkdir %DIR_CACHE%
 rem )
 
 set DIR_BLOG=%OME_ROOT%\blog
@@ -173,7 +173,7 @@ exit
 :gotAdmin
 if exist "%temp%\getadmin.vbs" ( del "%temp%\getadmin.vbs" )
 pushd "%CD%"
-CD /D "%~dp0" 
+CD /D "%~dp0"
 goto:eof
 
 REM%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -211,7 +211,7 @@ rem set HOME=%OME_ROOT%
 rem set ALTERNATE_EDITOR=%EMACS_BIN%\emacsc.exe
 rem set EMACS_SERVER_FILE=%HOME%\.emacs.d\server\emacs-server-file
 if not exist %HOME%\.emacs (
-   copy /y %OME_ROOT%\emacs-config\init.el %HOME%\.emacs
+copy /y %OME_ROOT%\emacs-config\init.el %HOME%\.emacs
 )
 cd %HOME%
 start %EMACS_BIN%\runemacs.exe --debug-init
@@ -223,7 +223,7 @@ rem set HOME=%OME_ROOT%
 rem set ALTERNATE_EDITOR=%EMACS_BIN%\emacsc.exe
 rem set EMACS_SERVER_FILE=%HOME%\.emacs.d\server\emacs-server-file
 if not exist %HOME%\.emacs (
-   copy /y %OME_ROOT%\emacs-config\init.el %HOME%\.emacs
+copy /y %OME_ROOT%\emacs-config\init.el %HOME%\.emacs
 )
 cd %HOME%
 %EMACS_BIN%\emacs.exe -nw --debug-init
@@ -260,7 +260,7 @@ if "%1" neq "1" (
 >>"%temp%\tmp.vbs" echo WshShell.Run chr^(34^) ^& %0 ^& chr^(34^) ^& ^" 1^",0
 start /d "%temp%" tmp.vbs
 exit
-) 
+)
 %UNITY_BIN%\Unity.exe
 goto:eof
 
@@ -314,21 +314,21 @@ git pull
 
 echo blog
 if not exist %DIR_BLOG% (
-   cd %OME_ROOT%
-   git clone https://github.com/damon-kwok/damon-kwok.github.io.git %DIR_BLOG%
+cd %OME_ROOT%
+git clone https://github.com/damon-kwok/damon-kwok.github.io.git %DIR_BLOG%
 ) else (
-  cd %DIR_BLOG%
-  git pull
+cd %DIR_BLOG%
+git pull
 )
 
 echo workspace
 if not exist %DIR_WORKSPACE% (
-   cd %OME_ROOT%
-   svn co svn://www.svn999.com/guowangwei.workspace workspace
+cd %OME_ROOT%
+svn co svn://www.svn999.com/guowangwei.workspace workspace
 ) else (
-  cd %DIR_WORKSPACE%
-  svn cleanup .
-  svn up
+cd %DIR_WORKSPACE%
+svn cleanup .
+svn up
 )
 
 cd %OME_ROOT%
@@ -407,20 +407,20 @@ goto:eof
 :getapp
 echo "do::getapp"
 if not exist %APP_HOME% (
-  
-  if exist %ZIP_HOME% (
-		echo apps-zip ok!
-		cd $ZIP_HOME
-		git pull
-		call:unzipapp
-    )
-	else (
-		echo apps-zip missing!
-		cd $ZIP_HOME/../
-		git clone https://github.com/damon-kwok/my-emacs-apps.git %ZIP_HOME%
-		call:unzipapp
-  )
-  move apps ../
+
+if exist %ZIP_HOME% (
+echo apps-zip ok!
+cd $ZIP_HOME
+git pull
+call:unzipapp
+)
+else (
+echo apps-zip missing!
+cd $ZIP_HOME/../
+git clone https://github.com/damon-kwok/my-emacs-apps.git %ZIP_HOME%
+call:unzipapp
+)
+move apps ../
 )
 goto:eof
 
@@ -472,8 +472,8 @@ echo loading...
 if /i "%c%"=="1" call:pull-blog
 if /i "%c%"=="2" call:push-blog
 if /i "%c%"=="3" (
-   cd %DIR_WORKSPACE%
-   call:svn-commit
+cd %DIR_WORKSPACE%
+call:svn-commit
 )
 if /i "%c%"=="s" zsh
 if /i "%c%"=="r" call:ask-menu
@@ -553,4 +553,3 @@ call:ask-menu
 
 :quit
 cd %OME_ROOT%
-

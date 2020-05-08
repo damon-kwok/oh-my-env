@@ -1,379 +1,379 @@
 #!/usr/bin/env sh
 
 ask() {
-    read -p $(tput setaf 2)"$@ "$(tput sgr0)
+  read -p $(tput setaf 2)"$@ "$(tput sgr0)
 }
 warning_ask() {
-    read -p $(tput setaf 3)"$@ "$(tput sgr0)
+  read -p $(tput setaf 3)"$@ "$(tput sgr0)
 }
 
 echo_success() {
-    echo -e $(tput setaf 2)"$@"$(tput sgr0) #2
+  echo -e $(tput setaf 2)"$@"$(tput sgr0) #2
 }
 echo_warning() {
-    echo -e $(tput setaf 3)"$@"$(tput sgr0) #3 dark yellow
+  echo -e $(tput setaf 3)"$@"$(tput sgr0) #3 dark yellow
 }
 echo_error() {
-    echo -e $(tput setaf 1)"$@"$(tput sgr0)
+  echo -e $(tput setaf 1)"$@"$(tput sgr0)
 }
 echo_tip() {
-    echo -e $(tput setaf 6)"$@"$(tput sgr0) #6
+  echo -e $(tput setaf 6)"$@"$(tput sgr0) #6
 }
 echo_debug() {
-    echo -e $(tput setaf 8)"$@"$(tput sgr0)
+  echo -e $(tput setaf 8)"$@"$(tput sgr0)
 }
 echo_waiting() {
-    echo -e $(tput setaf 4)"$@"$(tput sgr0)
+  echo -e $(tput setaf 4)"$@"$(tput sgr0)
 }
 
 echo_lang1() {
-    echo_error $*
+  echo_error $*
 }
 
 echo_lang2() {
-    echo_warning $*
+  echo_warning $*
 }
 
 echo_lang3() {
-    echo_success $*
+  echo_success $*
 }
 
 echo_lang4() {
-    echo_tip $*
+  echo_tip $*
 }
 
 readp() {
-    local str=$1
+  local str=$1
 
-    read -p "$(tput setaf 14)$str$(tput sgr0)(Y/n)" input
-    if [ "$input" == "y" ] || [ "$input" == "Y" ] || [ "$input" == "" ]; then
-	    return $(( 1 ));
-    elif [ "$input" == "n" ] || [ "$input" == "N" ]; then
-	    return $(( 0 ));
-    else
-	    echo "invalid input:$input"
-	    readp "$1"
-    fi
+  read -p "$(tput setaf 14)$str$(tput sgr0)(Y/n)" input
+  if [ "$input" == "y" ] || [ "$input" == "Y" ] || [ "$input" == "" ]; then
+	  return $(( 1 ));
+  elif [ "$input" == "n" ] || [ "$input" == "N" ]; then
+	  return $(( 0 ));
+  else
+	  echo "invalid input:$input"
+	  readp "$1"
+  fi
 }
 
 echo_kv() {
-    if [ "$#" == "3" ]; then
-        echo -e $(tput setaf 6)"$1\t"$(tput sgr0) $(tput setaf 2)"$2"$(tput sgr0) $(tput setaf 3)"$3"$(tput sgr0)
-    else
-        echo -e $(tput setaf 6)"$1\t"$(tput sgr0) $(tput setaf 3)"$2"$(tput sgr0)
-    fi
+  if [ "$#" == "3" ]; then
+    echo -e $(tput setaf 6)"$1\t"$(tput sgr0) $(tput setaf 2)"$2"$(tput sgr0) $(tput setaf 3)"$3"$(tput sgr0)
+  else
+    echo -e $(tput setaf 6)"$1\t"$(tput sgr0) $(tput setaf 3)"$2"$(tput sgr0)
+  fi
 }
 
 title() {
-    echo -e $(tput setaf 6)"\n<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>"$(tput sgr0)
-    echo -e $(tput setaf 6)"<>\t\t\t\t"$(tput sgr0)"$1"
-    echo -e $(tput setaf 6)"<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>"\
-         $(tput sgr0)
+  echo -e $(tput setaf 6)"\n<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>"$(tput sgr0)
+  echo -e $(tput setaf 6)"<>\t\t\t\t"$(tput sgr0)"$1"
+  echo -e $(tput setaf 6)"<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>"\
+       $(tput sgr0)
 }
 
 tip() {
-    # echo -e $(tput setaf 10)"\n------------------------------------------------------------"$(tput sgr0)
-    # echo -e $(tput setaf 10)"| $1"$(tput sgr0)
-    echo -e "$(tput setaf 6)\n<><><> "$(tput sgr0)"$1"$(tput setaf 6)" >"$(tput sgr0)
-    # cowsay "$(tput setaf 6)$1$(tput sgr0)"
+  # echo -e $(tput setaf 10)"\n------------------------------------------------------------"$(tput sgr0)
+  # echo -e $(tput setaf 10)"| $1"$(tput sgr0)
+  echo -e "$(tput setaf 6)\n<><><> "$(tput sgr0)"$1"$(tput setaf 6)" >"$(tput sgr0)
+  # cowsay "$(tput setaf 6)$1$(tput sgr0)"
 }
 
 get_os_type() {
-    if [ $OS_UNKNOW == $OME_OS ]; then
-        # $OS_UNKNOW) os_choose;;
-        tip "please choose your os:"
-        echo "    1) macOS"
-        echo "    -------------------------"
-        echo "    2) Cygwin"
-        echo "    3) MSYS2"
-        echo "    -------------------------"
-        echo "    4) ArchLinux"
-        echo "    5) Debian"
-        echo "    6) Ubuntu/LinuxMint/ElementaryOS"
-        echo "    7) Redhat/CentOS(yum)"
-        echo "    8) Fedora22+(dnf)"
-        echo "    -------------------------"
-        echo "    9) FreeBSD"
-        echo "    -------------------------"
-        echo "    q) quit"
+  if [ $OS_UNKNOW == $OME_OS ]; then
+    # $OS_UNKNOW) os_choose;;
+    tip "please choose your os:"
+    echo "    1) macOS"
+    echo "    -------------------------"
+    echo "    2) Cygwin"
+    echo "    3) MSYS2"
+    echo "    -------------------------"
+    echo "    4) ArchLinux"
+    echo "    5) Debian"
+    echo "    6) Ubuntu/LinuxMint/ElementaryOS"
+    echo "    7) Redhat/CentOS(yum)"
+    echo "    8) Fedora22+(dnf)"
+    echo "    -------------------------"
+    echo "    9) FreeBSD"
+    echo "    -------------------------"
+    echo "    q) quit"
 
-        read -p "please enter your choice:" item
-        case "$item" in
-            "1") export OME_OS=$OS_MACOS;;
-            "2") export OME_OS=$OS_CYGWIN;;
-            "3") export OME_OS=$OS_MSYS2;;
-            "4") export OME_OS=$OS_ARCH;;
-            "5") export OME_OS=$OS_DEBIAN;;
-            "6") export OME_OS=$OS_UBUNTU;;
-            "7") export OME_OS=$OS_REDHAT;;
-            "8") export OME_OS=$OS_FEDORA;;
-            "9") export OME_OS=$OS_FREEBSD;;
-        esac
-    fi
+    read -p "please enter your choice:" item
+    case "$item" in
+      "1") export OME_OS=$OS_MACOS;;
+      "2") export OME_OS=$OS_CYGWIN;;
+      "3") export OME_OS=$OS_MSYS2;;
+      "4") export OME_OS=$OS_ARCH;;
+      "5") export OME_OS=$OS_DEBIAN;;
+      "6") export OME_OS=$OS_UBUNTU;;
+      "7") export OME_OS=$OS_REDHAT;;
+      "8") export OME_OS=$OS_FEDORA;;
+      "9") export OME_OS=$OS_FREEBSD;;
+    esac
+  fi
 }
 
 ome_git_config() {
-    # title "ome config"
+  # title "ome config"
 
-    # tip "ldconfig"
-    # if [ ! -f "/etc/ld.so.conf.d/`whoami`.conf" ]; then
-    # sudo sh -c 'echo "$OME_PREFIX/lib" >> /etc/ld.so.conf.d/`whoami`.conf'
-    # sudo ldconfig
-    # fi
+  # tip "ldconfig"
+  # if [ ! -f "/etc/ld.so.conf.d/`whoami`.conf" ]; then
+  # sudo sh -c 'echo "$OME_PREFIX/lib" >> /etc/ld.so.conf.d/`whoami`.conf'
+  # sudo ldconfig
+  # fi
 
-    # tip "libtool"
-    # libtool --finish $OME_PREFIX/lib
+  # tip "libtool"
+  # libtool --finish $OME_PREFIX/lib
 
-    # tip "git config"
-    local oldir=`pwd`
-    if [ "$1" != "" ]; then
-        cd $1
-        tip "git project config"
-        git config core.editor $EDITOR
-        git config core.autocrlf false
-        git config core.safecrlf true
-    else
-        tip "git global config"
-        git config --global core.editor $EDITOR
-        git config --global core.autocrlf false
-        # git config --global core.safecrlf true
-        git config --global core.safecrlf false
+  # tip "git config"
+  local oldir=`pwd`
+  if [ "$1" != "" ]; then
+    cd $1
+    tip "git project config"
+    git config core.editor $EDITOR
+    git config core.autocrlf false
+    git config core.safecrlf true
+  else
+    tip "git global config"
+    git config --global core.editor $EDITOR
+    git config --global core.autocrlf false
+    # git config --global core.safecrlf true
+    git config --global core.safecrlf false
 
-        git config --global advice.addIgnoredFile false
+    git config --global advice.addIgnoredFile false
 
-        git config --global core.longpaths true
-        # git config --system core.longpaths true
+    git config --global core.longpaths true
+    # git config --system core.longpaths true
 
-        git config --global user.email "damon-kwok@outlook.com"
-        git config --global user.name "damon-kwok"
-        # git config --global credential.helper 'cache --timeout=36000'
-        git config --global credential.helper store
+    git config --global user.email "damon-kwok@outlook.com"
+    git config --global user.name "damon-kwok"
+    # git config --global credential.helper 'cache --timeout=36000'
+    git config --global credential.helper store
 
-        git config --global color.ui true
+    git config --global color.ui true
 
-        git config --global merge.tool emerge
-        git config --global mergetool.diffmerge.cmd "emerge \$LOCAL \$BASE \$REMOTE \$MERGED"
-        git config --global mergetool.keepBackup false
+    git config --global merge.tool emerge
+    git config --global mergetool.diffmerge.cmd "emerge \$LOCAL \$BASE \$REMOTE \$MERGED"
+    git config --global mergetool.keepBackup false
 
-        git config --global diff.tool ediff
-        git config --global difftool.ediff.cmd "ediff \"\$LOCAL\" \"\$REMOTE\""
-        git config --global difftool.prompt false
-    fi
+    git config --global diff.tool ediff
+    git config --global difftool.ediff.cmd "ediff \"\$LOCAL\" \"\$REMOTE\""
+    git config --global difftool.prompt false
+  fi
 }
 
 __git_upgrade() {
-    # echo "__git_upgrade:$@"
-    local oldir=`pwd`
-    local dir="$1"
-    local url="$2"
-    local submodule="$3"
-    local branch="$4"
+  # echo "__git_upgrade:$@"
+  local oldir=`pwd`
+  local dir="$1"
+  local url="$2"
+  local submodule="$3"
+  local branch="$4"
 
-    if [ ! -d "$dir" ]; then # || [ ! -e "$dir/.git/index" ]
-        # echo_success "git clone $url $dir --single-branch --depth=1 $branch"
-        if [ "$submodule" != "0" ]; then
-            echo_kv "clone --recurse-submodules" "[$project]" "$dir"
-            # git clone $url $dir --recurse-submodules --single-branch --depth=1 $branch
-            git clone $url $dir --recursive --single-branch --depth=1 $branch
-        else
-            echo_kv "clone" "[$project]" "$dir"
-            git clone $url $dir --single-branch --depth=1 $branch
-        fi
-        # elif [ "`ls -A $DIRECTORY`" = "" ]; then
-        # echo "$DIRECTORY is indeed empty"
-    elif [ -d "$dir/" ] && [ ! -d "$dir/.git/" ]; then
-        cd $dir
-        git init
-        git remote add origin $url
-        git pull origin master
+  if [ ! -d "$dir" ]; then # || [ ! -e "$dir/.git/index" ]
+    # echo_success "git clone $url $dir --single-branch --depth=1 $branch"
+    if [ "$submodule" != "0" ]; then
+      echo_kv "clone --recurse-submodules" "[$project]" "$dir"
+      # git clone $url $dir --recurse-submodules --single-branch --depth=1 $branch
+      git clone $url $dir --recursive --single-branch --depth=1 $branch
     else
-	    cd $dir
-	    echo_kv "git pull" "[$project]" "$dir"
-        # if [ -n "$5" ]; then
-        # git checkout -b $5 origin/$5
-        # fi
-	    git pull
-        # git submodule foreach --recursive 'git fetch --tags'
-        if [ "$submodule" != "0" ]; then
-            echo_kv "git submodule update" "[$project]" "$dir"
-            # echo_success "git submodule update --init --depth=1"
-            # echo_success "git submodule update --init"
-            git submodule sync && git submodule update --init --recursive --depth 1
-        fi
-        echo_kv "[$project]" "Upgrade to" `git log -1 --format="%cd" --date=short | sed 's|-||g'`
+      echo_kv "clone" "[$project]" "$dir"
+      git clone $url $dir --single-branch --depth=1 $branch
     fi
-    cd $oldir
+    # elif [ "`ls -A $DIRECTORY`" = "" ]; then
+    # echo "$DIRECTORY is indeed empty"
+  elif [ -d "$dir/" ] && [ ! -d "$dir/.git/" ]; then
+    cd $dir
+    git init
+    git remote add origin $url
+    git pull origin master
+  else
+	  cd $dir
+	  echo_kv "git pull" "[$project]" "$dir"
+    # if [ -n "$5" ]; then
+    # git checkout -b $5 origin/$5
+    # fi
+	  git pull
+    # git submodule foreach --recursive 'git fetch --tags'
+    if [ "$submodule" != "0" ]; then
+      echo_kv "git submodule update" "[$project]" "$dir"
+      # echo_success "git submodule update --init --depth=1"
+      # echo_success "git submodule update --init"
+      git submodule sync && git submodule update --init --recursive --depth 1
+    fi
+    echo_kv "[$project]" "Upgrade to" `git log -1 --format="%cd" --date=short | sed 's|-||g'`
+  fi
+  cd $oldir
 }
 git_upgrade() {
-    # echo "git_upgrade:$@"
-    local site=$1
-    local project=$2
-    if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
-        local dir=`cygpath $3`
-    else
-        local dir="$3"
-    fi
-    local submodule=$4
-    if [ ! -n "$5" ]; then
-        local branch=""
-    else
-        local branch="-b $5"
-    fi
-    local url="$site/${project}.git"
-    __git_upgrade $dir $url $submodule $branch
- }
+  # echo "git_upgrade:$@"
+  local site=$1
+  local project=$2
+  if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
+    local dir=`cygpath $3`
+  else
+    local dir="$3"
+  fi
+  local submodule=$4
+  if [ ! -n "$5" ]; then
+    local branch=""
+  else
+    local branch="-b $5"
+  fi
+  local url="$site/${project}.git"
+  __git_upgrade $dir $url $submodule $branch
+}
 
 git_ssh_upgrade() {
-    local site=$1
-    local project=$2
-    if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
-        local dir=`cygpath $1`
-    else
-        local dir="$1"
-    fi
-    local submodule=$4
-    if [ ! -n "$5" ]; then
-        local branch=""
-    else
-        local branch="-b $5"
-    fi
-    local url="git@${site}:${project}.git"
+  local site=$1
+  local project=$2
+  if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
+    local dir=`cygpath $1`
+  else
+    local dir="$1"
+  fi
+  local submodule=$4
+  if [ ! -n "$5" ]; then
+    local branch=""
+  else
+    local branch="-b $5"
+  fi
+  local url="git@${site}:${project}.git"
 
-    __git_upgrade $dir $url $submodule $branch
+  __git_upgrade $dir $url $submodule $branch
 }
 
 github_upgrade() {
-    local site="https://github.com"
-    git_upgrade $site $@
+  local site="https://github.com"
+  git_upgrade $site $@
 }
 
 github_ssh_upgrade() {
-    local site="github.com"
-    git_ssh_upgrade $site $@
+  local site="github.com"
+  git_ssh_upgrade $site $@
 }
 
 sf_upgrade() {
-    local site="https://git.code.sf.net/p"
-    git_upgrade $site $@
+  local site="https://git.code.sf.net/p"
+  git_upgrade $site $@
 }
 
 sf_ssh_upgrade() {
-    local site="git.code.sf.net/p"
-    git_ssh_upgrade $site $@
+  local site="git.code.sf.net/p"
+  git_ssh_upgrade $site $@
 }
 
 gitlab_upgrade() {
-    local site="https://gitlab.com"
-    git_upgrade $site $@
+  local site="https://gitlab.com"
+  git_upgrade $site $@
 }
 
 gitlab_ssh_upgrade() {
-    local site="gitlab.com"
-    git_ssh_upgrade $site $@
+  local site="gitlab.com"
+  git_ssh_upgrade $site $@
 }
 
 gitee_upgrade() {
-    local site="https://gitee.com"
-    git_upgrade $site $@
+  local site="https://gitee.com"
+  git_upgrade $site $@
 }
 
 gitee_ssh_upgrade() {
-    local site="gitee.com"
-    git_ssh_upgrade $site $@
+  local site="gitee.com"
+  git_ssh_upgrade $site $@
 }
 
 gitee_upgrade_bigrepo() {
-    local project=$1
-    if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
-        local repo=`cygpath $2`
-    else
-        local repo="$2"
-    fi
-    local force=$3
+  local project=$1
+  if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
+    local repo=`cygpath $2`
+  else
+    local repo="$2"
+  fi
+  local force=$3
 
-    if [ -d $repo ] || [ "$force" = "1" ]; then
-        # echo_kv "GIT PULL" "$repo"
-        gitee_upgrade $project $repo
-        git-hook $repo pull
-    fi
+  if [ -d $repo ] || [ "$force" = "1" ]; then
+    # echo_kv "GIT PULL" "$repo"
+    gitee_upgrade $project $repo
+    git-hook $repo pull
+  fi
 }
 gitee_push_bigrepo() {
-    if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
-        local repo=`cygpath $1`
-    else
-        local repo="$1"
+  if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
+    local repo=`cygpath $1`
+  else
+    local repo="$1"
+  fi
+  if [ -d $repo ]; then
+    echo_kv "git push" "$repo"
+    local oldir=`pwd`
+    cd $repo
+    git status
+    readp "==>push $repo?"
+    if [ $? -eq 1 ]; then
+      git-hook "$repo" push
+      git_push
     fi
-    if [ -d $repo ]; then
-        echo_kv "git push" "$repo"
-        local oldir=`pwd`
-        cd $repo
-        git status
-        readp "==>push $repo?"
-        if [ $? -eq 1 ]; then
-            git-hook "$repo" push
-            git_push
-        fi
-        cd $oldir
-    fi
+    cd $oldir
+  fi
 }
 
 git_cancel_commit() {
-    local hash=`git log -2 --format="%H" | head -n 2 | tail -n 1`
-    echo $hash
-    git reset --mixed $hash
+  local hash=`git log -2 --format="%H" | head -n 2 | tail -n 1`
+  echo $hash
+  git reset --mixed $hash
 }
 
 git_look_commit() {
-    local hash=`git log -2 --format="%H" | head -n 2 | tail -n 1`
-    echo $hash
-    git show $hash
+  local hash=`git log -2 --format="%H" | head -n 2 | tail -n 1`
+  echo $hash
+  git show $hash
 }
 
 git_history() {
-    git log -10 --format="[%h] %H" --stat
+  git log -10 --format="[%h] %H" --stat
 }
 
 git_pull_complete() {
-    git pull --unshallow origin
+  git pull --unshallow origin
 }
 
 svn_upgrade() {
-    local oldir=`pwd`
-    local url=$1
-    local dir=$2
+  local oldir=`pwd`
+  local url=$1
+  local dir=$2
 
-    if [ ! -d $dir ]; then
-	    svn co $url $dir
-    else
-	    cd $dir
-	    svn cleanup .
-	    svn up
-    fi
-    cd $oldir
+  if [ ! -d $dir ]; then
+	  svn co $url $dir
+  else
+	  cd $dir
+	  svn cleanup .
+	  svn up
+  fi
+  cd $oldir
 }
 
 svn_remove_lose() {
-    svn status grep "^!" awk `{print $2}` xargs svn rm
+  svn status grep "^!" awk `{print $2}` xargs svn rm
 }
 
 svn_add_new() {
-    svn status grep "^\?" awk `{print $2}` xargs svn add
+  svn status grep "^\?" awk `{print $2}` xargs svn add
 }
 
 svn_commit() {
-    svn_remove_lose
-    svn_add_new
+  svn_remove_lose
+  svn_add_new
 
-    svn status
-    readp "auto commit?"
-    if [ $? -eq 1 ]; then
-        svn commit -m `date +%Y-%m-%d@%H-%M-%S`
-    else
-        read -p "please enter commit message:" msg
-        svn commit -m "$msg"
-    fi
-    # set msg=%date:~0,4%-%date:~5,2%-%date:~8,2%@%time:~0,2%-%time:~3,2%-%time:~6,2%
-    svn commit -m "%msg%"
+  svn status
+  readp "auto commit?"
+  if [ $? -eq 1 ]; then
+    svn commit -m `date +%Y-%m-%d@%H-%M-%S`
+  else
+    read -p "please enter commit message:" msg
+    svn commit -m "$msg"
+  fi
+  # set msg=%date:~0,4%-%date:~5,2%-%date:~8,2%@%time:~0,2%-%time:~3,2%-%time:~6,2%
+  svn commit -m "%msg%"
 }
 
 # find_str $2:str $1:file
@@ -382,67 +382,67 @@ svn_commit() {
 # result=$?
 # echo $result
 find_str() {
-    local str=$1
-    local file=$2
+  local str=$1
+  local file=$2
 
-    grep $str $file >/dev/null
+  grep $str $file >/dev/null
 
-    if [ $? -eq 0 ]; then
-	    # echo "found:$str"
-	    return $(( 1 ));
-    else
-	    # echo "not found:$str"
-	    return $(( 0 ));
-    fi
+  if [ $? -eq 0 ]; then
+	  # echo "found:$str"
+	  return $(( 1 ));
+  else
+	  # echo "not found:$str"
+	  return $(( 0 ));
+  fi
 }
 
 replace_str() {
-    local old_str=$1
-    local new_str=$2
-    local file=$3
-    local rootp=$4
-    if [ "$rootp" == "1" ]; then
-        sudo perl -pi -e 's|$ENV{"old_str"}|$ENV{"new_str"}|g' $file
-    else
-        perl -pi -e 's|$ENV{"old_str"}|$ENV{"new_str"}|g' $file
-    fi
+  local old_str=$1
+  local new_str=$2
+  local file=$3
+  local rootp=$4
+  if [ "$rootp" == "1" ]; then
+    sudo perl -pi -e 's|$ENV{"old_str"}|$ENV{"new_str"}|g' $file
+  else
+    perl -pi -e 's|$ENV{"old_str"}|$ENV{"new_str"}|g' $file
+  fi
 }
 
 cmake_export_commands() {
-    cmake .. -DCMAKE_EXPORT_COMPILE_COMMANDS=YES
+  cmake .. -DCMAKE_EXPORT_COMPILE_COMMANDS=YES
 }
 
 dns_upgrade() {
-    if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
-        echo_error "'dns_upgrade' does not support windows"
-        return
-    fi
+  if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
+    echo_error "'dns_upgrade' does not support windows"
+    return
+  fi
 
-    local ip=$1
+  local ip=$1
 
-    tip "Add '$ip' to /etc/network/interfaces"
-    find_str $ip /etc/network/interfaces
-    if [ $? -eq 0 ]; then
-	    sudo sh -c "echo 'dns_nameservers  $ip' >> /etc/network/interfaces"
-    else
-	    echo "skip!"
-    fi
+  tip "Add '$ip' to /etc/network/interfaces"
+  find_str $ip /etc/network/interfaces
+  if [ $? -eq 0 ]; then
+	  sudo sh -c "echo 'dns_nameservers  $ip' >> /etc/network/interfaces"
+  else
+	  echo "skip!"
+  fi
 }
 
 host_upgrade() {
-    local ip=$1
-    local name=$2
+  local ip=$1
+  local name=$2
 
-    if [ "$OME_OS" = "$OS_MSYS2" ]; then
-        local hostfile=/c/Windows/System32/drivers/etc/hosts
-    elif [ "$OME_OS" = "$OS_CYGWIN" ]; then
-        local hostfile=/cygdrive/c/Windows/System32/drivers/etc/hosts
-    else
-        local hostfile=/etc/hosts
-    fi
+  if [ "$OME_OS" = "$OS_MSYS2" ]; then
+    local hostfile=/c/Windows/System32/drivers/etc/hosts
+  elif [ "$OME_OS" = "$OS_CYGWIN" ]; then
+    local hostfile=/cygdrive/c/Windows/System32/drivers/etc/hosts
+  else
+    local hostfile=/etc/hosts
+  fi
 
-    find_str $name $hostfile
-    if [ $? -eq 0 ]; then
+  find_str $name $hostfile
+  if [ $? -eq 0 ]; then
 		echo "Add '$ip $name' to $hostfile"
 		if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
 			echo '$ip $name' >> /etc/hosts
@@ -450,117 +450,117 @@ host_upgrade() {
 			sudo sh -c "echo '$ip $name' >> /etc/hosts"
 		fi
     #else
-	#    echo "'$ip $name' is exist in $hostfile"
-    fi
+	  #    echo "'$ip $name' is exist in $hostfile"
+  fi
 }
 
 apt_repo_upgrade() {
-    if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
-        echo_error "'apt_repo_upgrade' does not support windows"
-        return
-    fi
-    local arch=$1
-    local url=$2
-    tip "Add docker apt repository"
-    find_str "$url" /etc/apt/sources.list.d/additional-repositories.list
-    if [ $? -eq 0 ]; then
-	    sudo add-apt-repository \
-	         "deb [arch=$arch] $url xenial stable"
-	    sudo apt update
-    fi
-    # "deb [arch=amd64] https://download.docker.com/linux/ubuntu  $(lsb_release -cs) stable"
+  if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
+    echo_error "'apt_repo_upgrade' does not support windows"
+    return
+  fi
+  local arch=$1
+  local url=$2
+  tip "Add docker apt repository"
+  find_str "$url" /etc/apt/sources.list.d/additional-repositories.list
+  if [ $? -eq 0 ]; then
+	  sudo add-apt-repository \
+	       "deb [arch=$arch] $url xenial stable"
+	  sudo apt update
+  fi
+  # "deb [arch=amd64] https://download.docker.com/linux/ubuntu  $(lsb_release -cs) stable"
 }
 
 curdir_upgrade() {
-    local src=$1
-    local dst=$2
+  local src=$1
+  local dst=$2
 
-    if [ ! -d $dst ] || [ "$PULL_FOR_BUILD" == "1" ]; then
-	    rm -rf $dst
-	    cp -r $src $dst
-	    # cp -r $dir1/. $dir2
-    fi
+  if [ ! -d $dst ] || [ "$PULL_FOR_BUILD" == "1" ]; then
+	  rm -rf $dst
+	  cp -r $src $dst
+	  # cp -r $dir1/. $dir2
+  fi
 }
 
 dir_search() {
-    local str=$1
-    grep -n $str -r .
+  local str=$1
+  grep -n $str -r .
 }
 
 link_upgrade() {
-    local src=$1
-    local dst=$2
+  local src=$1
+  local dst=$2
 
-    rm -rf $dst
-    ln -s $src $dst
+  rm -rf $dst
+  ln -s $src $dst
 }
 
 git_pull() {
-    git reset
-    git pull
+  git reset
+  git pull
 
-    # chmod +x $OME_ROOT/bin/*
+  # chmod +x $OME_ROOT/bin/*
 }
 
 git_push() {
-    git reset
-    git pull
-    git add .
-    git status
+  git reset
+  git pull
+  git add .
+  git status
 
-    readp "auto commit?"
-    if [ $? -eq 1 ]; then
-	    git commit -m `date +%Y-%m-%d@%H-%M-%S`
-    else
-	    read -p "please enter commit message:" msg
-	    git commit -m "$msg"
-    fi
-    git push -u origin master
+  readp "auto commit?"
+  if [ $? -eq 1 ]; then
+	  git commit -m `date +%Y-%m-%d@%H-%M-%S`
+  else
+	  read -p "please enter commit message:" msg
+	  git commit -m "$msg"
+  fi
+  git push -u origin master
 }
 
 git_push_a() {
-    git reset
-    git pull
-    git add .
-    git status
-    # git commit -m "upgrade by "`uname -n`
-    git commit -m `date +%Y-%m-%d@%H-%M-%S` # "upgrade by "`uname -n`
-    git push -u origin master
+  git reset
+  git pull
+  git add .
+  git status
+  # git commit -m "upgrade by "`uname -n`
+  git commit -m `date +%Y-%m-%d@%H-%M-%S` # "upgrade by "`uname -n`
+  git push -u origin master
 }
 
 svn_remove_lose() {
-    # svn status grep "^!" awk '{print $2}' xargs svn rm
-    svn st | grep '^\!' | cut -c 9- | xargs -r svn rm
-    # --depth infinity
+  # svn status grep "^!" awk '{print $2}' xargs svn rm
+  svn st | grep '^\!' | cut -c 9- | xargs -r svn rm
+  # --depth infinity
 }
 
 svn_add_new() {
-    # svn status grep "^\?" awk '{print $2}' xargs svn add
-    svn st | grep '^\?' | cut -c 9- | xargs -r svn add --depth infinity
+  # svn status grep "^\?" awk '{print $2}' xargs svn add
+  svn st | grep '^\?' | cut -c 9- | xargs -r svn add --depth infinity
 }
 
 svn_cancel_add() {
-    # svn st |grep '^A' | cut -c 9- | awk '{print $2}' | xargs -r svn revert
-    svn st | grep '^A' | cut -c 9- | xargs -r svn revert --depth infinity
+  # svn st |grep '^A' | cut -c 9- | awk '{print $2}' | xargs -r svn revert
+  svn st | grep '^A' | cut -c 9- | xargs -r svn revert --depth infinity
 }
 
 svn_commit() {
-    tip "check lose files"
-    svn_remove_lose
+  tip "check lose files"
+  svn_remove_lose
 
-    tip "check new files"
-    svn_add_new
+  tip "check new files"
+  svn_add_new
 
-    tip "show status"
-    svn status
+  tip "show status"
+  svn status
 
-    readp "auto commit?"
-    if [ $? -eq 1 ]; then
-	    svn commit -m `date +%Y-%m-%d@%H-%M-%S`
-    else
-	    read -p "please enter commit message:" msg
-	    svn commit -m "$msg"
-    fi
+  readp "auto commit?"
+  if [ $? -eq 1 ]; then
+	  svn commit -m `date +%Y-%m-%d@%H-%M-%S`
+  else
+	  read -p "please enter commit message:" msg
+	  svn commit -m "$msg"
+  fi
 }
 
 # check install:rtags irony-server
@@ -606,261 +606,261 @@ svn_commit() {
 # fi
 # }
 zipapp() {
-    local oldir=`pwd`
-    tip "zipapp"
-    cd $CACHE
-    zip -r apps.zip apps
-    mv apps.zip $ZIP_HOME/apps.zip
-    cd $ZIP_HOME
-    rm -rf *.zip.*
-    split -d -b 3m apps.zip apps.zip.
-    sleep 1s
-    rm -rf apps.zip
+  local oldir=`pwd`
+  tip "zipapp"
+  cd $CACHE
+  zip -r apps.zip apps
+  mv apps.zip $ZIP_HOME/apps.zip
+  cd $ZIP_HOME
+  rm -rf *.zip.*
+  split -d -b 3m apps.zip apps.zip.
+  sleep 1s
+  rm -rf apps.zip
 
-    cd $oldir
+  cd $oldir
 }
 
 unzipapp() {
-    local oldir=`pwd`
-    tip "unzipapp"
-    cd $ZIP_HOME
-    ls
-    cat *.zip.* > apps.zip
-    unzip apps.zip
-    sleep 1s
-    rm -rf apps.zip
-    mv apps ..
+  local oldir=`pwd`
+  tip "unzipapp"
+  cd $ZIP_HOME
+  ls
+  cat *.zip.* > apps.zip
+  unzip apps.zip
+  sleep 1s
+  rm -rf apps.zip
+  mv apps ..
 
-    cd $oldir
+  cd $oldir
 }
 
 pushapp() {
-    tip "pushapp"
-    cd $ZIP_HOME
-    zipapp
-    git_push
+  tip "pushapp"
+  cd $ZIP_HOME
+  zipapp
+  git_push
 }
 
 getapp() {
-    tip "getapp"
-    if [ ! -d $APP_HOME ]; then
-	    if [ ! -d $ZIPHOME ]; then
-	        echo pass
-	    fi
-    fi
+  tip "getapp"
+  if [ ! -d $APP_HOME ]; then
+	  if [ ! -d $ZIPHOME ]; then
+	    echo pass
+	  fi
+  fi
 }
 
 ssh_gen() {
-    ssh-keygen -t rsa -C "$1"
+  ssh-keygen -t rsa -C "$1"
 }
 
 ssh_test() {
-    ssh -T git@github.com
+  ssh -T git@github.com
 }
 
 ntfs_fix() {
-    sudo ntfsfix /dev/sda2
+  sudo ntfsfix /dev/sda2
 }
 
 ome_export_version() {
-    local tool=$1
-    local VARNAME=$2
-    if [ "`command -v $tool`" != "" ]; then
-        eval 'export $VARNAME="`$tool --version | head -n 1`"'
-    else
-        eval 'export $VARNAME="$tool:miss"'
-    fi
+  local tool=$1
+  local VARNAME=$2
+  if [ "`command -v $tool`" != "" ]; then
+    eval 'export $VARNAME="`$tool --version | head -n 1`"'
+  else
+    eval 'export $VARNAME="$tool:miss"'
+  fi
 }
 
 ome_fetch_version() {
-    local tool=$1
-    if [ "`command -v $tool`" != "" ]; then
-        echo "`$tool --version 2>&1 | head -n 1 | cut -d ' ' -f 1-4`"
-    else
-        echo "$tool:miss"
-    fi
+  local tool=$1
+  if [ "`command -v $tool`" != "" ]; then
+    echo "`$tool --version 2>&1 | head -n 1 | cut -d ' ' -f 1-4`"
+  else
+    echo "$tool:miss"
+  fi
 }
 
 ome_write_env_to_dotfile() {
-    local dotfile=$1
-    touch $dotfile
-    if [ -f $dotfile ]; then
-        find_str ".oh-my-env/env" $dotfile
-        if [ $? -eq 0 ]; then
-            echo "" >> $dotfile
-            echo "# oh-my-emacs" >> $dotfile
-            echo '. $HOME/.oh-my-env/env' >> $dotfile
-        fi
+  local dotfile=$1
+  touch $dotfile
+  if [ -f $dotfile ]; then
+    find_str ".oh-my-env/env" $dotfile
+    if [ $? -eq 0 ]; then
+      echo "" >> $dotfile
+      echo "# oh-my-emacs" >> $dotfile
+      echo '. $HOME/.oh-my-env/env' >> $dotfile
     fi
+  fi
 }
 
 ome_fix_dotfiles() {
-    ome_write_env_to_dotfile $HOME/.profile
-    ome_write_env_to_dotfile $HOME/.shrc
-    ome_write_env_to_dotfile $HOME/.bashrc
-    ome_write_env_to_dotfile $HOME/.zshrc
+  ome_write_env_to_dotfile $HOME/.profile
+  ome_write_env_to_dotfile $HOME/.shrc
+  ome_write_env_to_dotfile $HOME/.bashrc
+  ome_write_env_to_dotfile $HOME/.zshrc
 }
 
 ome_replace() {
-    local oldir=`pwd`
-    tip "ome_replace ($1) to ($2)"
-    # local bakdir=$HOME/ome_backup_`date +%Y-%m-%d@%H-%M-%S`
-    # mkdir -p $bakdir
-    # perl -pi -e 's|"$1"|"$2"|g' $HOME/.oh-my-env/bin/*
-    # mv $HOME/.oh-my-env/*.bak $bakdir
-    # perl -pi -e 's|"$1"|"$2"|g' $HOME/.oh-my-env/plugins/*
-    # mv $HOME/.oh-my-env/plugins/*.bak $bakdir
-    sed -i "s#$1#$2#g" $OME_ROOT/env
-    sed -i "s#$1#$2#g" $OME_ROOT/install.sh
-    sed -i "s#$1#$2#g" $OME_ROOT/bin/*
-    sed -i "s#$1#$2#g" $OME_ROOT/plugins/*
-    sed -i "s#$1#$2#g" $OME_EMACS_SNIPPET/sh-mode/*
-    cd $oldir
+  local oldir=`pwd`
+  tip "ome_replace ($1) to ($2)"
+  # local bakdir=$HOME/ome_backup_`date +%Y-%m-%d@%H-%M-%S`
+  # mkdir -p $bakdir
+  # perl -pi -e 's|"$1"|"$2"|g' $HOME/.oh-my-env/bin/*
+  # mv $HOME/.oh-my-env/*.bak $bakdir
+  # perl -pi -e 's|"$1"|"$2"|g' $HOME/.oh-my-env/plugins/*
+  # mv $HOME/.oh-my-env/plugins/*.bak $bakdir
+  sed -i "s#$1#$2#g" $OME_ROOT/env
+  sed -i "s#$1#$2#g" $OME_ROOT/install.sh
+  sed -i "s#$1#$2#g" $OME_ROOT/bin/*
+  sed -i "s#$1#$2#g" $OME_ROOT/plugins/*
+  sed -i "s#$1#$2#g" $OME_EMACS_SNIPPET/sh-mode/*
+  cd $oldir
 }
 
 ome_check_install() {
-    local cmd=$1
-    local app=${2:-$1}
+  local cmd=$1
+  local app=${2:-$1}
 
-    if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
-        if [ ! "`cygcheck $cmd | head -n 1 | cut -d ' ' -f 1`" == "Found:" ]; then
-            ome install $app
-        fi
-    else
-        if [ "`command -v $cmd`" == "" ]; then
-            ome install $app
-        fi
+  if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
+    if [ ! "`cygcheck $cmd | head -n 1 | cut -d ' ' -f 1`" == "Found:" ]; then
+      ome install $app
     fi
+  else
+    if [ "`command -v $cmd`" == "" ]; then
+      ome install $app
+    fi
+  fi
 }
 
 ome_dev_path() {
-    if [ -d $1 ]; then
-        if [ "$OME_DEBUG_MODE" != "" ]; then
-            echo_kv "ome_dev_path" "$1/bin"
-        fi
-        export PATH=$1/bin:$PATH
-        export MANPATH=$dir/share/man:$MANPATH
-        export INFOPATH=$dir/share/info:$INFOPATH
-        export LIBRARY_PATH=$dir/lib:$LIBRARY_PATH
-        export LD_LIBRARY_PATH=$dir/lib:$LD_LIBRARY_PATH
-        export LD_RUN_PATH=$dir/lib:$LD_RUN_PATH
-        export PKG_CONFIG_PATH=$dir/lib/pkgconfig:$dir/share/pkgconfig:$PKG_CONFIG_PATH
-        # libtool --finish $dir/lib
-
-        export DCMAKE_INCLUDE_PATH=$dir/include:$DCMAKE_INCLUDE_PATH
-        export CMAKE_LIBRARY_PATH=$dir/lib:$CMAKE_LIBRARY_PATH
-
-        export C_INCLUDE_PATH=$dir/include:$C_INCLUDE_PATH
-        export CPLUS_INCLUDE_PATH=$dir/include:$CPLUS_INCLUDE_PATH
+  if [ -d $1 ]; then
+    if [ "$OME_DEBUG_MODE" != "" ]; then
+      echo_kv "ome_dev_path" "$1/bin"
     fi
+    export PATH=$1/bin:$PATH
+    export MANPATH=$dir/share/man:$MANPATH
+    export INFOPATH=$dir/share/info:$INFOPATH
+    export LIBRARY_PATH=$dir/lib:$LIBRARY_PATH
+    export LD_LIBRARY_PATH=$dir/lib:$LD_LIBRARY_PATH
+    export LD_RUN_PATH=$dir/lib:$LD_RUN_PATH
+    export PKG_CONFIG_PATH=$dir/lib/pkgconfig:$dir/share/pkgconfig:$PKG_CONFIG_PATH
+    # libtool --finish $dir/lib
+
+    export DCMAKE_INCLUDE_PATH=$dir/include:$DCMAKE_INCLUDE_PATH
+    export CMAKE_LIBRARY_PATH=$dir/lib:$CMAKE_LIBRARY_PATH
+
+    export C_INCLUDE_PATH=$dir/include:$C_INCLUDE_PATH
+    export CPLUS_INCLUDE_PATH=$dir/include:$CPLUS_INCLUDE_PATH
+  fi
 }
 
 ome_def_ws() {
-    local repo=$1
-    echo 'tip "wrokspace upgrade"' > $HOME/.ome_workspace
-    echo 'gitee_upgrade ${repo} $HOME/workspace'
+  local repo=$1
+  echo 'tip "wrokspace upgrade"' > $HOME/.ome_workspace
+  echo 'gitee_upgrade ${repo} $HOME/workspace'
 }
 
 ome_show_dir() {
-    if ! command -v tree >/dev/null 2>&1; then
-        ls -a
-    else
-        tree -ca
-    fi
+  if ! command -v tree >/dev/null 2>&1; then
+    ls -a
+  else
+    tree -ca
+  fi
 }
 
 gen_clang_format() {
-    local oldir=`pwd`
-    if [ ! -e ./.clang-format ]; then
-        #echo "Language: Cpp" >> ./.clang-format
-        echo "# 基于哪个配置文件" >> ./.clang-format
-        echo "BasedOnStyle: LLVM" >> ./.clang-format
-        echo "# BreakBeforeBraces: Attach" >> ./.clang-format
-        echo "BreakBeforeBraces: Attach" >> ./.clang-format
-        echo "# 指针的*的挨着哪边" >> ./.clang-format
-        echo "PointerAlignment: Right" >> ./.clang-format
-        echo "# 缩进宽度" >> ./.clang-format
-        echo "IndentWidth: 4" >> ./.clang-format
-        echo "# tab的宽度" >> ./.clang-format
-        echo "TabWidth: 4" >> ./.clang-format
-        echo "# 使用Tab" >> ./.clang-format
-        echo "UseTab: Never" >> ./.clang-format
-        echo "# 行长度限制" >> ./.clang-format
-        echo "ColumnLimit: 80" >> ./.clang-format
+  local oldir=`pwd`
+  if [ ! -e ./.clang-format ]; then
+    #echo "Language: Cpp" >> ./.clang-format
+    echo "# 基于哪个配置文件" >> ./.clang-format
+    echo "BasedOnStyle: LLVM" >> ./.clang-format
+    echo "# BreakBeforeBraces: Attach" >> ./.clang-format
+    echo "BreakBeforeBraces: Attach" >> ./.clang-format
+    echo "# 指针的*的挨着哪边" >> ./.clang-format
+    echo "PointerAlignment: Right" >> ./.clang-format
+    echo "# 缩进宽度" >> ./.clang-format
+    echo "IndentWidth: 4" >> ./.clang-format
+    echo "# tab的宽度" >> ./.clang-format
+    echo "TabWidth: 4" >> ./.clang-format
+    echo "# 使用Tab" >> ./.clang-format
+    echo "UseTab: Never" >> ./.clang-format
+    echo "# 行长度限制" >> ./.clang-format
+    echo "ColumnLimit: 80" >> ./.clang-format
 
-        echo "# 模板声明单独一行" >> ./.clang-format
-        echo "AlwaysBreakTemplateDeclarations: true" >> ./.clang-format
-        echo "# 连续的空行保留几行" >> ./.clang-format
-        echo "MaxEmptyLinesToKeep: 1" >> ./.clang-format
-        echo "# 在 @property 后面添加空格, @property (readonly) 而不是 @property(readonly)." >> ./.clang-format
-        echo "ObjCSpaceAfterProperty: true" >> ./.clang-format
-        echo "# OC block后面的缩进" >> ./.clang-format
-        echo "ObjCBlockIndentWidth: 4" >> ./.clang-format
-        echo "# 是否允许短方法单行" >> ./.clang-format
-        echo "AllowShortFunctionsOnASingleLine: true" >> ./.clang-format
-        echo "# 是否允许短if单行 If true, if (a) return; 可以放到同一行" >> ./.clang-format
-        echo "AllowShortIfStatementsOnASingleLine: true" >> ./.clang-format
-        echo "# 注释对齐" >> ./.clang-format
-        echo "AlignTrailingComments: true" >> ./.clang-format
-        echo "# 换行的时候对齐操作符" >> ./.clang-format
-        echo "# AlignOperands: true" >> ./.clang-format
-        echo "# 中括号两边空格 [] " >> ./.clang-format
-        echo "SpacesInSquareBrackets: false" >> ./.clang-format
-        echo "# 小括号两边添加空格" >> ./.clang-format
-        echo "SpacesInParentheses : false" >> ./.clang-format
-        echo "# 多行声明语句按照=对齐" >> ./.clang-format
-        echo "AlignConsecutiveDeclarations: true" >> ./.clang-format
-        echo "# 连续的赋值语句以 = 为中心对齐" >> ./.clang-format
-        echo "AlignConsecutiveAssignments: true" >> ./.clang-format
-        echo "# 等号两边的空格" >> ./.clang-format
-        echo "SpaceBeforeAssignmentOperators: true" >> ./.clang-format
-        echo "# 容器类的空格 例如 OC的字典" >> ./.clang-format
-        echo "SpacesInContainerLiterals: true" >> ./.clang-format
-        echo "# 缩进" >> ./.clang-format
-        echo "IndentWrappedFunctionNames: true" >> ./.clang-format
-        echo "# 在block从空行开始" >> ./.clang-format
-        echo "KeepEmptyLinesAtTheStartOfBlocks: true" >> ./.clang-format
-        echo "# 在构造函数初始化时按逗号断行，并以冒号对齐" >> ./.clang-format
-        echo "BreakConstructorInitializersBeforeComma: true" >> ./.clang-format
-        echo "# 函数参数换行" >> ./.clang-format
-        echo "AllowAllParametersOfDeclarationOnNextLine: true" >> ./.clang-format
-        echo "# 括号后添加空格" >> ./.clang-format
-        echo "SpaceAfterCStyleCast: true" >> ./.clang-format
+    echo "# 模板声明单独一行" >> ./.clang-format
+    echo "AlwaysBreakTemplateDeclarations: true" >> ./.clang-format
+    echo "# 连续的空行保留几行" >> ./.clang-format
+    echo "MaxEmptyLinesToKeep: 1" >> ./.clang-format
+    echo "# 在 @property 后面添加空格, @property (readonly) 而不是 @property(readonly)." >> ./.clang-format
+    echo "ObjCSpaceAfterProperty: true" >> ./.clang-format
+    echo "# OC block后面的缩进" >> ./.clang-format
+    echo "ObjCBlockIndentWidth: 4" >> ./.clang-format
+    echo "# 是否允许短方法单行" >> ./.clang-format
+    echo "AllowShortFunctionsOnASingleLine: true" >> ./.clang-format
+    echo "# 是否允许短if单行 If true, if (a) return; 可以放到同一行" >> ./.clang-format
+    echo "AllowShortIfStatementsOnASingleLine: true" >> ./.clang-format
+    echo "# 注释对齐" >> ./.clang-format
+    echo "AlignTrailingComments: true" >> ./.clang-format
+    echo "# 换行的时候对齐操作符" >> ./.clang-format
+    echo "# AlignOperands: true" >> ./.clang-format
+    echo "# 中括号两边空格 [] " >> ./.clang-format
+    echo "SpacesInSquareBrackets: false" >> ./.clang-format
+    echo "# 小括号两边添加空格" >> ./.clang-format
+    echo "SpacesInParentheses : false" >> ./.clang-format
+    echo "# 多行声明语句按照=对齐" >> ./.clang-format
+    echo "AlignConsecutiveDeclarations: true" >> ./.clang-format
+    echo "# 连续的赋值语句以 = 为中心对齐" >> ./.clang-format
+    echo "AlignConsecutiveAssignments: true" >> ./.clang-format
+    echo "# 等号两边的空格" >> ./.clang-format
+    echo "SpaceBeforeAssignmentOperators: true" >> ./.clang-format
+    echo "# 容器类的空格 例如 OC的字典" >> ./.clang-format
+    echo "SpacesInContainerLiterals: true" >> ./.clang-format
+    echo "# 缩进" >> ./.clang-format
+    echo "IndentWrappedFunctionNames: true" >> ./.clang-format
+    echo "# 在block从空行开始" >> ./.clang-format
+    echo "KeepEmptyLinesAtTheStartOfBlocks: true" >> ./.clang-format
+    echo "# 在构造函数初始化时按逗号断行，并以冒号对齐" >> ./.clang-format
+    echo "BreakConstructorInitializersBeforeComma: true" >> ./.clang-format
+    echo "# 函数参数换行" >> ./.clang-format
+    echo "AllowAllParametersOfDeclarationOnNextLine: true" >> ./.clang-format
+    echo "# 括号后添加空格" >> ./.clang-format
+    echo "SpaceAfterCStyleCast: true" >> ./.clang-format
 
-        echo "" >> ./.clang-format
-        echo "---" >> ./.clang-format
-        echo "Language: JavaScript" >> ./.clang-format
-        echo "# Use 100 columns for JS." >> ./.clang-format
-        echo "ColumnLimit: 0" >> ./.clang-nformat
-    fi
-    cd $oldir
+    echo "" >> ./.clang-format
+    echo "---" >> ./.clang-format
+    echo "Language: JavaScript" >> ./.clang-format
+    echo "# Use 100 columns for JS." >> ./.clang-format
+    echo "ColumnLimit: 0" >> ./.clang-nformat
+  fi
+  cd $oldir
 }
 
 ################################################################################
 # declare -x OME_SHOW=""
 export OME_SHOW=""
 ome_show() {
-    index=0
-    for item in $@; do
-        if [ "$index" = "0" ]; then
-            export OME_SHOW="${OME_SHOW}${item}\t"
-	        index=1
-        else
-            export OME_SHOW="$OME_SHOW${item} "
-        fi
-    done
-    export OME_SHOW="$OME_SHOW\n"
+  index=0
+  for item in $@; do
+    if [ "$index" = "0" ]; then
+      export OME_SHOW="${OME_SHOW}${item}\t"
+	    index=1
+    else
+      export OME_SHOW="$OME_SHOW${item} "
+    fi
+  done
+  export OME_SHOW="$OME_SHOW\n"
 }
 
 ome_httpserver() {
-    local oldir=`pwd`
-    cd $HOME/workspace/projects/nodejs/http_server
-    npm update
-    cd $oldir
-    if [ -n "$1" ]; then
-        node $HOME/workspace/projects/nodejs/http_server/index.js $1
-    else
-        node $HOME/workspace/projects/nodejs/http_server/index.js $HOME/pony-tutorial
-    fi
+  local oldir=`pwd`
+  cd $HOME/workspace/projects/nodejs/http_server
+  npm update
+  cd $oldir
+  if [ -n "$1" ]; then
+    node $HOME/workspace/projects/nodejs/http_server/index.js $1
+  else
+    node $HOME/workspace/projects/nodejs/http_server/index.js $HOME/pony-tutorial
+  fi
 
 }

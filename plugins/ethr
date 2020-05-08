@@ -1,21 +1,21 @@
 #!/usr/bin/env sh
 
 ethr_install() {
-    # github_upgrade Microsoft/ethr $OME_REPO/ethr
-    # cd $OME_REPO/ethr/
-    # dep ensure -v
-    # go build
-    go get github.com/Microsoft/ethr
+  # github_upgrade Microsoft/ethr $OME_REPO/ethr
+  # cd $OME_REPO/ethr/
+  # dep ensure -v
+  # go build
+  go get github.com/Microsoft/ethr
 }
 
 ethr_uninstall() {
-    echo_error "'ethr_uninstall' not implemented"
+  echo_error "'ethr_uninstall' not implemented"
 }
 
 ethr_exist_p() {
-    echo_error "'ethr_exist_p' not implemented"
+  echo_error "'ethr_exist_p' not implemented"
 }
 
 ethr_info() {
-    echo_error ""
+  echo_error ""
 }

@@ -1,39 +1,39 @@
 #!/usr/bin/env sh
 
 ros_install() {
-    echo_error "'ros_install' not implemented"
+  echo_error "'ros_install' not implemented"
 }
 
 ros_uninstall() {
-    echo_error "'ros_uninstall' not implemented"
+  echo_error "'ros_uninstall' not implemented"
 }
 
 ros_exist_p() {
-    echo_error "'ros_exist_p' not implemented"
+  echo_error "'ros_exist_p' not implemented"
 }
 
 ros_info() {
-    echo_error ""
+  echo_error ""
 }
 
 ros_setenv () {
-    # ROS
-    if [ -d /opt/ros/kinetic/ ] && [ -d $HOME/catkin_ws/ ]; then
-        case "$OME_SHELL" in
-            "zsh")
-                . /opt/ros/kinetic/env.zsh
-                . $HOME/catkin_ws/devel/env.zsh
-                ;;
-            "bash")
-                . /opt/ros/kinetic/env.bash
-                . $HOME/catkin_ws/devel/env.bash
-                ;;
-        esac
-        export PATH=$HOME/catkin_ws/bin:$PATH
-    fi
+  # ROS
+  if [ -d /opt/ros/kinetic/ ] && [ -d $HOME/catkin_ws/ ]; then
+    case "$OME_SHELL" in
+      "zsh")
+        . /opt/ros/kinetic/env.zsh
+        . $HOME/catkin_ws/devel/env.zsh
+        ;;
+      "bash")
+        . /opt/ros/kinetic/env.bash
+        . $HOME/catkin_ws/devel/env.bash
+        ;;
+    esac
+    export PATH=$HOME/catkin_ws/bin:$PATH
+  fi
 
-    # Cyberman
-    # export PATH=$HOME/Cyberman:$PATH
+  # Cyberman
+  # export PATH=$HOME/Cyberman:$PATH
 }
 
 ros_setenv

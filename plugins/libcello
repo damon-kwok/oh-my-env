@@ -1,20 +1,20 @@
 #!/usr/bin/env sh
 
 libcello_install() {
-    github_upgrade orangeduck/cello $OME_REPO/cello
-    cd $OME_REPO/cello
-    make
-    make check
+  github_upgrade orangeduck/cello $OME_REPO/cello
+  cd $OME_REPO/cello
+  make
+  make check
 }
 
 libcello_uninstall() {
-    echo_error "'libcello_uninstall' not implemented"
+  echo_error "'libcello_uninstall' not implemented"
 }
 
 libcello_exist_p() {
-    echo_error "'libcello_exist_p' not implemented"
+  echo_error "'libcello_exist_p' not implemented"
 }
 
 libcello_info() {
-    echo_error ""
+  echo_error ""
 }

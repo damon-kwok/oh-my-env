@@ -1,44 +1,44 @@
 #!/usr/bin/env sh
 
 cljs_install() {
-    # ome_check_install "clojure" "clj"
-    ome_check_install "npm" "nodejs"
+  # ome_check_install "clojure" "clj"
+  ome_check_install "npm" "nodejs"
 
-    # tip "install lumo-cljs"
-    # npm install -g lumo-cljs
+  # tip "install lumo-cljs"
+  # npm install -g lumo-cljs
 
-    tip "install shadow-cljs"
-    npm install -g shadow-cljs
+  tip "install shadow-cljs"
+  npm install -g shadow-cljs
 
-    # readp "install calvin and planck?"
-    # if [ $? -eq 1 ]; then
-        # tip "install calvin"
-        # npm install -g calvin-cljs
-        # npm install -g shelljs
+  # readp "install calvin and planck?"
+  # if [ $? -eq 1 ]; then
+  # tip "install calvin"
+  # npm install -g calvin-cljs
+  # npm install -g shelljs
 
-        # tip "install planck"
-        # github_upgrade planck-repl/planck $OME_REPO/planck
-        # cd $OME_REPO/planck/
-        # script/build
-        # script/install --prefix $OME_PREFIX
-    # fi
-    
-    # tip "install closh"
-    # npm install -g closh
+  # tip "install planck"
+  # github_upgrade planck-repl/planck $OME_REPO/planck
+  # cd $OME_REPO/planck/
+  # script/build
+  # script/install --prefix $OME_PREFIX
+  # fi
+
+  # tip "install closh"
+  # npm install -g closh
 }
 
 cljs_uninstall() {
-    echo_error "'cljs_uninstall' not implemented"
+  echo_error "'cljs_uninstall' not implemented"
 }
 
 cljs_exist_p() {
-    echo_error "'cljs_exist_p' not implemented"
+  echo_error "'cljs_exist_p' not implemented"
 }
 
 cljs_info() {
-    if [ "`command -v lumo`" != "" ]; then
-        # ome_show "Erlang" "`elixir --version 2>&1 | head -n 1 | cut -d ' ' -f 1-3`"
-        # ome_show "Elixir" "`elixir --version 2>&1 | tail -n 1 | cut -d ' ' -f 1-3`"
-        ome_show "CLJS" "lumo `lumo --version`"
-    fi
+  if [ "`command -v lumo`" != "" ]; then
+    # ome_show "Erlang" "`elixir --version 2>&1 | head -n 1 | cut -d ' ' -f 1-3`"
+    # ome_show "Elixir" "`elixir --version 2>&1 | tail -n 1 | cut -d ' ' -f 1-3`"
+    ome_show "CLJS" "lumo `lumo --version`"
+  fi
 }

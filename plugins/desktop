@@ -1,86 +1,86 @@
 #!/usr/bin/env sh
 
 desktop_install() {
-    # gnome
-    get_os_type
-    case $OME_OS in
-        # Linux
-        # $OS_DEBIAN) ;;
-        # $OS_UBUNTU) ;;
-        $OS_DEBIAN|$OS_UBUNTU) ;;
-        # $OS_REDHAT) ;;
-        # $OS_FEDORA) ;;
-        $OS_REDHAT|$OS_FEDORA) ;;
-        $OS_ARCH) ;;
-        $OS_GENTOO) ;;
-        $OS_SUSE) ;;
-        $OS_SLACKWARE) ;;
-        $OS_NIXOS) ;;
-        $OS_VOID) ;;
-        $OS_ALPINE) ;;
-        $OS_MAGEIA) ;;
-        $OS_SLITAZ) ;;
-        # Unix
-        $OS_MACOS) ;;
-        $OS_AIX) ;;
-        $OS_SOLARIS) ;;
-        $OS_FREEBSD)
-            # sudo sh -c 'echo "moused_enable=\"YES\"" >> /etc/rc.conf'
-            tip "install gnome desktop"
-            sudo pkg install xorg gdm # gnome3
-            sudo sh -c 'echo "dbus_enable=\"YES\"" >> /etc/rc.conf'
-            sudo sh -c 'echo "hald_enable=\"YES\"" >> /etc/rc.conf'
-            sudo sh -c 'echo "gdm_enable=\"YES\"" >> /etc/rc.conf'
-            sudo sh -c 'echo "gnome_enable=\"YES\"" >> /etc/rc.conf'
-            sudo sh -c 'echo "exec gnome-session" >> ~/.xinit'
+  # gnome
+  get_os_type
+  case $OME_OS in
+    # Linux
+    # $OS_DEBIAN) ;;
+    # $OS_UBUNTU) ;;
+    $OS_DEBIAN|$OS_UBUNTU) ;;
+    # $OS_REDHAT) ;;
+    # $OS_FEDORA) ;;
+    $OS_REDHAT|$OS_FEDORA) ;;
+    $OS_ARCH) ;;
+    $OS_GENTOO) ;;
+    $OS_SUSE) ;;
+    $OS_SLACKWARE) ;;
+    $OS_NIXOS) ;;
+    $OS_VOID) ;;
+    $OS_ALPINE) ;;
+    $OS_MAGEIA) ;;
+    $OS_SLITAZ) ;;
+    # Unix
+    $OS_MACOS) ;;
+    $OS_AIX) ;;
+    $OS_SOLARIS) ;;
+    $OS_FREEBSD)
+      # sudo sh -c 'echo "moused_enable=\"YES\"" >> /etc/rc.conf'
+      tip "install gnome desktop"
+      sudo pkg install xorg gdm # gnome3
+      sudo sh -c 'echo "dbus_enable=\"YES\"" >> /etc/rc.conf'
+      sudo sh -c 'echo "hald_enable=\"YES\"" >> /etc/rc.conf'
+      sudo sh -c 'echo "gdm_enable=\"YES\"" >> /etc/rc.conf'
+      sudo sh -c 'echo "gnome_enable=\"YES\"" >> /etc/rc.conf'
+      sudo sh -c 'echo "exec gnome-session" >> ~/.xinit'
 
-            tip "install KDE desktop"
-            sudo pkg install xorg kde4
-            sudo sh -c 'echo "dbus_enable=\"YES\"" >> /etc/rc.conf'
-            sudo sh -c 'echo "hald_enable=\"YES\"" >> /etc/rc.conf'
-            sudo sh -c 'echo "kdm4_enable=\"YES\"" >> /etc/rc.conf'
-            sudo sh -c 'echo "exec startkde" >> ~/.xinit'
+      tip "install KDE desktop"
+      sudo pkg install xorg kde4
+      sudo sh -c 'echo "dbus_enable=\"YES\"" >> /etc/rc.conf'
+      sudo sh -c 'echo "hald_enable=\"YES\"" >> /etc/rc.conf'
+      sudo sh -c 'echo "kdm4_enable=\"YES\"" >> /etc/rc.conf'
+      sudo sh -c 'echo "exec startkde" >> ~/.xinit'
 
-            tip "install xfce desktop"
-            sudo pkg install xorg slime xfce
-            sudo sh -c 'echo "dbus_enable=\"YES\"" >> /etc/rc.conf'
-            sudo sh -c 'echo "hald_enable=\"YES\"" >> /etc/rc.conf'
-            sudo sh -c 'echo ". /usr/local/etc/xdg/xfce4/xinitrc" >> ~/.xinit'
+      tip "install xfce desktop"
+      sudo pkg install xorg slime xfce
+      sudo sh -c 'echo "dbus_enable=\"YES\"" >> /etc/rc.conf'
+      sudo sh -c 'echo "hald_enable=\"YES\"" >> /etc/rc.conf'
+      sudo sh -c 'echo ". /usr/local/etc/xdg/xfce4/xinitrc" >> ~/.xinit'
 
-            tip "install mate desktop"
-            sudo pkg install xorg slime mate
-            sudo sh -c 'echo "dbus_enable=\"YES\"" >> /etc/rc.conf'
-            sudo sh -c 'echo "hald_enable=\"YES\"" >> /etc/rc.conf'
-            sudo sh -c 'echo "slim_enable=\"YES\"" >> /etc/rc.conf'
-            sh -c 'echo "exec mate-session" >> ~/.xinit'
+      tip "install mate desktop"
+      sudo pkg install xorg slime mate
+      sudo sh -c 'echo "dbus_enable=\"YES\"" >> /etc/rc.conf'
+      sudo sh -c 'echo "hald_enable=\"YES\"" >> /etc/rc.conf'
+      sudo sh -c 'echo "slim_enable=\"YES\"" >> /etc/rc.conf'
+      sh -c 'echo "exec mate-session" >> ~/.xinit'
 
-            tip "install cinnamon desktop"
-            sudo pkg install xorg gdm cinnamon
-            sudo sh -c 'echo "dbus_enable=\"YES\"" >> /etc/rc.conf'
-            sudo sh -c 'echo "hald_enable=\"YES\"" >> /etc/rc.conf'
-            sudo sh -c 'echo "gdm_enable=\"YES\"" >> /etc/rc.conf'
-            sudo sh -c 'echo "exec cinnamon-session" >> ~/.xinit'
-            ;;
-        $OS_OPENBSD) ;;
-        $OS_NETBSD) ;;
-        $OS_DFBSD) ;;
-        # Windows
-        $OS_CYGWIN) ;;
-        $OS_MSYS2) ;;
-        # Other
-        $OS_UNKNOW) ;;
-    esac
+      tip "install cinnamon desktop"
+      sudo pkg install xorg gdm cinnamon
+      sudo sh -c 'echo "dbus_enable=\"YES\"" >> /etc/rc.conf'
+      sudo sh -c 'echo "hald_enable=\"YES\"" >> /etc/rc.conf'
+      sudo sh -c 'echo "gdm_enable=\"YES\"" >> /etc/rc.conf'
+      sudo sh -c 'echo "exec cinnamon-session" >> ~/.xinit'
+      ;;
+    $OS_OPENBSD) ;;
+    $OS_NETBSD) ;;
+    $OS_DFBSD) ;;
+    # Windows
+    $OS_CYGWIN) ;;
+    $OS_MSYS2) ;;
+    # Other
+    $OS_UNKNOW) ;;
+  esac
 
 }
 
 desktop_uninstall() {
-    echo_error "'desktop_uninstall' not implemented"
+  echo_error "'desktop_uninstall' not implemented"
 }
 
 desktop_exist_p() {
-    echo_error "'desktop_exist_p' not implemented"
+  echo_error "'desktop_exist_p' not implemented"
 }
 
 desktop_info() {
-    echo_error ""
+  echo_error ""
 }

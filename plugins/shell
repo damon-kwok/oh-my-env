@@ -1,41 +1,41 @@
 #!/usr/bin/env sh
 
 shell_install() {
-    readp "install bash language server?"
-    if [ $? -eq 1 ]; then
-        ome_check_install "npm" "nodejs"
-        tip "install bash language server"
-        npm i -g bash-language-server        
-    fi
-    
-    # tip "install oh-my-zsh"
-    # sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+  readp "install bash language server?"
+  if [ $? -eq 1 ]; then
+    ome_check_install "npm" "nodejs"
+    tip "install bash language server"
+    npm i -g bash-language-server
+  fi
 
-    tip "install Bash-it"	
-    # if command -v bash-it >/dev/null 2>&1; then
+  # tip "install oh-my-zsh"
+  # sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+
+  tip "install Bash-it"
+  # if command -v bash-it >/dev/null 2>&1; then
 	if [ "`command -v bash-it`" != "" ]; then
-	    echo "----------------bash-it---update mode!!!!!!"
-	    bash-it update
-    else
-	    echo "----------------bash-it---net install mode!!!!!!"
-	    # git clone --depth=1 https://github.com/Bash-it/bash-it.git ~/.bash_it
-	    github_upgrade Bash-it/bash-it ~/.bash_it
-	    ~/.bash_it/install.sh
-        
-        ome_fix_dotfiles
+	  echo "----------------bash-it---update mode!!!!!!"
+	  bash-it update
+  else
+	  echo "----------------bash-it---net install mode!!!!!!"
+	  # git clone --depth=1 https://github.com/Bash-it/bash-it.git ~/.bash_it
+	  github_upgrade Bash-it/bash-it ~/.bash_it
+	  ~/.bash_it/install.sh
 
-        bash
-    fi
+    ome_fix_dotfiles
+
+    bash
+  fi
 }
 
 shell_uninstall() {
-    echo_error "'shell_uninstall' not implemented"
+  echo_error "'shell_uninstall' not implemented"
 }
 
 shell_exist_p() {
-    echo_error "'shell_exist_p' not implemented"
+  echo_error "'shell_exist_p' not implemented"
 }
 
 shell_info() {
-    echo_error ""
+  echo_error ""
 }

@@ -1,18 +1,18 @@
 #!/usr/bin/env sh
 
 ncurses_install() {
-    github_upgrade wmcbrine/PDCurses $OME_REPO/PDCurses
-    cd $OME_REPO/PDCurses
+  github_upgrade wmcbrine/PDCurses $OME_REPO/PDCurses
+  cd $OME_REPO/PDCurses
 }
 
 ncurses_uninstall() {
-    echo_error "'ncurses_uninstall' not implemented"
+  echo_error "'ncurses_uninstall' not implemented"
 }
 
 ncurses_exist_p() {
-    echo_error "'ncurses_exist_p' not implemented"
+  echo_error "'ncurses_exist_p' not implemented"
 }
 
 ncurses_info() {
-    echo_error ""
+  echo_error ""
 }

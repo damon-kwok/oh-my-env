@@ -1,55 +1,55 @@
 #!/usr/bin/env sh
 
 ccls_install() {
-    ome_check_install "clang" "clang"
-    github_upgrade MaskRay/ccls $OME_REPO/ccls 0
-    # github_upgrade Tencent/rapidjson $OME_REPO/ccls/third_party/rapidjson 0
+  ome_check_install "clang" "clang"
+  github_upgrade MaskRay/ccls $OME_REPO/ccls 0
+  # github_upgrade Tencent/rapidjson $OME_REPO/ccls/third_party/rapidjson 0
 
-    mkdir -p $HOME/.ccls
-    mkdir -p $OME_REPO/ccls/cmake_"$OME_MAKE"_build
-    cd $OME_REPO/ccls/cmake_"$OME_MAKE"_build/
+  mkdir -p $HOME/.ccls
+  mkdir -p $OME_REPO/ccls/cmake_"$OME_MAKE"_build
+  cd $OME_REPO/ccls/cmake_"$OME_MAKE"_build/
 
-    # -DCMAKE_CXX_STANDARD=17
-    # -DCMAKE_CXX_STANDARD_REQUIRED=ON
-    # -DCMAKE_CXX_EXTENSIONS=OFF
-    # -DCLANG_USE_BUNDLED_LIBC++=ON
-    # -DUSE_SHARED_LLVM=ON
-    cmake .. -G "$OME_MAKE" \
-          -DCMAKE_INSTALL_PREFIX=$OME_PREFIX \
+  # -DCMAKE_CXX_STANDARD=17
+  # -DCMAKE_CXX_STANDARD_REQUIRED=ON
+  # -DCMAKE_CXX_EXTENSIONS=OFF
+  # -DCLANG_USE_BUNDLED_LIBC++=ON
+  # -DUSE_SHARED_LLVM=ON
+  cmake .. -G "$OME_MAKE" \
+        -DCMAKE_INSTALL_PREFIX=$OME_PREFIX \
 	      -DCMAKE_EXPORT_COMPILE_COMMANDS=YES \
 	      -DCMAKE_BUILD_TYPE=Release \
-          -DSYSTEM_CLANG=ON \
-          -DCMAKE_C_COMPILER=clang \
-          -DCMAKE_CXX_COMPILER=clang++ \
-          -DCMAKE_CXX_STANDARD=17
-    # -DCMAKE_PREFIX_PATH=$LLVM_ROOT
-    # -DCMAKE_CXX_COMPILER=$LLVM_ROOT/bin/clang++
-    # make -j4
-    # make install
-    cmake --build . #--use-stderr --config Release --target install
-    ccls_setenv
-    # config: clang-format
-    cc_install_clang_format
+        -DSYSTEM_CLANG=ON \
+        -DCMAKE_C_COMPILER=clang \
+        -DCMAKE_CXX_COMPILER=clang++ \
+        -DCMAKE_CXX_STANDARD=17
+  # -DCMAKE_PREFIX_PATH=$LLVM_ROOT
+  # -DCMAKE_CXX_COMPILER=$LLVM_ROOT/bin/clang++
+  # make -j4
+  # make install
+  cmake --build . #--use-stderr --config Release --target install
+  ccls_setenv
+  # config: clang-format
+  cc_install_clang_format
 }
 
 ccls_uninstall() {
-    echo_error "'ccls_uninstall' not implemented"
+  echo_error "'ccls_uninstall' not implemented"
 }
 
 ccls_exist_p() {
-    echo_error "'ccls_exist_p' not implemented"
+  echo_error "'ccls_exist_p' not implemented"
 }
 
 ccls_info() {
-    echo_error ""
+  echo_error ""
 }
 ccls_setenv() {
-    local CCLS_BIN=$OME_REPO/ccls/cmake_"$OME_MAKE"_build
-    if [ -e "$CCLS_BIN/ccls" ];then
-        export PATH=$CCLS_BIN:$PATH
-        if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
-            export PATH=`cygpath -m $CCLS_BIN`:$PATH
-        fi
+  local CCLS_BIN=$OME_REPO/ccls/cmake_"$OME_MAKE"_build
+  if [ -e "$CCLS_BIN/ccls" ];then
+    export PATH=$CCLS_BIN:$PATH
+    if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
+      export PATH=`cygpath -m $CCLS_BIN`:$PATH
     fi
+  fi
 }
 ccls_setenv
