@@ -20,6 +20,7 @@ title() {
     echo -e $(tput setaf 6)"<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>"\
          $(tput sgr0)
 }
+
 tip() {
     echo -e "$(tput setaf 6)\n<><><> "$(tput sgr0)"$1"$(tput setaf 6)" >"$(tput sgr0)
 }
