@@ -223,10 +223,7 @@ ome_pull() {
   elif [ "$OME_OS" = "$OS_CYGWIN" ]; then
     cp -f $OME_ROOT/desktop-extensions/cygwin/*.bat /
   fi
-  cp -f $OME_ROOT/conf/project/.editorconfig $OME_ROOT
-  cp -f $OME_ROOT/conf/project/.editorconfig $OME_EMACS
-  cp -f $OME_ROOT/conf/project/.editorconfig $OME_WS
-
+  
   # ome_fix_dotfiles
   # echo_kv "GIT PULL" "~/.oh_my_emacs/"
   github_upgrade damon-kwok/oh-my-emacs $HOME/.oh-my-emacs/
@@ -247,6 +244,11 @@ ome_pull() {
 
   # echo_kv "GIT PULL" "~/wrokspace/"
   gitee_upgrade damon-kwok/workspace $HOME/workspace/
+
+  #
+  cp -f $OME_ROOT/conf/project/.editorconfig $OME_ROOT
+  cp -f $OME_ROOT/conf/project/.editorconfig $OME_EMACS
+  cp -f $OME_ROOT/conf/project/.editorconfig $OME_WS
 
   cd $oldir
 }
