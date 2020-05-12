@@ -1,5 +1,19 @@
 #!/usr/bin/env sh
 
+readp() {
+  local str=$1
+
+  read -p "$(tput setaf 14)$str$(tput sgr0)(Y/n)" input
+  if [ "$input" == "y" ] || [ "$input" == "Y" ] || [ "$input" == "" ]; then
+	  return $(( 1 ));
+  elif [ "$input" == "n" ] || [ "$input" == "N" ]; then
+	  return $(( 0 ));
+  else
+	  echo "invalid input:$input"
+	  readp "$1"
+  fi
+}
+
 title() {
     echo -e $(tput setaf 6)"\n<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>"$(tput sgr0)
     echo -e $(tput setaf 6)"<>\t\t\t\t"$(tput sgr0)"$1"
