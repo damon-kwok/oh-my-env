@@ -1,0 +1,40 @@
+#!/usr/bin/env sh
+
+zmq_install() {
+  github_upgrade zeromq/libzmq $OME_REPO/libzmq
+  mkdir -p $OME_REPO/libzmq/cmake_build
+  cd $OME_REPO/libzmq/cmake_build/
+  cmake .. -G "$OME_MAKE" \
+        -DCMAKE_INSTALL_PREFIX=$OME_PREFIX \
+        -DCMAKE_EXPORT_COMPILE_COMMANDS=1 \
+        -DCMAKE_CXX_STANDARD=17
+  cmake --build . --use-stderr --config Release --target install
+
+  github_upgrade zeromq/czmq $OME_REPO/czmq
+  mkdir -p $OME_REPO/czmq/cmake_build
+  cd $OME_REPO/czmq/cmake_build/
+  cmake .. -G "$OME_MAKE" \
+        -DCMAKE_INSTALL_PREFIX=$OME_PREFIX \
+        -DCMAKE_EXPORT_COMPILE_COMMANDS=1 \
+        -DCMAKE_CXX_STANDARD=17
+  cmake --build . --use-stderr --config Release --target install
+
+  github_upgrade jedisct1/libsodium $OME_REPO/libsodium
+  cd $OME_REPO/czmq
+  chmod +x ./autogen.sh
+  ./autogen.sh
+  ./configure --prefix=$OME_PREFIX
+  make install
+}
+
+zmq_uninstall() {
+  echo_error "'zmq_uninstall' not implemented"
+}
+
+zmq_exist_p() {
+  echo_error "'zmq_exist_p' not implemented"
+}
+
+zmq_info() {
+  echo_error ""
+}

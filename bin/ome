@@ -223,7 +223,7 @@ ome_pull() {
   elif [ "$OME_OS" = "$OS_CYGWIN" ]; then
     cp -f $OME_ROOT/desktop-extensions/cygwin/*.bat /
   fi
-  
+
   # ome_fix_dotfiles
   # echo_kv "GIT PULL" "~/.oh_my_emacs/"
   github_upgrade damon-kwok/oh-my-emacs $HOME/.oh-my-emacs/
@@ -405,6 +405,9 @@ ome_parse() {
       ;;
     "new")
       app_wizard $ARG1 $ARG2
+      ;;
+    "time")
+      sudo ntpdate ntp.aliyun.com
       ;;
     "look"|"check")
       xdg-open "http://mirror.bit.edu.cn/cygwin/x86_64/release/cygutils/"

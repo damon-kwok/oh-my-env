@@ -35,6 +35,13 @@ input_install() {
     $OS_UNKNOW) ;;
   esac
 
+  find_str "ibus-daemon" $HOME/.profile
+  if [ $? -eq 0 ]; then
+    echo "export GTK_IM_MODULE=ibus" >> $HOME/.profile
+    echo "export XMODIFIERS=@im=ibus" >> $HOME/.profile
+    echo "export QT_IM_MODULE=ibus" >> $HOME/.profile
+    echo "ibus-daemon -d -x" >> $HOME/.profile
+  fi
 }
 
 input_uninstall() {
