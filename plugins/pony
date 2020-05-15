@@ -36,56 +36,75 @@ pony_deps() {
   esac
 }
 
-pony_install() {
-  pony_deps
-  # curl --proto '=https' --tlsv1.2 -sSf https://raw.githubusercontent.com/ponylang/ponyup/latest-release/ponyup-init.sh | sh
+pony_install_ponyup() {
+  curl --proto '=https' --tlsv1.2 -sSf https://raw.githubusercontent.com/ponylang/ponyup/latest-release/ponyup-init.sh | sh
+  pony_setenv
   # ponyup update ponyc release
-  # ponyup update ponyc nightly
-  if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
-    readp "pony: install with precompile?"
-    if [ $? -eq 1 ]; then
-      local zipkg=ponyc-${PONY_VERSION}-x86-64-pc-windows-msvc.zip
-      cd $HOME/Downloads/
-      if [ ! -e "$HOME/Downloads/$zipkg" ]; then
-        local URL=https://dl.cloudsmith.io/public/ponylang/releases/raw/versions/${PONY_VERSION}/ponyc-x86_64-pc-windows-msvc.zip
-        wget $URL -O $HOME/Downloads/$zipkg
-      fi
-      if [ ! -d "$OME_REPO/ponyc-${PONY_VERSION}-bin" ]; then
-        mkdir -p $OME_REPO/ponyc-${PONY_VERSION}-bin
-        unzip ./$zipkg -d $OME_REPO/ponyc-${PONY_VERSION}-bin
-      fi
-    else
-      github_upgrade ponylang/ponyc $OME_REPO/ponyc-git 0
-      cd $OME_REPO/ponyc-git
+  ponyup update ponyc nightly
+  # ponyup update stable nightly
+  ponyup update corral nightly
 
-      powershell -c ./make.ps1 libs
-      powershell -c ./make.ps1 configure
-      powershell -c ./make.ps1 build
-    fi
+  # readp "pony: install with precompile?"
+  # if [ $? -eq 1 ]; then
+  #   local zipkg=ponyc-${PONY_VERSION}-x86-64-pc-windows-msvc.zip
+  #   cd $HOME/Downloads/
+  #   if [ ! -e "$HOME/Downloads/$zipkg" ]; then
+  #     local URL=https://dl.cloudsmith.io/public/ponylang/releases/raw/versions/${PONY_VERSION}/ponyc-x86_64-pc-windows-msvc.zip
+  #     wget $URL -O $HOME/Downloads/$zipkg
+  #   fi
+  #   if [ ! -d "$OME_REPO/ponyc-${PONY_VERSION}-bin" ]; then
+  #     mkdir -p $OME_REPO/ponyc-${PONY_VERSION}-bin
+  #     unzip ./$zipkg -d $OME_REPO/ponyc-${PONY_VERSION}-bin
+  #   fi
+  # else
+  #
+  # fi
+}
+
+pony_install_git() {
+  if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
+    github_upgrade ponylang/ponyc $OME_REPO/ponyc-git 0
+    cd $OME_REPO/ponyc-git
+
+    powershell -c ./make.ps1 libs
+    powershell -c ./make.ps1 configure
+    powershell -c ./make.ps1 build
+    powershell -c ./make.ps1 test
+    powershell -c ./make.ps1 install
   else
+    pony_deps
     github_upgrade ponylang/ponyc $OME_REPO/ponyc-git 0
     cd $OME_REPO/ponyc-git
 
     make libs
     make configure
     make build
-    # make test
+    make test
     # sudo make install
     chmod +x $OME_REPO/ponyc-git/build/release/ponyc
   fi
   pony_setenv
 
-  github_upgrade ponylang/pony-stable $OME_REPO/pony-stable
-  cd $OME_REPO/pony-stable
-  make
-  chmod +x $OME_REPO/pony-stable/build/release/*
-  pony_setenv
+  # github_upgrade ponylang/pony-stable $OME_REPO/pony-stable
+  # cd $OME_REPO/pony-stable
+  # make
+  # chmod +x $OME_REPO/pony-stable/build/release/*
+  # pony_setenv
 
   github_upgrade ponylang/corral $OME_REPO/corral
   cd $OME_REPO/corral
   make
   chmod +x $OME_REPO/corral/build/release/*
   pony_setenv
+}
+
+pony_install() {
+  readp "pony: install with precompile?"
+  if [ $? -eq 1 ]; then
+    pony_install_ponyup
+  else
+    pony_install_git
+  fi
 
   # github_upgrade damon-kwok/novitiate $OME_REPO/novitiate
   # cd $OME_REPO/novitiate
@@ -94,6 +113,7 @@ pony_install() {
 
   readp "install ponylang doc tools ?"
   if [ $? -eq 1 ]; then
+    ome_check_install "pip3" "python"
     pip3 install --prefix $OME_PREFIX -U mkdocs-ponylang
   fi
 }
@@ -142,6 +162,10 @@ pony_setenv() {
 
   if [ -d "$OME_REPO/corral/build/release" ]; then
     export PATH=$OME_REPO/corral/build/release:$PATH
+  fi
+
+  if [ -d "$HOME/.local/share/ponyup/bin" ]; then
+    export PATH=$HOME/.local/share/ponyup/bin:$PATH
   fi
 }
 pony_setenv
