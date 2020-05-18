@@ -42,6 +42,7 @@ input_install() {
     echo "export QT_IM_MODULE=ibus" >> $HOME/.profile
     echo "ibus-daemon -d -x" >> $HOME/.profile
   fi
+  . $HOME/.profile
 }
 
 input_uninstall() {
