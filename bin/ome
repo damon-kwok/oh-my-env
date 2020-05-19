@@ -430,7 +430,7 @@ ome_parse() {
       xdg-open "https://github.com/commercialhaskell/stack/releases"
 
       xdg-open "https://github.com/cpp-pm/hunter/releases"
-      xdg-open "https://github.com/emacs-lsp/lsp-mode#supported-languages"
+      xdg-open "https://emacs-lsp.github.io/lsp-mode/page/languages/"
       xdg-open "https://github.com/clojure/core.async"
       xdg-open "https://clojars.org/reagent"
 

@@ -361,6 +361,7 @@ ome_app_wizard() {
       ome_check_install "ponyc" "pony"
       mkdir -p $proj_root
       cd $proj_root
+      corral init
       $EDITOR "main.pony"
       ;;
     "q") exit;;
