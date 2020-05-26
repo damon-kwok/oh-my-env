@@ -202,9 +202,15 @@ esac
 title "hosts init"
 
 
+host_upgrade 140.82.114.3 github.com
 host_upgrade 192.30.253.113 github.com
 host_upgrade 192.30.253.112 github.com
 host_upgrade 140.82.112.6 api.github.com
+
+host_upgrade 185.199.108.153 github.io
+host_upgrade 185.199.109.153 github.io
+host_upgrade 185.199.110.153 github.io
+host_upgrade 185.199.111.153 github.io
 
 host_upgrade 151.101.44.249 github.global.ssl.fastly.net
 host_upgrade 151.101.185.194 github.global.ssl.fastly.net
