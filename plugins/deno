@@ -1,0 +1,26 @@
+#!/usr/bin/env sh
+
+deno_install() {
+  curl -fsSL https://x.deno.js.cn/install.sh | sh
+  deno_setenv
+}
+
+deno_uninstall() {
+  echo_error "'deno_uninstall' not implemented"
+}
+
+deno_exist_p() {
+  echo_error "'deno_exist_p' not implemented"
+}
+
+deno_info() {
+  echo_error ""
+}
+
+deno_setenv() {
+  if [ -d "$HOME/.deno" ]; then
+    export DENO_INSTALL="$HOME/.deno"
+    export PATH="$DENO_INSTALL/bin:$PATH"
+  fi
+}
+deno_setenv

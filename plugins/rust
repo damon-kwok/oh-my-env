@@ -13,10 +13,15 @@ rust_install() {
   tip "set rust install env:"
   mkdir -p $HOME/.rustup
   # https://github.com/rust-lang/rustup#environment-variables
+
+  # ustc
   export RUSTUP_DIST_SERVER=https://mirrors.ustc.edu.cn/rust-static
   export RUSTUP_UPDATE_ROOT=https://mirrors.ustc.edu.cn/rust-static/rustup
+
+  # tuna
   # export RUSTUP_DIST_SERVER=https://mirrors.tuna.tsinghua.edu.cn/rustup
   # export RUSTUP_UPDATE_ROOT=https://mirrors.tuna.tsinghua.edu.cn/rustup/rustup
+
   export RUSTUP_HOME=$HOME/.rustup
   export CARGO_HOME=$HOME/.cargo
 
@@ -75,26 +80,27 @@ rust_install() {
     rustup update
   fi
 
-  tip "rustup install stable"
-  rustup toolchain add stable
-  tip "rustup default stable"
-  rustup default stable
+  # tip "rustup install stable"
+  # rustup toolchain add stable
+  # tip "rustup default stable"
+  # rustup default stable
 
   # tip "rustup install beta"
   # rustup toolchain add beta
   # tip "rustup default beta"
   # rustup default beta
 
-  # tip "rustup install nightly"
-  # rustup toolchain add nightly
-  # tip "rustup default nightly"
-  # rustup default nightly
+  tip "rustup install nightly"
+  rustup toolchain add nightly
+  tip "rustup default nightly"
+  rustup default nightly
 
   # tip "rustup component add rust-src"
   # rustup component add rust-src
 
   tip "install rust language server: (RLS)"
-  rustup component add rls rust-analysis rust-src
+  # rustup component add clippy rls rust-analysis rust-src
+  rustup component add --toolchain nightly clippy rls rust-analysis rust-src
 
   tip "rust set env"
   rust_setenv
@@ -129,36 +135,14 @@ rust_info() {
 
 # Rust
 rust_setenv() {
-  # [ -s "$HOME/.cargo/env" ] && \. "$HOME/.cargo/env"
-
+  # ustc
   # export RUSTUP_DIST_SERVER=https://mirrors.ustc.edu.cn/rust-static
   # export RUSTUP_UPDATE_ROOT=https://mirrors.ustc.edu.cn/rust-static/rustup
-  # if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
-  #     # export RUSTUP_HOME=`cygpath -m "$USERPROFILE/.rustup"`
-  #     export RUSTUP_HOME=`cygpath -m $HOME/.rustup`
-  #     export CARGO_HOME=`cygpath -m "$USERPROFILE/.cargo"`
-  #     export RUST_BIN=`cygpath -m "$USERPROFILE/.cargo/bin"`
-  #     if [ -d "$CARGO_HOME/bin/" ]; then
-  #         export PATH=$RUST_BIN:"$PATH"
-  #         export RUST_SRC_PATH="$($RUST_BIN/rustc --print sysroot)/lib/rustlib/src/rust/src"
-  #     fi
-  # else
-  #     export RUSTUP_HOME=$HOME/.rustup
-  #     export CARGO_HOME=$HOME/.cargo
-  #     export RUST_BIN=$CARGO_HOME/bin
-  #     if [ -f $CARGO_HOME/env ]; then
-  #         . $HOME/.cargo/env
-  #     fi
-  #     if [ -d "$CARGO_HOME/bin/" ]; then
-  #         export PATH="$HOME/.cargo/bin:$PATH"
-  #         export RUST_SRC_PATH="$(rustc --print sysroot)/lib/rustlib/src/rust/src"
-  #     fi
-  # fi
 
-  export RUSTUP_DIST_SERVER=https://mirrors.ustc.edu.cn/rust-static
-  export RUSTUP_UPDATE_ROOT=https://mirrors.ustc.edu.cn/rust-static/rustup
-  # export RUSTUP_DIST_SERVER=https://mirrors.tuna.tsinghua.edu.cn/rustup
-  # export RUSTUP_UPDATE_ROOT=https://mirrors.tuna.tsinghua.edu.cn/rustup/rustup
+  # tuna
+  export RUSTUP_DIST_SERVER=https://mirrors.tuna.tsinghua.edu.cn/rustup
+  export RUSTUP_UPDATE_ROOT=https://mirrors.tuna.tsinghua.edu.cn/rustup/rustup
+
   export RUSTUP_HOME=$HOME/.rustup
   export CARGO_HOME=$HOME/.cargo
   export RUST_BACKTRACE=full  # 0 1 full

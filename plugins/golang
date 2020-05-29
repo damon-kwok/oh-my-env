@@ -106,8 +106,8 @@ golang_install() {
   tip "install go language server (gopls)"
   go get -u golang.org/x/tools/gopls@latest
 
-  tip "install gocode"
-  go get -u github.com/mdempsky/gocode
+  # tip "install gocode"
+  # go get -u github.com/mdempsky/gocode
 
   tip "install REPL (gomacro)"
   go get -u github.com/cosmos72/gomacro
