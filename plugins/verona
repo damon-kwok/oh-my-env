@@ -4,12 +4,14 @@ verona_install() {
   github_upgrade microsoft/verona $OME_REPO/verona
   cd $OME_REPO/verona
 
+  export PATH="$PATH":"/c/Program Files (x86)/Microsoft Visual Studio/2019/Preview/MSBuild/Current/Bin/amd64"
 
   if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
     mkdir -p vs_build
     cd vs_build
     cmake .. -G "Visual Studio 16 2019" -A x64
-    msbuild INSTALL.vcxproj /m /P:Configuration=Release
+    # msbuild INSTALL.vcxproj /m /P:Configuration=Release
+    MSBuild.exe INSTALL.vcxproj -m -P:Configuration=Release
   else
     mkdir -p build_ninja
     cd build_ninja
