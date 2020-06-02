@@ -417,6 +417,8 @@ ome_parse() {
       xdg-open "http://ftp.gnome.org/pub/gnome/sources/gmime/"
       xdg-open "https://sourceforge.net/p/isync/isync/commit_browser"
 
+      xdg-open "https://github.com/roswell/roswell/releases"
+      xdg-open "https://github.com/roswell/sbcl_bin/releases"
       xdg-open "https://ziglang.org/download/"
       xdg-open "https://nim-lang.org/install_windows.html"
       xdg-open "https://sdkman.io/sdks#leiningen"
