@@ -25,6 +25,7 @@ janet_info() {
 }
 
 janet_setenv() {
+  export PATH=$OME_REPO/janet:$PATH
   if [ -e "$OME_REPO/janet/build/janet" ]; then
     export PATH=$OME_REPO/janet/build:$PATH
   fi

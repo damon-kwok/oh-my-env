@@ -164,6 +164,9 @@ ome_repl() {
   if [ "`command -v carp`" != "" ]; then
     echo_lang4 "    C) carp"
   fi
+  if [ "`command -v janet`" != "" ]; then
+    echo_lang4 "    J) janet"
+  fi
   if [ "`command -v gluon`" != "" ]; then
     echo_lang4 "    g) Gluon"
   fi
@@ -191,6 +194,7 @@ ome_repl() {
     H) echo_success "abort node repl with C-d" && hy;;
 
     C) echo_success "abort carp repl with C-c" && carp;;
+    J) echo_success "abort janet repl with C-c" && janet;;
     G) echo_success "abort gluon repl with C-d | :q" && gluon -i;;
     q|Q) exit;;
     *) ome_repl;;

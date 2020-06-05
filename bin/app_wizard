@@ -44,6 +44,7 @@ ome_app_wizard() {
     echo "    30) Scala (gradle)"
     echo "    31) Swift (SPM)"
     echo "    32) Pony"
+    echo "    33) Janet"
     # echo "    32) .net"
     echo "    --------------------------"
     echo "    r) return"
