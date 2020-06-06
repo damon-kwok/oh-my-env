@@ -9,7 +9,8 @@
 | OS     | Distribution                               |
 |--------+--------------------------------------------|
 | Linux  | Arch/Debian/Ubuntu/Mint/Redhat/Fedora/SUSE |
-| Unix   | FreeBSD/OpenBSD/Dragonfly/Solaris/illumo   |
+| BSD    | FreeBSD/OpenBSD/Dragonfly                  |
+| Unix   | Solaris/illumo                             |
 | Window | Cygwin/MSYS2                               |
 
 *** Requires
