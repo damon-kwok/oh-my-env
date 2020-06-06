@@ -6,32 +6,32 @@
 #+TODO: TODO DOING DONE
 
 *** Support OS
-| OS     | Distribution                               |
-|--------+--------------------------------------------|
-| Linux  | Arch/Debian/Ubuntu/Mint/Redhat/Fedora/SUSE |
-| BSD    | FreeBSD/OpenBSD/Dragonfly                  |
-| Unix   | Solaris/illumo                             |
-| Window | Cygwin/MSYS2                               |
+| OS     | Distribution                                     |
+|--------+--------------------------------------------------|
+| Linux  | Arch/ Debian/ Ubuntu/ Mint/ Redhat/ Fedora/ SUSE |
+| BSD    | FreeBSD/ DragonFly/ OpenBSD/ NetBSD              |
+| Unix   | Solaris/ OpenIndiana/ *illumo                    |
+| Window | Cygwin/ MSYS2                                    |
 
 *** Requires
 - curl
 - bash
 
 *** Install
-#+BEGIN_SRC shell
+#+BEGIN_SRC sh
 # curl -L https://raw.githubusercontent.com/damon-kwok/oh-my-env/master/INSTALL | bash -s install
 curl -L https://git.io/Jf1Ho | bash
 #+END_SRC
 
 *** Uninstall
-#+BEGIN_SRC shell
+#+BEGIN_SRC sh
 rm -rf ~/.oh-my-env
 rm -rf ~/.ome_local
 #+END_SRC
 
 *** Usage
 - install programming languages
-#+BEGIN_SRC shell
+#+BEGIN_SRC sh
 ome install cc          # gcc clang lsp:clangd
 ome install clj         # leiningen clojure-cli
 ome install golang      # golang
