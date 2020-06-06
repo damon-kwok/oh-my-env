@@ -52,17 +52,17 @@ ome install jvm kotlin groovy scala ceylon
 #+END_SRC
 
 - update
-#+BEGIN_SRC shell
+#+BEGIN_SRC sh
 ome update
 #+END_SRC
 
 - REPL
-#+BEGIN_SRC shell
+#+BEGIN_SRC sh
 ome repl
 #+END_SRC
 
 - create project
-#+BEGIN_SRC shell
+#+BEGIN_SRC sh
 ome new
 #+END_SRC
 
