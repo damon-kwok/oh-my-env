@@ -6,12 +6,12 @@
 #+TODO: TODO DOING DONE
 
 *** Support OS
-| OS     | Distribution                                     |
-|--------+--------------------------------------------------|
-| Linux  | Arch/ Debian/ Ubuntu/ Mint/ Redhat/ Fedora/ SUSE |
-| BSD    | FreeBSD/ DragonFly/ OpenBSD/ NetBSD              |
-| Unix   | Solaris/ OpenIndiana/ *illumo                    |
-| Window | Cygwin/ MSYS2                                    |
+| OS     | Distribution                                                      |
+|--------+-------------------------------------------------------------------|
+| Linux  | Arch/ Manjaro/ Debian/ Ubuntu/ Mint/ RedHat/ CentOS/ Fedora/ SUSE |
+| BSD    | FreeBSD/ DragonFly/ OpenBSD/ NetBSD                               |
+| Unix   | Solaris/ OpenIndiana/ *illumo                                     |
+| Window | Cygwin/ MSYS2                                                     |
 
 *** Requires
 - curl
