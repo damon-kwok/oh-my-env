@@ -1,4 +1,4 @@
-#+TITLE:     Oh My ENV
+#+TITLE:     Oh My Env
 #+AUTHOR:    damon-kwok
 #+EMAIL:     damon-kwok@outlook.com
 #+DATE:      2018-06-08
@@ -19,8 +19,8 @@
 
 *** Install
 #+BEGIN_SRC shell
-# curl -L https://raw.githubusercontent.com/damon-kwok/oh-my-env/master/install.sh | bash -s install
-curl -L https://git.io/JeLGL | bash
+# curl -L https://raw.githubusercontent.com/damon-kwok/oh-my-env/master/INSTALL | bash -s install
+curl -L https://git.io/Jf1Ho | bash
 #+END_SRC
 
 *** Uninstall
@@ -45,8 +45,9 @@ ome install erlang      # erlang
 ome install elixir      # elixir
 ome install nim         # nim
 ome install pony        # pony-lang
-ome install chez        # ChezScheme
+ome install chez        # Chez Scheme
 ome install roswell     # CommonLisp
+ome install janet       # Janet
 ome install jvm kotlin groovy scala ceylon
 #+END_SRC
 
