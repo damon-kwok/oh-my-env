@@ -567,48 +567,6 @@ svn_commit() {
   fi
 }
 
-# check install:rtags irony-server
-# find_camke() {
-# echo 111
-# }
-
-# kill_process() {
-# echo 222
-# }
-
-# find_file() {
-# echo 333
-# }
-
-# dirp() {
-# dir=`pwd`
-# if [ ! "/" == "$DIR" ]; then
-# echo "dir is "`pwd`
-# else
-# echo "dir is root"
-# fi
-# }
-
-# dirp
-
-# find_str "devel" $HOME/.bashrc
-# if [ $? -eq 1 ]; then
-# echo "found:"$?
-# else
-# echo "not-found:"$?
-# fi
-
-# readp_ {
-# read -p "$1(Y/n)" c
-# if [ "$c" == "y" ] || [ "$c" == "Y" ] || [ "$c" == "" ]; then
-# return $(( 1 ));
-# elif [ "$c" == "n" ] || [ "$c" == "N" ]; then
-# return $(( 0 ));
-# else
-# echo "invalid input:$c"
-# readp "$1"
-# fi
-# }
 zipapp() {
   local oldir=`pwd`
   tip "zipapp"
