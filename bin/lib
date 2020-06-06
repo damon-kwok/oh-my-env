@@ -140,6 +140,7 @@ ome_git_config() {
     git config --global core.safecrlf false
 
     git config --global advice.addIgnoredFile true
+    # git config --global init.templatedir $OME_ROOT/conf/git/templates
 
     git config --global pull.rebase false  # merge (the default
     # git config --global pull.rebase true   # rebase
