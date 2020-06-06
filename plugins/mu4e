@@ -130,7 +130,7 @@ mu4e_install() {
       sudo yum install xapian-core-devel gmime30-devel libticonv-devel sqlite-devel
       ;;
     $OS_ARCH)
-      sudo pacman -S xapian-core gmime3 sqlite
+      sudo pacman -S xapian-core gmime3 sqlite isync
       ;;
     $OS_GENTOO) ;;
     $OS_SUSE)
