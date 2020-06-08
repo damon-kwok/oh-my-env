@@ -5,10 +5,12 @@ golang_getsrc_zip() {
   # echo "zipkg:$zipkg"
   mkdir -p $HOME/Downloads
   cd $HOME/Downloads/
-  if [ ! -f $HOME/Downloads/$zipkg ]; then
+  if [ ! -f "$HOME/Downloads/$zipkg" ]; then
     wget https://dl.google.com/go/$zipkg
   fi
-  if [ ! -d $OME_REPO/go ]; then
+
+  rm -rf $OME_REPO/go
+  if [ ! -d "$OME_REPO/go" ]; then
     tar xvzf $zipkg -C $OME_REPO/
   fi
 }
@@ -20,11 +22,11 @@ golang_getsrc_git() {
 }
 
 golang_install_download() {
-  if [ ! -f $OME_REPO/go/bin/go ] || [ ! "`go version | cut -d ' ' -f 3`" = "go${GOLANG_VERSION}" ]; then
+  if [ ! -f "$OME_REPO/go/bin/go" ] || [ ! "`go version | cut -d ' ' -f 3`" = "go${GOLANG_VERSION}" ]; then
     local zipkg=go${GOLANG_VERSION}.windows-amd64.zip
     mkdir -p ~/Downloads
     cd ~/Downloads/
-    if [ ! -f $HOME/Downloads/$zipkg ]; then
+    if [ ! -f "$HOME/Downloads/$zipkg" ]; then
       rm -rf $OME_REPO/go/
       wget https://dl.google.com/go/$zipkg
     fi
@@ -48,8 +50,8 @@ golang_install_build() {
 
   # bootstrap get src
   # github_upgrade golang/go $OME_REPO/go_bootstrap/go 1 "release-branch.go1.4"
-  if [ ! -d $OME_REPO/go_bootstrap/go/ ]; then
-    if [ ! -f ~/Downloads/go1.4.3.src.tar.gz ]; then
+  if [ ! -d "$OME_REPO/go_bootstrap/go/" ]; then
+    if [ ! -f "~/Downloads/go1.4.3.src.tar.gz" ]; then
       cd ~/Downloads/
       wget https://dl.google.com/go/go1.4.3.src.tar.gz
     fi
@@ -58,7 +60,7 @@ golang_install_build() {
   fi
 
   # bootstrap build
-  if [ ! -f $OME_REPO/go_bootstrap/go/bin/go ]; then
+  if [ ! -f "$OME_REPO/go_bootstrap/go/bin/go" ]; then
     cd $OME_REPO/go_bootstrap/go/src
     if [ "$OME_OS" = "$OS_MSYS2" ] || [ "$OME_OS" = "$OS_CYGWIN" ]; then
       chmod +x ./make.bat
@@ -71,7 +73,7 @@ golang_install_build() {
   fi
 
   # golang build
-  if [ ! -d $OME_REPO/go/ ] || [ ! "`go version | cut -d ' ' -f 3`" = "go${GOLANG_VERSION}" ]; then
+  if [ ! -d "$OME_REPO/go/" ] || [ ! "`go version | cut -d ' ' -f 3`" = "go${GOLANG_VERSION}" ]; then
     tip "set GOROOT_BOOTSTRAP"
     export GOROOT_BOOTSTRAP=$OME_REPO/go_bootstrap/go
     unset GOROOT
@@ -94,6 +96,7 @@ golang_install_build() {
     golang_setenv
   fi
 }
+
 golang_install() {
   if [ "$OME_OS" = "$OS_MSYS2" ] || [ "$OME_OS" = "$OS_CYGWIN" ]; then
     golang_install_download
@@ -155,6 +158,7 @@ golang_info() {
     ome_show "Golang" "`go version` | GO111MODULE=$GO111MODULE | CGO_ENABLED=$CGO_ENABLED"
   fi
 }
+
 # Golang
 # export GOROOT_BOOTSTRAP=$OME_REPO/go
 # export GOOS=linux
@@ -170,10 +174,11 @@ golang_setenv() {
   export GOBIN=$GOPATH/bin
   export PATH=$GOROOT/bin:$GOBIN:$PATH
   export GO111MODULE=on
+
+  # If you live in China and may not be able to download golang.org/x/dependency
+  # module, please set GOPROXY as follow:
+  # export GOPROXY=https://athens.azurefd.net/
+  export GOPROXY=https://goproxy.io
+  # export GOPROXY=https://mirrors.aliyun.com/goproxy/
 }
 golang_setenv
-# If you live in China and may not be able to download golang.org/x/dependency
-# module, please set GOPROXY as follow:
-# export GOPROXY=https://athens.azurefd.net/
-export GOPROXY=https://goproxy.io
-# export GOPROXY=https://mirrors.aliyun.com/goproxy/
