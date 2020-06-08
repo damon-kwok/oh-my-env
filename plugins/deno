@@ -3,6 +3,7 @@
 deno_install() {
   curl -fsSL https://x.deno.js.cn/install.sh | sh
   deno_setenv
+  deno --version
 }
 
 deno_uninstall() {
