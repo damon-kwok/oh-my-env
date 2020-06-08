@@ -19,8 +19,7 @@
 
 *** Install
 #+BEGIN_SRC sh
-# curl -L https://raw.githubusercontent.com/damon-kwok/oh-my-env/master/INSTALL | bash -s install
-curl -L https://git.io/Jf1Ho | bash
+bash <(curl -fksSL https://git.io/Jf1Ho)
 #+END_SRC
 
 *** Uninstall
