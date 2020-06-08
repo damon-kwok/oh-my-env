@@ -337,7 +337,7 @@ ome_status() {
 }
 
 ome_help() {
-  echo "$OME_VERSION"
+  ECHO_OME_VERSION
   echo ""
   echo "Usage: ome [OPTION]..."
   echo "help                           display this help and exit"
@@ -480,7 +480,7 @@ ome_parse() {
     #            echo ""
     #            ;;
     "version"|"--version"|"-v"|"-ver"|"ver"|"v")
-      echo "$OME_VERSION"
+      ECHO_OME_VERSION
       ome_package_info
       ;;
     "help"|"--help")
@@ -492,7 +492,13 @@ ome_parse() {
   esac
   cd $oldir
 }
-readonly OME_VERSION="OME-2020.0325 copyleft 2020 damon-kwok"
+
+ECHO_OME_VERSION() {
+  local oldir=`pwd`
+  cd $OME_ROOT
+  echo "OME-`git log -1 --format="%cd" --date=short | sed 's|-||g'` Copyright 2009-2020 Damon Kwok"
+  cd $oldir
+}
 
 #echo $@
 if [[ "$@" == *"--debug"* ]]; then
