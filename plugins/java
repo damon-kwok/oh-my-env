@@ -22,7 +22,7 @@ install_java_language_server() {
   cd $oldir
 }
 
-jvm_install_sdkman() {
+java_install_sdkman() {
   tip "install sdkman"
   #if ! command -v sdk >/dev/null 2>&1; then
   if [ "`command -v sdk`" = "" ]; then
@@ -131,7 +131,7 @@ jvm_install_sdkman() {
   # install_scala_language_server
 }
 
-jvm_install_download() {
+java_install_download() {
   get_os_type
   case $OME_OS in
     # Linux
@@ -179,22 +179,22 @@ jvm_install_download() {
   esac
 }
 
-jvm_install() {
-  jvm_install_sdkman
+java_install() {
+  java_install_sdkman
 
   # if [ "$OME_OS" = "$OS_FREEBSD" ]; then
-  # jvm_install_download
+  # java_install_download
   # else
-  # jvm_install_sdkman
+  # java_install_sdkman
   # fi
 }
 
-jvm_uninstall() {
-  echo_error "'jvm_uninstall' not implemented"
+java_uninstall() {
+  echo_error "'java_uninstall' not implemented"
 }
 
-jvm_exist_p() {
-  echo_error "'jvm_exist_p' not implemented"
+java_exist_p() {
+  echo_error "'java_exist_p' not implemented"
 }
 
 # ome login info
@@ -212,7 +212,7 @@ sdkman_info() {
   fi
 }
 
-jvm_info() {
+java_info() {
   if [ "`command -v java`" != "" ]; then
     ome_show "Java" "`java -version 2>&1 | head -n 1`|`sdkman_info ant Ant`|`sdkman_info maven Maven`|`sdkman_info gradle Gradle`"
   fi
