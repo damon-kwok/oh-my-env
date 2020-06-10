@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-roswell_install() {
+lisp_install() {
   if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
     if [ ! -d $OME_REPO/roswell ]; then
       local zipkg=Roswell-x86_64.zip
@@ -44,15 +44,15 @@ roswell_install() {
   # ros install clack
 }
 
-roswell_uninstall() {
-  echo_error "'roswell_uninstall' not implemented"
+lisp_uninstall() {
+  echo_error "'lisp_uninstall' not implemented"
 }
 
-roswell_exist_p() {
-  echo_error "'roswell_exist_p' not implemented"
+lisp_exist_p() {
+  echo_error "'lisp_exist_p' not implemented"
 }
 
-roswell_info() {
+lisp_info() {
   # if [ -d $HOME/.roswell/ ]; then
   if [ "`command -v ros`" != "" ]; then
     ome_show "Roswell" "`ome_fetch_version ros` | `ros run -- --version`"
