@@ -1,0 +1,54 @@
+#!/usr/bin/env sh
+
+antlr_install() {
+  mkdir -p ~/.emacs.d/antlr
+  if [ ! -f "$HOME/.emacs.d/antlr/antlr-${ANTLR4_VERSION}-complete.jar" ]; then
+    tip "download: antlr-${ANTLR4_VERSION}-complete.jar"
+    cd $HOME/.emacs.d/antlr
+    curl -O https://www.antlr.org/download/antlr-${ANTLR4_VERSION}-complete.jar
+  fi
+
+  if [ ! -f "$HOME/.emacs.d/antlr/ST-${ST_VERSION}.jar" ]; then
+    tip "download: ST-${ST_VERSION}.jar"
+    cd $HOME/.emacs.d/antlr
+    curl -O http://www.stringtemplate.org/download/ST-${ST_VERSION}.jar
+  fi
+  
+  if [ ! -f "$HOME/.emacs.d/antlr/antlr-${ANTLR3_VERSION}-complete.jar" ]; then
+    tip "download: antlr-${ANTLR3_VERSION}-complete.jar"
+    cd $HOME/.emacs.d/antlr
+    curl -O https://www.antlr3.org/download/antlr-${ANTLR3_VERSION}-complete.jar
+  fi
+  antlr_setenv
+}
+
+antlr_uninstall() {
+  echo_error "'antlr_uninstall' not implemented"
+}
+
+antlr_exist_p() {
+  echo_error "'antlr_exist_p' not implemented"
+}
+
+antlr_info() {
+  echo_error ""
+}
+
+antlr_setenv() {
+  if [ -f "$HOME/.emacs.d/antlr/antlr-${ANTLR4_VERSION}-complete.jar" ]; then
+    export CLASSPATH=".:$HOME/.emacs.d/antlr/antlr-${ANTLR4_VERSION}-complete.jar:$CLASSPATH"
+    alias antlr4='java -jar $HOME/.emacs.d/antlr/antlr-${ANTLR4_VERSION}-complete.jar'
+    alias grun='java org.antlr.v4.gui.TestRig'
+  fi
+
+  if [ -f "$HOME/.emacs.d/antlr/ST-${ST_VERSION}.jar" ]; then
+    export CLASSPATH=".:$HOME/.emacs.d/antlr/ST-${ST_VERSION}.jar:$CLASSPATH"
+  fi
+
+  if [ -f "$HOME/.emacs.d/antlr/antlr-${ANTLR3_VERSION}-complete.jar" ]; then
+    export CLASSPATH=".:$HOME/.emacs.d/antlr/antlr-${ANTLR3_VERSION}-complete.jar:$CLASSPATH"
+    alias antlr3='java -jar $HOME/.emacs.d/antlr/antlr-${ANTLR3_VERSION}-complete.jar'
+    alias grun3='java -cp $HOME/.emacs.d/antlr/antlr-${ANTLR3_VERSION}-complete.jar org.antlr.gunit.swingui.Tool'
+  fi
+}
+antlr_setenv
