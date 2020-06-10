@@ -9,14 +9,12 @@ install_java_language_server() {
     rm -rf ~/.emacs.d/eclipse.jdt.ls/server/
   fi
 
-  if [ ! -d ~/.emacs.d/eclipse.jdt.ls/server/ ]; then
-    mkdir -p ~/.emacs.d/eclipse.jdt.ls/server/
-    if [ ! -f ~/Downloads/jdt-language-server-latest.tar.gz ]; then
-      # wget http://mirror.switch.ch/eclipse/jdtls/snapshots/jdt-language-server-latest.tar.gz  \
-        # -O ~/Downloads/jdt-language-server-latest.tar.gz
-      wget http://download.eclipse.org/jdtls/snapshots/jdt-language-server-latest.tar.gz -O \
-           ~/Downloads/jdt-language-server-latest.tar.gz
-    fi
+  mkdir -p ~/.emacs.d/eclipse.jdt.ls/server/
+  if [ ! -f ~/Downloads/jdt-language-server-latest.tar.gz ]; then
+    wget http://download.eclipse.org/jdtls/snapshots/jdt-language-server-latest.tar.gz -O \
+         ~/Downloads/jdt-language-server-latest.tar.gz
+  fi
+  if [ -f ~/Downloads/jdt-language-server-latest.tar.gz ]; then
     tar xf ~/Downloads/jdt-language-server-latest.tar.gz -C ~/.emacs.d/eclipse.jdt.ls/server/
   fi
   cd $oldir
