@@ -1,4 +1,12 @@
 #!/usr/bin/env sh
+install_zig_language_server() {
+  github_upgrade zigtools/zls $OME_REPO/zls
+  cd $OME_REPO/zls
+  zig build
+
+  # To configure ZLS:
+  zig build config
+}
 
 zig_install() {
   github_upgrade ziglang/zig $OME_REPO/zig
@@ -13,6 +21,9 @@ zig_install() {
 
   # cmake --build . --use-stderr --config Release --target install
   ninja install
+
+  tip "install Zig language server"
+  install_zig_language_server
 }
 
 zig_uninstall() {
