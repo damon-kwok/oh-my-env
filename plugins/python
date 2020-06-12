@@ -65,7 +65,7 @@ python_install_bin() {
       apt install python3
       ;;
     $OS_MSYS2)
-      pacman -S mingw-w64-x86_64-python mingw-w64-x86_64-python-pip
+      # pacman -S python python-pip #mingw-w64-x86_64-python #mingw-w64-x86_64-python-pip
       ;;
     # Other
     $OS_UNKNOW) ;;
@@ -75,8 +75,8 @@ python_install_bin() {
 python_install() {
   local oldir=`pwd`
 
-  python_install_bin
-  # python_install_pyenv
+  # python_install_bin
+  python_install_pyenv
 
   tip "set pip mirror"
   if [ ! -f $HOME/.pip/pip.conf ]; then
@@ -109,12 +109,19 @@ python_install() {
     fi
     # python3 get-pip.py --user
     # curl https://bootstrap.pypa.io/get-pip.py | python3
-    #11 python3 get-pip.py --prefix=$OME_PREFIX
-  else
-    # pip3 install --prefix $OME_PREFIX --user -U pip
-    #11 pip3 install --prefix $OME_PREFIX --upgrade pip -i http://mirrors.aliyun.com/pypi/simple/ --trusted-host mirrors.aliyun.com
-    echo ""
+    if [ "$OME_OS" != "$OS_CYGWIN" ] && [ "$OME_OS" != "$OS_MSYS2" ]; then
+      python3 get-pip.py --prefix=$OME_PREFIX
+    fi
   fi
+  # else
+  # pip3 install --prefix $OME_PREFIX --user -U pip
+  if [ "$OME_OS" != "$OS_CYGWIN" ] && [ "$OME_OS" != "$OS_MSYS2" ]; then
+    echo_error "'python' does not support windows"
+    pip3 install --prefix $OME_PREFIX --upgrade pip -i http://mirrors.aliyun.com/pypi/simple/ --trusted-host mirrors.aliyun.com
+  fi
+  # fi
+
+  # python -m pip install --upgrade pip
 
   tip "check pip3"
   which pip3
