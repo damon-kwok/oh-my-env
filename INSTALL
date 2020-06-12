@@ -201,7 +201,7 @@ esac
 ###############################################################################
 title "hosts init"
 
-
+host_upgrade 140.82.112.3 github.com
 host_upgrade 140.82.114.3 github.com
 host_upgrade 192.30.253.113 github.com
 host_upgrade 192.30.253.112 github.com
