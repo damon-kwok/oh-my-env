@@ -3,7 +3,7 @@
 hugo_install() {
   ome_check_install "go" "golang"
 
-  git clone https://github.com/gohugoio/hugo.git
+  # git clone https://github.com/gohugoio/hugo.git
   github_upgrade gohugoio/hugo $OME_REPO/hugo
   cd $OME_REPO/hugo
   go install
