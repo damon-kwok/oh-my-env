@@ -1,1 +1,7 @@
-taskkill -f -t -im $@
+#!/usr/bin/env sh
+
+if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
+  taskkill -f -t -im $@
+else
+  /usr/bin/pkill $@
+fi
