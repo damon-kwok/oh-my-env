@@ -227,7 +227,7 @@ export PYTHON2_VERSION=2.7.18
 export PYTHON3_VERSION=3.8.3
 export RUBY_VERSION=2.7.1
 # export PHP_VERSION=5.6.39
-export PHP_VERSION=7.4.6
+export PHP_VERSION=7.4.7
 
 export JAVA_VERSION=11.0.6.hs-adpt
 # export JAVA_VERSION=20.0.0.r11-grl
@@ -246,10 +246,10 @@ export GRAILS_VERSION=4.0.1
 export CLOJURE_VERSION=1.10.1.536
 export LEIN_VERSION=2.9.3
 export GOLANG_VERSION=1.14.4
-export NODEJS_VERSION=12.18.0
+export NODEJS_VERSION=12.18.2
 
 # Language IV
-export NIM_VERSION=1.2.0
+export NIM_VERSION=1.2.4
 export PONY_VERSION=git
 export ZIG_VERSION=zig-0.6.0
 
