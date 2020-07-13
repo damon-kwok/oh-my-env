@@ -76,7 +76,9 @@ chez_install() {
 }
 
 chez_uninstall() {
-  echo_error "'chez_uninstall' not implemented"
+  rm -rf $OME_REPO/ChezScheme
+  rm -rf $OME_REPO/akku
+  rm -rf $OME_REPO/Raven
 }
 
 chez_exist_p() {

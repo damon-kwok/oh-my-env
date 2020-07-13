@@ -48,7 +48,7 @@ clasp_install() {
 }
 
 clasp_uninstall() {
-  echo_error "'clasp_uninstall' not implemented"
+  rm -rf $OME_REPO/clasp
 }
 
 clasp_exist_p() {

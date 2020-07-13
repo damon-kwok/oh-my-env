@@ -36,7 +36,8 @@ lisp_install() {
   fi
 
   tip "lisp install"
-  ros install sbcl-bin/$SBCL_VERSION
+  ros install sbcl-bin
+  # ros install sbcl-bin/$SBCL_VERSION
   #ros use sbcl/system
   #ros setup
 
@@ -45,7 +46,12 @@ lisp_install() {
 }
 
 lisp_uninstall() {
-  echo_error "'lisp_uninstall' not implemented"
+  rm -rf $OME_REPO/roswell
+  if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
+    rm -rf $USERPROFILE/.roswell/archives/
+  else
+    rm -rf $HOME/.roswell/archives/
+  fi
 }
 
 lisp_exist_p() {

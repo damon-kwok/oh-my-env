@@ -12,10 +12,10 @@ books_install() {
   # vuepress dev ./src
 
   tip "pony-tutorial"
-  github_upgrade damon-kwok/pony-tutorial-zh_CN $HOME/pony-tutorial
+  github_upgrade damon-kwok/pony-tutorial-zh_CN $HOME/pony-tutorial-zh_CN
   github_upgrade damon-kwok/pony-tutorial $HOME/pony-tutorial-en
 
-  cd $HOME/pony-tutorial
+  cd $HOME/pony-tutorial-zh_CN
   hugo
 
   # preview
@@ -25,7 +25,8 @@ books_install() {
 }
 
 books_uninstall() {
-  echo_error "'books_uninstall' not implemented"
+  rm -rf $HOME/pony-tutorial-zh_CN
+  rm -rf $HOME/pony-tutorial-en
 }
 
 books_exist_p() {

@@ -19,7 +19,7 @@ carp_install() {
 }
 
 carp_uninstall() {
-  echo_error "'carp_uninstall' not implemented"
+  rm -rf $OME_REPO/carp
 }
 
 carp_exist_p() {

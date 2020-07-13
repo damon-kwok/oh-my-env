@@ -17,7 +17,7 @@ ceylon_install() {
 }
 
 ceylon_uninstall() {
-  echo_error "'ceylon_uninstall' not implemented"
+  sdk uninstall ceylon
 }
 
 ceylon_exist_p() {

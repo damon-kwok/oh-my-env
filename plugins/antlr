@@ -13,7 +13,7 @@ antlr_install() {
     cd $HOME/.emacs.d/antlr
     curl -O http://www.stringtemplate.org/download/ST-${ST_VERSION}.jar
   fi
-  
+
   if [ ! -f "$HOME/.emacs.d/antlr/antlr-${ANTLR3_VERSION}-complete.jar" ]; then
     tip "download: antlr-${ANTLR3_VERSION}-complete.jar"
     cd $HOME/.emacs.d/antlr
@@ -23,7 +23,7 @@ antlr_install() {
 }
 
 antlr_uninstall() {
-  echo_error "'antlr_uninstall' not implemented"
+  rm -rf $HOME/.emacs.d/antlr/
 }
 
 antlr_exist_p() {

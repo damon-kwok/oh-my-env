@@ -11,7 +11,7 @@ boost_install() {
 }
 
 boost_uninstall() {
-  echo_error "'boost_uninstall' not implemented"
+  rm -rf $OME_REPO/boost
 }
 
 boost_exist_p() {
