@@ -33,7 +33,7 @@ max_line_length             = 80
 # Tab indentation (no size specified)
 [Makefile]
 indent_style                = tab
-tab_width                   = 4
+tab_width                   = 8
 
 [Makefile.am]
 indent_style                = tab
@@ -76,3 +76,9 @@ tab_width                   = 2
 indent_style                = space
 indent_size                 = 2
 tab_width                   = 2
+
+# Matches the pony files
+[*.{odin,jai}]
+indent_style                = tab
+indent_size                 = 4
+tab_width                   = 4
