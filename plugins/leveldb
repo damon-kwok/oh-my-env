@@ -1,0 +1,20 @@
+#!/usr/bin/env sh
+
+leveldb_install() {
+  github_upgrade google/leveldb $OME_REPO/leveldb
+  cd $OME_REPO/leveldb
+  mkdir -p build && cd build
+  cmake -DCMAKE_BUILD_TYPE=Release .. && cmake --build .
+}
+
+leveldb_uninstall() {
+  echo_error "'leveldb_uninstall' not implemented"
+}
+
+leveldb_exist_p() {
+  echo_error "'leveldb_exist_p' not implemented"
+}
+
+leveldb_info() {
+  echo_error ""
+}
