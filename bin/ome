@@ -346,8 +346,8 @@ ome_help() {
   echo ""
   echo "init                           initialization"
   #echo "config                         ome base config:git/gcc/clang"
-  echo "install   [plugin_name]        install plugin"
-  echo "uninstall [plugin_name]        uninstall plugin"
+  echo "install   [plugin_name...]     install plugin"
+  echo "uninstall [plugin_name...]     uninstall plugin"
   echo "plugin    [plugin name]        create/edit plugin"
   echo "new [language] [project_name]  create project"
   echo "repl                           show REPL menu"
@@ -386,7 +386,10 @@ ome_parse() {
       if [ "$ARG1" = "self" ]; then
         . ../uninstall.sh
       else
-        ome_eval "uninstall" $ARG1
+        # ome_eval "uninstall" $ARG1
+        for ARG in $ARGV; do
+          ome_eval "uninstall" $ARG
+        done
       fi
       ;;
     "repl")
