@@ -1,0 +1,19 @@
+#!/usr/bin/env sh
+
+clib_install() {
+  github_upgrade clibs/clib $OME_REPO/clib
+  cd $OME_REPO/clib
+  PREFIX=$OME_PREFIX make install
+}
+
+clib_uninstall() {
+  echo_error "'clib_uninstall' not implemented"
+}
+
+clib_exist_p() {
+  echo_error "'clib_exist_p' not implemented"
+}
+
+clib_info() {
+  echo_error ""
+}
