@@ -1,0 +1,19 @@
+#!/usr/bin/env sh
+
+zz_install() {
+  github_upgrade zetzit/zz $OME_REPO/zz
+  cd $OME_REPO/zz/examples/hello
+  cargo run run
+}
+
+zz_uninstall() {
+  echo_error "'zz_uninstall' not implemented"
+}
+
+zz_exist_p() {
+  echo_error "'zz_exist_p' not implemented"
+}
+
+zz_info() {
+  echo_error ""
+}
