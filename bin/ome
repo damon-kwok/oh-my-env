@@ -170,6 +170,9 @@ ome_repl() {
   if [ "`command -v gluon`" != "" ]; then
     echo_lang4 "    g) Gluon"
   fi
+  if [ "`command -v v`" != "" ]; then
+    echo_lang4 "    v) V"
+  fi
   echo "    -------------------------"
   echo "    q | C-c) exit"
 
@@ -196,6 +199,7 @@ ome_repl() {
     C) echo_success "abort carp repl with C-c" && carp;;
     J) echo_success "abort janet repl with C-c" && janet;;
     G) echo_success "abort gluon repl with C-d | :q" && gluon -i;;
+    v) echo_success "abort gluon repl with C-c | exit" && v;;
     q|Q) exit;;
     *) ome_repl;;
   esac
