@@ -1,0 +1,19 @@
+#!/usr/bin/env sh
+
+odin_install() {
+  github_upgrade odin-lang/Odin $OME_REPO/odin
+  cd $OME_REPO/odin
+  make
+}
+
+odin_uninstall() {
+  echo_error "'odin_uninstall' not implemented"
+}
+
+odin_exist_p() {
+  echo_error "'odin_exist_p' not implemented"
+}
+
+odin_info() {
+  echo_error ""
+}
