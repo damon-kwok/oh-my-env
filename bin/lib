@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-ask() {
+function ask() {
   read -p $(tput setaf 2)"$@ "$(tput sgr0)
 }
 warning_ask() {
@@ -232,9 +232,9 @@ git_ssh_upgrade() {
   local site=$1
   local project=$2
   if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
-    local dir=`cygpath $1`
+    local dir=`cygpath $3`
   else
-    local dir="$1"
+    local dir="$3"
   fi
   local submodule=$4
   if [ ! -n "$5" ]; then
@@ -710,7 +710,7 @@ ome_dev_path() {
     export PKG_CONFIG_PATH=$dir/lib/pkgconfig:$dir/share/pkgconfig:$PKG_CONFIG_PATH
     # libtool --finish $dir/lib
 
-    export DCMAKE_INCLUDE_PATH=$dir/include:$DCMAKE_INCLUDE_PATH
+    export CMAKE_INCLUDE_PATH=$dir/include:$CMAKE_INCLUDE_PATH
     export CMAKE_LIBRARY_PATH=$dir/lib:$CMAKE_LIBRARY_PATH
 
     export C_INCLUDE_PATH=$dir/include:$C_INCLUDE_PATH
