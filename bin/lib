@@ -825,5 +825,4 @@ ome_httpserver() {
   else
     node $HOME/workspace/projects/nodejs/http_server/index.js $HOME/pony-tutorial
   fi
-
 }

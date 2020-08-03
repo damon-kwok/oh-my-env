@@ -1,3 +1,5 @@
+TAGS
+tags
 .DS_Store
 *.elc
 .#*
@@ -13,4 +15,3 @@ rtags_indexes/
 /.vscode/
 /build/
 /prefix/
-
