@@ -125,27 +125,6 @@ oh_my_env_push() {
   cd $oldir
 }
 
-ome_pull_proj() {
-  github_upgrade damon-kwok/damon-kwok.github.io $OME_PROJ/me/blog
-
-  github_upgrade damon-kwok/awesome-package-manager $OME_PROJ/me/awesome-package-manager
-  github_upgrade damon-kwok/awesome-network-programming $OME_PROJ/me/awesome-network-programming
-  github_upgrade damon-kwok/awesome-web-scraping $OME_PROJ/me/awesome-web-scraping
-  github_upgrade damon-kwok/medusa $OME_PROJ/me/medusa
-  # github_upgrade damon-kwok/balisong $OME_PROJ/me/balisong
-  github_upgrade damon-kwok/data-bundle $OME_PROJ/me/data-bundle
-  github_upgrade damon-kwok/memrock $OME_PROJ/me/memrock
-
-  github_upgrade damon-kwok/cljs-example $OME_PROJ/me/cljs-example
-
-  github_upgrade damon-kwok/libknife $OME_PROJ/me/libknife
-  # cd $OME_PROJ/c/libknife
-  # mkdir -p build
-  # cd build
-  # cmake ..
-  # make
-}
-
 ome_push_proj() {
   local oldir=`pwd`
   #################################
@@ -181,4 +160,30 @@ emacsd_push() {
     fi
     cd $oldir
   fi
+}
+
+ome_pull_proj() {
+  github_ssh_upgrade damon-kwok/v-mode $OME_PROJ/me/v-mode
+  github_ssh_upgrade damon-kwok/zetz-mode $OME_PROJ/me/zetz-mode
+  github_ssh_upgrade damon-kwok/verona-mode $OME_PROJ/me/verona-mode
+  github_ssh_upgrade damon-kwok/modern-sh $OME_PROJ/me/modern-sh
+
+  github_ssh_upgrade damon-kwok/damon-kwok.github.io $OME_PROJ/me/blog
+
+  github_ssh_upgrade damon-kwok/awesome-package-manager $OME_PROJ/me/awesome-package-manager
+  # github_ssh_upgrade damon-kwok/awesome-network-programming $OME_PROJ/me/awesome-network-programming
+  # github_ssh_upgrade damon-kwok/awesome-web-scraping $OME_PROJ/me/awesome-web-scraping
+  # github_ssh_upgrade damon-kwok/medusa $OME_PROJ/me/medusa
+  # github_ssh_upgrade damon-kwok/balisong $OME_PROJ/me/balisong
+  # github_ssh_upgrade damon-kwok/data-bundle $OME_PROJ/me/data-bundle
+  # github_ssh_upgrade damon-kwok/memrock $OME_PROJ/me/memrock
+
+  # github_ssh_upgrade damon-kwok/cljs-example $OME_PROJ/me/cljs-example
+
+  # github_ssh_upgrade damon-kwok/libknife $OME_PROJ/me/libknife
+  # cd $OME_PROJ/c/libknife
+  # mkdir -p build
+  # cd build
+  # cmake ..
+  # make
 }
