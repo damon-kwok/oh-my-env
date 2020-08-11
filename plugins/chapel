@@ -1,0 +1,21 @@
+#!/usr/bin/env sh
+
+chapel_install() {
+  github_upgrade chapel-lang/chapel $OME_REPO/chapel
+  cd $OME_REPO/chapel
+
+  make
+  make check
+}
+
+chapel_uninstall() {
+  echo_error "'chapel_uninstall' not implemented"
+}
+
+chapel_exist_p() {
+  echo_error "'chapel_exist_p' not implemented"
+}
+
+chapel_info() {
+  echo_error ""
+}
