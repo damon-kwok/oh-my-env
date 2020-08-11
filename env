@@ -213,6 +213,11 @@ if [ "$OME_OS" = "$OS_MSYS2" ]; then
   fi
 fi
 
+# FIX `LLVM` path for windows
+if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
+  export PATH="/c/Program Files (x86)/Microsoft Visual Studio/2019/Preview/VC/Tools/Llvm/x64/bin":"$PATH"
+fi
+
 # lang
 export OME_MAKE="Ninja"
 export MAKE_PROG="make"
