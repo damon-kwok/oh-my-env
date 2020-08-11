@@ -2,9 +2,13 @@
 
 chapel_install() {
   github_upgrade chapel-lang/chapel $OME_REPO/chapel
+  # chapel_setenv
+  # unset CHPL_HOME
   cd $OME_REPO/chapel
-
+  # ./configure --prefix=$OME_PREFIX
+  # ./configure --chpl-home=$CHPL_DESTDIR
   make
+  chapel_setenv
   make check
 }
 
@@ -19,3 +23,17 @@ chapel_exist_p() {
 chapel_info() {
   echo_error ""
 }
+
+chapel_setenv() {
+  # export CHPL_DESTDIR=$OME_DESTDIR/chapel
+  # mkdir -p $CHPL_DESTDIR
+  # if [ -f "$CHPL_DESTDIR/util/setchplenv.bash" ]; then
+  # source "$CHPL_DESTDIR/util/setchplenv.bash"
+  # fi
+  if [ -f "$OME_REPO/chapel/util/setchplenv.bash" ]; then
+    # unset CHPL_HOME
+    source "$OME_REPO/chapel/util/setchplenv.bash" >/dev/null 2>&1
+  fi
+
+}
+chapel_setenv

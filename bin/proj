@@ -167,6 +167,7 @@ ome_pull_proj() {
   github_ssh_upgrade damon-kwok/zetz-mode $OME_PROJ/me/zetz-mode
   github_ssh_upgrade damon-kwok/verona-mode $OME_PROJ/me/verona-mode
   github_ssh_upgrade damon-kwok/modern-sh $OME_PROJ/me/modern-sh
+  github_ssh_upgrade damon-kwok/chapel-mode $OME_PROJ/me/chapel-mode
 
   github_ssh_upgrade damon-kwok/damon-kwok.github.io $OME_PROJ/me/blog
 

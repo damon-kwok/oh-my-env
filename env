@@ -95,6 +95,7 @@ export OME_BIN=$OME_ROOT/bin
 export OME_PREFIX=$HOME/.ome_local
 export OME_CACHE=$OME_PREFIX/caches
 export OME_REPO=$OME_PREFIX/repo
+export OME_DESTDIR=$OME_PREFIX/destdir
 
 export OME_WS=$HOME/workspace
 export OME_BOOK=$HOME/book
