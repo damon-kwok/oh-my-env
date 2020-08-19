@@ -263,7 +263,7 @@ export NODEJS_VERSION=12.18.3
 # Language IV
 export NIM_VERSION=1.2.6
 export PONY_VERSION=git
-export ZIG_VERSION=zig-0.6.0
+export ZIG_VERSION=0.6.0
 
 # Other
 export ANTLR3_VERSION=3.5.2
