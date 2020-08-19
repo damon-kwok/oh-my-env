@@ -242,21 +242,22 @@ ome_pull() {
 
   # tip "cache upgrade"
   chmod +x $OME_ROOT/bin/git-hook
-  gitee_upgrade_bigrepo damon-kwok/other-caches $HOME/Downloads/
-  gitee_upgrade_bigrepo damon-kwok/sdkman-caches $HOME/.sdkman/archives/
-  if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
-    gitee_upgrade_bigrepo damon-kwok/roswell-caches $USERPROFILE/.roswell/archives/
-  else
-    gitee_upgrade_bigrepo damon-kwok/roswell-caches $HOME/.roswell/archives/
-  fi
+
+  # gitee_upgrade_bigrepo damon-kwok/other-caches $HOME/Downloads/
+  # gitee_upgrade_bigrepo damon-kwok/sdkman-caches $HOME/.sdkman/archives/
+  # if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
+  #   gitee_upgrade_bigrepo damon-kwok/roswell-caches $USERPROFILE/.roswell/archives/
+  # else
+  #   gitee_upgrade_bigrepo damon-kwok/roswell-caches $HOME/.roswell/archives/
+  # fi
 
   # echo_kv "GIT PULL" "~/wrokspace/"
   gitee_upgrade damon-kwok/workspace $HOME/workspace/
 
-  #
-  cp -f $OME_ROOT/conf/project/.editorconfig $OME_ROOT
-  cp -f $OME_ROOT/conf/project/.editorconfig $OME_EMACS
-  cp -f $OME_ROOT/conf/project/.editorconfig $OME_WS
+  # sync .editorconfig
+  # cp -f $OME_ROOT/conf/project/.editorconfig $OME_ROOT
+  # cp -f $OME_ROOT/conf/project/.editorconfig $OME_EMACS
+  # cp -f $OME_ROOT/conf/project/.editorconfig $OME_WS
 
   cd $oldir
 }
