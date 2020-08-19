@@ -228,19 +228,19 @@ export ROSWELL_VERSION=20.06.14.107
 if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
   export SBCL_VERSION=2.0.2
 else
-  export SBCL_VERSION=2.0.6
+  export SBCL_VERSION=2.0.7
 fi
 
 # Language II
 export ERLANG_VERSION=23.0
 export OCAML_VERSION=4.10.0
-export STACK_VERSION=2.3.1
+export STACK_VERSION=2.3.3
 export GHC_VERSION=8.8.3
 export PYTHON2_VERSION=2.7.18
 export PYTHON3_VERSION=3.8.5
 export RUBY_VERSION=2.7.1
 # export PHP_VERSION=5.6.39
-export PHP_VERSION=7.4.8
+export PHP_VERSION=7.4.9
 
 export JAVA_VERSION=11.0.6.hs-adpt
 # export JAVA_VERSION=20.0.0.r11-grl
@@ -257,11 +257,11 @@ export GROOVY_VERSION=3.0.4
 export GRAILS_VERSION=4.0.1
 export CLOJURE_VERSION=1.10.1.561
 export LEIN_VERSION=2.9.3
-export GOLANG_VERSION=1.14.6
+export GOLANG_VERSION=1.15
 export NODEJS_VERSION=12.18.3
 
 # Language IV
-export NIM_VERSION=1.2.4
+export NIM_VERSION=1.2.6
 export PONY_VERSION=git
 export ZIG_VERSION=zig-0.6.0
 
