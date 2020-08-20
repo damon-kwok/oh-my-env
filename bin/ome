@@ -378,7 +378,7 @@ ome_parse() {
 		"init"|"doctor"|"fix")
 			title "ome doctor"
       ome_config
-	    . $OME_ROOT/install.sh install
+	    . $OME_ROOT/INSTALL install
       ome_install "neofetch"
       ome_install "goto"
       ;;
