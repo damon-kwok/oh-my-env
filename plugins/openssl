@@ -1,0 +1,62 @@
+#!/usr/bin/env sh
+
+openssl_install() {
+  github_upgrade openssl/openssl $OME_REPO/openssl
+  cd $OME_REPO/openssl
+
+  ########################################
+  # Linux
+  output=$HOME/ssl
+  # for gcc
+  ./Configure linux-x86_64 zlib rc5 no-shared -api=1.1.1 --prefix=$output --openssldir=$output
+  # for clang
+  ./Configure linux-x86_64-clang zlib rc5 no-shared  -api=1.1.1 --prefix=$output --openssldir=$output
+  make
+  make test
+  make install
+
+  aaa -api=2
+  bbb -api=1
+  ccc -api=3
+
+  ########################################
+  # # macOS
+  # output=$HOME/ssl
+  # # for clang   (default)
+  # ./Configure darwin64-x86_64 zlib rc5 no-shared  -api=1.1.1 --prefix=$output --openssldir=$output
+  # # for gcc
+  # ./Configuredarwin64-x86_64-cc zlib rc5 no-shared -api=1.1.1 --prefix=$output --openssldir=$output
+
+  # make
+  # make test
+  # make install
+
+  ########################################
+  # # BSD
+  # output=$HOME/ssl
+  # #  clang only   (default)
+  # ./Configure BSD-x86_64 zlib rc5 no-shared  -api=1.1.1 --prefix=$output --openssldir=$output
+  # make
+  # make test
+  # make install
+
+  ########################################
+  # # Windows
+  # perl Configure VC-WIN64 zlib rc5 no-shared -api=1.1.1 --prefix=d:\openssl_lib  --openssldir=d:\openssl_lib
+  # nmake
+  # nmake test
+  # nmake install
+
+}
+
+openssl_uninstall() {
+  echo_error "'openssl_uninstall' not implemented"
+}
+
+openssl_exist_p() {
+  echo_error "'openssl_exist_p' not implemented"
+}
+
+openssl_info() {
+  echo_error ""
+}
