@@ -15,45 +15,45 @@ readp() {
 }
 
 title() {
-    echo -e $(tput setaf 6)"\n<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>"$(tput sgr0)
-    echo -e $(tput setaf 6)"<>\t\t\t\t"$(tput sgr0)"$1"
-    echo -e $(tput setaf 6)"<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>"\
-         $(tput sgr0)
+  echo -e $(tput setaf 6)"\n<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>"$(tput sgr0)
+  echo -e $(tput setaf 6)"<>\t\t\t\t"$(tput sgr0)"$1"
+  echo -e $(tput setaf 6)"<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>"\
+       $(tput sgr0)
 }
 
 tip() {
-    echo -e "$(tput setaf 6)\n<><><> "$(tput sgr0)"$1"$(tput setaf 6)" >"$(tput sgr0)
+  echo -e "$(tput setaf 6)\n<><><> "$(tput sgr0)"$1"$(tput setaf 6)" >"$(tput sgr0)
 }
 
 find_str() {
-    local str=$1
-    local file=$2
+  local str=$1
+  local file=$2
 
-    grep $str $file >/dev/null
+  grep $str $file >/dev/null
 
-    if [ $? -eq 0 ]; then
-	    # echo "found:$str"
-	    return $(( 1 ));
-    else
-	    # echo "not found:$str"
-	    return $(( 0 ));
-    fi
+  if [ $? -eq 0 ]; then
+	  # echo "found:$str"
+	  return $(( 1 ));
+  else
+	  # echo "not found:$str"
+	  return $(( 0 ));
+  fi
 }
 
 host_upgrade() {
-    local ip=$1
-    local name=$2
+  local ip=$1
+  local name=$2
 
-    if [ "$OME_OS" = "$OS_MSYS2" ]; then
-        local hostfile=/c/Windows/System32/drivers/etc/hosts
-    elif [ "$OME_OS" = "$OS_CYGWIN" ]; then
-        local hostfile=/cygdrive/c/Windows/System32/drivers/etc/hosts
-    else
-        local hostfile=/etc/hosts
-    fi
+  if [ "$OME_OS" = "$OS_MSYS2" ]; then
+    local hostfile=/c/Windows/System32/drivers/etc/hosts
+  elif [ "$OME_OS" = "$OS_CYGWIN" ]; then
+    local hostfile=/cygdrive/c/Windows/System32/drivers/etc/hosts
+  else
+    local hostfile=/etc/hosts
+  fi
 
-    find_str $name $hostfile
-    if [ $? -eq 0 ]; then
+  find_str $name $hostfile
+  if [ $? -eq 0 ]; then
 		echo "Add '$ip $name' to $hostfile"
 		if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
 			echo '$ip $name' >> /etc/hosts
@@ -61,55 +61,55 @@ host_upgrade() {
 			sudo sh -c "echo '$ip $name' >> /etc/hosts"
 		fi
     #else
-	#    echo "'$ip $name' is exist in $hostfile"
-    fi
+	  #    echo "'$ip $name' is exist in $hostfile"
+  fi
 }
 
 get_os_type() {
-    if [ $OS_UNKNOW == $OME_OS ]; then
-        # $OS_UNKNOW) os_choose;;
-        tip "please choose your os:"
-        echo "    1) macOS"
-        echo "    -------------------------"
-        echo "    2) Cygwin"
-        echo "    3) MSYS2"
-        echo "    -------------------------"
-        echo "    4) ArchLinux"
-        echo "    5) Debian"
-        echo "    6) Ubuntu/LinuxMint/ElementaryOS"
-        echo "    7) Redhat/CentOS(yum)"
-        echo "    8) Fedora22+(dnf)"
-        echo "    -------------------------"
-        echo "    9) FreeBSD"
-        echo "    -------------------------"
-        echo "    q) quit"
+  if [ $OS_UNKNOW == $OME_OS ]; then
+    # $OS_UNKNOW) os_choose;;
+    tip "please choose your os:"
+    echo "    1) macOS"
+    echo "    -------------------------"
+    echo "    2) Cygwin"
+    echo "    3) MSYS2"
+    echo "    -------------------------"
+    echo "    4) ArchLinux"
+    echo "    5) Debian"
+    echo "    6) Ubuntu/LinuxMint/ElementaryOS"
+    echo "    7) Redhat/CentOS(yum)"
+    echo "    8) Fedora22+(dnf)"
+    echo "    -------------------------"
+    echo "    9) FreeBSD"
+    echo "    -------------------------"
+    echo "    q) quit"
 
-        read -p "please enter your choice:" item
-        case "$item" in
-            "1") export OME_OS=$OS_MACOS;;
-            "2") export OME_OS=$OS_CYGWIN;;
-            "3") export OME_OS=$OS_MSYS2;;
-            "4") export OME_OS=$OS_ARCH;;
-            "5") export OME_OS=$OS_DEBIAN;;
-            "6") export OME_OS=$OS_UBUNTU;;
-            "7") export OME_OS=$OS_REDHAT;;
-            "8") export OME_OS=$OS_FEDORA;;
-            "9") export OME_OS=$OS_FREEBSD;;
-        esac
-    fi
+    read -p "please enter your choice:" item
+    case "$item" in
+      "1") export OME_OS=$OS_MACOS;;
+      "2") export OME_OS=$OS_CYGWIN;;
+      "3") export OME_OS=$OS_MSYS2;;
+      "4") export OME_OS=$OS_ARCH;;
+      "5") export OME_OS=$OS_DEBIAN;;
+      "6") export OME_OS=$OS_UBUNTU;;
+      "7") export OME_OS=$OS_REDHAT;;
+      "8") export OME_OS=$OS_FEDORA;;
+      "9") export OME_OS=$OS_FREEBSD;;
+    esac
+  fi
 }
 
 ome_write_env_to_dotfile() {
-    local dotfile=$1
-    if [ -f $dotfile ]; then
-        find_str "oh-my-env" $dotfile
-        if [ $? -eq 0 ]; then
-            echo "" >> $dotfile
-            echo "# oh-my-env" >> $dotfile
-            echo '. $HOME/.oh-my-env/env' >> $dotfile
-            . $dotfile
-        fi
+  local dotfile=$1
+  if [ -f $dotfile ]; then
+    find_str "oh-my-env" $dotfile
+    if [ $? -eq 0 ]; then
+      echo "" >> $dotfile
+      echo "# oh-my-env" >> $dotfile
+      echo '. $HOME/.oh-my-env/env' >> $dotfile
+      . $dotfile
     fi
+  fi
 }
 
 ###############################################################################
@@ -158,45 +158,45 @@ export OME_SHELL="`basename $SHELL`"
 
 # case "`uname -o`" in
 case "`uname -s`" in
-    "GNU/Linux" | "Linux")
-        if [ "$(uname -o)" = Android ]; then
-            export OME_OS=$OS_ANDROID
-        elif [ "`command -v yum`" != "" ]; then
-            os=`cat /etc/system-release | head -n 1 | cut -d ' ' -f 1`
-            if [ "$os" = "CentOS" ] || [ "$os" = "RedHat" ]; then
-                export OME_OS=$OS_REDHAT
-            else
-                export OME_OS=$OS_FEDORA
-            fi
-        # elif [ "`command -v yum`" != "" ]; then
-        elif [ "`command -v zypper`" != "" ]; then
-            export OME_OS=$OS_SUSE
-        elif [ "`command -v nix`" != "" ]; then
-            export OME_OS=$OS_NIXOS
-        elif [ "`command -v guix`" != "" ]; then
-            export OME_OS=$OS_GUIXSD
-        elif [ "lsb_release" != "" ]; then
-            case "`lsb_release -is`" in
-                "Debian")
-                    export OME_OS=$OS_DEBIAN;;
-                "Ubuntu"|"elementary"|"LinuxMint")
-                    export OME_OS="$OS_UBUNTU";;
-                "ManjaroLinux"|"Arch")
-                    export OME_OS=$OS_ARCH;;
-                *)
-                    export OME_OS="`lsb_release -is`";;
-            esac
-        else
-            export OME_OS=$OS_UNKNOW
-        fi
-        ;;
-    CYGWIN*) export OME_OS=$OS_CYGWIN;;
-    MINGW* | MSYS*) export OME_OS=$OS_MSYS2;;
-    FreeBSD) export OME_OS=$OS_FREEBSD;;
-    DragonFly) export OME_OS=$OS_DFBSD;;
-    NetBSD) export OME_OS=$OS_NETBSD;;
-    Darwin) export OME_OS=$OS_MACOS;;
-    *) export OME_OS=$OS_UNKNOW;;
+  "GNU/Linux" | "Linux")
+    if [ "$(uname -o)" = Android ]; then
+      export OME_OS=$OS_ANDROID
+    elif [ "`command -v yum`" != "" ]; then
+      os=`cat /etc/system-release | head -n 1 | cut -d ' ' -f 1`
+      if [ "$os" = "CentOS" ] || [ "$os" = "RedHat" ]; then
+        export OME_OS=$OS_REDHAT
+      else
+        export OME_OS=$OS_FEDORA
+      fi
+      # elif [ "`command -v yum`" != "" ]; then
+    elif [ "`command -v zypper`" != "" ]; then
+      export OME_OS=$OS_SUSE
+    elif [ "`command -v nix`" != "" ]; then
+      export OME_OS=$OS_NIXOS
+    elif [ "`command -v guix`" != "" ]; then
+      export OME_OS=$OS_GUIXSD
+    elif [ "lsb_release" != "" ]; then
+      case "`lsb_release -is`" in
+        "Debian")
+          export OME_OS=$OS_DEBIAN;;
+        "Ubuntu"|"elementary"|"LinuxMint")
+          export OME_OS="$OS_UBUNTU";;
+        "ManjaroLinux"|"Arch")
+          export OME_OS=$OS_ARCH;;
+        *)
+          export OME_OS="`lsb_release -is`";;
+      esac
+    else
+      export OME_OS=$OS_UNKNOW
+    fi
+    ;;
+  CYGWIN*) export OME_OS=$OS_CYGWIN;;
+  MINGW* | MSYS*) export OME_OS=$OS_MSYS2;;
+  FreeBSD) export OME_OS=$OS_FREEBSD;;
+  DragonFly) export OME_OS=$OS_DFBSD;;
+  NetBSD) export OME_OS=$OS_NETBSD;;
+  Darwin) export OME_OS=$OS_MACOS;;
+  *) export OME_OS=$OS_UNKNOW;;
 esac
 ###############################################################################
 title "hosts init"
@@ -291,8 +291,8 @@ case $OME_OS in
 
 		tip "install base tool"
 		sudo apt install -y git subversion wget curl make \
-			 tar zip unzip rlwrap coreutils findutils diffutils \
-			 ttf-bitstream-vera
+			   tar zip unzip rlwrap coreutils findutils diffutils \
+			   ttf-bitstream-vera
 
 		readp "X mode?"
 		if [ $? -eq 1 ]; then
@@ -336,8 +336,8 @@ case $OME_OS in
 		fi
 
 		sudo dnf install -y git subversion wget curl make \
-			 tar zip unzip rlwrap coreutils findutils diffutils \
-			 emacs
+			   tar zip unzip rlwrap coreutils findutils diffutils \
+			   emacs gnome-tweaks
 		;;
 	$OS_ARCH)
 		readp "update system?"
@@ -375,8 +375,8 @@ case $OME_OS in
 			sudo zypper update
 		fi
 		sudo zypper install git subversion wget curl make \
-			 tar zip unzip rlwrap coreutils findutils diffutils \
-			 bitstream-vera-fonts emacs
+			   tar zip unzip rlwrap coreutils findutils diffutils \
+			   bitstream-vera-fonts emacs
 		;;
 	$OS_SLACKWARE) ;;
 	# install slapt-get
@@ -396,7 +396,7 @@ case $OME_OS in
 		# brew install wget
 		# brew install coreutils findutils
 		brew install git subversion wget curl make \
-			 tar zip unzip rlwrap coreutils findutils diffutils
+			   tar zip unzip rlwrap coreutils findutils diffutils
 
 		echo "Install font-bitstream-vera"
 		brew tap homebrew/cask-fonts
@@ -416,8 +416,8 @@ case $OME_OS in
 		fi
 
 		sudo pkg install git subversion wget curl gmake \
-			 bash zip unzip rlwrap coreutils findutils diffutils \
-			 zh-font-std bitstream-vera emacs
+			   bash zip unzip rlwrap coreutils findutils diffutils \
+			   zh-font-std bitstream-vera emacs
 
 		# tip "install mate desktop"
 		# sudo pkg install xorg slime mate
@@ -465,8 +465,8 @@ case $OME_OS in
 			fi
 		fi
 		apt install git subversion wget curl make \
-			tar zip unzip rlwrap coreutils findutils diffutils \
-			xdg-utils chere emacs-w32
+			  tar zip unzip rlwrap coreutils findutils diffutils \
+			  xdg-utils chere emacs-w32
 		;;
 	$OS_MSYS2)
 		#readp "msys2: use china morrir?"
@@ -486,7 +486,7 @@ case $OME_OS in
 			echo "Server = https://mirrors.tuna.tsinghua.edu.cn/msys2/mingw/x86_64" >> /etc/pacman.d/mirrorlist.mingw64
 			echo 'Server = https://mirrors.tuna.tsinghua.edu.cn/msys2/msys/$arch' >> /etc/pacman.d/mirrorlist.msys
 
-            echo "Server = https://mirrors.ustc.edu.cn/msys2/mingw/i686" >> /etc/pacman.d/mirrorlist.mingw32
+      echo "Server = https://mirrors.ustc.edu.cn/msys2/mingw/i686" >> /etc/pacman.d/mirrorlist.mingw32
 			echo "Server = https://mirrors.ustc.edu.cn/msys2/mingw/x86_64" >> /etc/pacman.d/mirrorlist.mingw64
 			echo 'Server = https://mirrors.ustc.edu.cn/msys2/msys/$arch' >> /etc/pacman.d/mirrorlist.msys
 		else
@@ -494,8 +494,8 @@ case $OME_OS in
 		fi
 
 		pacman -S git subversion wget curl make \
-			   tar zip unzip rlwrap coreutils findutils diffutils \
-			   mingw-w64-x86_64-emacs
+			     tar zip unzip rlwrap coreutils findutils diffutils \
+			     mingw-w64-x86_64-emacs
 		;;
 	# Other
 	$OS_UNKNOW) ;;
