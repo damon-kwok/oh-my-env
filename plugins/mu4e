@@ -160,7 +160,7 @@ mu4e_install() {
       ;;
     $OS_MSYS2)
       cd ~/.emacs.d/pkgs-bin/
-      pacman -U isync-git-*.pkg.tar.xz gmime3-3*.pkg.tar.xz xapian-core-*.pkg.tar.xz mu-*.pkg.tar.xz
+      pacman -U isync-git-*.pkg.tar.zst gmime3-3*.pkg.tar.zst xapian-core-*.pkg.tar.zst mu-*.pkg.tar.zst
       pacman -S mingw-w64-x86_64-libxml2
       ;;
     # Other
