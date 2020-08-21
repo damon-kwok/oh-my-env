@@ -9,7 +9,10 @@ pony_deps() {
     $OS_DEBIAN|$OS_UBUNTU) sudo apt install libz3-dev;;
     # $OS_REDHAT) ;;
     # $OS_FEDORA) ;;
-    $OS_REDHAT|$OS_FEDORA) sudo dnf install -y glibc-devel libatomic libxml2-devel ;;#libz3-devel;;
+    $OS_REDHAT|$OS_FEDORA)
+      ome install cmake
+      sudo dnf install -y glibc-devel libatomic libxml2-devel libstdc++-static
+      ;;
     $OS_ARCH) trizen -S z3;;
     $OS_GENTOO) ;;
     $OS_SUSE) ;;
@@ -78,7 +81,10 @@ pony_install_git() {
     github_upgrade ponylang/ponyc $OME_REPO/ponyc-git 0
     cd $OME_REPO/ponyc-git
 
-    make libs
+    readp "make libs?"
+    if [ $? -eq 1 ]; then
+      make libs
+    fi
     make configure
     make build
     # make test
@@ -153,9 +159,16 @@ pony_setenv() {
   #     fi
   # fi
 
-  export PONY_BIN=$OME_REPO/ponyc-git/build/install/bin
-  if [ -d "$PONY_BIN" ]; then
-    export PATH=$PONY_BIN:$PATH
+  export PONY_BIN_WIN=$OME_REPO/ponyc-git/build/install/bin
+  if [ -d "$PONY_BIN_WIN" ]; then
+    export PATH=$PONY_BIN_WIN:$PATH
+    export PONY_BIN=$PONY_BIN_WIN
+  fi
+
+  export PONY_BIN_UNIX=$OME_REPO/ponyc-git/build/release
+  if [ -d "$PONY_BIN_UNIX" ]; then
+    export PATH=$PONY_BIN_UNIX:$PATH
+    export PONY_BIN=$PONY_BIN_UNIX
   fi
 
   if [ -d "$OME_REPO/pony-stable/build/release" ]; then
