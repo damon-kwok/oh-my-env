@@ -16,7 +16,7 @@ cc_install_tools() {
     # $OS_FEDORA) ;;
     $OS_REDHAT|$OS_FEDORA)
       sudo yum groupinstall -y "Development Tools"
-      sudo yum install -y gcc gcc-c++ cmake make ninja-build meson-build \
+      sudo yum install -y gcc gcc-c++ cmake make ninja-build meson \
            autogen automake autoconf libtool \
            pkg-config
       ;;
