@@ -9,7 +9,7 @@ pony_deps() {
     $OS_DEBIAN|$OS_UBUNTU) sudo apt install libz3-dev;;
     # $OS_REDHAT) ;;
     # $OS_FEDORA) ;;
-    $OS_REDHAT|$OS_FEDORA) sudo dnf install -y libz3-devel;;
+    $OS_REDHAT|$OS_FEDORA) sudo dnf install -y glibc-devel libatomic libxml2-devel ;;#libz3-devel;;
     $OS_ARCH) trizen -S z3;;
     $OS_GENTOO) ;;
     $OS_SUSE) ;;
@@ -37,7 +37,9 @@ pony_deps() {
 }
 
 pony_install_ponyup() {
-  curl --proto '=https' --tlsv1.2 -sSf https://raw.githubusercontent.com/ponylang/ponyup/latest-release/ponyup-init.sh | sh
+  pony_deps
+  # curl --proto '=https' --tlsv1.2 -sSf https://raw.githubusercontent.com/ponylang/ponyup/latest-release/ponyup-init.sh | sh
+  sh -c "$(curl --proto '=https' --tlsv1.2 -sSf https://raw.githubusercontent.com/ponylang/ponyup/latest-release/ponyup-init.sh)"
   pony_setenv
   # ponyup update ponyc release
   ponyup update ponyc nightly
@@ -79,8 +81,8 @@ pony_install_git() {
     make libs
     make configure
     make build
-    make test
-    # sudo make install
+    # make test
+    sudo make install
     chmod +x $OME_REPO/ponyc-git/build/release/ponyc
   fi
   pony_setenv

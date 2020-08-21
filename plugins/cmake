@@ -9,7 +9,7 @@ cmake_install() {
     $OS_DEBIAN|$OS_UBUNTU) ;;
     # $OS_REDHAT) ;;
     # $OS_FEDORA) ;;
-    $OS_REDHAT|$OS_FEDORA) ;;
+    $OS_REDHAT|$OS_FEDORA) sudo yum install openssl-devel;;
     $OS_ARCH) ;;
     $OS_GENTOO) ;;
     $OS_SUSE) ;;
@@ -43,7 +43,7 @@ cmake_install() {
   # build cmake with bjam
   ./bootstrap
   ./configure --prefix=$OME_PREFIX
-  make -j10
+  make -j8
   make install
 
   # build cmake with cmake
