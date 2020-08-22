@@ -87,7 +87,7 @@ pony_install_git() {
     fi
     make configure
     make build
-    # make test
+    make test
     sudo make install
     chmod +x $OME_REPO/ponyc-git/build/release/ponyc
   fi
