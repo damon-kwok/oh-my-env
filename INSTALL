@@ -337,7 +337,8 @@ case $OME_OS in
 
 		sudo dnf install -y git subversion wget curl make \
 			   tar zip unzip rlwrap coreutils findutils diffutils \
-			   emacs gnome-tweaks
+			   emacs gnome-tweaks wntp http://mirrors.wlnmp.com/centos/wlnmp-release-centos.noarch.rpm
+    sudo ln -s /usr/local/bin/ntpdate /usr/bin/ntpdate
 		;;
 	$OS_ARCH)
 		readp "update system?"
