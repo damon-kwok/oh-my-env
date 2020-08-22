@@ -9,7 +9,7 @@ input_install() {
     $OS_DEBIAN|$OS_UBUNTU) ;;
     # $OS_REDHAT) ;;
     # $OS_FEDORA) ;;
-    $OS_REDHAT|$OS_FEDORA) ;;
+    $OS_REDHAT|$OS_FEDORA) sudo dnf install ibus-libpinyin -y;;
     $OS_ARCH) trizen -S ibus ibus-sunpinyin;;
     $OS_GENTOO) ;;
     $OS_SUSE) ;;
