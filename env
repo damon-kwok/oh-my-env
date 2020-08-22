@@ -270,7 +270,7 @@ export ANTLR3_VERSION=3.5.2
 export ANTLR4_VERSION=4.8
 export ST_VERSION=4.3 #StringTemplate
 
-export JETBRINS_FONT_VERSION=1.0.3
+export JETBRINS_FONT_VERSION=2.001
 export POWERSHELL_VERSION=7.1.0-preview.1
 ################################################################################
 # load plugins
