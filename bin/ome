@@ -448,6 +448,8 @@ ome_parse() {
       xdg-open "https://github.com/clojure/core.async"
       xdg-open "https://clojars.org/reagent"
 
+      xdg-open "https://www.jetbrains.com/lp/mono/"
+
       # sdk list java
       # sdk list maven
       # sdk list gradle
