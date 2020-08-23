@@ -169,7 +169,7 @@ ome_pull_proj() {
   github_ssh_upgrade damon-kwok/modern-sh $OME_PROJ/me/modern-sh
   github_ssh_upgrade damon-kwok/chapel-mode $OME_PROJ/me/chapel-mode
   github_ssh_upgrade damon-kwok/ponylang-mode $OME_PROJ/me/ponylang-mode
-
+  github_ssh_upgrade damon-kwok/org-test $OME_PROJ/me/org-test
   github_ssh_upgrade damon-kwok/damon-kwok.github.io $OME_PROJ/me/blog
 
   github_ssh_upgrade damon-kwok/awesome-package-manager $OME_PROJ/me/awesome-package-manager
