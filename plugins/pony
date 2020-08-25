@@ -67,10 +67,17 @@ pony_install_ponyup() {
 }
 
 pony_install_git() {
-  if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
-    github_upgrade ponylang/ponyc $OME_REPO/ponyc-git 0
-    cd $OME_REPO/ponyc-git
+  pony_deps
+  # github_upgrade ponylang/ponyc $OME_REPO/ponyc-git 0
+  cd $OME_REPO/ponyc-git
+  git checkout lib/CMakeLists.txt
+  str1="github.com/google/benchmark/archive"
+  str2="github.com/google/googletest/archive"
+  str3="gitee.com/damon-kwok/google/raw/master"
+  sed -i "s/${str1}/${str3}/g" lib/CMakeLists.txt
+  sed -i "s/${str2}/${str3}/g" lib/CMakeLists.txt
 
+  if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
     readp "make libs?"
     if [ $? -eq 1 ]; then
       powershell -c ./make.ps1 libs
@@ -80,10 +87,6 @@ pony_install_git() {
     powershell -c ./make.ps1 test
     powershell -c ./make.ps1 install
   else
-    pony_deps
-    github_upgrade ponylang/ponyc $OME_REPO/ponyc-git 0
-    cd $OME_REPO/ponyc-git
-
     readp "make libs?"
     if [ $? -eq 1 ]; then
       make libs
