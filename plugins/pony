@@ -71,7 +71,10 @@ pony_install_git() {
     github_upgrade ponylang/ponyc $OME_REPO/ponyc-git 0
     cd $OME_REPO/ponyc-git
 
-    powershell -c ./make.ps1 libs
+    readp "make libs?"
+    if [ $? -eq 1 ]; then
+      powershell -c ./make.ps1 libs
+    fi
     powershell -c ./make.ps1 configure
     powershell -c ./make.ps1 build
     powershell -c ./make.ps1 test
