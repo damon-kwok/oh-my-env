@@ -70,12 +70,14 @@ pony_install_git() {
   pony_deps
   # github_upgrade ponylang/ponyc $OME_REPO/ponyc-git 0
   cd $OME_REPO/ponyc-git
-  git checkout lib/CMakeLists.txt
-  str1="github.com/google/benchmark/archive"
-  str2="github.com/google/googletest/archive"
-  str3="gitee.com/damon-kwok/google/raw/master"
-  sed -i "s/${str1}/${str3}/g" lib/CMakeLists.txt
-  sed -i "s/${str2}/${str3}/g" lib/CMakeLists.txt
+  readp "live in China?"
+  if [ $? -eq 1 ]; then
+    str1="github.com\/google\/benchmark\/archive"
+    str2="github.com\/google\/googletest\/archive"
+    str3="gitee.com\/damon-kwok\/google\/raw\/master"
+    sed -i "s/$str1/$str3/g" $OME_REPO/ponyc-git/lib/CMakeLists.txt
+    sed -i "s/$str2/$str3/g" $OME_REPO/ponyc-git/lib/CMakeLists.txt
+  fi
 
   if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
     readp "make libs?"
@@ -97,6 +99,7 @@ pony_install_git() {
     sudo make install
     chmod +x $OME_REPO/ponyc-git/build/release/ponyc
   fi
+  git checkout lib/CMakeLists.txt
   pony_setenv
 
   # github_upgrade ponylang/pony-stable $OME_REPO/pony-stable
