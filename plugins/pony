@@ -68,7 +68,7 @@ pony_install_ponyup() {
 
 pony_install_git() {
   pony_deps
-  # github_upgrade ponylang/ponyc $OME_REPO/ponyc-git 0
+  github_upgrade ponylang/ponyc $OME_REPO/ponyc-git 0
   cd $OME_REPO/ponyc-git
   readp "live in China?"
   if [ $? -eq 1 ]; then
