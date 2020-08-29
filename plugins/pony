@@ -10,7 +10,10 @@ pony_deps() {
     # $OS_REDHAT) ;;
     # $OS_FEDORA) ;;
     $OS_REDHAT|$OS_FEDORA)
-      ome install cmake
+      readp "install latest cmake?"
+      if [ $? -eq 1 ]; then
+        ome install cmake
+      fi
       sudo dnf install -y glibc-devel libatomic libxml2-devel libstdc++-static
       ;;
     $OS_ARCH) trizen -S z3;;
