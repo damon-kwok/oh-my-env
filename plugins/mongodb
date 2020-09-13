@@ -1,0 +1,62 @@
+#!/usr/bin/env sh
+
+mongodb_install() {
+  get_os_type
+  case $OME_OS in
+    # Linux
+    # $OS_DEBIAN) ;;
+    # $OS_UBUNTU) ;;
+    $OS_DEBIAN|$OS_UBUNTU) ;;
+    # $OS_REDHAT) ;;
+    # $OS_FEDORA) ;;
+    $OS_REDHAT|$OS_FEDORA)
+      if [ ! -e $dir ]; then
+        echo "write config file: ${cfg}"
+        local cfg = /etc/yum.repos.d/mongodb-org-4.2.repo
+        sudo echo '[mongodb-org-4.2]' > $cfg
+        sudo echo 'name=MongoDB Repository' >> $cfg
+        sudo echo 'baseurl=https://repo.mongodb.org/yum/redhat/$releasever/mongodb-org/4.2/x86_64/' >> $cfg
+        sudo echo 'gpgcheck=1' >> $cfg
+        sudo echo 'enabled=1' >> $cfg
+        sudo echo 'gpgkey=https://www.mongodb.org/static/pgp/server-4.2.asc' >> $cfg
+      fi
+      sudo yum update
+      sudo yum install mongodb-org
+      ;;
+    $OS_ARCH) ;;
+    $OS_GENTOO) ;;
+    $OS_SUSE) ;;
+    $OS_SLACKWARE) ;;
+    $OS_NIXOS) ;;
+    $OS_VOID) ;;
+    $OS_ALPINE) ;;
+    $OS_MAGEIA) ;;
+    $OS_SLITAZ) ;;
+    $OS_GUIXSD) ;;
+    # Unix
+    $OS_MACOS) ;;
+    $OS_AIX) ;;
+    $OS_SOLARIS) ;;
+    $OS_FREEBSD) ;;
+    $OS_OPENBSD) ;;
+    $OS_NETBSD) ;;
+    $OS_DFBSD) ;;
+    # Windows
+    $OS_CYGWIN) ;;
+    $OS_MSYS2) ;;
+    # Other
+    $OS_UNKNOW) ;;
+  esac
+}
+
+mongodb_uninstall() {
+  echo_error "'mongodb_uninstall' not implemented"
+}
+
+mongodb_exist_p() {
+  echo_error "'mongodb_exist_p' not implemented"
+}
+
+mongodb_info() {
+  echo_error ""
+}
