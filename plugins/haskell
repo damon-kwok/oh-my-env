@@ -81,7 +81,7 @@ stack_install_download() {
   fi
 }
 
-install_haskell_language_server() {
+install_haskell_language_server_hide() {
   # https://github.com/haskell/haskell-ide-engine/blob/master/docs/Build.md
   github_upgrade haskell/haskell-ide-engine $OME_REPO/haskell-ide-engine
   cd $OME_REPO/haskell-ide-engine/
@@ -99,6 +99,10 @@ install_haskell_language_server() {
   # 4
   stack install --stack-yaml=stack-8.8.3.yaml
   # stack install --stack-yaml=stack-8.6.5.yaml
+}
+
+install_haskell_language_server() {
+  ghcup install hls
 }
 
 install_haskell_ghcide() {
