@@ -224,11 +224,11 @@ export OME_MAKE="Ninja"
 export MAKE_PROG="make"
 
 # Language I
-export ROSWELL_VERSION=20.0.11 # 20.06.14.107
+export ROSWELL_VERSION=21.01.14.108 # 20.06.14.107
 if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
   export SBCL_VERSION=2.0.2
 else
-  export SBCL_VERSION=2.0.11
+  export SBCL_VERSION=2.1.1
 fi
 
 # Language II
@@ -240,7 +240,7 @@ export PYTHON2_VERSION=2.7.18
 export PYTHON3_VERSION=3.9.1
 export RUBY_VERSION=3.0.0
 # export PHP_VERSION=5.6.39
-export PHP_VERSION=8.0.0
+export PHP_VERSION=8.0.2
 
 export JAVA_VERSION="11.0.6.hs-adpt"
 # export JAVA_VERSION=20.0.0.r11-grl
@@ -255,9 +255,9 @@ export SCALA_VERSION=2.13.4
 export SBT_VERSION=1.4.6
 export GROOVY_VERSION=3.0.7
 export GRAILS_VERSION=4.0.1
-export CLOJURE_VERSION=1.10.1.763
+export CLOJURE_VERSION=1.10.2.774
 export LEIN_VERSION=2.9.5
-export GOLANG_VERSION=1.15.6
+export GOLANG_VERSION=1.16
 export NODEJS_VERSION=14.15.3
 
 # Language IV
@@ -270,7 +270,7 @@ export ANTLR3_VERSION=3.5.2
 export ANTLR4_VERSION=4.8
 export ST_VERSION=4.3 #StringTemplate
 
-export JETBRINS_FONT_VERSION=2.221
+export JETBRINS_FONT_VERSION=2.225
 export POWERSHELL_VERSION="7.1.0-preview.1"
 ################################################################################
 # load plugins

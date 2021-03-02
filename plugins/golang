@@ -73,36 +73,36 @@ golang_install_build() {
   fi
 
   # golang build
-  if [ ! -d "$OME_REPO/go/" ] || [ ! "`go version | cut -d ' ' -f 3`" = "go${GOLANG_VERSION}" ]; then
-    tip "set GOROOT_BOOTSTRAP"
-    export GOROOT_BOOTSTRAP=$OME_REPO/go_bootstrap/go
-    unset GOROOT
-    unset GOROOT_FINAL
+  # if [ ! -d "$OME_REPO/go/" ] || [ ! "`go version | cut -d ' ' -f 3`" = "go${GOLANG_VERSION}" ]; then
+  tip "set GOROOT_BOOTSTRAP"
+  export GOROOT_BOOTSTRAP=$OME_REPO/go_bootstrap/go
+  unset GOROOT
+  unset GOROOT_FINAL
 
-    tip "compile golang-$GOLANG_VERSION"
-    # golang_getsrc_git
-    golang_getsrc_zip
-    cd $OME_REPO/go/src/
+  tip "compile golang-$GOLANG_VERSION"
+  # golang_getsrc_git
+  # golang_getsrc_zip
+  cd $OME_REPO/go/src/
 
-    if [ "$OME_OS" = "$OS_MSYS2" ] || [ "$OME_OS" = "$OS_CYGWIN" ]; then
-      chmod +x ./make.bat
-      ./make.bat
-    else
-      chmod +x ./*.bash
-      # ./all.bash
-      ./make.bash
-    fi
-
-    golang_setenv
+  if [ "$OME_OS" = "$OS_MSYS2" ] || [ "$OME_OS" = "$OS_CYGWIN" ]; then
+    chmod +x ./make.bat
+    ./make.bat
+  else
+    chmod +x ./*.bash
+    # ./all.bash
+    ./make.bash
   fi
+
+  golang_setenv
+  # fi
 }
 
 golang_install() {
   if [ "$OME_OS" = "$OS_MSYS2" ] || [ "$OME_OS" = "$OS_CYGWIN" ]; then
     golang_install_download
   else
-    # golang_getsrc_git
-    golang_getsrc_zip
+    golang_getsrc_git
+    # golang_getsrc_zip
     golang_install_build
   fi
 
