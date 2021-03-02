@@ -60,7 +60,7 @@ golang_install_build() {
   fi
 
   # bootstrap build
-  if [ ! -f "$OME_REPO/go_bootstrap/go/bin/go" ]; then
+  if [ ! -x "$OME_REPO/go_bootstrap/go/bin/go" ]; then
     cd $OME_REPO/go_bootstrap/go/src
     if [ "$OME_OS" = "$OS_MSYS2" ] || [ "$OME_OS" = "$OS_CYGWIN" ]; then
       chmod +x ./make.bat
