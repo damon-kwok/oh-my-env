@@ -114,6 +114,9 @@ export TERM=xterm-256color
 . $HOME/.oh-my-env/bin/tool
 . $HOME/.oh-my-env/bin/proj
 
+# .net
+export PATH="$PATH:$HOME/.dotnet/tools"
+
 ################################################################################
 # User Settings
 # if [ -d /mingw64/bin2 ]; then
@@ -244,9 +247,9 @@ export PHP_VERSION=8.0.3
 
 export JAVA_VERSION="11.0.6.hs-adpt"
 # export JAVA_VERSION=20.0.0.r11-grl
-export JBANG_VERSION=0.57.0
-export ANT_VERSION=1.10.8
-export MAVEN_VERSION=3.6.3
+export JBANG_VERSION=0.70.0
+export ANT_VERSION=1.10.9
+export MAVEN_VERSION=3.8.1
 
 # Language III
 export GRADLE_VERSION=6.7.1
@@ -256,7 +259,7 @@ export SBT_VERSION=1.4.6
 export GROOVY_VERSION=3.0.7
 export GRAILS_VERSION=4.0.1
 export CLOJURE_VERSION=1.10.3.822
-export LEIN_VERSION=2.9.5
+export LEIN_VERSION=2.9.6
 export GOLANG_VERSION=1.16.3
 export NODEJS_VERSION=14.16.1
 
