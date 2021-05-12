@@ -51,4 +51,4 @@ antlr_setenv() {
     alias grun3='java -cp $HOME/.emacs.d/antlr/antlr-${ANTLR3_VERSION}-complete.jar org.antlr.gunit.swingui.Tool'
   fi
 }
-antlr_setenv
+# antlr_setenv

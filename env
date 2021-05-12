@@ -114,8 +114,11 @@ export TERM=xterm-256color
 . $HOME/.oh-my-env/bin/tool
 . $HOME/.oh-my-env/bin/proj
 
-# .net
+# dotnet
 export PATH="$PATH:$HOME/.dotnet/tools"
+
+# Clojure CLR
+export CLJCLR14_40="$HOME/clojure-clr/Clojure/Clojure.Main461/bin/Debug/net461"
 
 ################################################################################
 # User Settings

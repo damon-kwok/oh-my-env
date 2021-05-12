@@ -1,0 +1,7 @@
+#!/usr/bin/env sh
+
+if ["$1" != ""]; then
+  cd "$1"
+fi
+xdg-open http://127.0.0.1:8000
+python -m http.server
