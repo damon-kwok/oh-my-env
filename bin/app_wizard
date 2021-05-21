@@ -373,12 +373,13 @@ ome_app_wizard() {
     cp -u $SELF_DIR/../conf/project/.editorconfig $proj_root
     if [ ! -d "$proj_root/.git" ]; then
       git init
+      git config init.defaultBranch main
     fi
 
     if [ ! -e "$proj_root/.gitignore" ]; then
       echo "" >> $proj_root/.gitignore
     fi
-    $proj_root
+    cd $proj_root
     ome_show_dir
   fi
 

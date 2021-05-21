@@ -134,6 +134,7 @@ ome_git_config() {
     git config core.safecrlf true
   else
     tip "git global config"
+    git config --global init.defaultBranch main
     git config --global core.editor $EDITOR
     git config --global core.autocrlf false
     # git config --global core.safecrlf true
