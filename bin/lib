@@ -43,17 +43,15 @@ echo_lang4() {
 }
 
 readp() {
-  local str="${1:-Y}"
-
-  read -p "$(tput setaf 14)$str$(tput sgr0)(Y/n)" input
-  if [ "$input" == "y" ] || [ "$input" == "Y" ] || [ "$input" == "" ]; then
-	  return $(( 1 ));
-  elif [ "$input" == "n" ] || [ "$input" == "N" ]; then
-	  return $(( 0 ));
-  else
-	  echo "invalid input:$input"
-	  readp "$1"
-  fi
+  local INFO="$1"
+  read -p "$(tput setaf 14)${INFO}$(tput sgr0)(Y/n)" INPUT
+  local INPUT=${INPUT:-"y"}
+  case $INPUT in
+    "y"|"Y"|"")
+      return 1;;
+    *)
+      return 0;;
+  esac
 }
 
 echo_kv() {

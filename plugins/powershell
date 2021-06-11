@@ -39,13 +39,13 @@ powershell_info() {
 #v7.1.0-preview.1/PowerShell-7.1.0-preview.1-win-x64.zip
 #v7.1.0-preview.1/powershell-7.1.0-preview.1-osx-x64.tar.gz
 #v7.1.0-preview.1/powershell-7.1.0-preview.1-linux-x64.tar.gz
-if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
+if [ $OME_OS = $OS_CYGWIN ] || [ $OME_OS = $OS_MSYS2 ]; then
   export POWERSHELL_VERINFO=PowerShell-${POWERSHELL_VERSION}-win-x64
   POWERSHELL_ZIP=${POWERSHELL_VERINFO}.zip
-elif [ "$OME_OS" = "$OS_MACOS" ]; then
+elif [ $OME_OS = $OS_MACOS ]; then
   export POWERSHELL_VERINFO=PowerShell-${POWERSHELL_VERSION}-osx-x64
   POWERSHELL_ZIP=${POWERSHELL_VERINFO}.tar.gz
-elif [ "$OME_OS" != "$OS_FREEBSD" ]; then
+elif [ $OME_OS != $OS_FREEBSD ]; then
   export POWERSHELL_VERINFO=PowerShell-${POWERSHELL_VERSION}-linux-x64
   POWERSHELL_ZIP=${POWERSHELL_VERINFO}.tar.gz
 fi

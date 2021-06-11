@@ -230,23 +230,23 @@ export OME_MAKE="Ninja"
 export MAKE_PROG="make"
 
 # Language I
-export ROSWELL_VERSION=21.01.14.108 # 20.06.14.107
+export ROSWELL_VERSION=21.05.14.109
 if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
-  export SBCL_VERSION=2.1.3
+  export SBCL_VERSION=2.1.5
 else
-  export SBCL_VERSION=2.1.3
+  export SBCL_VERSION=2.1.5
 fi
 
 # Language II
-export ERLANG_VERSION=23.3
+export ERLANG_VERSION=24.0
 export OCAML_VERSION=4.10.0
-export STACK_VERSION=2.5.1
+export STACK_VERSION=2.7.1
 export GHC_VERSION=8.8.3
 export PYTHON2_VERSION=2.7.18
-export PYTHON3_VERSION=3.9.4
+export PYTHON3_VERSION=3.9.5
 export RUBY_VERSION=3.0.1
 # export PHP_VERSION=5.6.39
-export PHP_VERSION=8.0.3
+export PHP_VERSION=8.0.7
 
 export JAVA_VERSION="11.0.6.hs-adpt"
 # export JAVA_VERSION=20.0.0.r11-grl
@@ -255,21 +255,21 @@ export ANT_VERSION=1.10.9
 export MAVEN_VERSION=3.8.1
 
 # Language III
-export GRADLE_VERSION=6.7.1
-export KOTLIN_VERSION=1.4.21
-export SCALA_VERSION=2.13.4
-export SBT_VERSION=1.4.6
-export GROOVY_VERSION=3.0.7
-export GRAILS_VERSION=4.0.1
-export CLOJURE_VERSION=1.10.3.822
+export GRADLE_VERSION=7.0.2
+export KOTLIN_VERSION=1.5.10
+export SCALA_VERSION=2.13.6
+export SBT_VERSION=1.5.3
+export GROOVY_VERSION=3.0.8
+export GRAILS_VERSION=4.0.10
+export CLOJURE_VERSION=1.10.3.855
 export LEIN_VERSION=2.9.6
-export GOLANG_VERSION=1.16.3
-export NODEJS_VERSION=14.16.1
+export GOLANG_VERSION=1.16.5
+export NODEJS_VERSION=14.17.0
 
 # Language IV
-export NIM_VERSION=1.4.2
+export NIM_VERSION=1.4.8
 export PONY_VERSION=git
-export ZIG_VERSION=0.7.1
+export ZIG_VERSION=0.8.0
 
 # Other
 export ANTLR3_VERSION=3.5.2

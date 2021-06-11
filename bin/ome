@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -o errexit
+# set -o errexit
 set -o nounset
 set -o pipefail
 
@@ -426,8 +426,8 @@ ome_parse() {
       sudo ntpdate ntp.aliyun.com
       ;;
     "look"|"check")
-      xdg-open "http://mirror.bit.edu.cn/cygwin/x86_64/release/cygutils/"
-      xdg-open "http://mirror.bit.edu.cn/cygwin/x86_64/release/popt/"
+      xdg-open "http://mirror.163.com/cygwin/x86_64/release/cygutils/"
+      xdg-open "http://mirror.163.com/cygwin/x86_64/release/popt/"
       xdg-open "https://github.com/mongodb/mongo-c-driver/releases"
       xdg-open "https://github.com/mongodb/mongo-cxx-driver/releases"
       xdg-open "http://ftp.gnome.org/pub/gnome/sources/gmime/"
