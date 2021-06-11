@@ -698,7 +698,7 @@ ome_check_install() {
 ome_dev_path() {
   local dir="$1"
   if [ -d ${dir} ]; then
-    if [ "$OME_DEBUG_MODE" != "" ]; then
+    if [ "$OME_DEBUG_MODE" == "1" ]; then
       echo_kv "ome_dev_path" "${dir}/bin"
     fi
     export PATH=$dir/bin:$PATH
