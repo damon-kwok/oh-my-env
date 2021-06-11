@@ -119,6 +119,7 @@ oh_my_env_push() {
   cd $HOME/.oh-my-env
   git status
   readp "==>push oh-my-env?"
+  echo "44444"
   if [ $? -eq 1 ]; then
     git_push
   fi

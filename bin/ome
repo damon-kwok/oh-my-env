@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+set -o errexit
+set -o nounset
+set -o pipefail
+
 ################################################################################
 # SELF_DIR=$(dirname $(readlink -f $0))
 # . $SELF_DIR/../env
@@ -37,7 +41,7 @@ ome_package_info() {
   # strload[2]="|"
   # strload[3]="/"
 
-  # echo -n -e "\033[?25l"  #隐藏光标
+  # echo -n -e "\033[?25l"  # hide cursor
   # echo_kv "OME" "OS:$OME_OS | Arch:$OME_ARCH | Shell:$OME_SHELL | PREFIX:$OME_PREFIX"
   # echo_kv "VCS" "`git --version | head -n 1` | `svn --version | head -n 1`"
   # echo_kv "Perl" "`perl -V | head -n 1 | cut -c 15-57`"
@@ -55,7 +59,7 @@ ome_package_info() {
       local PLUGIN=`basename $plugin_file`
       local FUNC_INFO="${PLUGIN}_info"
 
-      if [ "$OME_DEBUG_MODE" = "1" ]; then
+      if [ "${OME_DEBUG_MODE}" = "1" ]; then
         echo_kv "$FUNC_INFO" "$plugin_file"
       fi
       $plugin_file > /dev/null 2>&1
@@ -68,7 +72,7 @@ ome_package_info() {
       # echo -n -e "\b\b"
     fi
   done
-  # echo -n -e "\033[?25h"  #显示光标
+  # echo -n -e "\033[?25h"  # show cursor
   # echo -n -e "\b\c"
   echo -e $OME_SHOW
   cd $olddir
@@ -366,9 +370,9 @@ ome_help() {
 ome_parse() {
   local oldir=`pwd`
 
-  local OPT_TYPE=$1
-  local ARG1=$2
-  local ARG2=$3
+  local OPT_TYPE="${1:-unset}"
+  local ARG1="${2:-unset}"
+  local ARG2="${3:-unset}"
   local ARGV=`echo $@ | cut -d ' ' -f 2-`
 
   case "$OPT_TYPE" in
@@ -513,6 +517,8 @@ ECHO_OME_VERSION() {
 #echo $@
 if [[ "$@" == *"--debug"* ]]; then
   export OME_DEBUG_MODE=1
+else
+  export OME_DEBUG_MODE=0
 fi
 SELF_DIR=$(dirname $(readlink -f $0))
 . $SELF_DIR/../env

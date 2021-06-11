@@ -45,7 +45,7 @@ if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
 elif [ "$OME_OS" = "$OS_MACOS" ]; then
   export POWERSHELL_VERINFO=PowerShell-${POWERSHELL_VERSION}-osx-x64
   POWERSHELL_ZIP=${POWERSHELL_VERINFO}.tar.gz
-elif [ "$OME_OS" != "$FREEBSD" ]; then
+elif [ "$OME_OS" != "$OS_FREEBSD" ]; then
   export POWERSHELL_VERINFO=PowerShell-${POWERSHELL_VERSION}-linux-x64
   POWERSHELL_ZIP=${POWERSHELL_VERINFO}.tar.gz
 fi

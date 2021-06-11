@@ -43,7 +43,7 @@ echo_lang4() {
 }
 
 readp() {
-  local str=$1
+  local str="${1:-Y}"
 
   read -p "$(tput setaf 14)$str$(tput sgr0)(Y/n)" input
   if [ "$input" == "y" ] || [ "$input" == "Y" ] || [ "$input" == "" ]; then
@@ -698,11 +698,12 @@ ome_check_install() {
 }
 
 ome_dev_path() {
-  if [ -d $1 ]; then
+  local dir="$1"
+  if [ -d ${dir} ]; then
     if [ "$OME_DEBUG_MODE" != "" ]; then
-      echo_kv "ome_dev_path" "$1/bin"
+      echo_kv "ome_dev_path" "${dir}/bin"
     fi
-    export PATH=$1/bin:$PATH
+    export PATH=$dir/bin:$PATH
     export MANPATH=$dir/share/man:$MANPATH
     export INFOPATH=$dir/share/info:$INFOPATH
     export LIBRARY_PATH=$dir/lib:$LIBRARY_PATH

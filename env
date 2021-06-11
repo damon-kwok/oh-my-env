@@ -137,7 +137,7 @@ ome_add_path() {
   cd $1
   local dir=`pwd`
   export PATH=$dir:"$PATH"
-  if [ "$OME_DEBUG_MODE" != "" ]; then
+  if [ "${OME_DEBUG_MODE}" != "" ]; then
     echo_kv "ome_add_path" "$dir"
   fi
   # if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
