@@ -124,7 +124,8 @@ ome_git_config() {
 
   # tip "git config"
   local oldir=`pwd`
-  if [ "$1" != "" ]; then
+  local dir="${1:-unset}"
+  if [ "$dir" != "unset" ]; then
     cd $1
     tip "git project config"
     git config core.editor $EDITOR
@@ -170,8 +171,8 @@ __git_upgrade() {
   local oldir=`pwd`
   local dir="$1"
   local url="$2"
-  local submodule="$3"
-  local branch="$4"
+  local submodule=${3:-""}
+  local branch=${4:-""}
 
   if [ ! -d "$dir" ]; then # || [ ! -e "$dir/.git/index" ]
     # echo_success "git clone $url $dir --single-branch --depth=1 $branch"
@@ -217,11 +218,10 @@ git_upgrade() {
   else
     local dir="$3"
   fi
-  local submodule=$4
-  if [ ! -n "$5" ]; then
-    local branch=""
-  else
-    local branch="-b $5"
+  local submodule=${4:-""}
+  local branch=${5:-""}
+  if [ "$branch" != "" ]; then
+    branch="-b $5"
   fi
   local url="$site/${project}.git"
   __git_upgrade $dir $url $submodule $branch
@@ -235,11 +235,10 @@ git_ssh_upgrade() {
   else
     local dir="$3"
   fi
-  local submodule=$4
-  if [ ! -n "$5" ]; then
-    local branch=""
-  else
-    local branch="-b $5"
+  local submodule=${4:-""}
+  local branch=${5:-""}
+  if [ "$branch" != "" ]; then
+    branch="-b $5"
   fi
   local url="git@${site}:${project}.git"
 
@@ -692,29 +691,6 @@ ome_check_install() {
     if [ "`command -v $cmd`" == "" ]; then
       ome install $app
     fi
-  fi
-}
-
-ome_dev_path() {
-  local dir="$1"
-  if [ -d ${dir} ]; then
-    if [ "$OME_DEBUG_MODE" == "1" ]; then
-      echo_kv "ome_dev_path" "${dir}/bin"
-    fi
-    export PATH=$dir/bin:$PATH
-    export MANPATH=$dir/share/man:$MANPATH
-    export INFOPATH=$dir/share/info:$INFOPATH
-    export LIBRARY_PATH=$dir/lib:$LIBRARY_PATH
-    export LD_LIBRARY_PATH=$dir/lib:$LD_LIBRARY_PATH
-    export LD_RUN_PATH=$dir/lib:$LD_RUN_PATH
-    export PKG_CONFIG_PATH=$dir/lib/pkgconfig:$dir/share/pkgconfig:$PKG_CONFIG_PATH
-    # libtool --finish $dir/lib
-
-    export CMAKE_INCLUDE_PATH=$dir/include:$CMAKE_INCLUDE_PATH
-    export CMAKE_LIBRARY_PATH=$dir/lib:$CMAKE_LIBRARY_PATH
-
-    export C_INCLUDE_PATH=$dir/include:$C_INCLUDE_PATH
-    export CPLUS_INCLUDE_PATH=$dir/include:$CPLUS_INCLUDE_PATH
   fi
 }
 
