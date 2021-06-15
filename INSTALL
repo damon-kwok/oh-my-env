@@ -383,8 +383,8 @@ case $OME_OS in
 	        sudo zypper addrepo -f http://mirrors.aliyun.com/opensuse/tumbleweed/repo/oss/ aliyun-oss.repo
 	        sudo zypper addrepo -f http://mirrors.aliyun.com/opensuse/tumbleweed/repo/non-oss/ aliyun-non-oss.repo
 
-            sudo zypper addrepo -f http://mirrors.aliyun.com/opensuse/tumbleweed/repo/src-oss/ aliyun-oss.repo
-            sudo zypper addrepo -f http://mirrors.aliyun.com/opensuse/tumbleweed/repo/src-non-oss/ aliyun-oss.repo
+            sudo zypper addrepo -f http://mirrors.aliyun.com/opensuse/tumbleweed/repo/src-oss/ aliyun-src-oss.repo
+            sudo zypper addrepo -f http://mirrors.aliyun.com/opensuse/tumbleweed/repo/src-non-oss/ aliyun-src-oss.repo
       
             sudo zypper addrepo -f http://mirrors.aliyun.com/opensuse/tumbleweed/repo/debug/ aliyun-debug.repo
 		fi
