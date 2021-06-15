@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-set -o errexit
+# set -o errexit
 set -o nounset
 set -o pipefail
 
@@ -324,6 +324,13 @@ case $OME_OS in
 			sudo dnf install -y --nogpgcheck https://download1.rpmfusion.org/free/el/rpmfusion-free-release-8.noarch.rpm
 			sudo dnf install -y --nogpgcheck https://download1.rpmfusion.org/nonfree/el/rpmfusion-nonfree-release-8.noarch.rpm
 
+      readp "enable raven repo?"
+			if [ $? -eq 1 ]; then
+        sudo dnf -y install https://pkgs.dyn.su/el8/base/x86_64/raven-release-1.0-1.el8.noarch.rpm
+        sudo dnf -y install raven-release
+        sudo dnf -y --enablerepo=raven-extras install tcp_wrappers-devel
+      fi
+
 			readp "centos:y REHL:n"
 			if [ $? -eq 1 ]; then
 				# CentOS 8 required additional step
@@ -341,8 +348,8 @@ case $OME_OS in
 
 		sudo dnf install -y git subversion wget curl make \
 			   tar zip unzip rlwrap coreutils findutils diffutils \
-			   emacs gnome-tweaks wntp http://mirrors.wlnmp.com/centos/wlnmp-release-centos.noarch.rpm
-    sudo ln -s /usr/local/bin/ntpdate /usr/bin/ntpdate
+			   emacs gnome-tweaks # wntp http://mirrors.wlnmp.com/centos/wlnmp-release-centos.noarch.rpm
+    # sudo ln -s /usr/local/bin/ntpdate /usr/bin/ntpdate
 		;;
 	$OS_ARCH)
 		readp "update system?"
@@ -507,7 +514,8 @@ case $OME_OS in
 esac
 ###############################################################################
 title "git config"
-git config --global core.editor $EDITOR
+git_editor=${EDITOR:-emacs}
+git config --global core.editor $git_editor
 git config --global core.autocrlf false
 git config --global core.safecrlf false
 git config --global core.safecrlf warn
@@ -529,7 +537,12 @@ git config --global difftool.prompt false
 ###############################################################################
 title "OME INSTALL"
 if [ ! -f "$HOME/.oh-my-env/.git/index" ]; then
-	git clone https://github.com/damon-kwok/oh-my-env $HOME/.oh-my-env --depth=1
+  readp "are you living in China?"
+	if [ $? -eq 1 ]; then
+    git clone https://gitee.com/damon-kwok/oh-my-env $HOME/.oh-my-env --depth=1
+  else
+		git clone https://github.com/damon-kwok/oh-my-env $HOME/.oh-my-env --depth=1
+	fi
 else
 	cd $HOME/.oh-my-env
 	git pull

@@ -11,20 +11,23 @@
 *** Support OS
 | OS     | Distribution                                                      |
 |--------+-------------------------------------------------------------------|
-| Linux  | Arch/ Manjaro/ Debian/ Ubuntu/ Mint/ RedHat/ CentOS/ Fedora/ SUSE |
+| Linux  | Arch/ Debian/ Ubuntu/ RedHat/ Fedora/ SUSE |
 | BSD    | FreeBSD/ DragonFly/ OpenBSD/ NetBSD                               |
 | Unix   | Solaris/ OpenIndiana/ *illumo                                     |
 | Window | Cygwin/ MSYS2                                                     |
 
 *** Requires
-- curl
 - bash
+- git
+- curl
 
 *** Install
 # bash -c "$(curl -fksSL https://git.io/Jf1Ho)"
 # bash -c "$(curl --proto '=https' --tlsv1.2 -sSf https://git.io/Jf1Ho)"
-#+BEGIN_SRC bash
+#+BEGIN_SRC sh
 bash <(curl -fksSL https://git.io/Jf1Ho)
+# If you living China:
+bash <(curl -fksSL http://alturl.com/j2dbn)
 #+END_SRC
 
 *** Uninstall
