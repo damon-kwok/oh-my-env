@@ -378,19 +378,19 @@ case $OME_OS in
 			sudo zypper mr -da
 
 			# use new source
-      zypper addrepo -f http://mirrors.aliyun.com/opensuse/tumbleweed/ aliyun-update.repo
+            sudo zypper addrepo -f http://mirrors.aliyun.com/opensuse/tumbleweed/ aliyun-update.repo
       
-	    zypper addrepo -f http://mirrors.aliyun.com/opensuse/tumbleweed/repo/oss/ aliyun-oss.repo
-	    zypper addrepo -f http://mirrors.aliyun.com/opensuse/tumbleweed/repo/non-oss/ aliyun-non-oss.repo
+	        sudo zypper addrepo -f http://mirrors.aliyun.com/opensuse/tumbleweed/repo/oss/ aliyun-oss.repo
+	        sudo zypper addrepo -f http://mirrors.aliyun.com/opensuse/tumbleweed/repo/non-oss/ aliyun-non-oss.repo
 
-      zypper addrepo -f http://mirrors.aliyun.com/opensuse/tumbleweed/repo/src-oss/ aliyun-oss.repo
-      zypper addrepo -f http://mirrors.aliyun.com/opensuse/tumbleweed/repo/src-non-oss/ aliyun-oss.repo
+            sudo zypper addrepo -f http://mirrors.aliyun.com/opensuse/tumbleweed/repo/src-oss/ aliyun-oss.repo
+            sudo zypper addrepo -f http://mirrors.aliyun.com/opensuse/tumbleweed/repo/src-non-oss/ aliyun-oss.repo
       
-      zypper addrepo -f http://mirrors.aliyun.com/opensuse/tumbleweed/repo/debug/ aliyun-debug.repo
+            sudo zypper addrepo -f http://mirrors.aliyun.com/opensuse/tumbleweed/repo/debug/ aliyun-debug.repo
 		fi
     
-    tip "add nvidia repo:"
-    zypper addrepo -f https://download.nvidia.com/opensuse/tumbleweed/ nvidia
+        tip "add nvidia repo:"
+        sudo zypper addrepo -f https://download.nvidia.com/opensuse/tumbleweed/ nvidia
     
 		readp "update system?"
 		if [ $? -eq 1 ]; then
