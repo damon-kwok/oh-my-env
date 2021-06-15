@@ -282,11 +282,6 @@ case $OME_OS in
 		sudo add-apt-repository -y ppa:ubuntu-elisp
 		# fi
 
-		# if [ ! -f /etc/apt/sources.list.d/graphics-drivers-ubuntu-ppa-xenial.list ]; then
-		tip "add ppa:nvidia-driver"
-		sudo add-apt-repository -y ppa:graphics-drivers/ppa
-		# fi
-
 		readp "update system?"
 		if [ $? -eq 1 ]; then
 			sudo apt update
@@ -301,16 +296,6 @@ case $OME_OS in
 		readp "X mode?"
 		if [ $? -eq 1 ]; then
 			sudo apt install -y software-properties-gtk emacs-snapshot
-			readp "install nvidia-driver?"
-			if [ $? -eq 1 ]; then
-				sudo apt install -y nvidia-driver-390
-				# nomodeset
-				readp "nomodeset for grub.cfg?"
-				if [ $? -eq 1 ]; then
-					# replace-str "quiet splash" "nomodeset" /boot/grub/grub.cfg 1
-					sudo perl -pi -e 's|quiet splash|nomodeset|g' /boot/grub/grub.cfg
-				fi
-			fi
 		else
 			sudo apt install -y emacs-snapshot-nox
 		fi
@@ -378,20 +363,14 @@ case $OME_OS in
 			sudo zypper mr -da
 
 			# use new source
-            sudo zypper addrepo -f http://mirrors.aliyun.com/opensuse/tumbleweed/ aliyun-update.repo
-      
-	        sudo zypper addrepo -f http://mirrors.aliyun.com/opensuse/tumbleweed/repo/oss/ aliyun-oss.repo
-	        sudo zypper addrepo -f http://mirrors.aliyun.com/opensuse/tumbleweed/repo/non-oss/ aliyun-non-oss.repo
-
-            sudo zypper addrepo -f http://mirrors.aliyun.com/opensuse/tumbleweed/repo/src-oss/ aliyun-src-oss.repo
-            sudo zypper addrepo -f http://mirrors.aliyun.com/opensuse/tumbleweed/repo/src-non-oss/ aliyun-src-non-oss.repo
-      
-            sudo zypper addrepo -f http://mirrors.aliyun.com/opensuse/tumbleweed/repo/debug/ aliyun-debug.repo
+      # sudo zypper addrepo -f http://mirrors.aliyun.com/opensuse/tumbleweed/ aliyun-update.repo
+	    sudo zypper addrepo -f http://mirrors.aliyun.com/opensuse/tumbleweed/repo/oss/ aliyun-oss.repo
+	    sudo zypper addrepo -f http://mirrors.aliyun.com/opensuse/tumbleweed/repo/non-oss/ aliyun-non-oss.repo
+      # sudo zypper addrepo -f http://mirrors.aliyun.com/opensuse/tumbleweed/repo/src-oss/ aliyun-src-oss.repo
+      # sudo zypper addrepo -f http://mirrors.aliyun.com/opensuse/tumbleweed/repo/src-non-oss/ aliyun-src-non-oss.repo
+      # sudo zypper addrepo -f http://mirrors.aliyun.com/opensuse/tumbleweed/repo/debug/ aliyun-debug.repo
 		fi
-    
-        tip "add nvidia repo:"
-        sudo zypper addrepo -f https://download.nvidia.com/opensuse/tumbleweed/ nvidia
-    
+
 		readp "update system?"
 		if [ $? -eq 1 ]; then
 			sudo zypper refresh
@@ -551,8 +530,10 @@ if [ ! -f "$HOME/.oh-my-env/.git/index" ]; then
   readp "are you living in China?"
 	if [ $? -eq 1 ]; then
     git clone https://gitee.com/damon-kwok/oh-my-env $HOME/.oh-my-env --depth=1
+    git clone https://gitee.com/damon-kwok/oh-my-env $HOME/.oh-my-emacs --depth=1
   else
-		git clone https://github.com/damon-kwok/oh-my-env $HOME/.oh-my-env --depth=1
+	  git clone https://github.com/damon-kwok/oh-my-env $HOME/.oh-my-env --depth=1
+    git clone https://github.com/damon-kwok/oh-my-env $HOME/.oh-my-emacs --depth=1
 	fi
 else
 	cd $HOME/.oh-my-env
