@@ -12,7 +12,11 @@ input_install() {
     $OS_REDHAT|$OS_FEDORA) sudo dnf install ibus-libpinyin -y;;
     $OS_ARCH) trizen -S ibus ibus-sunpinyin;;
     $OS_GENTOO) ;;
-    $OS_SUSE) ;;
+    $OS_SUSE)
+      tip "add M17N repo:"
+      sudo zypper ar -f http://download.opensuse.org/repositories/M17N/openSUSE_Leap_42.2/ M17N
+      sudo zypper install sunpinyin
+      ;;
     $OS_SLACKWARE) ;;
     $OS_NIXOS) ;;
     $OS_VOID) ;;

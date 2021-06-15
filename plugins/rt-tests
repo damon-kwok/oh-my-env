@@ -6,16 +6,13 @@ rt-tests_install() {
     # Linux
     # $OS_DEBIAN) ;;
     # $OS_UBUNTU) ;;
-    $OS_DEBIAN|$OS_UBUNTU)
-      sudo apt-get install rt-tests numactl;;
+    $OS_DEBIAN|$OS_UBUNTU) sudo apt-get install rt-tests numactl;;
     # $OS_REDHAT) ;;
     # $OS_FEDORA) ;;
-    $OS_REDHAT|$OS_FEDORA)
-      sudo yum install -y rt-tests numactl;;
-    $OS_ARCH)
-      sudo pacman -S rt-tests numactl;;
+    $OS_REDHAT|$OS_FEDORA) sudo yum install -y rt-tests numactl;;
+    $OS_ARCH) sudo pacman -S rt-tests numactl;;
     $OS_GENTOO) ;;
-    $OS_SUSE) ;;
+    $OS_SUSE) sudo zypper install rt-tests numactl;;
     $OS_SLACKWARE) ;;
     $OS_NIXOS) ;;
     $OS_VOID) ;;
