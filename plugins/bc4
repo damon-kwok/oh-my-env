@@ -1,0 +1,54 @@
+#!/usr/bin/env sh
+
+bc4_install() {
+  get_os_type
+  case $OME_OS in
+    # Linux
+    # $OS_DEBIAN) ;;
+    # $OS_UBUNTU) ;;
+    $OS_DEBIAN|$OS_UBUNTU) ;;
+    # $OS_REDHAT) ;;
+    # $OS_FEDORA) ;;
+    $OS_REDHAT|$OS_FEDORA) ;;
+    $OS_ARCH) ;;
+    $OS_GENTOO) ;;
+    $OS_SUSE)
+      sudo rpm --import https://www.scootersoftware.com/RPM-GPG-KEY-scootersoftware
+      sudo zypper install http://www.scootersoftware.com/bcompare-4.3.7.25118.x86_64.rpm
+      ;;
+    $OS_SLACKWARE) ;;
+    $OS_NIXOS) ;;
+    $OS_VOID) ;;
+    $OS_ALPINE) ;;
+    $OS_MAGEIA) ;;
+    $OS_SLITAZ) ;;
+    $OS_GUIXSD) ;;
+    # Unix
+    $OS_MACOS) ;;
+    $OS_AIX) ;;
+    $OS_SOLARIS) ;;
+    $OS_FREEBSD) ;;
+    $OS_OPENBSD) ;;
+    $OS_NETBSD) ;;
+    $OS_DFBSD) ;;
+    # Windows
+    $OS_CYGWIN) ;;
+    $OS_MSYS2) ;;
+    # Other
+    $OS_UNKNOW) ;;
+  esac
+
+  echo_error "'bc4_install' not implemented"
+}
+
+bc4_uninstall() {
+  echo_error "'bc4_uninstall' not implemented"
+}
+
+bc4_exist_p() {
+  echo_error "'bc4_exist_p' not implemented"
+}
+
+bc4_info() {
+  echo_error ""
+}
