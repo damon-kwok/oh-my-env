@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+case "$1" in
+  "--help"|"-h"| \
+    "--version"|"-V"| \
+    "search"|"se"| \
+    "info"|"if"| \
+    "patch-info"|"pattern-info"|"product-info"| \
+    "patches"|"pch"| \
+    "packages"|"pa"| \
+    "patterns"|"pt"| \
+    "products"|"pd"| \
+    "what-provides"|"wp")
+    zypper $@
+    ;;
+  *)
+    sudo zypper $@
+    ;;
+esac
