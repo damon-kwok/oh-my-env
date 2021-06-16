@@ -333,6 +333,7 @@ case $OME_OS in
 
 		sudo dnf install -y git subversion wget curl make \
 			   tar zip unzip rlwrap coreutils findutils diffutils \
+         net-tools ethtool \
 			   emacs gnome-tweaks # wntp http://mirrors.wlnmp.com/centos/wlnmp-release-centos.noarch.rpm
     # sudo ln -s /usr/local/bin/ntpdate /usr/bin/ntpdate
 		;;
@@ -370,6 +371,21 @@ case $OME_OS in
       # sudo zypper addrepo -f http://mirrors.aliyun.com/opensuse/tumbleweed/repo/src-non-oss/ aliyun-src-non-oss.repo
       # sudo zypper addrepo -f http://mirrors.aliyun.com/opensuse/tumbleweed/repo/debug/ aliyun-debug.repo
 		fi
+    readp "SUSE: use 3rd repos?"
+		if [ $? -eq 1 ]; then
+      tip "add http servers repo:"
+      sudo zypper ar -f http://download.opensuse.org/repositories/server:/http/openSUSE_Tumbleweed/ http-server
+      tip "add database servers repo:"
+      sudo zypper ar -f http://download.opensuse.org/repositories/server:/database/openSUSE_Tumbleweed/ db-server
+      tip "add games repo:"
+      sudo zypper ar -f http://download.opensuse.org/repositories/games/openSUSE_Tumbleweed/ games
+      tip "add wine repo:"
+      sudo zypper ar -f http://download.opensuse.org/repositories/Emulators:/Wine/openSUSE_Tumbleweed/ wine
+      tip "add science repo:"
+      sudo zypper ar -f http://download.opensuse.org/repositories/science/openSUSE_Tumbleweed/ science
+      tip "add mozilla repo:"
+      sudo zypper ar -f http://download.opensuse.org/repositories/mozilla/openSUSE_Tumbleweed/ mozilla
+    fi
 
 		readp "update system?"
 		if [ $? -eq 1 ]; then
@@ -378,6 +394,7 @@ case $OME_OS in
 		fi
 		sudo zypper install git subversion wget curl make \
 			   tar zip unzip rlwrap coreutils findutils diffutils \
+         net-tools  net-tools-lang net-tools-deprecated ethtool \
 			   bitstream-vera-fonts emacs
 		;;
 	$OS_SLACKWARE) ;;
