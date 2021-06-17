@@ -3,12 +3,13 @@
 nix_install() {
   mkdir -p $HOME/.config/nix/
   echo "substituters = https://mirrors.tuna.tsinghua.edu.cn/nix-channels/store https://cache.nixos.org/" > $HOME/.config/nix/nix.conf
+  sudo sh -c 'echo "substituters = https://mirrors.tuna.tsinghua.edu.cn/nix-channels/store https://cache.nixos.org/" > /etc/nix/nix.conf'
   sh <(curl https://mirrors.tuna.tsinghua.edu.cn/nix/latest/install) --daemon
 }
 
 nix_uninstall() {
   sudo rm -rf /nix
-  sudo rm -rf $HOME/nix-*
+  sudo rm -rf /etc/nix /nix /root/.nix-profile /root/.nix-defexpr /root/.nix-channels $HOME/.nix-profile $HOME/.nix-defexpr $HOME/.nix-channels
 }
 
 nix_exist_p() {

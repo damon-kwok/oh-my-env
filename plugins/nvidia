@@ -27,7 +27,12 @@ nvidia_install() {
     # $OS_FEDORA) ;;
     $OS_REDHAT|$OS_FEDORA)
       yum install nvidia-driver ;;
-    $OS_ARCH) ;;
+    $OS_ARCH)
+      kver=`uname -r|cut -d"." -f1-2`
+      pkg_name="linux${kver//./}-nvidia"
+      tip "install ${pkg_name}"
+      sudo pacman -S ${pkg_name}
+      ;;
     $OS_GENTOO) ;;
     $OS_SUSE)
       tip "add nvidia repo:"

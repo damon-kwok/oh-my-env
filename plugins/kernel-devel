@@ -1,0 +1,61 @@
+#!/usr/bin/env sh
+
+kernel-devel_install() {
+  get_os_type
+  case $OME_OS in
+    # Linux
+    # $OS_DEBIAN) ;;
+    # $OS_UBUNTU) ;;
+    $OS_DEBIAN|$OS_UBUNTU)
+      sudo apt install build-essential patch flex bison cpio ncurses-dev openssl openssl-dev
+      ;;
+    # $OS_REDHAT) ;;
+    # $OS_FEDORA) ;;
+    $OS_REDHAT|$OS_FEDORA)
+      yum groupinstall -y "Development Tools"
+      # yum groupinstall -y "Development Libraries"
+      # yum groupinstall -y "Chinese Support"
+      yum install -y patch flex bison cpio ncurses-devel openssl openssl-devel
+      ;;
+    $OS_ARCH)
+      trizen -S base-devel flex bison cpio ncurses-devel openssl openssl-devel
+      ;;
+    $OS_GENTOO)
+      sudo zypper install -t pattern devel_basis
+      sudo zypper install patch flex bison cpio ncurses-devel openssl openssl-devel
+      ;;
+    $OS_SUSE) ;;
+    $OS_SLACKWARE) ;;
+    $OS_NIXOS) ;;
+    $OS_VOID) ;;
+    $OS_ALPINE) ;;
+    $OS_MAGEIA) ;;
+    $OS_SLITAZ) ;;
+    $OS_GUIXSD) ;;
+    # Unix
+    $OS_MACOS) ;;
+    $OS_AIX) ;;
+    $OS_SOLARIS) ;;
+    $OS_FREEBSD) ;;
+    $OS_OPENBSD) ;;
+    $OS_NETBSD) ;;
+    $OS_DFBSD) ;;
+    # Windows
+    $OS_CYGWIN) ;;
+    $OS_MSYS2) ;;
+    # Other
+    $OS_UNKNOW) ;;
+  esac
+}
+
+kernel-devel_uninstall() {
+  echo_error "'kernel-devel_uninstall' not implemented"
+}
+
+kernel-devel_exist_p() {
+  echo_error "'kernel-devel_exist_p' not implemented"
+}
+
+kernel-devel_info() {
+  echo_error ""
+}
