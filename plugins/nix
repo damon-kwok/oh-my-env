@@ -1,0 +1,20 @@
+#!/usr/bin/env sh
+
+nix_install() {
+  mkdir -p $HOME/.config/nix/
+  echo "substituters = https://mirrors.tuna.tsinghua.edu.cn/nix-channels/store https://cache.nixos.org/" > $HOME/.config/nix/nix.conf
+  sh <(curl https://mirrors.tuna.tsinghua.edu.cn/nix/latest/install) --daemon
+}
+
+nix_uninstall() {
+  sudo rm -rf /nix
+  sudo rm -rf $HOME/nix-*
+}
+
+nix_exist_p() {
+  echo_error "'nix_exist_p' not implemented"
+}
+
+nix_info() {
+  echo_error ""
+}

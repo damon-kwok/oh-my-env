@@ -10,7 +10,9 @@ bc4_install() {
     # $OS_REDHAT) ;;
     # $OS_FEDORA) ;;
     $OS_REDHAT|$OS_FEDORA) ;;
-    $OS_ARCH) ;;
+    $OS_ARCH)
+      trizen -S bcompare bcompare-cinnamon
+      ;;
     $OS_GENTOO) ;;
     $OS_SUSE)
       sudo rpm --import https://www.scootersoftware.com/RPM-GPG-KEY-scootersoftware
@@ -37,8 +39,6 @@ bc4_install() {
     # Other
     $OS_UNKNOW) ;;
   esac
-
-  echo_error "'bc4_install' not implemented"
 }
 
 bc4_uninstall() {

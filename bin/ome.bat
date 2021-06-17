@@ -1,7 +1,7 @@
 @echo off
 REM medusa.bat --- This is where you apply your OCD.
 REM
-REM Copyright (C) 2015-2016 damon-kwok
+REM Copyright (C) 2015-2021 damon-kwok
 REM
 REM Author: gww <damon-kwok@outlook.com>
 REM Date: 2016-04-29
@@ -182,7 +182,7 @@ REM%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 rem set HOME=%OME_ROOT%
 rem set ALTERNATE_EDITOR=%EMACS_BIN%\emacsc.exe
 rem set EMACS_SERVER_FILE=%HOME%\.emacs.d\server\emacs-server-file
-copy /y %OME_ROOT%\emacs-config\init.el %HOME%\.emacs
+copy /y %OME_ROOT%\conf\init.el %HOME%\.emacs
 goto:eof
 
 :open
@@ -211,11 +211,11 @@ rem set HOME=%OME_ROOT%
 rem set ALTERNATE_EDITOR=%EMACS_BIN%\emacsc.exe
 rem set EMACS_SERVER_FILE=%HOME%\.emacs.d\server\emacs-server-file
 if not exist %HOME%\.emacs (
-copy /y %OME_ROOT%\emacs-config\init.el %HOME%\.emacs
+copy /y %OME_ROOT%\conf\init.el %HOME%\.emacs
 )
 cd %HOME%
 start %EMACS_BIN%\runemacs.exe --debug-init
-rem call %EMACS_BIN%\emacs.exe -Q -l ~/emacs-config/profile-dotemacs.el -f profile-dotemacs ~/emacs-config/init.el
+rem call %EMACS_BIN%\emacs.exe -Q -l ~/conf/profile-dotemacs.el -f profile-dotemacs ~/conf/init.el
 exit
 
 :emacs-nw
@@ -223,7 +223,7 @@ rem set HOME=%OME_ROOT%
 rem set ALTERNATE_EDITOR=%EMACS_BIN%\emacsc.exe
 rem set EMACS_SERVER_FILE=%HOME%\.emacs.d\server\emacs-server-file
 if not exist %HOME%\.emacs (
-copy /y %OME_ROOT%\emacs-config\init.el %HOME%\.emacs
+copy /y %OME_ROOT%\conf\init.el %HOME%\.emacs
 )
 cd %HOME%
 %EMACS_BIN%\emacs.exe -nw --debug-init
@@ -234,18 +234,18 @@ rem set HOME=%OME_ROOT%
 rem set ALTERNATE_EDITOR=%EMACS_BIN%\emacsc.exe
 rem set EMACS_SERVER_FILE=%HOME%\.emacs.d\server\emacs-server-file
 
-cd %OME_ROOT%\emacs-config\modules
+cd %OME_ROOT%\conf\modules
 %EMACS_BIN%\emacs.exe -Q -batch -f batch-byte-compile *.el
 REM emacs --batch --eval '(byte-recompile-directory "~/.emacs.d")'
 REM emacs --batch --eval '(byte-compile-file "your-elisp-file.el")'
 REM emacs -Q --batch -f batch-byte-compile *.el foo/*.el
-REM %EMACS_BIN%\emacs.exe --batch --eval "(byte-recompile-directory  \"~/emacs-config/modules\" 0)"
-REM copy /y %OME_ROOT%\emacs-config\comp.el %HOME%\.emacs
+REM %EMACS_BIN%\emacs.exe --batch --eval "(byte-recompile-directory  \"~/conf/modules\" 0)"
+REM copy /y %OME_ROOT%\conf\comp.el %HOME%\.emacs
 cd %OME_ROOT%
 goto:eof
 
 :delete-elc
-cd %OME_ROOT%\emacs-config\modules
+cd %OME_ROOT%\conf\modules
 rm -rf *.elc
 cd %OME_ROOT%
 goto:eof

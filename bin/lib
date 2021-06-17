@@ -656,7 +656,6 @@ ome_write_env_to_dotfile() {
 }
 
 ome_fix_dotfiles() {
-  ome_write_env_to_dotfile $HOME/.profile
   ome_write_env_to_dotfile $HOME/.shrc
   ome_write_env_to_dotfile $HOME/.bashrc
   ome_write_env_to_dotfile $HOME/.zshrc

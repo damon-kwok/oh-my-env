@@ -10,7 +10,21 @@ input_install() {
     # $OS_REDHAT) ;;
     # $OS_FEDORA) ;;
     $OS_REDHAT|$OS_FEDORA) sudo dnf install ibus-libpinyin -y;;
-    $OS_ARCH) trizen -S ibus ibus-sunpinyin;;
+    $OS_ARCH)
+      # trizen -S ibus ibus-sunpinyin
+      if [ "$(pacman -Qsq fcitx)" != "" ]; then
+        sudo pacman -Rs $(pacman -Qsq fcitx)
+      fi
+      sudo pacman -S fcitx5 fcitx5-configtool fcitx5-qt fcitx5-gtk fcitx5-chinese-addons fcitx5-material-color
+      echo "GTK_IM_MODULE DEFAULT=fcitx" > ~/.pam_environment
+      echo "QT_IM_MODULE DEFAULT=fcitx" >> ~/.pam_environment
+      echo "XMODIFIERS DEFAULT=@im=fcitx" >> ~/.pam_environment
+      #
+      echo "GTK_IM_MODULE DEFAULT=fcitx" >> ~/.profile
+      echo "QT_IM_MODULE DEFAULT=fcitx" >> ~/.profile
+      echo "XMODIFIERS DEFAULT=@im=fcitx" >> ~/.profile
+      echo "fcitx5 &" >> ~/.profile
+      ;;
     $OS_GENTOO) ;;
     $OS_SUSE)
       tip "add M17N repo:"

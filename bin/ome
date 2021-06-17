@@ -12,7 +12,7 @@ set -o pipefail
 ################################################################################
 
 delete_elc() {
-  cd $OME_ROOT/emacs-config/modules
+  cd $OME_ROOT/conf/modules
   rm -rf *.elc
   cd $OME_ROOT
 }
@@ -242,7 +242,7 @@ ome_pull() {
 
   # echo_kv "GIT PULL" "~/.emacs.d/"
   gitee_upgrade damon-kwok/emacs.d $HOME/.emacs.d/
-  cp -f $HOME/.oh-my-emacs/emacs-config/init.el $HOME/.emacs.d/
+  cp -f $HOME/.oh-my-emacs/conf/init.el $HOME/.emacs.d/
 
   # tip "cache upgrade"
   chmod +x $OME_ROOT/bin/git-hook
@@ -364,7 +364,7 @@ ome_help() {
   echo ""
   echo "update, pull                   self update"
   echo "commit, push                   commit your modify content"
-  echo "status                         git status:ome/workspace/emacs-config"
+  echo "status                         git status"
 }
 
 ome_parse() {

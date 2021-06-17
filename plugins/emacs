@@ -11,11 +11,11 @@ link_init_el() {
     mv $HOME/.emacs.d/init.el $bkdir
   fi
 
-  if [ -e $HOME/emacs-config ]; then
-    mv $HOME/emacs-config $bkdir
+  if [ -e $HOME/conf ]; then
+    mv $HOME/conf $bkdir
   fi
 
-  cp -f $HOME/.oh-my-emacs/emacs-config/init.el $HOME/.emacs.d/init.el
+  cp -f $HOME/.oh-my-emacs/conf/init.el $HOME/.emacs.d/init.el
 
   # tip "link .emacs.d/"
   # if [ ! -d "$HOME/.emacs.d/.git/" ]; then
