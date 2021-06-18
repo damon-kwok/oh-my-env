@@ -47,6 +47,8 @@ case "`uname -s`" in
   "GNU/Linux" | "Linux")
     if [ "$(uname -o)" = Android ]; then
       export OME_OS=$OS_ANDROID
+    elif [ "`command -v zypper`" != "" ]; then
+      export OME_OS=$OS_SUSE
     elif [ "`command -v yum`" != "" ]; then
       os=`cat /etc/system-release | head -n 1 | cut -d ' ' -f 1`
       if [ "$os" = "CentOS" ] || [ "$os" = "RedHat" ]; then
@@ -55,8 +57,6 @@ case "`uname -s`" in
         export OME_OS=$OS_FEDORA
       fi
       # elif [ "`command -v yum`" != "" ]; then
-    elif [ "`command -v zypper`" != "" ]; then
-      export OME_OS=$OS_SUSE
     elif [ "`command -v nix`" != "" ]; then
       export OME_OS=$OS_NIXOS
     elif [ "`command -v guix`" != "" ]; then
