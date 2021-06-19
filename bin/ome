@@ -20,16 +20,33 @@ delete_elc() {
 ome_package_list() {
   local olddir=`pwd`
   # tip "package list:"
-  # for plugin in $HOME/.oh-my-env/plugins/* ; do
-  # echo_success `basename $plugin`
+  # for pkg in $HOME/.oh-my-env/packages/* ; do
+  # echo_success `basename $pkg`
   # done
 
-  cd $HOME/.oh-my-env/plugins/
-  ls
+  cd $HOME/.oh-my-env/packages/
+  tree
 
   cd $olddir
 }
 
+ome_load_package_dir() {
+  local dir="$1"
+  for pkg in $dir/* ; do
+    local PKG=`basename $pkg`
+    if [ -d "$pkg" ]; then
+      ome_load_package_dir $pkg
+    elif [ "$PKG" != "README.org" ]; then
+      local FUNC_INFO="${PKG}_info"
+
+      if [ "${OME_DEBUG_MODE}" = "1" ]; then
+        echo_kv "$FUNC_INFO" "$pkg"
+      fi
+      $pkg > /dev/null 2>&1
+      eval "$FUNC_INFO > /dev/null 2>&1"
+    fi
+  done
+}
 ome_package_info() {
   local olddir=`pwd`
   # tip "package list"
@@ -48,30 +65,7 @@ ome_package_info() {
   ome_show "SYSTEM" "OS:$OME_OS | Arch:$OME_ARCH | Shell:$OME_SHELL | EDITOR:$EDITOR"
   ome_show "PREFIX" "$OME_PREFIX"
   ome_show "VCS" "`ome_fetch_version git` | `ome_fetch_version svn`"
-  for plugin_file in $HOME/.oh-my-env/plugins/* ; do
-    if [ "$plugin_file" != "$HOME/.oh-my-env/plugins/README.org" ]; then
-
-      # local idx=$((index%4))
-      # echo -n -e "${strload[$idx]}"
-      # let index++
-      # let index=$index+1
-      # index=$((index+1))
-      local PLUGIN=`basename $plugin_file`
-      local FUNC_INFO="${PLUGIN}_info"
-
-      if [ "${OME_DEBUG_MODE}" = "1" ]; then
-        echo_kv "$FUNC_INFO" "$plugin_file"
-      fi
-      $plugin_file > /dev/null 2>&1
-      eval "$FUNC_INFO > /dev/null 2>&1"
-
-      #. $plugin_file
-      #eval "$EVAL"
-
-      # sleep 0.2
-      # echo -n -e "\b\b"
-    fi
-  done
+  ome_load_package_dir $HOME/.oh-my-env/packages
   # echo -n -e "\033[?25h"  # show cursor
   # echo -n -e "\b\c"
   echo -e $OME_SHOW

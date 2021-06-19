@@ -133,9 +133,9 @@ swapkey_init() {
       echo "add Control = Control_R" >> $HOME/.Xmodmap
     fi
 
-    find_str "xmodmap" $HOME/.xinitrc
+    find_str "xmodmap" $HOME/.profile
     if [ $? -eq 0 ]; then
-      echo "xmodmap $HOME/.Xmodmap" >> $HOME/.xinitrc
+      echo "xmodmap \$HOME/.Xmodmap" >> $HOME/.profile
     fi
     xmodmap $HOME/.Xmodmap
   fi

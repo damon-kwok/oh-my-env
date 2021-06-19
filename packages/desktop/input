@@ -28,7 +28,7 @@ input_install() {
     $OS_GENTOO) ;;
     $OS_SUSE)
       tip "add M17N repo:"
-      sudo zypper ar -f http://download.opensuse.org/repositories/M17N/openSUSE_Leap_42.2/ M17N
+      sudo zypper ar -f https://download.opensuse.org/repositories/M17N/openSUSE_Tumbleweed/ M17N
       sudo zypper install sunpinyin
       ;;
     $OS_SLACKWARE) ;;

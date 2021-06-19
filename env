@@ -304,23 +304,27 @@ export ANTLR3_VERSION=3.5.2
 export ANTLR4_VERSION=4.8
 export ST_VERSION=4.3 #StringTemplate
 
+export BC4_VERSION=4.3.7.25118
 export JETBRINS_FONT_VERSION=2.225
 export POWERSHELL_VERSION="7.1.0-preview.1"
 ################################################################################
 # load plugins
-ome_load_plugins() {
-  for plugin in $HOME/.oh-my-env/plugins/* ; do
-    if [ ! -d "$plugin" ] && [ "$plugin" != "$HOME/.oh-my-env/plugins/README.org" ]; then
+ome_load_pkgs() {
+  local dir="$1"
+  for pkg in $dir/* ; do
+    if [ -d "$pkg" ]; then
+      ome_load_pkgs $pkg
+    else
       local debug_mode="${OME_DEBUG_MODE:-unset}"
-      if [ "${debug_mode}" == "1" ]; then
-        # time "$plugin"">/dev/null 2>&1
-        tip "$plugin"
-        # time `. $plugin`
-        . "$plugin"
-      else
-        . "$plugin"
+      if [ "`basename $pkg`" != "README.org" ]; then
+        if [ "${debug_mode}" == "1" ]; then
+          # time "$pkg">/dev/null 2>&1
+          tip "$pkg"
+          # time `. $pkg`
+        fi
+        . "$pkg"
       fi
     fi
   done
 }
-ome_load_plugins
+ome_load_pkgs $HOME/.oh-my-env/packages

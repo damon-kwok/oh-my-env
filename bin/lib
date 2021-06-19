@@ -629,7 +629,7 @@ ome_export_version() {
   if [ "`command -v $tool`" != "" ]; then
     eval 'export $VARNAME="`$tool --version | head -n 1`"'
   else
-    eval 'export $VARNAME="$tool:miss"'
+    eval 'export $VARNAME="$tool:nil"'
   fi
 }
 
@@ -638,7 +638,7 @@ ome_fetch_version() {
   if [ "`command -v $tool`" != "" ]; then
     echo "`$tool --version 2>&1 | head -n 1 | cut -d ' ' -f 1-4`"
   else
-    echo "$tool:miss"
+    echo "$tool:nil"
   fi
 }
 

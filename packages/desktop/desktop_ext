@@ -1,0 +1,162 @@
+#!/usr/bin/env sh
+
+font_install() {
+  cd $HOME/Downloads/
+  local pkgname=JetBrainsMono-${JETBRINS_FONT_VERSION}
+  local zipkg=${pkgname}.zip
+
+  if [ ! -f "$HOME/Downloads/$zipkg" ]; then
+    wget https://download.jetbrains.8686c.com/fonts/${zipkg}
+  fi
+  if [ ! -d "$HOME/Downloads/$pkgname" ]; then
+    unzip ./JetBrainsMono-${JETBRINS_FONT_VERSION}.zip -d ./
+  fi
+
+  if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
+    # cp -f ./JetBrainsMono-${JETBRINS_FONT_VERSION}/ttf/* "${USERPROFILE}/AppData/Local/Microsoft/Fonts/"
+    echo "windows"
+    # echo A^|xcopy `cygpath -m ./JetBrainsMono-${JETBRINS_FONT_VERSION}/ttf/*` "${SYSTEMROOT}/Fonts/"
+    # cp -f ./JetBrainsMono-${JETBRINS_FONT_VERSION}/ttf/* "${SYSTEMROOT}/Fonts/"
+    cd "$HOME/Downloads/$pkgname"
+    for file in `ls "$HOME/Downloads/$pkgname/ttf"`
+    do
+      local basename=${file%.*}
+      local extname=${file##*.}
+      if [ "$extname" = "ttf" ]; then
+        # cp -f ./ttf/$file "${SYSTEMROOT}/Fonts/"
+        local REGPATH='"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts"'
+        echo reg add ${REGPATH} /v "\"${basename} (TrueType)\"" /t REG_SZ /d "${file}" /f
+
+        # local REGPATH="\"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts\""
+        # REG ADD ${REGPATH} /v "\"${basename} (TrueType)\"" /t REG_SZ /d "\"${file}\"" /f
+
+      fi
+    done
+  else
+    cp -f ./JetBrainsMono-${JETBRINS_FONT_VERSION}/ttf/* $HOME/.local/share/fonts/
+    fc-cache -f -v
+  fi
+}
+
+desktop_ext_install() {
+  get_os_type
+  case $OME_OS in
+    # Linux
+    # $OS_DEBIAN) ;;
+    # $OS_UBUNTU) ;;
+    $OS_DEBIAN|$OS_UBUNTU)
+      # if [ ! -f /etc/apt/sources.list.d/graphics-drivers-ubuntu-ppa-xenial.list ]; then
+		  tip "add ppa:nvidia-driver"
+		  sudo add-apt-repository -y ppa:graphics-drivers/ppa
+		  # fi
+
+      apt search nvidia-driver
+			sudo apt install -y nvidia-driver #-390
+			# nomodeset
+			readp "nomodeset for grub.cfg?"
+			if [ $? -eq 1 ]; then
+				# replace-str "quiet splash" "nomodeset" /boot/grub/grub.cfg 1
+				sudo perl -pi -e 's|quiet splash|nomodeset|g' /boot/grub/grub.cfg
+			fi
+      ;;
+    # $OS_REDHAT) ;;
+    # $OS_FEDORA) ;;
+    $OS_REDHAT|$OS_FEDORA)
+      # nvidia
+      yum install nvidia-driver
+      ;;
+    $OS_ARCH)
+      # nvidia driver
+      kver=`uname -r|cut -d"." -f1-2`
+      pkg_name="linux${kver//./}-nvidia"
+      tip "install ${pkg_name}"
+      sudo pacman -S ${pkg_name}
+      trizen -S wps-office bcompare wechat-uos
+      ;;
+    $OS_GENTOO) ;;
+    $OS_SUSE)
+      readp "Tumbleweed?"
+      if [ $? -eq 1 ]; then
+        # nvidia
+        sudo zypper ar https://download.nvidia.com/opensuse/tumbleweed/ nvidia
+        # vlc
+        sudo ar http://download.videolan.org/pub/vlc/SuSE/Tumbleweed/ vlc
+        sudo zypper ar https://mirrors.ustc.edu.cn/packman/suse/openSUSE_Tumbleweed/ USTC:42.3:PACKMAN
+        # wps
+        sudo zypper ar https://download.opensuse.org/repositories/home:opensuse_zh/openSUSE_Tumbleweed/home:opensuse_zh.repo
+        # wechat-uos
+        sudo zypper ar https://download.opensuse.org/repositories/home:zzndb001/openSUSE_Tumbleweed/home:zzndb001.repo
+        # snappy
+        sudo zypper ar https://download.opensuse.org/repositories/system:/snappy/openSUSE_Tumbleweed snappy
+        sudo zypper --gpg-auto-import-keys refresh
+        sudo zypper dup --from snappy
+      else
+        # nvidia
+        sudo zypper ar https://download.nvidia.com/opensuse/leap/${releasever} nvidia
+        # vlc
+        sudo ar http://download.videolan.org/pub/vlc/SuSE/Leap_${releasever}/ vlc
+        sudo zypper ar https://mirrors.ustc.edu.cn/packman/suse/openSUSE_Leap_${releasever}/ USTC:42.3:PACKMAN
+        # wps-office
+        sudo zypper ar https://download.opensuse.org/repositories/home:opensuse_zh/openSUSE_Leap_${releasever}/home:opensuse_zh.repo
+        # wechat-uos
+        sudo zypper ar https://download.opensuse.org/repositories/home:zzndb001/openSUSE_Leap_${releasever}/home:zzndb001.repo
+        # snappy
+        sudo zypper ar https://download.opensuse.org/repositories/system:/snappy/openSUSE_Leap_${releasever} snappy
+        sudo zypper --gpg-auto-import-keys refresh
+        sudo zypper dup --from snappy
+      fi
+
+      sudo zypper refresh
+      sudo zypper install x11-video-nvidiaG05 nvidia-glG05 \
+           wps-office wechat-uos vlc ffmpeg-tools vlc-codecs \
+           ibus ibus-libpinyin \
+           MozillaThunderbird steam
+      # bc4
+      sudo rpm --import https://www.scootersoftware.com/RPM-GPG-KEY-scootersoftware
+      sudo zypper install http://www.scootersoftware.com/bcompare-4.3.7.25118.x86_64.rpm
+
+      sudo systemctl enable snapd
+      sudo systemctl start snapd
+
+      readp "Tumbleweed?"
+      if [ $? -eq 1 ]; then
+        sudo systemctl enable snapd.apparmor
+        sudo systemctl start snapd.apparmor
+      fi
+      ;;
+    $OS_SLACKWARE) ;;
+    $OS_NIXOS) ;;
+    $OS_VOID) ;;
+    $OS_ALPINE) ;;
+    $OS_MAGEIA) ;;
+    $OS_SLITAZ) ;;
+    $OS_GUIXSD) ;;
+    # Unix
+    $OS_MACOS) ;;
+    $OS_AIX) ;;
+    $OS_SOLARIS) ;;
+    $OS_FREEBSD) ;;
+    $OS_OPENBSD) ;;
+    $OS_NETBSD) ;;
+    $OS_DFBSD) ;;
+    # Windows
+    $OS_CYGWIN) ;;
+    $OS_MSYS2) ;;
+    # Other
+    $OS_UNKNOW) ;;
+  esac
+
+  font_install
+}
+
+desktop_ext_uninstall() {
+  echo_error "'desktop_ext_uninstall' not implemented"
+}
+
+desktop_ext_exist_p() {
+  echo_error "'desktop_ext_exist_p' not implemented"
+}
+
+desktop_ext_info() {
+  echo_error ""
+}

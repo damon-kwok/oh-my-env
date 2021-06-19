@@ -201,13 +201,13 @@ python_info() {
   if [ "`command -v python2`" != "" ]; then
     PY2VER="`python2 --version 2>&1 | cut -c 8-`"
   else
-    PY2VER="!miss!"
+    PY2VER="nil"
   fi
 
   if [ "`command -v python3`" != "" ]; then
     PY3VER="`python3 --version | cut -c 8-`"
   else
-    PY3VER="!miss!"
+    PY3VER="nil"
   fi
   if [ "`command -v python2`" != "" ] || [ "`command -v python3`" != "" ]; then
     ome_show "Python" "py2:$PY2VER | py3:$PY3VER"

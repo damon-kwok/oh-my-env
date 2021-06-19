@@ -228,7 +228,7 @@ case $OME_OS in
 		tip "install base tool"
 		sudo apt install -y git subversion wget curl make \
 			   tar zip unzip rlwrap coreutils findutils diffutils \
-			   ttf-bitstream-vera
+			   net-tools ethtool ttf-bitstream-vera
 
 		readp "X mode?"
 		if [ $? -eq 1 ]; then
@@ -291,7 +291,7 @@ case $OME_OS in
 
 		sudo pacman -S git subversion wget curl make \
 			   tar zip unzip rlwrap coreutils findutils diffutils \
-			   net-tools ttf-bitstream-vera emacs
+			   net-tools ethtool ttf-bitstream-vera emacs
 		;;
 	$OS_GENTOO) ;;
 	$OS_SUSE)
@@ -300,26 +300,28 @@ case $OME_OS in
 			# disable old source
 			sudo zypper mr -da
 
-		    # use new source
-            readp "Tumbleweed?"
-            if [ $? -eq 1 ]; then
-                # sudo zypper addrepo -f http://mirrors.aliyun.com/opensuse/tumbleweed/ openSUSE-Aliyun-UPDATE
-                sudo zypper addrepo -f http://mirrors.aliyun.com/opensuse/tumbleweed/repo/oss/ openSUSE-Aliyun-OSS
-                sudo zypper addrepo -f http://mirrors.aliyun.com/opensuse/tumbleweed/repo/non-oss/ openSUSE-Aliyun-NON-OSS
-                # sudo zypper addrepo -f http://mirrors.aliyun.com/opensuse/tumbleweed/repo/src-oss/ openSUSE-Aliyun-SRC-OSS
-                # sudo zypper addrepo -f http://mirrors.aliyun.com/opensuse/tumbleweed/repo/src-non-oss/ openSUSE-Aliyun-SRC-NON-OSS
-                # sudo zypper addrepo -f http://mirrors.aliyun.com/opensuse/tumbleweed/repo/debug/ aliyun-debug.repo
-            else
-                sudo zypper ar https://mirrors.aliyun.com/opensuse/distribution/leap/${releasever}/repo/oss openSUSE-Aliyun-OSS
-                sudo zypper ar https://mirrors.aliyun.com/opensuse/distribution/leap/${releasever}/repo/non-oss openSUSE-Aliyun-NON-OSS
-                sudo zypper ar https://mirrors.aliyun.com/opensuse/update/leap/${releasever}/oss openSUSE-Aliyun-UPDATE-OSS
-                sudo zypper ar https://mirrors.aliyun.com/opensuse/update/leap/${releasever}/non-oss openSUSE-Aliyun-UPDATE-NON-OSS
-            fi
+		  # use new source
+      readp "Tumbleweed?"
+      if [ $? -eq 1 ]; then
+        # sudo zypper ar -f http://mirrors.aliyun.com/opensuse/tumbleweed/ openSUSE-Aliyun-UPDATE
+        sudo zypper ar http://mirrors.aliyun.com/opensuse/tumbleweed/repo/oss/ openSUSE-Aliyun-OSS
+        sudo zypper ar http://mirrors.aliyun.com/opensuse/tumbleweed/repo/non-oss/ openSUSE-Aliyun-NON-OSS
+        # sudo zypper ar -f http://mirrors.aliyun.com/opensuse/tumbleweed/repo/src-oss/ openSUSE-Aliyun-SRC-OSS
+        # sudo zypper ar -f http://mirrors.aliyun.com/opensuse/tumbleweed/repo/src-non-oss/ openSUSE-Aliyun-SRC-NON-OSS
+        # sudo zypper ar -f http://mirrors.aliyun.com/opensuse/tumbleweed/repo/debug/ aliyun-debug.repo
+        sudo zypper ar https://mirrors.ustc.edu.cn/packman/suse/openSUSE_Tumbleweed/ USTC:42.3:PACKMAN
+      else
+        sudo zypper ar https://mirrors.aliyun.com/opensuse/distribution/leap/${releasever}/repo/oss openSUSE-Aliyun-OSS
+        sudo zypper ar https://mirrors.aliyun.com/opensuse/distribution/leap/${releasever}/repo/non-oss openSUSE-Aliyun-NON-OSS
+        sudo zypper ar https://mirrors.aliyun.com/opensuse/update/leap/${releasever}/oss openSUSE-Aliyun-UPDATE-OSS
+        sudo zypper ar https://mirrors.aliyun.com/opensuse/update/leap/${releasever}/non-oss openSUSE-Aliyun-UPDATE-NON-OSS
+        sudo zypper ar https://mirrors.ustc.edu.cn/packman/suse/openSUSE_Leap_${releasever}/ USTC:42.3:PACKMAN
+      fi
 		fi
     readp "SUSE: use 3rd repos?"
 		if [ $? -eq 1 ]; then
 
-      readp "tumbleweed?"
+      readp "Tumbleweed?"
       if [ $? -eq 1 ]; then
         sudo zypper addrepo https://download.nvidia.com/opensuse/tumbleweed/ nvidia
         tip "add http servers repo:"
@@ -358,7 +360,7 @@ case $OME_OS in
 		sudo zypper install git subversion wget curl make \
 			   tar zip unzip rlwrap coreutils findutils diffutils \
          net-tools  net-tools-lang net-tools-deprecated ethtool \
-			   bitstream-vera-fonts emacs
+			   bitstream-vera-fonts emacs opi
 		;;
 	$OS_SLACKWARE) ;;
 	# install slapt-get

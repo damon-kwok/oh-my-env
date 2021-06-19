@@ -206,7 +206,7 @@ sdkman_info() {
   if [ -d $HOME/.sdkman/candidates/$item ]; then
     echo "$key:`ls -D $HOME/.sdkman/candidates/$item|head -n 1`"
   else
-    echo "$key: !miss!"
+    echo "$key:nil"
   fi
 }
 
