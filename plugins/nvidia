@@ -42,7 +42,7 @@ nvidia_install() {
       else
         sudo zypper addrepo -f https://download.nvidia.com/opensuse/leap/${releasever} nvidia
       fi
-      sudo zypper install x11-video-nvidiaG05
+      sudo zypper install x11-video-nvidiaG05 nvidia-glG05
       ;;
     $OS_SLACKWARE) ;;
     $OS_NIXOS) ;;
