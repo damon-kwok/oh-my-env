@@ -363,13 +363,21 @@ case $OME_OS in
 			# disable old source
 			sudo zypper mr -da
 
-			# use new source
-      # sudo zypper addrepo -f http://mirrors.aliyun.com/opensuse/tumbleweed/ aliyun-update.repo
-	    sudo zypper addrepo -f http://mirrors.aliyun.com/opensuse/tumbleweed/repo/oss/ aliyun-oss.repo
-	    sudo zypper addrepo -f http://mirrors.aliyun.com/opensuse/tumbleweed/repo/non-oss/ aliyun-non-oss.repo
-      # sudo zypper addrepo -f http://mirrors.aliyun.com/opensuse/tumbleweed/repo/src-oss/ aliyun-src-oss.repo
-      # sudo zypper addrepo -f http://mirrors.aliyun.com/opensuse/tumbleweed/repo/src-non-oss/ aliyun-src-non-oss.repo
-      # sudo zypper addrepo -f http://mirrors.aliyun.com/opensuse/tumbleweed/repo/debug/ aliyun-debug.repo
+		    # use new source
+            readp "Tumbleweed?"
+            if [ $? -eq 1 ]; then
+                # sudo zypper addrepo -f http://mirrors.aliyun.com/opensuse/tumbleweed/ openSUSE-Aliyun-UPDATE
+                sudo zypper addrepo -f http://mirrors.aliyun.com/opensuse/tumbleweed/repo/oss/ openSUSE-Aliyun-OSS
+                sudo zypper addrepo -f http://mirrors.aliyun.com/opensuse/tumbleweed/repo/non-oss/ openSUSE-Aliyun-NON-OSS
+                # sudo zypper addrepo -f http://mirrors.aliyun.com/opensuse/tumbleweed/repo/src-oss/ openSUSE-Aliyun-SRC-OSS
+                # sudo zypper addrepo -f http://mirrors.aliyun.com/opensuse/tumbleweed/repo/src-non-oss/ openSUSE-Aliyun-SRC-NON-OSS
+                # sudo zypper addrepo -f http://mirrors.aliyun.com/opensuse/tumbleweed/repo/debug/ aliyun-debug.repo
+            else
+                sudo zypper ar https://mirrors.aliyun.com/opensuse/distribution/leap/${releasever}/repo/oss openSUSE-Aliyun-OSS
+                sudo zypper ar https://mirrors.aliyun.com/opensuse/distribution/leap/${releasever}/repo/non-oss openSUSE-Aliyun-NON-OSS
+                sudo zypper ar https://mirrors.aliyun.com/opensuse/update/leap/${releasever}/oss openSUSE-Aliyun-UPDATE-OSS
+                sudo zypper ar https://mirrors.aliyun.com/opensuse/update/leap/${releasever}/non-oss openSUSE-Aliyun-UPDATE-NON-OSS
+            fi
 		fi
     readp "SUSE: use 3rd repos?"
 		if [ $? -eq 1 ]; then
