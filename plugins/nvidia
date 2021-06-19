@@ -36,7 +36,12 @@ nvidia_install() {
     $OS_GENTOO) ;;
     $OS_SUSE)
       tip "add nvidia repo:"
-      sudo zypper addrepo -f https://download.nvidia.com/opensuse/tumbleweed/ nvidia
+      readp "tumbleweed?"
+      if [ $? -eq 1 ]; then
+        sudo zypper addrepo -f https://download.nvidia.com/opensuse/tumbleweed/ nvidia
+      else
+        sudo zypper addrepo -f https://download.nvidia.com/opensuse/leap/${releasever} nvidia
+      fi
       sudo zypper install x11-video-nvidiaG05
       ;;
     $OS_SLACKWARE) ;;

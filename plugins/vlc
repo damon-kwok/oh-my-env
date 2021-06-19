@@ -1,0 +1,27 @@
+#!/usr/bin/env sh
+
+vlc_install() {
+  readp "tumbleweed?"
+  if [ $? -eq 1 ]; then
+    sudo ar http://download.videolan.org/pub/vlc/SuSE/Tumbleweed/ vlc
+    sudo ar http://ftp.gwdg.de/pub/linux/misc/packman/suse/openSUSE_Tumbleweed/ packman
+  else
+    sudo ar http://download.videolan.org/pub/vlc/SuSE/Leap_${releasever}/ vlc
+    sudo ar http://ftp.gwdg.de/pub/linux/misc/packman/suse/openSUSE_Leap_${releasever}/ packman
+  fi
+
+  sudo zypper ref
+  sudo zypper in vlc ffmpeg-tools vlc-codecs
+}
+
+vlc_uninstall() {
+  echo_error "'vlc_uninstall' not implemented"
+}
+
+vlc_exist_p() {
+  echo_error "'vlc_exist_p' not implemented"
+}
+
+vlc_info() {
+  echo_error ""
+}
