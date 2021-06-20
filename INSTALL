@@ -355,7 +355,7 @@ case $OME_OS in
 		readp "update system?"
 		if [ $? -eq 1 ]; then
 			sudo zypper refresh
-			sudo zypper update
+			sudo zypper dup --no-allow-vendor-change
 		fi
 		sudo zypper install git subversion wget curl make \
 			   tar zip unzip rlwrap coreutils findutils diffutils \

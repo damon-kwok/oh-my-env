@@ -88,8 +88,6 @@ desktop_ext_install() {
         sudo zypper ar https://download.opensuse.org/repositories/home:zzndb001/openSUSE_Tumbleweed/home:zzndb001.repo
         # snappy
         sudo zypper ar https://download.opensuse.org/repositories/system:/snappy/openSUSE_Tumbleweed snappy
-        sudo zypper --gpg-auto-import-keys refresh
-        sudo zypper dup --from snappy
       else
         # nvidia
         sudo zypper ar https://download.nvidia.com/opensuse/leap/${releasever} nvidia
@@ -102,27 +100,31 @@ desktop_ext_install() {
         sudo zypper ar https://download.opensuse.org/repositories/home:zzndb001/openSUSE_Leap_${releasever}/home:zzndb001.repo
         # snappy
         sudo zypper ar https://download.opensuse.org/repositories/system:/snappy/openSUSE_Leap_${releasever} snappy
-        sudo zypper --gpg-auto-import-keys refresh
-        sudo zypper dup --from snappy
       fi
 
       sudo zypper refresh
+      sudo zypper dup --no-allow-vendor-change
       sudo zypper install x11-video-nvidiaG05 nvidia-glG05 \
            wps-office wechat-uos vlc ffmpeg-tools vlc-codecs \
            ibus ibus-libpinyin \
            MozillaThunderbird steam
       # bc4
       sudo rpm --import https://www.scootersoftware.com/RPM-GPG-KEY-scootersoftware
-      sudo zypper install http://www.scootersoftware.com/bcompare-4.3.7.25118.x86_64.rpm
+      sudo zypper install http://www.scootersoftware.com/bcompare-${BC4_VERSION}.x86_64.rpm #4.3.7.25118
 
+      # snappy
+      sudo zypper --gpg-auto-import-keys refresh
+      sudo zypper dup --from snappy
       sudo systemctl enable snapd
       sudo systemctl start snapd
-
       readp "Tumbleweed?"
       if [ $? -eq 1 ]; then
         sudo systemctl enable snapd.apparmor
         sudo systemctl start snapd.apparmor
       fi
+
+      # termius
+      sudo snap install termius-app
       ;;
     $OS_SLACKWARE) ;;
     $OS_NIXOS) ;;
