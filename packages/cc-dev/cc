@@ -114,7 +114,7 @@ cc_info() {
   # echo_kv "CTool" "pkg-config $PKGCONF_VERSION|$LIBTOOL_VERSION"
   # echo_kv "Make" "$MAKE_VERSION|$AUTOMAKE_VERSION|$AUTOCONF_VERSION"
 
-  ome_show "Make" "`ome_fetch_version make` | `ome_fetch_version cmake` | Ninja `ome_fetch_version ninja` | Meson `ome_fetch_version meson`"
+  ome_show "Make" "`ome_fetch_version make` | `ome_fetch_version cmake` | `ome_fetch_version ninja` | `ome_fetch_version meson`"
   ome_show "GCC" "`ome_fetch_version gcc`"
   ome_show "Clang" "`ome_fetch_version clang`"
   # ome_show "Auto" "`ome_fetch_version autogen` | `ome_fetch_version automake` | `ome_fetch_version autoconf`"
