@@ -90,16 +90,16 @@ desktop_ext_install() {
         sudo zypper ar https://download.opensuse.org/repositories/system:/snappy/openSUSE_Tumbleweed snappy
       else
         # nvidia
-        sudo zypper ar https://download.nvidia.com/opensuse/leap/${releasever} nvidia
+        sudo zypper ar https://download.nvidia.com/opensuse/leap/\$releasever nvidia
         # vlc
-        sudo ar http://download.videolan.org/pub/vlc/SuSE/Leap_${releasever}/ vlc
-        sudo zypper ar https://mirrors.ustc.edu.cn/packman/suse/openSUSE_Leap_${releasever}/ USTC:42.3:PACKMAN
+        sudo ar http://download.videolan.org/pub/vlc/SuSE/Leap_\$releasever/ vlc
+        sudo zypper ar https://mirrors.ustc.edu.cn/packman/suse/openSUSE_Leap_\$releasever/ USTC:42.3:PACKMAN
         # wps-office
-        sudo zypper ar https://download.opensuse.org/repositories/home:opensuse_zh/openSUSE_Leap_${releasever}/home:opensuse_zh.repo
+        sudo zypper ar https://download.opensuse.org/repositories/home:opensuse_zh/openSUSE_Leap_\$releasever/home:opensuse_zh.repo
         # wechat-uos
-        sudo zypper ar https://download.opensuse.org/repositories/home:zzndb001/openSUSE_Leap_${releasever}/home:zzndb001.repo
+        sudo zypper ar https://download.opensuse.org/repositories/home:zzndb001/openSUSE_Leap_\$releasever/home:zzndb001.repo
         # snappy
-        sudo zypper ar https://download.opensuse.org/repositories/system:/snappy/openSUSE_Leap_${releasever} snappy
+        sudo zypper ar https://download.opensuse.org/repositories/system:/snappy/openSUSE_Leap_\$releasever snappy
       fi
 
       sudo zypper refresh

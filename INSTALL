@@ -311,11 +311,11 @@ case $OME_OS in
         # sudo zypper ar -f http://mirrors.aliyun.com/opensuse/tumbleweed/repo/debug/ aliyun-debug.repo
         sudo zypper ar https://mirrors.ustc.edu.cn/packman/suse/openSUSE_Tumbleweed/ USTC:42.3:PACKMAN
       else
-        sudo zypper ar https://mirrors.aliyun.com/opensuse/distribution/leap/${releasever}/repo/oss openSUSE-Aliyun-OSS
-        sudo zypper ar https://mirrors.aliyun.com/opensuse/distribution/leap/${releasever}/repo/non-oss openSUSE-Aliyun-NON-OSS
-        sudo zypper ar https://mirrors.aliyun.com/opensuse/update/leap/${releasever}/oss openSUSE-Aliyun-UPDATE-OSS
-        sudo zypper ar https://mirrors.aliyun.com/opensuse/update/leap/${releasever}/non-oss openSUSE-Aliyun-UPDATE-NON-OSS
-        sudo zypper ar https://mirrors.ustc.edu.cn/packman/suse/openSUSE_Leap_${releasever}/ USTC:42.3:PACKMAN
+        sudo zypper ar https://mirrors.aliyun.com/opensuse/distribution/leap/\$releasever/repo/oss openSUSE-Aliyun-OSS
+        sudo zypper ar https://mirrors.aliyun.com/opensuse/distribution/leap/\$releasever/repo/non-oss openSUSE-Aliyun-NON-OSS
+        sudo zypper ar https://mirrors.aliyun.com/opensuse/update/leap/\$releasever/oss openSUSE-Aliyun-UPDATE-OSS
+        sudo zypper ar https://mirrors.aliyun.com/opensuse/update/leap/\$releasever/non-oss openSUSE-Aliyun-UPDATE-NON-OSS
+        sudo zypper ar https://mirrors.ustc.edu.cn/packman/suse/openSUSE_Leap_\$releasever/ USTC:42.3:PACKMAN
       fi
 		fi
     readp "SUSE: use 3rd repos?"
@@ -338,17 +338,17 @@ case $OME_OS in
         sudo zypper ar http://download.opensuse.org/repositories/mozilla/openSUSE_Tumbleweed/ mozilla
       else
         tip "add http servers repo:"
-        sudo zypper ar http://download.opensuse.org/repositories/server:/http/openSUSE_Leap_${releasever}/ http-server
+        sudo zypper ar http://download.opensuse.org/repositories/server:/http/openSUSE_Leap_\$releasever/ http-server
         tip "add database servers repo:"
-        sudo zypper ar http://download.opensuse.org/repositories/server:/database/openSUSE_Leap_${releasever}/ db-server
+        sudo zypper ar http://download.opensuse.org/repositories/server:/database/openSUSE_Leap_\$releasever/ db-server
         tip "add games repo:"
-        sudo zypper ar http://download.opensuse.org/repositories/games/openSUSE_Leap_${releasever}/ games
+        sudo zypper ar http://download.opensuse.org/repositories/games/openSUSE_Leap_\$releasever/ games
         tip "add wine repo:"
-        sudo zypper ar http://download.opensuse.org/repositories/Emulators:/Wine/openSUSE_Leap_${releasever}/ wine
+        sudo zypper ar http://download.opensuse.org/repositories/Emulators:/Wine/openSUSE_Leap_\$releasever/ wine
         tip "add science repo:"
-        sudo zypper ar http://download.opensuse.org/repositories/science/openSUSE_Leap_${releasever}/ science
+        sudo zypper ar http://download.opensuse.org/repositories/science/openSUSE_Leap_\$releasever/ science
         tip "add mozilla repo:"
-        sudo zypper ar http://download.opensuse.org/repositories/mozilla/openSUSE_Leap_${releasever}/ mozilla
+        sudo zypper ar http://download.opensuse.org/repositories/mozilla/openSUSE_Leap_\$releasever/ mozilla
       fi
     fi
 

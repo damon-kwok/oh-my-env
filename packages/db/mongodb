@@ -15,7 +15,7 @@ mongodb_install() {
         local cfg = /etc/yum.repos.d/mongodb-org-4.2.repo
         sudo echo '[mongodb-org-4.2]' > $cfg
         sudo echo 'name=MongoDB Repository' >> $cfg
-        sudo echo 'baseurl=https://repo.mongodb.org/yum/redhat/$releasever/mongodb-org/4.2/x86_64/' >> $cfg
+        sudo echo 'baseurl=https://repo.mongodb.org/yum/redhat/\$releasever/mongodb-org/4.2/x86_64/' >> $cfg
         sudo echo 'gpgcheck=1' >> $cfg
         sudo echo 'enabled=1' >> $cfg
         sudo echo 'gpgkey=https://www.mongodb.org/static/pgp/server-4.2.asc' >> $cfg
