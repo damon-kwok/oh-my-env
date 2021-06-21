@@ -79,26 +79,27 @@ ome_eval() {
 
   #echo "ome_eval:$@"
   local FUNC="$1"
-  local PLUGIN="$2"
+  local PKG="$2"
 
   # local OPT_TYPE=$2
   # local ARG1=$3
   # local ARG2=$4
 
-  local EVAL="${PLUGIN}_${FUNC}"
+  local EVAL="${PKG}_${FUNC}"
   title "$EVAL"
 
-  if [ -f "$OME_ROOT/plugins/$OME_OS/$PLUGIN" ]; then
-    . "$OME_ROOT/plugins/$OME_OS/$PLUGIN"
-    #echo "eval $EVAL"
-    eval "$EVAL"
-  elif [ -f "$OME_ROOT/plugins/$PLUGIN" ]; then
-    . "$OME_ROOT/plugins/$PLUGIN"
-    #echo "eval $EVAL"
-    eval "$EVAL"
-  else
-    echo_error "$PLUGIN is not exist!"
-  fi
+  # if [ -f "$OME_ROOT/packages/$OME_OS/$PKG" ]; then
+  #   . "$OME_ROOT/packages/$OME_OS/$PKG"
+  #   #echo "eval $EVAL"
+  #   eval "$EVAL"
+  # elif [ -f "$OME_ROOT/packages/$PKG" ]; then
+  #   . "$OME_ROOT/packages/$PKG"
+  #   #echo "eval $EVAL"
+  #   eval "$EVAL"
+  # else
+  #   echo_error "$PKG is not exist!"
+  # fi
+  eval "$EVAL"
 }
 
 ome_install() {
@@ -349,12 +350,12 @@ ome_help() {
   echo ""
   echo "init                           initialization"
   #echo "config                         ome base config:git/gcc/clang"
-  echo "install   [plugin_name...]     install plugin"
-  echo "uninstall [plugin_name...]     uninstall plugin"
-  echo "plugin    [plugin name]        create/edit plugin"
+  echo "install   [pkg_name...]     install plugin"
+  echo "uninstall [pkg_name...]     uninstall plugin"
+  echo "pkg       [pkg_name]        create/edit plugin"
   echo "new [language] [project_name]  create project"
   echo "repl                           show REPL menu"
-  echo "list                           list all plugins"
+  echo "list                           list all packages"
   echo ""
   echo "update, pull                   self update"
   echo "commit, push                   commit your modify content"
@@ -401,7 +402,7 @@ ome_parse() {
       ome_package_list
       ;;
     "open")
-      $EDITOR "$OME_ROOT/plugins/$ARG1"
+      $EDITOR "$OME_ROOT/packages/$ARG1"
       ;;
     "pull"|"update"|"upgrade")
       ome_config
@@ -457,7 +458,7 @@ ome_parse() {
       # sdk list groovy
       ;;
     "plugin")
-      $EDITOR $HOME/.oh-my-env/plugins/$ARG1
+      $EDITOR $HOME/.oh-my-env/packages/$ARG1
       ;;
     #        "test")
     #            # spin

@@ -4,6 +4,7 @@ nix_install() {
   mkdir -p $HOME/.config/nix/
   echo "substituters = https://mirrors.tuna.tsinghua.edu.cn/nix-channels/store https://cache.nixos.org/" > $HOME/.config/nix/nix.conf
   sudo sh -c 'echo "substituters = https://mirrors.tuna.tsinghua.edu.cn/nix-channels/store https://cache.nixos.org/" > /etc/nix/nix.conf'
+  echo "{ allowUnfree = true; }" >> ~/.config/nixpkgs/config.nix
   sh <(curl https://mirrors.tuna.tsinghua.edu.cn/nix/latest/install) --daemon
 }
 
@@ -19,3 +20,5 @@ nix_exist_p() {
 nix_info() {
   echo_error ""
 }
+
+export NIXPKGS_ALLOW_UNFREE=1
