@@ -18,7 +18,7 @@ kernel-devel_install() {
       yum install -y patch flex bison cpio ncurses-devel openssl openssl-devel
       ;;
     $OS_ARCH)
-      trizen -S base-devel flex bison cpio ncurses-devel openssl openssl-devel
+      trizen -S base-devel flex bison cpio ncurses openssl
       ;;
     $OS_GENTOO)
       sudo zypper install -t pattern devel_basis

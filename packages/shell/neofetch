@@ -3,7 +3,7 @@
 neofetch_install() {
   github_upgrade dylanaraps/neofetch $OME_REPO/neofetch
   cd $OME_REPO/neofetch
-  make PREFIX=$OME_PREFOX install
+  make PREFIX=$OME_PREFIX install
 }
 
 neofetch_uninstall() {
