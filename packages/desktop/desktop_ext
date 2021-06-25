@@ -71,7 +71,12 @@ desktop_ext_install() {
       pkg_name="linux${kver//./}-nvidia"
       tip "install ${pkg_name}"
       sudo pacman -S ${pkg_name}
-      trizen -S wps-office bcompare wechat-uos
+
+      # zh fonts
+      sudo pacman -S wqy-bitmapfont wqy-microhei wqy-zenhei
+
+      # other
+      trizen -S wps-office bcompare wechat-uos termius
       ;;
     $OS_GENTOO) ;;
     $OS_SUSE)
