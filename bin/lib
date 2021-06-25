@@ -139,6 +139,8 @@ ome_git_config() {
     # git config --global core.safecrlf true
     git config --global core.safecrlf false
 
+    git config --global format.signOff true
+
     git config --global advice.addIgnoredFile true
     # git config --global init.templatedir $OME_ROOT/conf/git/templates
 
