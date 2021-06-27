@@ -160,16 +160,16 @@ ome_dev_path() {
       echo_kv "ome_dev_path" "${dir}/bin"
     fi
     export PATH=$dir/bin:$PATH
-    # export MANPATH=$dir/share/man:${MANPATH:-""}
-    # export INFOPATH=$dir/share/info:${INFOPATH:-""}
-    # export LIBRARY_PATH=$dir/lib:${LIBRARY_PATH:-""}
-    # export LD_LIBRARY_PATH=$dir/lib:${LD_LIBRARY_PATH:-""}
-    # export LD_RUN_PATH=$dir/lib:${LD_RUN_PATH:-""}
-    # export PKG_CONFIG_PATH=$dir/lib/pkgconfig:$dir/share/pkgconfig:${PKG_CONFIG_PATH:-""}
+    export MANPATH=$dir/share/man:${MANPATH:-""}
+    export INFOPATH=$dir/share/info:${INFOPATH:-""}
+    export LIBRARY_PATH=$dir/lib:${LIBRARY_PATH:-""}
+    export LD_LIBRARY_PATH=$dir/lib:${LD_LIBRARY_PATH:-""}
+    export LD_RUN_PATH=$dir/lib:${LD_RUN_PATH:-""}
+    export PKG_CONFIG_PATH=$dir/lib/pkgconfig:$dir/share/pkgconfig:${PKG_CONFIG_PATH:-""}
     # libtool --finish $dir/lib
 
-    # export CMAKE_INCLUDE_PATH=$dir/include:${CMAKE_INCLUDE_PATH:-""}
-    # export CMAKE_LIBRARY_PATH=$dir/lib:${CMAKE_LIBRARY_PATH:-""}
+    export CMAKE_INCLUDE_PATH=$dir/include:${CMAKE_INCLUDE_PATH:-""}
+    export CMAKE_LIBRARY_PATH=$dir/lib:${CMAKE_LIBRARY_PATH:-""}
 
     # export C_INCLUDE_PATH=$dir/include:${C_INCLUDE_PATH:-""}
     # export CPLUS_INCLUDE_PATH=$dir/include:${CPLUS_INCLUDE_PATH:-""}
