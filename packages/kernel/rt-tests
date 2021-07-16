@@ -9,7 +9,12 @@ rt-tests_install() {
     $OS_DEBIAN|$OS_UBUNTU) sudo apt-get install rt-tests numactl;;
     # $OS_REDHAT) ;;
     # $OS_FEDORA) ;;
-    $OS_REDHAT|$OS_FEDORA) sudo yum install -y rt-tests numactl;;
+    $OS_REDHAT|$OS_FEDORA)
+      sudo yum install -y numactl-devel # numactl-libs
+      git clone git://git.kernel.org/pub/scm/utils/rt-tests/rt-tests.git --depth 1
+      cd rt-tests/
+      make -j8 all
+      ;;
     $OS_ARCH) sudo pacman -S rt-tests numactl;;
     $OS_GENTOO) ;;
     $OS_SUSE) sudo zypper install rt-tests numactl;;
@@ -34,7 +39,7 @@ rt-tests_install() {
     # Other
     $OS_UNKNOW) ;;
   esac
-
+  sudo cyclictest -t 5 -p 80 -N
 }
 
 rt-tests_uninstall() {
