@@ -272,27 +272,27 @@ export STACK_VERSION=2.7.1
 export GHC_VERSION=8.8.3
 export PYTHON2_VERSION=2.7.18
 export PYTHON3_VERSION=3.9.5
-export RUBY_VERSION=3.0.1
+export RUBY_VERSION=3.02
 # export PHP_VERSION=5.6.39
-export PHP_VERSION=8.0.7
+export PHP_VERSION=8.0.9
 
 export JAVA_VERSION="11.0.6.hs-adpt"
 # export JAVA_VERSION=20.0.0.r11-grl
-export JBANG_VERSION=0.70.0
-export ANT_VERSION=1.10.9
-export MAVEN_VERSION=3.8.1
+export JBANG_VERSION=0.78.0
+export ANT_VERSION=1.10.10
+export MAVEN_VERSION=3.8.2
 
 # Language III
-export GRADLE_VERSION=7.0.2
-export KOTLIN_VERSION=1.5.10
-export SCALA_VERSION=2.13.6
-export SBT_VERSION=1.5.3
+export GRADLE_VERSION=7.2
+export KOTLIN_VERSION=1.5.21
+export SCALA_VERSION=3.0.1
+export SBT_VERSION=1.5.5
 export GROOVY_VERSION=3.0.8
-export GRAILS_VERSION=4.0.10
-export CLOJURE_VERSION=1.10.3.855
+export GRAILS_VERSION=4.0.11
+export CLOJURE_VERSION=1.10.3.943
 export LEIN_VERSION=2.9.6
-export GOLANG_VERSION=1.16.5
-export NODEJS_VERSION=14.17.0
+export GOLANG_VERSION=1.17
+export NODEJS_VERSION=14.17.5
 
 # Language IV
 export NIM_VERSION=1.4.8
@@ -304,8 +304,8 @@ export ANTLR3_VERSION=3.5.2
 export ANTLR4_VERSION=4.8
 export ST_VERSION=4.3 #StringTemplate
 
-export BC4_VERSION=4.3.7.25118
-export JETBRINS_FONT_VERSION=2.225
+export BC4_VERSION=4.4.0.25886
+export JETBRINS_FONT_VERSION=2.242
 export POWERSHELL_VERSION="7.2.0-preview.7"
 ################################################################################
 # load plugins
