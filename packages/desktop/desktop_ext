@@ -86,7 +86,7 @@ desktop_ext_install() {
         sudo zypper ar https://download.nvidia.com/opensuse/tumbleweed/ nvidia
         # vlc
         sudo ar http://download.videolan.org/pub/vlc/SuSE/Tumbleweed/ vlc
-        sudo zypper ar https://mirrors.ustc.edu.cn/packman/suse/openSUSE_Tumbleweed/ USTC:42.3:PACKMAN
+        sudo zypper ar https://mirrors.ustc.edu.cn/packman/suse/openSUSE_Tumbleweed/ packman
         # wps
         sudo zypper ar https://download.opensuse.org/repositories/home:opensuse_zh/openSUSE_Tumbleweed/home:opensuse_zh.repo
         # wechat-uos
@@ -98,7 +98,7 @@ desktop_ext_install() {
         sudo zypper ar https://download.nvidia.com/opensuse/leap/\$releasever nvidia
         # vlc
         sudo ar http://download.videolan.org/pub/vlc/SuSE/Leap_\$releasever/ vlc
-        sudo zypper ar https://mirrors.ustc.edu.cn/packman/suse/openSUSE_Leap_\$releasever/ USTC:42.3:PACKMAN
+        sudo zypper ar https://mirrors.ustc.edu.cn/packman/suse/openSUSE_Leap_\$releasever/ packman
         # wps-office
         sudo zypper ar https://download.opensuse.org/repositories/home:opensuse_zh/openSUSE_Leap_\$releasever/home:opensuse_zh.repo
         # wechat-uos
@@ -115,7 +115,7 @@ desktop_ext_install() {
            MozillaThunderbird steam
       # bc4
       sudo rpm --import https://www.scootersoftware.com/RPM-GPG-KEY-scootersoftware
-      sudo zypper install http://www.scootersoftware.com/bcompare-${BC4_VERSION}.x86_64.rpm #4.3.7.25118
+      sudo zypper install http://www.scootersoftware.com/bcompare-${BC4_VERSION}.x86_64.rpm
 
       # snappy
       sudo zypper --gpg-auto-import-keys refresh
