@@ -352,7 +352,7 @@ ome_help() {
   #echo "config                         ome base config:git/gcc/clang"
   echo "install   [pkg_name...]     install plugin"
   echo "uninstall [pkg_name...]     uninstall plugin"
-  echo "pkg       [pkg_name]        create/edit plugin"
+  echo "open      [pkg_name]        create/edit plugin"
   echo "new [language] [project_name]  create project"
   echo "repl                           show REPL menu"
   echo "list                           list all packages"
