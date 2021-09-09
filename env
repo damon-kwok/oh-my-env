@@ -58,8 +58,6 @@ case "`uname -s`" in
         export OME_OS=$OS_FEDORA
       fi
       # elif [ "`command -v yum`" != "" ]; then
-    elif [ "`command -v nix`" != "" ]; then
-      export OME_OS=$OS_NIXOS
     elif [ "`command -v guix`" != "" ]; then
       export OME_OS=$OS_GUIXSD
     elif [ "lsb_release" != "" ]; then
@@ -73,6 +71,8 @@ case "`uname -s`" in
         *)
           export OME_OS="`lsb_release -is`";;
       esac
+    elif [ "`command -v nix`" != "" ]; then
+      export OME_OS=$OS_NIXOS
     else
       export OME_OS=$OS_UNKNOW
     fi
