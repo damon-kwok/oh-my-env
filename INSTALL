@@ -370,6 +370,34 @@ case $OME_OS in
 	$OS_ALPINE) ;;
 	$OS_MAGEIA) ;;
 	$OS_SLITAZ) ;;
+  $OS_GENTOO)
+    readp "Gentoo: select mirrors?"
+		if [ $? -eq 1 ]; then
+      mirrorselect -i -o >> /mnt/gentoo/etc/portage/make.conf
+    fi
+    emerge --syncc
+    emerge -auvDN @world
+    perl-cleaner --all
+    etc-update --automode -3
+    ;;
+  $OS_FUNTOO)
+    readp "Funtoo: use china mirror repos?"
+		if [ $? -eq 1 ]; then
+      echo "meta_repo_path = /var/git/meta-repo" >> /etc/ego.conf
+      echo "repos_conf_path = /var/git/meta-repo" >> /etc/portage/repos.conf
+      echo "sync_base_url = https://gitee.com/funtoo/{repo}" >> /etc/ego.conf
+    fi
+    ego sync
+    emerge -auvDN @world
+    perl-cleaner --all
+    etc-update --automode -3
+    ;;
+  $OS_EXHERBO)
+    cave sync
+    cave resolve world -c
+    perl-cleaner --all
+    etc-update --automode -3
+    ;;
 	# Unix
 	$OS_MACOS)
 		echo "Install Homebrew"
@@ -395,8 +423,22 @@ case $OME_OS in
 	$OS_FREEBSD)
 		readp "update system?"
 		if [ $? -eq 1 ]; then
-			sudo pkg update
+      # pkg:
+      echo 'FreeBSD: {' > /usr/local/etc/pkg/repos/FreeBSD.conf
+      readp "Are you using FreeBSD-CURRENT??"
+		  if [ $? -eq 1 ]; then
+        echo '  url: "pkg+http://mirrors.ustc.edu.cn/freebsd-pkg/${ABI}/latest",' >> /usr/local/etc/pkg/repos/FreeBSD.conf
+      else
+        echo '  url: "pkg+http://mirrors.ustc.edu.cn/freebsd-pkg/${ABI}/quarterly",' >> /usr/local/etc/pkg/repos/FreeBSD.conf
+      fi
+      echo '}' >> /usr/local/etc/pkg/repos/FreeBSD.conf
+			sudo pkg update -f
 			sudo pkg upgrade
+
+      # ports:
+      echo "MASTER_SITE_OVERRIDE?=http://mirrors.ustc.edu.cn/freebsd-ports/distfiles/${DIST_SUBDIR}/" >> /etc/make.conf
+      freebsd-update fetch
+      freebsd-update install
 		fi
 
 		sudo pkg install git subversion wget curl gmake \

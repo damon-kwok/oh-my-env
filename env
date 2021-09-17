@@ -8,6 +8,8 @@ export OS_REDHAT="RedHat" # Red Hat Enterprise Linux, Oracle Linux, CentOS, Scie
 export OS_FEDORA="Fedora"
 export OS_ARCH="ArchLinux"
 export OS_GENTOO="Gentoo"
+export OS_FUNTOO="Funtoo"
+export OS_EXHERBO="Exherbo"
 export OS_SUSE="openSUSE"
 export OS_SLACKWARE="Slackware"
 export OS_NIXOS="NixOS"
@@ -71,6 +73,12 @@ case "`uname -s`" in
         *)
           export OME_OS="`lsb_release -is`";;
       esac
+    elif [ "`command -v ego`" != "" ]; then
+      export OME_OS=$OS_FUNTOO
+    elif [ "`command -v cave`" != "" ]; then
+      export OME_OS=$OS_EXHERBO
+    elif [ "`command -v emerge`" != "" ]; then
+      export OME_OS=$OS_GENTOO
     elif [ "`command -v nix`" != "" ]; then
       export OME_OS=$OS_NIXOS
     else
