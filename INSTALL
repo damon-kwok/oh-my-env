@@ -437,13 +437,13 @@ case $OME_OS in
 
       # ports:
       echo "MASTER_SITE_OVERRIDE?=http://mirrors.ustc.edu.cn/freebsd-ports/distfiles/${DIST_SUBDIR}/" >> /etc/make.conf
-      freebsd-update fetch
-      freebsd-update install
+      sudo freebsd-update fetch
+      sudo freebsd-update install
 		fi
 
 		sudo pkg install git subversion wget curl gmake \
-			   bash zip unzip rlwrap coreutils findutils diffutils \
-			   zh-font-std bitstream-vera emacs
+			  bash zip unzip rlwrap coreutils findutils diffutils \
+			  zh-font-std bitstream-vera emacs
 
 		# tip "install mate desktop"
 		# sudo pkg install xorg slime mate
@@ -464,7 +464,26 @@ case $OME_OS in
 		;;
 	$OS_OPENBSD) ;;
 	$OS_NETBSD) ;;
-	$OS_DFBSD) ;;
+	$OS_DFBSD)
+    readp "update system?"
+		if [ $? -eq 1 ]; then
+      # pkg:
+      echo "# China, Shanghai" > /usr/local/etc/pkg/repos/sjtug.conf
+      echo "SJTUG: {" >> /usr/local/etc/pkg/repos/sjtug.conf
+      echo "    url:        https://mirror.sjtu.edu.cn/dragonflybsd/dports/${ABI}/LATEST," >> /usr/local/etc/pkg/repos/sjtug.conf
+      echo "    priority:   10," >> /usr/local/etc/pkg/repos/sjtug.conf
+      echo "    enabled:    yes" >> /usr/local/etc/pkg/repos/sjtug.conf
+      echo '}' >> /usr/local/etc/pkg/repos/sjtug.conf
+    fi
+    sudo pkg update -f
+		sudo pkg upgrade
+
+    # ports:
+    echo "MASTER_SITE_OVERRIDE?=http://mirrors.ustc.edu.cn/freebsd-ports/distfiles/${DIST_SUBDIR}/" >> /etc/make.conf
+
+    pkg update
+    pkg upgrade
+    ;;
 	# Windows
 	$OS_CYGWIN)
 		readp "upgrade apt-cyg tools?"

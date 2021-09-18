@@ -79,76 +79,17 @@ desktop_ext_install() {
       trizen -S wps-office bcompare wechat-uos termius
       ;;
     $OS_GENTOO) ;;
-    $OS_SUSE)
-      readp "Tumbleweed?"
-      if [ $? -eq 1 ]; then
-        # nvidia
-        sudo zypper ar https://download.nvidia.com/opensuse/tumbleweed/ nvidia
-        # vlc
-        sudo ar http://download.videolan.org/pub/vlc/SuSE/Tumbleweed/ vlc
-        sudo zypper ar https://mirrors.ustc.edu.cn/packman/suse/openSUSE_Tumbleweed/ packman
-        # wps
-        sudo zypper ar https://download.opensuse.org/repositories/home:opensuse_zh/openSUSE_Tumbleweed/home:opensuse_zh.repo
-        # wechat-uos
-        sudo zypper ar https://download.opensuse.org/repositories/home:zzndb001/openSUSE_Tumbleweed/home:zzndb001.repo
-        # snappy
-        sudo zypper ar https://download.opensuse.org/repositories/system:/snappy/openSUSE_Tumbleweed snappy
-      else
-        # nvidia
-        sudo zypper ar https://download.nvidia.com/opensuse/leap/\$releasever nvidia
-        # vlc
-        sudo ar http://download.videolan.org/pub/vlc/SuSE/Leap_\$releasever/ vlc
-        sudo zypper ar https://mirrors.ustc.edu.cn/packman/suse/openSUSE_Leap_\$releasever/ packman
-        # wps-office
-        sudo zypper ar https://download.opensuse.org/repositories/home:opensuse_zh/openSUSE_Leap_\$releasever/home:opensuse_zh.repo
-        # wechat-uos
-        sudo zypper ar https://download.opensuse.org/repositories/home:zzndb001/openSUSE_Leap_\$releasever/home:zzndb001.repo
-        # snappy
-        sudo zypper ar https://download.opensuse.org/repositories/system:/snappy/openSUSE_Leap_\$releasever snappy
-      fi
-
-      sudo zypper refresh
-      sudo zypper dup --no-allow-vendor-change
-      sudo zypper install x11-video-nvidiaG05 nvidia-glG05 \
-           wps-office wechat-uos vlc ffmpeg-tools vlc-codecs \
-           ibus ibus-libpinyin \
-           MozillaThunderbird steam
-      # bc4
-      sudo rpm --import https://www.scootersoftware.com/RPM-GPG-KEY-scootersoftware
-      sudo zypper install http://www.scootersoftware.com/bcompare-${BC4_VERSION}.x86_64.rpm
-
-      # snappy
-      sudo zypper --gpg-auto-import-keys refresh
-      sudo zypper dup --from snappy
-      sudo systemctl enable snapd
-      sudo systemctl start snapd
-      readp "Tumbleweed?"
-      if [ $? -eq 1 ]; then
-        sudo systemctl enable snapd.apparmor
-        sudo systemctl start snapd.apparmor
-      fi
-
-      # termius
-      sudo snap install termius-app
-
-      # P3X-onenote
-      sudo snap install p3x-onenote
+    $OS_FUNTOO) ;;
+    $OS_FREEBSD | $OS_DFBSD)
+      pkg install xorg slim cinnamon
+      echo 'gdm_enable="YES"' >> /etc/rc.conf
+      echo 'slim_enable="YES"' >> /etc/rc.conf
+      echo 'dbus_enable="YES"' >> /etc/rc.conf
+      echo 'hald_enable="YES"' >> /etc/rc.conf
+      echo 'exec cinnamon-session' >> ~/.xinitrc
       ;;
-    $OS_SLACKWARE) ;;
-    $OS_NIXOS) ;;
-    $OS_VOID) ;;
-    $OS_ALPINE) ;;
-    $OS_MAGEIA) ;;
-    $OS_SLITAZ) ;;
-    $OS_GUIXSD) ;;
-    # Unix
-    $OS_MACOS) ;;
-    $OS_AIX) ;;
-    $OS_SOLARIS) ;;
-    $OS_FREEBSD) ;;
     $OS_OPENBSD) ;;
     $OS_NETBSD) ;;
-    $OS_DFBSD) ;;
     # Windows
     $OS_CYGWIN) ;;
     $OS_MSYS2) ;;
