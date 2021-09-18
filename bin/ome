@@ -505,7 +505,8 @@ ome_parse() {
 ECHO_OME_VERSION() {
   local oldir=`pwd`
   cd $OME_ROOT
-  echo "OME-`git log -1 --format="%cd" --date=short | sed 's|-||g'` Copyright 2009-2020 Damon Kwok"
+  tmp=`git log -1 --format="%cd" --date=short | sed 's|-||g'`
+  echo "OME-${tmp} Copyright 2009-${tmp:0:4} Damon Kwok"
   cd $oldir
 }
 
