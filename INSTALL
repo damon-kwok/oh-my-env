@@ -442,8 +442,8 @@ case $OME_OS in
 		fi
 
 		sudo pkg install git subversion wget curl gmake \
-			  bash zip unzip rlwrap coreutils findutils diffutils \
-			  zh-font-std bitstream-vera emacs
+			   bash zip unzip rlwrap coreutils findutils diffutils \
+			   zh-font-std bitstream-vera emacs
 
 		# tip "install mate desktop"
 		# sudo pkg install xorg slime mate
@@ -477,12 +477,6 @@ case $OME_OS in
     fi
     sudo pkg update -f
 		sudo pkg upgrade
-
-    # ports:
-    echo "MASTER_SITE_OVERRIDE?=http://mirrors.ustc.edu.cn/freebsd-ports/distfiles/${DIST_SUBDIR}/" >> /etc/make.conf
-
-    pkg update
-    pkg upgrade
     ;;
 	# Windows
 	$OS_CYGWIN)
