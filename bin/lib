@@ -520,7 +520,7 @@ git_push() {
 	  read -p "please enter commit message:" msg
 	  git commit -m "$msg"
   fi
-  git push -u origin master
+  git push #-u origin master
 }
 
 git_push_a() {
