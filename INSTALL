@@ -375,21 +375,29 @@ case $OME_OS in
 		if [ $? -eq 1 ]; then
       mirrorselect -i -o >> /mnt/gentoo/etc/portage/make.conf
     fi
-    emerge --syncc
+    emerge --sync
+    emerge layman
+    layman -S
+    layman -a gentoo-zh
+    emerge --sync
     emerge -auvDN @world
-    perl-cleaner --all
     etc-update --automode -3
+    emerge --depclean
+    perl-cleaner --all
     ;;
   $OS_FUNTOO)
     readp "Funtoo: use china mirror repos?"
 		if [ $? -eq 1 ]; then
-      echo "meta_repo_path = /var/git/meta-repo" >> /etc/ego.conf
-      echo "repos_conf_path = /var/git/meta-repo" >> /etc/portage/repos.conf
-      echo "sync_base_url = https://gitee.com/funtoo/{repo}" >> /etc/ego.conf
+      # echo "meta_repo_path = /var/git/meta-repo" >> /etc/ego.conf
+      # echo "repos_conf_path = /var/git/meta-repo" >> /etc/portage/repos.conf
+      if ! grep -q "sync_base_url" /etc/ego.conf; then
+        echo "sync_base_url = https://gitee.com/funtoo/{repo}" >> /etc/ego.conf
+      fi
     fi
     ego sync
     emerge -auvDN @world
     perl-cleaner --all
+    emerge --depclean
     etc-update --automode -3
     ;;
   $OS_EXHERBO)
