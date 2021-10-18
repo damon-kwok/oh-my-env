@@ -22,12 +22,12 @@
 - curl
 
 *** Install
-# bash -c "$(curl -fksSL https://git.io/Jf1Ho)"
-# bash -c "$(curl --proto '=https' --tlsv1.2 -sSf https://git.io/Jf1Ho)"
+# bash -c "$(curl -fksSL https://git.io/JK1di)"
+# bash -c "$(curl --proto '=https' --tlsv1.2 -sSf https://git.io/JK1di))"
 #+BEGIN_SRC sh
-bash <(curl -fksSL https://git.io/Jf1Ho)
+bash <(curl -fksSL https://git.io/JK1di))
 # If you living China:
-bash <(curl -fksSL http://alturl.com/j2dbn)
+bash <(curl -fksSL http://topurl.cn/8V8)
 #+END_SRC
 
 *** Uninstall
