@@ -1,5 +1,5 @@
-#+TITLE:     Oh My Env
-#+AUTHOR:    damon-kwok
+#+TITLE:     Oh My Environment
+#+AUTHOR:    Damon Kwok
 #+EMAIL:     damon-kwok@outlook.com
 #+DATE:      2018-06-08
 #+OPTIONS: toc:nil creator:nil author:nil email:nil timestamp:nil html-postamble:nil
@@ -11,21 +11,21 @@
 *** Support OS
 | OS     | Distribution                                                      |
 |--------+-------------------------------------------------------------------|
-| Linux  | Arch/ Debian/ Ubuntu/ RedHat/ Fedora/ SUSE |
-| BSD    | FreeBSD/ DragonFly/ OpenBSD/ NetBSD                               |
+| Linux  | Arch/ Debian/ Ubuntu/ RedHat/ Fedora/ SUSE/ Gentoo                |
+| BSD    | FreeBSD/ DragonFly/ OpenBSD/ NetBSD/ NomadBSD/ GhostBSDD/ SteamBSD|
 | Unix   | Solaris/ OpenIndiana/ *illumo                                     |
-| Window | Cygwin/ MSYS2                                                     |
+| Window | Cygwin/ MSYS2/ git-sh                                             |
 
 *** Requires
 - bash
-- git
 - curl
+- git
 
 *** Install
 # bash -c "$(curl -fksSL https://git.io/JK1di)"
 # bash -c "$(curl --proto '=https' --tlsv1.2 -sSf https://git.io/JK1di))"
 #+BEGIN_SRC sh
-bash <(curl -fksSL https://git.io/JK1di))
+bash <(curl -fksSL https://git.io/JK1di)
 # If you living China:
 bash <(curl -fksSL http://topurl.cn/8V8)
 #+END_SRC
