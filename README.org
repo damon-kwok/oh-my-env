@@ -12,7 +12,7 @@
 | OS     | Distribution                                                      |
 |--------+-------------------------------------------------------------------|
 | Linux  | Arch/ Debian/ Ubuntu/ RedHat/ Fedora/ SUSE/ Gentoo                |
-| BSD    | FreeBSD/ DragonFly/ OpenBSD/ NetBSD/ NomadBSD/ GhostBSDD/ SteamBSD|
+| BSD    | FreeBSD/DragonFly/OpenBSD/NetBSD/NomadBSD/GhostBSD/SteamBSD       |
 | Unix   | Solaris/ OpenIndiana/ *illumo                                     |
 | Window | Cygwin/ MSYS2/ git-sh                                             |
 
@@ -37,7 +37,13 @@ rm -rf ~/.ome_local
 #+END_SRC
 
 *** Usage
-- Install plugins
+
+- Update
+#+BEGIN_SRC sh
+ome update
+#+END_SRC
+
+- Install programming language
 #+BEGIN_SRC sh
 ome install cc          # GCC Clang
 ome install clj cljls   # Clojure ClojureScript
@@ -59,19 +65,14 @@ ome install v           # vlang
 ome install java kotlin groovy scala ceylon
 #+END_SRC
 
-- Update
+- Create project
 #+BEGIN_SRC sh
-ome update
+ome new
 #+END_SRC
 
 - REPL
 #+BEGIN_SRC sh
 ome repl
-#+END_SRC
-
-- Create project
-#+BEGIN_SRC sh
-ome new
 #+END_SRC
 
 *** Link
