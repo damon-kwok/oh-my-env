@@ -12,8 +12,8 @@
 | OS     | Distribution                                                      |
 |--------+-------------------------------------------------------------------|
 | Linux  | Arch/ Debian/ Ubuntu/ RedHat/ Fedora/ SUSE/ Gentoo                |
-| BSD    | FreeBSD/DragonFly/OpenBSD/NetBSD/NomadBSD/GhostBSD/SteamBSD       |
-| Unix   | Solaris/ OpenIndiana/ *illumo                                     |
+| BSD    | FreeBSD/ DragonFly/ OpenBSD/ NetBSD/ NomadBSD/ SteamBSD           |
+| Unix   | Solaris/ illumos/ OpenIndiana                                     |
 | Window | Cygwin/ MSYS2/ git-sh                                             |
 
 *** Requires
@@ -25,9 +25,12 @@
 # bash -c "$(curl -fksSL https://git.io/JK1di)"
 # bash -c "$(curl --proto '=https' --tlsv1.2 -sSf https://git.io/JK1di))"
 #+BEGIN_SRC sh
-bash <(curl -fksSL https://git.io/JK1di)
-# If you living China:
+
+# if you living China:
 bash <(curl -fksSL http://topurl.cn/8V8)
+
+# else...
+bash <(curl -fksSL https://git.io/JK1di)
 #+END_SRC
 
 *** Uninstall
@@ -43,26 +46,33 @@ rm -rf ~/.ome_local
 ome update
 #+END_SRC
 
-- Install programming language
+- Lookup packages
+#+BEGIN_SRC sh
+ome list
+#+END_SRC
+
+- Install packages
 #+BEGIN_SRC sh
 ome install cc          # GCC Clang
-ome install clj cljls   # Clojure ClojureScript
-ome install golang      # Golang
-ome install haskell     # Haskel
-ome install rust        # Rust
-ome install php         # PHP
-ome install python      # Python3
-ome install ruby        # Ruby
-ome install perl        # Perl
-ome install erlang      # Erlang
-ome install elixir      # Elixir
-ome install nim         # Nim
-ome install pony        # Ponylang 🐎
+ome install cl          # CommonLisp (Roswell)
 ome install chez        # Chez Scheme
-ome install roswell     # CommonLisp
 ome install janet       # Janet
-ome install v           # vlang
+ome install clj cljls   # Clojure ClojureScript
+ome install golang
+ome install haskell
+ome install rust
+ome install php
+ome install python      # Python3
+ome install ruby
+ome install perl
+ome install erlang
+ome install elixir
+ome install nim
+ome install pony        # Ponylang 🐎
+ome install roswell     # CommonLisp
+ome install vlang       # vlang
 ome install java kotlin groovy scala ceylon
+ome install verona
 #+END_SRC
 
 - Create project
