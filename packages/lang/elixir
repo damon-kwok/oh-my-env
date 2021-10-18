@@ -44,7 +44,7 @@ elixir_exist_p() {
 }
 
 elixir_info() {
-  if [ "`command -v elixir`" != "" ]; then
+  if [ -n "$(command -v elixir)" ]; then
     ome_show "Erlang" "`elixir --version 2>&1 | head -n 1 | cut -d ' ' -f 1-3`"
     ome_show "Elixir" "`elixir --version 2>&1 | tail -n 1 | cut -d ' ' -f 1-3`"
   fi

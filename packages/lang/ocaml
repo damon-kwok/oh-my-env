@@ -1,6 +1,5 @@
 #!/usr/bin/env sh
-
-ocaml_install() {
+opam_install() {
   tip "install opam"
   # if [ "$OME_OS" = "$OS_MSYS2" ]; then
   # echo_error "'ocaml' does not support msys2"
@@ -35,7 +34,9 @@ ocaml_install() {
     tip "opam update"
     opam update --debug
   else
-    if [ ! "$OME_OS" = "$OS_FREEBSD" ]; then
+    if [ "$OME_OS" == "$OS_FREEBSD" ]; then
+      pkg install opam
+    else
       # method 1: install pre-build
 			# http://opam.ocaml.org/doc/Install.html
 			# sh <(curl -sL https://raw.githubusercontent.com/ocaml/opam/master/shell/install.sh)
@@ -59,9 +60,20 @@ ocaml_install() {
     opam switch install ${OCAML_VERSION}+flambda --debug
     # opam switch 4.11.0+trunk+flambda --debug
   fi
+}
 
+ocaml_install() {
+  if [ ! -n "$(commandd -v opam)" ]; then
+    opam_install
+  fi
   eval $(opam env)
   #eval `opam env`
+
+  tip "install ocaml language server"
+  opam install ocaml-lsp-server
+
+  tip "install utop"
+  opam install utop
 
   # tip "install ohai"
   # opam pin add ohai git+https://github.com/jaredly/ohai
@@ -69,14 +81,14 @@ ocaml_install() {
   # tip "install ocamlbuild"
   # opam pin add ocamlbuild --kind=git "https://github.com/ocaml/ocamlbuild.git#master"
 
-  # tip "install dune"
-  # opam install dune
+  tip "install dune"
+  opam install dune
 
   # tip "install OASIS" #obsolete
   # opam install oasis
 
-  # tip "install merlin"
-  # opam install merlin
+  tip "install merlin"
+  opam install merlin
   # opam user-setup install
 
   if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
@@ -86,22 +98,6 @@ ocaml_install() {
     tip "install core"
     opam install core
   fi
-
-  # readp "install ReasonML?"
-  # if [ $? -eq 1 ]; then
-  # ome_check_install "npm" "nodejs"
-
-  # tip "install ReasonML"
-  # npm install -g yauzl
-  # npm install -g bsb-native
-  # npm install -g bs-platform
-
-  # tip "install reason project package manager: esy"
-  # npm install -g esy
-
-  # tip "install ocaml language server"
-  # npm install -g ocaml-language-server
-  # fi
 }
 
 ocaml_uninstall() {
@@ -113,7 +109,7 @@ ocaml_exist_p() {
 }
 
 ocaml_info() {
-  if [ "`command -v ocaml`" != "" ] || [ "`command -v opam`" != "" ]; then
+  if [ -n "$(command -v ocaml)" ] || [ -n "$(command -v opam)" ]; then
     ome_show "OCaml" "ocaml `ome_fetch_version ocaml` | opam `ome_fetch_version opam`"
   fi
 }
@@ -134,10 +130,9 @@ ocaml_setenv() {
     esac
   fi
 
-  if [ "`command -v opam`" != "" ]; then
+  if [ -n "$(command -v opam)" ]; then
     eval $(opam env)
   fi
-
 }
 
 ocaml_setenv

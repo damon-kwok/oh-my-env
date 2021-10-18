@@ -31,7 +31,7 @@ erlang_install_git() {
 }
 
 erlang_install_zip() {
-  if [ "`command -v erl`" = "" ]; then
+  if [ ! -n "$(command -v erl)" ]; then
     # local zipkg=otp-OTP-${ERLANG_VERSION}.zip
     local zipkg=otp_src_${ERLANG_VERSION}.tar.gz
     # echo "zipkg:$zipkg"

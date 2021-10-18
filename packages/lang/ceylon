@@ -8,7 +8,7 @@ ceylon_install() {
   ome_check_install "sdk" "jvm"
 
   #if ! command -v ceylon >/dev/null 2>&1; then
-  if [ "`command -v ceylon`" = "" ]; then
+  if [ -n "$(command -v ceylon)" ]; then
     sdk install ceylon $GROOVY_VERSION
   fi
 

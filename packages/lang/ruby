@@ -39,7 +39,7 @@ ruby_install_rvm() {
     $OS_UNKNOW) ;;
   esac
 
-  if [ "`command -v rvm`" = "" ]; then
+  if [ ! -n "$(command -v rvm)" ]; then
     # curl -sSL https://get.rvm.io | bash -s stable
     curl -sSL https://get.rvm.io | sh -s stable
     curl -sSL https://rvm.io/mpapis.asc | gpg2 --import -
@@ -118,7 +118,7 @@ rbenv_setenv() {
 }
 
 ruby_info() {
-  if [ "`command -v ruby`" != "" ]; then
+  if [ ! -n "$(command -v ruby)" ]; then
     # ome_show "Ruby" "`ome_fetch_version ruby`"
     ome_show "Ruby" "`ruby --version | cut -d" " -f1-5`"
   fi

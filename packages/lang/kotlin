@@ -15,7 +15,7 @@ kotlin_install() {
   ome_check_install "sdk" "jvm"
 
   #if ! command -v kotlinc >/dev/null 2>&1; then
-  if [ "`command -v kotlinc`" = "" ]; then
+  if [ -n "$(command -v kotlinc)" ]; then
     sdk install kotlin $KOTLIN_VERSION
   fi
 

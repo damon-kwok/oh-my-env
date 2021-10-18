@@ -2,6 +2,7 @@
 
 reason_install() {
   ome_check_install "npm" "nodejs"
+  ome_check_install "opam" "ocaml"
 
   tip "install ReasonML"
   npm install -g yauzl
@@ -11,7 +12,7 @@ reason_install() {
   tip "install reason project package manager: esy"
   npm install -g esy
 
-  tip "install ocaml language server"
+  tip "install reason language server"
   npm install -g ocaml-language-server
 }
 

@@ -101,7 +101,7 @@ python_install() {
   fi
 
   # if ! command -v pip3 >/dev/null 2>&1; then
-  if [ "`command -v pip3`" = "" ]; then
+  if [ -n "$(command -v pip3)" ]; then
     tip "install pip3"
     cd $HOME/Downloads/
     if [ ! -f get-pip.py ]; then
@@ -198,18 +198,18 @@ python_exist_p() {
 }
 
 python_info() {
-  if [ "`command -v python2`" != "" ]; then
+  if [ -n "$(command -v python2)" ]; then
     PY2VER="`python2 --version 2>&1 | cut -c 8-`"
   else
     PY2VER="nil"
   fi
 
-  if [ "`command -v python3`" != "" ]; then
+  if [ -n "$(command -v python3)" ]; then
     PY3VER="`python3 --version | cut -c 8-`"
   else
     PY3VER="nil"
   fi
-  if [ "`command -v python2`" != "" ] || [ "`command -v python3`" != "" ]; then
+  if [ -n "$(command -v python2)" ] || [ -n "$(command -v python3)" ]; then
     ome_show "Python" "py2:$PY2VER | py3:$PY3VER"
   fi
 }
@@ -223,7 +223,7 @@ pyenv_setenv() {
   # if [ "$OME_OS" = "$OS_MSYS2" ]; then
   # export PATH="$USERPROFILE/.local/bin:$PATH"
   # fi
-  if command -v pyenv 1>/dev/null 2>&1; then
+  if [ -n "$(command -v pyenv)" ]; then
     eval "$(pyenv init -)"
   fi
   # export PYTHON_BUILD_MIRROR_URL="http://mirrors.sohu.com/python/2.7.12/"

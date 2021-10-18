@@ -25,12 +25,12 @@ scala_install() {
   ome_check_install "sdk" "jvm"
 
   #if ! command -v scalac >/dev/null 2>&1; then
-  if [ "`command -v scalac`" = "" ]; then
+  if [ -n "$(command -v scalac)" ]; then
     sdk install scala $SCALA_VERSION
   fi
 
   #if ! command -v sbt >/dev/null 2>&1; then
-  if [ "`command -v sbt`" = "" ]; then
+  if [ ! -n "$(command -v sbt)"]; then
     sdk install sbt $SBT_VERSION
   fi
 

@@ -276,7 +276,7 @@ fi
 
 # Language II
 export ERLANG_VERSION=24.1
-export OCAML_VERSION=4.10.0
+export OCAML_VERSION=4.13.1
 export STACK_VERSION=2.7.3
 export GHC_VERSION=8.8.3
 export PYTHON2_VERSION=2.7.18

@@ -127,7 +127,7 @@ php_exist_p() {
 }
 
 php_info() {
-  if [ "`command -v php`" != "" ]; then
+  if [ -n "$(command -v php)" ]; then
     ome_show "PHP" "`ome_fetch_version php` | `ome_fetch_version composer`"
   fi
 }

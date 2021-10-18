@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 lua_install_lenv() {
-  if [ "`command -v lenv`" = "" ]; then
+  if [ -n "$(command -v lenv)" ]; then
     tip "install lenv"
     curl -L http://git.io/lenv | perl
   fi
@@ -43,7 +43,7 @@ lua_exist_p() {
 }
 
 lua_info() {
-  if [ "`command -v lua`" != "" ]; then
+  if [ -n "$(command -v lua)" ]; then
     ome_show "Lua" "`lua -v`"
   fi
 }

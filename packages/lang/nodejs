@@ -134,22 +134,22 @@ nodejs_install() {
   # npm update -g
 
 
-  if [ "`command -v ncu`" = "" ]; then
+  if [ -n "$(command -v ncu)" ]; then
     tip "install npm-check-updates"
     npm install -g npm-check-updates
   fi
 
-  if [ "`command -v grunt`" = "" ]; then
+  if [ -n "$(command -v grunt)" ]; then
     tip "install grunt-cli"
     npm install -g grunt-cli
   fi
 
-  if [ "`command -v gulp`" = "" ]; then
+  if [ -n "$(command -v gulp)" ]; then
     tip "install gulp"
     npm install -g gulp
   fi
 
-  if [ "`command -v yarn`" = "" ]; then
+  if [ -n "$(command -v yarn)" ]; then
     tip "install yarn"
     # curl -o- -L https://yarnpkg.com/install.sh | bash
     npm install -g yarn

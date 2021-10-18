@@ -19,7 +19,7 @@ janet_exist_p() {
 }
 
 janet_info() {
-  if [ "`command -v janet`" != "" ]; then
+  if [ -n "$(command -v janet)" ]; then
     ome_show "Janet" "`janet -v`"
   fi
 }

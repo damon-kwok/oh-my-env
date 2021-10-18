@@ -147,7 +147,7 @@ pony_exist_p() {
 }
 
 pony_info() {
-  if [ "`command -v ponyc`" != "" ]; then
+  if [ -n "$(command -v ponyc)" ]; then
     ome_show "Pony" "`ome_fetch_version ponyc`"
   fi
 }

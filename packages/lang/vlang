@@ -1,29 +1,29 @@
 #!/usr/bin/env sh
 
-v_install() {
+vlang_install() {
   github_upgrade vlang/v $OME_REPO/v
   cd $OME_REPO/v
 
   make
-  v_setenv
+  vlang_setenv
 }
 
-v_uninstall() {
+vlang_uninstall() {
   echo_error "'v_uninstall' not implemented"
 }
 
-v_exist_p() {
+vlang_exist_p() {
   echo_error "'v_exist_p' not implemented"
 }
 
-v_info() {
+vlang_info() {
   echo_error ""
 }
 
-v_setenv() {
+vlang_setenv() {
   export VLANG_BIN=$OME_REPO/v
   if [ -d "$VLANG_BIN" ]; then
     export PATH=$VLANG_BIN:$PATH
   fi
 }
-v_setenv
+vlang_setenv

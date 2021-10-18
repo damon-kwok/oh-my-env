@@ -23,7 +23,7 @@ install_java_language_server() {
 java_install_sdkman() {
   tip "install sdkman"
   #if ! command -v sdk >/dev/null 2>&1; then
-  if [ "`command -v sdk`" = "" ]; then
+  if [ -n "$(command -v sdk)" ]; then
     curl -s "https://get.sdkman.io" | sh
     . $HOME/.sdkman/bin/sdkman-init.sh
     sdk update
@@ -76,7 +76,7 @@ java_install_sdkman() {
   fi
 
   #if ! command -v javac >/dev/null 2>&1; then
-  if [ "`command -v javac`" = "" ]; then
+  if [ -n "$(command -v javac)" ]; then
     sdk install java $JAVA_VERSION
   fi
   #if ! command -v kotlinc >/dev/null 2>&1; then
@@ -92,12 +92,12 @@ java_install_sdkman() {
   # sdk install groovy $GROOVY_VERSION
   # fi
 
-  if [ "`command -v ant`" = "" ]; then
+  if [ -n "$(command -v ant)" ]; then
     sdk install ant $ANT_VERSION
   fi
 
   #if ! command -v mvn >/dev/null 2>&1; then
-  if [ "`command -v mvn`" = "" ]; then
+  if [ -n "$(command -v mvn)" ]; then
     sdk install maven $MAVEN_VERSION
   fi
 
@@ -107,7 +107,7 @@ java_install_sdkman() {
   fi
 
   #if ! command -v gradle >/dev/null 2>&1; then
-  if [ "`command -v gradle`" = "" ]; then
+  if [ ! -n "$(command -v gradle)" ]; then
     sdk install gradle $GRADLE_VERSION
   fi
 
@@ -211,19 +211,19 @@ sdkman_info() {
 }
 
 java_info() {
-  if [ "`command -v java`" != "" ]; then
+  if [ -n "$(command -v java)" ]; then
     ome_show "Java" "`java -version 2>&1 | head -n 1`|`sdkman_info ant Ant`|`sdkman_info maven Maven`|`sdkman_info gradle Gradle`"
   fi
-  if [ "`command -v kotlin`" != "" ]; then
+  if [ -n "$(command -v kotlin)" ]; then
     ome_show "Kotlin" "`sdkman_info kotlin Kotlin` | `sdkman_info gradle Gradle`"
   fi
-  if [ "`command -v scala`" != "" ]; then
+  if [ -n "$(command -v scala)" ]; then
     ome_show "Scala" "`sdkman_info scala Scala` | `sdkman_info sbt SBT`"
   fi
-  if [ "`command -v groovy`" != "" ]; then
+  if [ -n "$(command -v groovy)" ]; then
     ome_show "Groovy" "`sdkman_info groovy Groovy` | `sdkman_info gradle Gradle`"
   fi
-  if [ "`command -v ceylon`" != "" ]; then
+  if [ -n "$(command -v ceylon)" != "" ]; then
     ome_show "Ceylon" "`sdkman_info ceylon Ceylon`"
   fi
 }

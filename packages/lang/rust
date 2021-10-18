@@ -28,7 +28,7 @@ rust_install() {
   fi
 
   tip "install rust"
-  if [ "`command -v rustup`" = "" ]; then
+  if [ ! -n "$(command -v rustup)" ]; then
     tip "install rustup"
 
     readp "install rustup with china mirror?"
@@ -116,10 +116,10 @@ rust_exist_p() {
 }
 
 rust_info() {
-  if [ "`command -v rustup`" != "" ]; then
+  if [ -n "$(command -v rustup)" ]; then
     ome_show "Rust" "`ome_fetch_version rustc` |  `rustup -V | cut -c 1-13`"
   fi
-  # if [ "`command -v rustup`" != "" ]; then
+  # if [ -n "$(command -v rustup)" ]; then
   # echo_kv "Rustup" "`rustup -V | head -n 1`"
   # fi
 }

@@ -23,7 +23,7 @@ nim_install() {
       chmod +x ./*
       # fi
     fi
-	elif [ "`command -v nimble`" = "" ]; then
+	elif [ ! -n "$(command -v nimble)" ]; then
     # if test nimble = "" ; then
     curl https://nim-lang.org/choosenim/init.sh -sSf | sh
   fi
@@ -39,7 +39,7 @@ nim_exist_p() {
 }
 
 nim_info() {
-  if [ "`command -v nim`" != "" ]; then
+  if [ -n "$(command -v nim)" ]; then
     ome_show "Nim" "`ome_fetch_version nim` | `ome_fetch_version nimble`"
   fi
 }
