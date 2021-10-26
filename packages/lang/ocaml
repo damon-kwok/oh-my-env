@@ -63,7 +63,7 @@ opam_install() {
 }
 
 ocaml_install() {
-  if [ ! -n "$(commandd -v opam)" ]; then
+  if [ ! -n "$(command -v opam)" ]; then
     opam_install
   fi
   eval $(opam env)
