@@ -101,7 +101,7 @@ python_install() {
   fi
 
   # if ! command -v pip3 >/dev/null 2>&1; then
-  if [ -n "$(command -v pip3)" ]; then
+  if [ ! -n "$(command -v pip3)" ]; then
     tip "install pip3"
     cd $HOME/Downloads/
     if [ ! -f get-pip.py ]; then
