@@ -5,16 +5,15 @@
 # echo "size:$size"
 # if [ $size -gt 52428800 ]; then
 # echo "!${filename}" > ./.gitignore
-# else
-# echo "222"
 # fi
+
 echo_kv() {
   echo -e $(tput setaf 14)"$1\t"$(tput sgr0) $(tput setaf 10)"$2"$(tput sgr0)
 }
 
 split_file() {
   local file="$1"
-  if [ ! -f "$DIR_DEFS/$file" ] ; then
+  if [ ! -f "$DIR_DEFS/$file" ]; then
     echo "split==> $file"
     touch $DIR_DEFS/$file
     # echo "split -b 52428800 -d $1/$file $DIR_PARTS/${file}_"
@@ -49,8 +48,7 @@ split_all_files() {
 merge_all_files() {
   for file in ` ls $1 `
   do
-    if [ -d $1"/"$file ]
-    then
+    if [ -d $1"/"$file ]; then
       merge_all_files $1"/"$file
     else
       if [ ! -f "$DIR_MERGE/${file}" ]; then
@@ -69,7 +67,6 @@ merge_all_files() {
 
 if [ ! "$1" == "" ]; then
   cd $1
-
   DIR_ROOT="`pwd`"
   DIR_DEFS="$DIR_ROOT/defs"
   DIR_PARTS="$DIR_ROOT/parts"
