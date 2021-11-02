@@ -58,14 +58,14 @@ dfm_add() {
   cd $realdir
 
   local basedir="`pwd`"
-  local filename="`basename $1`"
+  local fname="`basename $1`"
 
   local dotdir=${basedir/"$HOME"/"${DFM_STORE_ROOT}/home"}
   mkdir -p $dotdir
 
-  mv $basedir/$filename $dotdir
-  ln -s $dotdir/$filename $basedir/$filename
-  print "stored: $basedir/$filename => $dotdir"
+  mv $basedir/$fname $dotdir
+  ln -s $dotdir/$fname $basedir/$fname
+  print "stored: $basedir/$fname => $dotdir"
   ########################################
   cd $oldir
 }
@@ -78,14 +78,14 @@ dfm_del() {
   cd $realdir
 
   local basedir="`pwd`"
-  local filename="`basename $1`"
+  local fname="`basename $1`"
 
   local dotdir=${basedir/"${DFM_STORE_ROOT}/home"/"$HOME"}
   mkdir -p $dotdir
 
-  rm -f $basedir/$filename
-  mv $dotdir/$filename $basedir
-  print "free: '$filename' => '$dotdir'"
+  rm -f $basedir/$fname
+  mv $dotdir/$fname $basedir
+  print "free: '$fname' => '$dotdir'"
   ########################################
   cd $oldir
 }
@@ -95,29 +95,29 @@ dfm_restore() {
   ########################################
   cd $1
   local dotdir="`pwd`"
-  for filename in `ls -a`; do
-    if [ "$filename" == "dfm.db" ] || [ -L "$filename" ] || [ "$filename" == "." ] || [ "$filename" == ".." ]; then
+  for fname in `ls -a`; do
+    if [ "$fname" == "dfm.db" ] || [ -L "$fname" ] || [ "$fname" == "." ] || [ "$fname" == ".." ]; then
       continue
-    elif [ -d "$filename" ]; then
-      dfm_restore $dotdir/$filename
+    elif [ -d "$fname" ]; then
+      dfm_restore $dotdir/$fname
     else
       local basedir=${dotdir/"${DFM_STORE_ROOT}/home"/"$HOME"}
       local tm=`date +%Y-%m-%d@%H-%M-%S`
       mkdir -p $basedir
-      if [ -e $basedir/$filename ]; then
-        if [ -L $basedir/$filename ]; then
-          rm -f $basedir/$filename
-          echo "deleted old link: $basedir/$filename"
+      if [ -e $basedir/$fname ]; then
+        if [ -L $basedir/$fname ]; then
+          rm -f $basedir/$fname
+          echo "deleted old link: $basedir/$fname"
         else
-          mv $basedir/$filename $basedir/${filename}.${tm}
-          echo "backup: $basedir/$filename => $basedir/${filename}.${tm}"
+          mv $basedir/$fname $basedir/${fname}.${tm}
+          echo "backup: $basedir/$fname => $basedir/${fname}.${tm}"
         fi
       fi
-      ln -s $dotdir/$filename $basedir/$filename
-      echo "restored: $basedir/$filename"
+      ln -s $dotdir/$fname $basedir/$fname
+      echo "restored: $basedir/$fname"
       echo ""
     fi
-  done; unset filename
+  done; unset fname
   ########################################
   cd $oldir
 }
