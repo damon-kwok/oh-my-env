@@ -1,0 +1,152 @@
+#!/usr/bin/env bash
+
+set -e -o pipefail
+
+# if [ "`whoami`" != "root" ]; then
+# echo "error: you cannot perform this operation unless you are root."
+# exit 1
+# fi
+
+export DFM_ROOT=$(dirname $(readlink -f $0))
+export DFM_STORE_ROOT=/$HOME/.dotfiles
+export DMF_DB_FILE=$DFM_STORE_ROOT/dfm.db
+
+echo "DFM_STORE_ROOT:$DFM_STORE_ROOT"
+
+function dfm_db_clear() {
+  rm -f "$DMF_DB_FILE"
+}
+
+function dfm_db_set() {
+  echo "$1,$2" >> "$DMF_DB_FILE"
+}
+
+function dfm_db_get() {
+  grep "^$1," "$DMF_DB_FILE" | sed -e "s/^$1,//" | tail -n 1
+}
+
+function dfm_db_remove() {
+  dfm_db_set $1 ""
+}
+
+print() {
+  echo "<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>"
+  echo "<> dotfiles: $@" | fold
+  # echo "<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>"
+  echo ""
+}
+
+dfm_add() {
+  if [ ! -e "$1" ]; then
+    print "$1 not exist!"
+    exit 1
+  fi
+
+  if [[ -L "$1" ]]; then
+    print "$1 is a link!"
+    exit 1
+  fi
+
+  if [[ -L "$1" && -d "$1" ]]; then
+    print "$1 is a dir link!"
+    exit 1
+  fi
+
+  local oldir="`pwd`"
+  ########################################
+  local realdir="`dirname $1`"
+  cd $realdir
+
+  local basedir="`pwd`"
+  local filename="`basename $1`"
+
+  local dotdir=${basedir/"$HOME"/"${DFM_STORE_ROOT}/home"}
+  mkdir -p $dotdir
+
+  mv $basedir/$filename $dotdir
+  ln -s $dotdir/$filename $basedir/$filename
+  print "stored: $basedir/$filename => $dotdir"
+  ########################################
+  cd $oldir
+}
+
+dfm_del() {
+  print "adding $1"
+  local oldir="`pwd`"
+  ########################################
+  local realdir="`dirname $1`"
+  cd $realdir
+
+  local basedir="`pwd`"
+  local filename="`basename $1`"
+
+  local dotdir=${basedir/"${DFM_STORE_ROOT}/home"/"$HOME"}
+  mkdir -p $dotdir
+
+  rm -f $basedir/$filename
+  mv $dotdir/$filename $basedir
+  print "free: '$filename' => '$dotdir'"
+  ########################################
+  cd $oldir
+}
+
+dfm_restore() {
+  local oldir="`pwd`"
+  ########################################
+  cd $1
+  local dotdir="`pwd`"
+  for filename in `ls -a`; do
+    if [ "$filename" == "dfm.db" ] || [ -L "$filename" ] || [ "$filename" == "." ] || [ "$filename" == ".." ]; then
+      continue
+    elif [ -d "$filename" ]; then
+      dfm_restore $dotdir/$filename
+    else
+      local basedir=${dotdir/"${DFM_STORE_ROOT}/home"/"$HOME"}
+      local tm=`date +%Y-%m-%d@%H-%M-%S`
+      mkdir -p $basedir
+      if [ -e $basedir/$filename ]; then
+        if [ -L $basedir/$filename ]; then
+          rm -f $basedir/$filename
+          echo "deleted old link: $basedir/$filename"
+        else
+          mv $basedir/$filename $basedir/${filename}.${tm}
+          echo "backup: $basedir/$filename => $basedir/${filename}.${tm}"
+        fi
+      fi
+      ln -s $dotdir/$filename $basedir/$filename
+      echo "restored: $basedir/$filename"
+      echo ""
+    fi
+  done; unset filename
+  ########################################
+  cd $oldir
+}
+
+dfm_usage() {
+  echo "Dotfiles Manager:"
+  echo " -a | --add [PATH]"
+  echo " -d | --del [PATH]"
+  echo " -r | --restore restore all"
+}
+
+dfm_parse() {
+  local oldir=`pwd`
+  local ARGV=`echo $@ | cut -d ' ' -f 2-`
+  case "$1" in
+    "-a|--add")
+      dfm_add $ARGV
+      ;;
+	  "-d|--del")
+      dfm_del $ARGV
+      ;;
+    "-r|--restore")
+      print "restore all config"
+      dfm_restore $DFM_STORE_ROOT
+      ;;
+    *)
+      dfm_usage
+      ;;
+  esac
+  cd $oldir
+}
+dfm_parse $@
