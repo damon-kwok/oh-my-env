@@ -421,11 +421,11 @@ ome_parse() {
       sudo ntpdate ntp.aliyun.com
       ;;
     "look"|"check")
-      xdg-open "http://mirror.163.com/cygwin/x86_64/release/cygutils/"
-      xdg-open "http://mirror.163.com/cygwin/x86_64/release/popt/"
+      xdg-open "https://mirrors.ustc.edu.cn/cygwin/x86_64/release/cygutils/"
+      xdg-open "https://mirrors.ustc.edu.cn/cygwin/x86_64/release/popt/"
       xdg-open "https://github.com/mongodb/mongo-c-driver/releases"
       xdg-open "https://github.com/mongodb/mongo-cxx-driver/releases"
-      xdg-open "http://ftp.gnome.org/pub/gnome/sources/gmime/"
+      xdg-open "https://ftp.gnome.org/pub/gnome/sources/gmime/"
       xdg-open "https://sourceforge.net/p/isync/isync/commit_browser"
 
       xdg-open "https://github.com/roswell/roswell/releases"
@@ -439,13 +439,14 @@ ome_parse() {
       xdg-open "https://www.erlang.org/downloads/"
       xdg-open "https://www.python.org/downloads/"
       xdg-open "https://www.ruby-lang.org/en/downloads/"
-      xdg-open "http://php.net/downloads.php"
+      xdg-open "https://php.net/downloads.php"
       xdg-open "https://github.com/commercialhaskell/stack/releases"
 
       xdg-open "https://github.com/cpp-pm/hunter/releases"
       xdg-open "https://emacs-lsp.github.io/lsp-mode/page/languages/"
       xdg-open "https://github.com/clojure/core.async"
       xdg-open "https://clojars.org/reagent"
+      xdg-open "https://github.com/PowerShell/PowerShell/releases"
 
       xdg-open "https://www.jetbrains.com/lp/mono/"
 

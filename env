@@ -269,13 +269,13 @@ export MAKE_PROG="make"
 # Language I
 export ROSWELL_VERSION=21.10.14.111
 if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
-  export SBCL_VERSION=2.1.9
+  export SBCL_VERSION=2.1.10
 else
-  export SBCL_VERSION=2.1.9
+  export SBCL_VERSION=2.1.10
 fi
 
 # Language II
-export ERLANG_VERSION=24.1
+export ERLANG_VERSION=24.1.4
 export OCAML_VERSION=4.13.1
 export STACK_VERSION=2.7.3
 export GHC_VERSION=8.8.3
@@ -283,10 +283,10 @@ export PYTHON2_VERSION=2.7.18
 export PYTHON3_VERSION=3.10.0
 export RUBY_VERSION=3.0.2
 # export PHP_VERSION=5.6.39
-export PHP_VERSION=8.0.11
+export PHP_VERSION=8.0.12
 
-export JAVA_VERSION="11.0.6.hs-adpt"
-# export JAVA_VERSION=20.0.0.r11-grl
+export JAVA_VERSION="18.ea.22-open"
+# export JAVA_VERSION="21.3.0.r17-grl"
 export JBANG_VERSION=0.81.2
 export ANT_VERSION=1.10.10
 export MAVEN_VERSION=3.8.3
@@ -294,17 +294,17 @@ export MAVEN_VERSION=3.8.3
 # Language III
 export GRADLE_VERSION=7.2
 export KOTLIN_VERSION=1.5.31
-export SCALA_VERSION=3.0.2
+export SCALA_VERSION=3.1.0
 export SBT_VERSION=1.5.5
 export GROOVY_VERSION=3.0.9
-export GRAILS_VERSION=5.0.0
-export CLOJURE_VERSION=1.10.3.986
+export GRAILS_VERSION=5.0.1
+export CLOJURE_VERSION=1.10.3.1020
 export LEIN_VERSION=2.9.7
-export GOLANG_VERSION=1.17.2
-export NODEJS_VERSION=14.18.1
+export GOLANG_VERSION=1.17.3
+export NODEJS_VERSION=16.13.0
 
 # Language IV
-export NIM_VERSION=1.4.8
+export NIM_VERSION=1.6.0
 export PONY_VERSION=git
 export ZIG_VERSION=0.8.1
 
@@ -315,7 +315,7 @@ export ST_VERSION=4.3 #StringTemplate
 
 export BC4_VERSION=4.4.0.25886
 export JETBRINS_FONT_VERSION=2.242
-export POWERSHELL_VERSION="7.2.0-preview.7"
+export POWERSHELL_VERSION="7.2.0-rc.1"
 ################################################################################
 # load plugins
 ome_load_pkgs() {
