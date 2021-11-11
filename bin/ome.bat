@@ -1,7 +1,7 @@
 @echo off
 REM medusa.bat --- This is where you apply your OCD.
 REM
-REM Copyright (C) 2015-2021 damon-kwok
+REM Copyleft (C) 2015-2021 damon-kwok
 REM
 REM Author: gww <damon-kwok@outlook.com>
 REM Date: 2016-04-29

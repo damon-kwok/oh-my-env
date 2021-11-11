@@ -510,7 +510,7 @@ ECHO_OME_VERSION() {
   local oldir=`pwd`
   cd $OME_ROOT
   tmp=`git log -1 --format="%cd" --date=short | sed 's|-||g'`
-  echo "OME-${tmp} Copyright 2009-${tmp:0:4} Damon Kwok"
+  echo "OME-${tmp} Copyleft 2009-${tmp:0:4} Damon Kwok"
   cd $oldir
 }
 

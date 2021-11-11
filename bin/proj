@@ -172,7 +172,7 @@ ome_pull_proj() {
   github_ssh_upgrade damon-kwok/org-test $OME_PROJ/me/org-test
   # github_ssh_upgrade damon-kwok/lori $OME_PROJ/me/lori
   github_ssh_upgrade pony-ready/lori $OME_PROJ/me/lori
-  gitee_ssh_upgrade damon-kwok/xgame $OME_PROJ/me/x-game
+  # gitee_ssh_upgrade damon-kwok/xgame $OME_PROJ/me/x-game
 
   github_ssh_upgrade damon-kwok/damon-kwok.github.io $OME_PROJ/me/blog
 
