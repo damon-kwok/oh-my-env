@@ -1,0 +1,7 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=EXWM
+Comment=Emacs window manager
+Exec=emacs
+Icon=emacs
+Type=XSession
