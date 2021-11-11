@@ -238,6 +238,9 @@ ome_pull() {
   # echo_kv "GIT PULL" "~/.emacs.d/"
   gitee_upgrade damon-kwok/emacs.d $HOME/.emacs.d/
   cp -f $HOME/.oh-my-emacs/conf/init.el $HOME/.emacs.d/
+  cd $HOME/.emacs.d/site-lisp/emacs-application-framework/
+  git pull
+  ./install-eaf.py --install-all-apps --use-gitee
 
   # tip "cache upgrade"
   chmod +x $OME_ROOT/bin/git-hook
