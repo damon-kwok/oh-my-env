@@ -592,7 +592,7 @@ ome_write_env_to_dotfile $HOME/.bashrc
 ome_write_env_to_dotfile $HOME/.zshrc
 
 $HOME/.oh-my-env/bin/ome pull
-if [ "`uname -s`" = "GNU/Linux"] || [ "`uname -s`" = "Linux" ]; then
+if [ "`uname -s`" = "GNU/Linux" ] || [ "`uname -s`" = "Linux" ]; then
   sudo cp -f $HOME/.oh-my-env/conf/xsessions/* /usr/share/xsessions/
 fi
 bash
