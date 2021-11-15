@@ -126,6 +126,8 @@ export OS_REDHAT="RedHat" # Red Hat Enterprise Linux, Oracle Linux, CentOS, Scie
 export OS_FEDORA="Fedora"
 export OS_ARCH="ArchLinux"
 export OS_GENTOO="Gentoo"
+export OS_FUNTOO="Funtoo"
+export OS_EXHERBO="Exherbo"
 export OS_SUSE="openSUSE"
 export OS_SLACKWARE="Slackware"
 export OS_NIXOS="NixOS"
@@ -590,7 +592,7 @@ ome_write_env_to_dotfile $HOME/.bashrc
 ome_write_env_to_dotfile $HOME/.zshrc
 
 $HOME/.oh-my-env/bin/ome pull
-if [ "`uname -s`" = "GNU/Linux"] || [ "`uname -s`" = "Linux" ]; then
+if [ "`uname -s`" = "GNU/Linux" ] || [ "`uname -s`" = "Linux" ]; then
   sudo cp -f $HOME/.oh-my-env/conf/xsessions/* /usr/share/xsessions/
 fi
 bash

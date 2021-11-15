@@ -238,9 +238,10 @@ ome_pull() {
   # echo_kv "GIT PULL" "~/.emacs.d/"
   gitee_upgrade damon-kwok/emacs.d $HOME/.emacs.d/
   cp -f $HOME/.oh-my-emacs/conf/init.el $HOME/.emacs.d/
-  cd $HOME/.emacs.d/site-lisp/emacs-application-framework/
-  git pull
-  ./install-eaf.py --install-all-apps --use-gitee
+
+  # gitee_upgrade emacs-eaf/emacs-application-framework $HOME/.emacs.d/site-lisp/emacs-application-framework/
+  # cd $HOME/.emacs.d/site-lisp/emacs-application-framework/
+  # ./install-eaf.py --install-all-apps --use-gitee
 
   # tip "cache upgrade"
   chmod +x $OME_ROOT/bin/git-hook
@@ -254,7 +255,7 @@ ome_pull() {
   # fi
 
   # echo_kv "GIT PULL" "~/wrokspace/"
-  gitee_upgrade damon-kwok/workspace $HOME/workspace/
+  [ -d $HOME/workspace ] && gitee_upgrade damon-kwok/workspace $HOME/workspace/
 
   # sync .editorconfig
   # cp -f $OME_ROOT/conf/project/.editorconfig $OME_ROOT
