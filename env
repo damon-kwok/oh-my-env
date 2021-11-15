@@ -275,7 +275,7 @@ else
 fi
 
 # Language II
-export ERLANG_VERSION=24.1.4
+export ERLANG_VERSION=24.1.5
 export OCAML_VERSION=4.13.1
 export STACK_VERSION=2.7.3
 export GHC_VERSION=8.8.3
@@ -287,19 +287,19 @@ export PHP_VERSION=8.0.12
 
 export JAVA_VERSION="18.ea.22-open"
 # export JAVA_VERSION="21.3.0.r17-grl"
-export JBANG_VERSION=0.81.2
+export JBANG_VERSION=0.83.1
 export ANT_VERSION=1.10.10
 export MAVEN_VERSION=3.8.3
 
 # Language III
-export GRADLE_VERSION=7.2
+export GRADLE_VERSION=7.3
 export KOTLIN_VERSION=1.5.31
 export SCALA_VERSION=3.1.0
 export SBT_VERSION=1.5.5
 export GROOVY_VERSION=3.0.9
 export GRAILS_VERSION=5.0.1
-export CLOJURE_VERSION=1.10.3.1020
-export LEIN_VERSION=2.9.7
+export CLOJURE_VERSION=1.10.3.1029
+export LEIN_VERSION=2.9.8
 export GOLANG_VERSION=1.17.3
 export NODEJS_VERSION=16.13.0
 
@@ -315,7 +315,7 @@ export ST_VERSION=4.3 #StringTemplate
 
 export BC4_VERSION=4.4.0.25886
 export JETBRINS_FONT_VERSION=2.242
-export POWERSHELL_VERSION="7.2.0-rc.1"
+export POWERSHELL_VERSION="7.2.0"
 ################################################################################
 # load plugins
 ome_load_pkgs() {

@@ -18,6 +18,7 @@ ome_app_wizard() {
     echo "    4)  Clojure (fullstack:lein+fulcro)"
     echo "    5)  ClojureScript (fullstack:shadow-cljs)"
     echo "    6)  ClojureScript (browser:lein+figwheel)"
+    echo "    61) playc) "
     echo "    7)  CommonLisp (roswell)"
     echo "    8)  Crystal"
     echo "    9)  Erlang (rebar3)"
@@ -146,6 +147,11 @@ ome_app_wizard() {
     "6"|"figwheel")
       ome_check_install "lein" "clj"
       lein new figwheel $proj_name -- --reagent
+      cd $proj_root
+      $EDITOR "project.clj"
+      ;;
+    "61" | "playc")
+      clj -Sdeps "{:deps {leiningen/leiningen {:mvn/version \""${LEIN_VERSION}\""}}}" -m leiningen.core.main new play-cljc $proj_name
       cd $proj_root
       $EDITOR "project.clj"
       ;;

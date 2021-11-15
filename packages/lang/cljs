@@ -3,12 +3,13 @@
 cljs_install() {
   # ome_check_install "clojure" "clj"
   ome_check_install "npm" "nodejs"
+  sudo npm install -g npm
 
   # tip "install lumo-cljs"
   # npm install -g lumo-cljs
 
   tip "install shadow-cljs"
-  npm install -g shadow-cljs
+  sudo npm install -g shadow-cljs
 
   # readp "install calvin and planck?"
   # if [ $? -eq 1 ]; then
