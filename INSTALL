@@ -571,8 +571,8 @@ git config --global difftool.prompt false
 ###############################################################################
 title "OME INSTALL"
 if [ ! -f "$HOME/.oh-my-env/.git/index" ]; then
-  readp "are you living in China?"
-	if [ $? -eq 1 ]; then
+  read -p "Are you living in China? [y/N]: " changed
+  if echo "$changed" | grep -iq "^y"; then
     git clone https://gitee.com/damon-kwok/oh-my-env $HOME/.oh-my-env --depth=1
     git clone https://gitee.com/damon-kwok/oh-my-emacs $HOME/.oh-my-emacs --depth=1
   else
