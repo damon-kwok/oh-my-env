@@ -445,7 +445,7 @@ case $OME_OS in
 	  pkg upgrade
 
     tip "update ports mirror"
-    echo "MASTER_SITE_OVERRIDE?=http://mirrors.ustc.edu.cn/freebsd-ports/distfiles/${DIST_SUBDIR}/" >> /etc/make.conf
+    echo "MASTER_SITE_OVERRIDE?=http://mirrors.ustc.edu.cn/freebsd-ports/distfiles/\${DIST_SUBDIR}/" >> /etc/make.conf
     freebsd-update fetch
     freebsd-update install
 		pkg install git subversion wget curl gmake \
