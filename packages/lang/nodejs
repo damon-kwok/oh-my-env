@@ -177,11 +177,10 @@ elif [ $OME_OS != $OS_FREEBSD ]; then
   export PATH="$OME_REPO/$NODEJS_VERINFO/bin":"$PATH"
 fi
 
-if [ "$NODEJS_VERINFO" != "" ]; then
-  export NODEJS_BIN=$OME_REPO/$NODEJS_VERINFO/bin
-fi
-
 nodejs_setenv() {
+  if [ $OME_OS != $OS_FREEBSD ]; then
+    export NODEJS_BIN=$OME_REPO/$NODEJS_VERINFO/bin
+  fi
   if [ -d "$NODEJS_BIN" ]; then
     export PATH="$NODEJS_BIN":"$PATH"
   fi
