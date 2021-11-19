@@ -431,7 +431,7 @@ case $OME_OS in
 	$OS_AIX) ;;
 	$OS_SOLARIS) ;;
 	$OS_FREEBSD)
-    print "update pkg mirror"
+    tip "update pkg mirror"
     mkdir -p /usr/local/etc/pkg/repos/
     echo 'FreeBSD: {' > /usr/local/etc/pkg/repos/FreeBSD.conf
     read -p "Are you using FreeBSD-CURRENT? [y/N]: " changed
@@ -444,7 +444,7 @@ case $OME_OS in
 	  pkg update -f
 	  pkg upgrade
 
-    print "update ports mirror"
+    tip "update ports mirror"
     echo "MASTER_SITE_OVERRIDE?=http://mirrors.ustc.edu.cn/freebsd-ports/distfiles/${DIST_SUBDIR}/" >> /etc/make.conf
     freebsd-update fetch
     freebsd-update install
