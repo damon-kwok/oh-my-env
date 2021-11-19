@@ -176,7 +176,11 @@ elif [ $OME_OS != $OS_FREEBSD ]; then
   NODEJS_VERSION_ZIP=${NODEJS_VERINFO}.tar.xz
   export PATH="$OME_REPO/$NODEJS_VERINFO/bin":"$PATH"
 fi
-export NODEJS_BIN=$OME_REPO/$NODEJS_VERINFO/bin
+
+if [ "$NODEJS_VERINFO" != "" ]; then
+  export NODEJS_BIN=$OME_REPO/$NODEJS_VERINFO/bin
+fi
+
 nodejs_setenv() {
   if [ -d "$NODEJS_BIN" ]; then
     export PATH="$NODEJS_BIN":"$PATH"
