@@ -15,16 +15,13 @@ kernel-devel_install() {
       yum groupinstall -y "Development Tools"
       # yum groupinstall -y "Development Libraries"
       # yum groupinstall -y "Chinese Support"
-      yum install -y patch flex bison cpio ncurses-devel openssl openssl-devel
-      ;;
+      yum install -y patch flex bison cpio ncurses-devel openssl openssl-devel ;;
     $OS_ARCH)
-      trizen -S base-devel flex bison cpio ncurses openssl
-      ;;
-    $OS_GENTOO)
+      trizen -S base-devel bc flex bison cpio ncurses openssl ;;
+    $OS_GENTOO) ;;
+    $OS_SUSE)
       sudo zypper install -t pattern devel_basis
-      sudo zypper install patch flex bison cpio ncurses-devel openssl openssl-devel
-      ;;
-    $OS_SUSE) ;;
+      sudo zypper install patch flex bison cpio ncurses-devel openssl openssl-devel ;;
     $OS_SLACKWARE) ;;
     $OS_NIXOS) ;;
     $OS_VOID) ;;

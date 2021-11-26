@@ -185,7 +185,7 @@ nodejs_setenv() {
     export PATH="$NODEJS_BIN":"$PATH"
   fi
 }
-
+nodejs_setenv
 # https://nodejs.org/dist/v12.14.1/node-v12.14.1-darwin-x64.tar.gz
 # https://nodejs.org/dist/v12.14.1/node-v12.14.1-win-x86.zip
 # https://nodejs.org/dist/v12.14.1/node-v12.14.1-win-x64.zip
