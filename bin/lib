@@ -192,7 +192,7 @@ __git_upgrade() {
     cd $dir
     git init
     git remote add origin $url
-    git pull origin master
+    git pull # origin main
   else
 	  cd $dir
 	  echo_kv "git pull" "[$project]" "$dir"
@@ -530,7 +530,7 @@ git_push_a() {
   git status
   # git commit -m "upgrade by "`uname -n`
   git commit -m `date +%Y-%m-%d@%H-%M-%S` # "upgrade by "`uname -n`
-  git push -u origin master
+  git push # -u origin main
 }
 
 svn_remove_lose() {

@@ -343,7 +343,8 @@ git add .
 git status
 set /p msg=please input commit message:
 git commit -m "%msg%"
-git push -u origin master
+git push
+rem -u origin main
 goto:eof
 
 :push-a
@@ -356,7 +357,8 @@ git status
 rem git commit -m "upgrade by "%computername%
 set msg=%date:~0,4%-%date:~5,2%-%date:~8,2%@%time:~0,2%-%time:~3,2%-%time:~6,2%
 git commit -m "%msg%"
-git push -u origin master
+git push
+rem -u origin main
 goto:eof
 
 :push-blog
@@ -370,7 +372,8 @@ rem set /p msg=please input commit message:
 set msg=%date:~0,4%-%date:~5,2%-%date:~8,2%@%time:~0,2%-%time:~3,2%-%time:~6,2%
 rem echo commit:%msg%
 git commit -m "%msg%"
-git push -u origin master
+git push
+rem -u origin main
 goto:eof
 
 :zipapp
