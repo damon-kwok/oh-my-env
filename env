@@ -269,9 +269,9 @@ export MAKE_PROG="make"
 # Language I
 export ROSWELL_VERSION=21.10.14.111
 if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
-  export SBCL_VERSION=2.1.10
+  export SBCL_VERSION=2.1.11
 else
-  export SBCL_VERSION=2.1.10
+  export SBCL_VERSION=2.1.11
 fi
 
 # Language II
@@ -280,7 +280,7 @@ export OCAML_VERSION=4.13.1
 export STACK_VERSION=2.7.3
 export GHC_VERSION=8.8.3
 export PYTHON2_VERSION=2.7.18
-export PYTHON3_VERSION=3.10.0
+export PYTHON3_VERSION=3.10.1
 export RUBY_VERSION=3.0.3
 # export PHP_VERSION=5.6.39
 export PHP_VERSION=8.1.0
@@ -298,10 +298,10 @@ export SCALA_VERSION=3.1.0
 export SBT_VERSION=1.5.5
 export GROOVY_VERSION=3.0.9
 export GRAILS_VERSION=5.0.2
-export CLOJURE_VERSION=1.10.3.1029
+export CLOJURE_VERSION=1.10.3.1040
 export LEIN_VERSION=2.9.8
-export GOLANG_VERSION=1.17.3
-export NODEJS_VERSION=16.13.0
+export GOLANG_VERSION=1.17.5
+export NODEJS_VERSION=16.13.1
 
 # Language IV
 export NIM_VERSION=1.6.0

@@ -449,8 +449,6 @@ ome_parse() {
 
       xdg-open "https://github.com/cpp-pm/hunter/releases"
       xdg-open "https://emacs-lsp.github.io/lsp-mode/page/languages/"
-      xdg-open "https://github.com/clojure/core.async"
-      xdg-open "https://clojars.org/reagent"
       xdg-open "https://github.com/PowerShell/PowerShell/releases"
 
       xdg-open "https://www.antlr3.org/download.html"
