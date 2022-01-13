@@ -453,7 +453,9 @@ ome_parse() {
 
       xdg-open "https://www.antlr3.org/download.html"
       xdg-open "https://www.antlr.org/download.html"
+      xdg-open "https://www.stringtemplate.org/"
       xdg-open "https://www.jetbrains.com/lp/mono/"
+      xdg-open "https://www.scootersoftware.com/download.php"
 
       # sdk list java
       # sdk list maven
