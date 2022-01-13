@@ -17,12 +17,12 @@ ome_gen_cmake_file() {
 
   if [ ! -f "$proj_root/CMakeLists.txt" ]; then
     echo "cmake_minimum_required(VERSION 3.2)" >> $proj_root/CMakeLists.txt
-    echo "project(libexample)" >> $proj_root/CMakeLists.txt
+    echo "project(project_name)" >> $proj_root/CMakeLists.txt
 
     echo "" >> $proj_root/CMakeLists.txt
     echo "if (UNIX)" >> $proj_root/CMakeLists.txt
     echo "SET (CMAKE_C_COMPILER             \"clang\")" >> $proj_root/CMakeLists.txt
-    echo "SET (CMAKE_C_FLAGS                \"-Wall -std=gnu99\")" >> $proj_root/CMakeLists.txt
+    echo "SET (CMAKE_C_FLAGS                \"-Wall -std=gnu11\")" >> $proj_root/CMakeLists.txt
     echo "SET (CMAKE_C_FLAGS_DEBUG          \"-g\")" >> $proj_root/CMakeLists.txt
     echo "SET (CMAKE_C_FLAGS_MINSIZEREL     \"-Os -DNDEBUG\")" >> $proj_root/CMakeLists.txt
     echo "SET (CMAKE_C_FLAGS_RELEASE        \"-O4 -DNDEBUG\")" >> $proj_root/CMakeLists.txt
@@ -30,7 +30,7 @@ ome_gen_cmake_file() {
 
     echo "" >> $proj_root/CMakeLists.txt
     echo "SET (CMAKE_CXX_COMPILER             \"clang++\")" >> $proj_root/CMakeLists.txt
-    echo "SET (CMAKE_CXX_FLAGS                \"-Wall -std=gnu++17\")" >> $proj_root/CMakeLists.txt
+    echo "SET (CMAKE_CXX_FLAGS                \"-Wall -std=gnu++20\")" >> $proj_root/CMakeLists.txt
     echo "SET (CMAKE_CXX_FLAGS_DEBUG          \"-g\")" >> $proj_root/CMakeLists.txt
     echo "SET (CMAKE_CXX_FLAGS_MINSIZEREL     \"-Os -DNDEBUG\")" >> $proj_root/CMakeLists.txt
     echo "SET (CMAKE_CXX_FLAGS_RELEASE        \"-O4 -DNDEBUG\")" >> $proj_root/CMakeLists.txt
@@ -54,7 +54,11 @@ ome_gen_cmake_file() {
 
     echo "" >> $proj_root/CMakeLists.txt
     echo "file(GLOB_RECURSE hdrs *.h *.hh *.hpp *.hxx *.ipp)" >> $proj_root/CMakeLists.txt
-    echo "file(GLOB_RECURSE srcs \${ROOT}/src/*.c \${ROOT}/src/*.cc \${ROOT}/src/*.cxx \${ROOT}/src/*.ixx \${ROOT}/src/*.cpp \${ROOT}/src/*.m \${ROOT}/src/*.mm)" >> $proj_root/CMakeLists.txt
+    echo "file(GLOB_RECURSE srcs LIST_DIRECTORIES true"  >> $proj_root/CMakeLists.txt
+    echo "  \${ROOT}/src/*.c \${ROOT}/src/*.cc \${ROOT}/src/*.cxx \${ROOT}/src/*.ixx \${ROOT}/src/*.cpp \${ROOT}/src/*.m \${ROOT}/src/*.mm)" >> $proj_root/CMakeLists.txt
+
+    echo "" >> $proj_root/CMakeLists.txt
+    echo "include_directories(${ROOT}/include)"  >> $proj_root/CMakeLists.txt
 
     echo "" >> $proj_root/CMakeLists.txt
     echo "# add_library(pro_a STATIC \${srcs})" >> $proj_root/CMakeLists.txt
@@ -62,8 +66,12 @@ ome_gen_cmake_file() {
     echo "# message(STATUS \${srcs})" >> $proj_root/CMakeLists.txt
 
     echo "" >> $proj_root/CMakeLists.txt
-    echo "add_executable(main \${srcs} \${hdrs})" >> $proj_root/CMakeLists.txt
-    echo "target_link_libraries(main)" >> $proj_root/CMakeLists.txt
+    echo "add_executable(test \${ROOT}/test/test.c \${srcs} \${hdrs})" >> $proj_root/CMakeLists.txt
+    echo "target_link_libraries(main pthread)" >> $proj_root/CMakeLists.txt
+  fi
+
+  if [ ! -f "$proj_root/gen.bat" ]; then
+    echo 'cmake -G "Visual Studio 16 2019" -A x64' > $proj_root/gen.bat
   fi
 
   # if [ ! -f "$proj_root/compile_commands.json" ]; then

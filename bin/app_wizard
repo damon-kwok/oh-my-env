@@ -80,6 +80,8 @@ ome_app_wizard() {
       cd $proj_root
       echo ".git/" >> .gitignore
       echo "build/" >> .gitignore
+      echo ".idea/" >> .gitignore
+      echo "cmake-build-debug/" >> .gitignore
       echo "compile_commands.json" >> .gitignore
       gen_clang_format
       # $EDITOR "CMakeLists.txt"
