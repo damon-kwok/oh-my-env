@@ -184,6 +184,7 @@ ome_pull_proj() {
   # github_ssh_upgrade damon-kwok/balisong $OME_PROJ/me/balisong
   # github_ssh_upgrade damon-kwok/data-bundle $OME_PROJ/me/data-bundle
   # github_ssh_upgrade damon-kwok/memrock $OME_PROJ/me/memrock
+  github_ssh_upgrade damon-kwok/lara $OME_PROJ/me/lara
 
   # github_ssh_upgrade damon-kwok/cljs-example $OME_PROJ/me/cljs-example
 
