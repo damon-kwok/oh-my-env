@@ -202,6 +202,7 @@ ome_dev_path $HOME/.local
 if [ ! "$OME_OS" = "$OS_MACOS" ]; then
   alias ls='ls --color'
 fi
+alias ll='ls -l'
 alias wget='wget -c'
 alias omecd='f(){ cd $OME_ROOT/$1; ls; unset -f f; }; f'
 alias pjcd='f(){ cd $OME_PROJ/$1; ls; unset -f f; }; f'
@@ -287,21 +288,21 @@ export PHP_VERSION=8.1.1
 
 export JAVA_VERSION="18.ea.22-open"
 # export JAVA_VERSION="21.3.0.r17-grl"
-export JBANG_VERSION=0.83.1
+export JBANG_VERSION=0.86.0
 export ANT_VERSION=1.10.10
 export MAVEN_VERSION=3.8.4
 
 # Language III
-export GRADLE_VERSION=7.3
+export GRADLE_VERSION=7.3.3
 export KOTLIN_VERSION=1.6.0
 export SCALA_VERSION=3.1.0
-export SBT_VERSION=1.5.5
+export SBT_VERSION=1.6.1
 export GROOVY_VERSION=3.0.9
-export GRAILS_VERSION=5.0.2
-export CLOJURE_VERSION=1.10.3.1040
+export GRAILS_VERSION=5.1.1
+export CLOJURE_VERSION=1.10.3.1058
 export LEIN_VERSION=2.9.8
-export GOLANG_VERSION=1.18beta1
-export NODEJS_VERSION=16.13.1
+export GOLANG_VERSION=1.18beta1 #1.17.6
+export NODEJS_VERSION=16.13.2
 
 # Language IV
 export NIM_VERSION=1.6.2
@@ -311,9 +312,9 @@ export ZIG_VERSION=0.9.0
 # Other
 export ANTLR3_VERSION=3.5.2
 export ANTLR4_VERSION=4.9.3
-export ST_VERSION=4.3 #StringTemplate
+export ST_VERSION=4.3.1 #StringTemplate
 
-export BC4_VERSION=4.4.0.25886
+export BC4_VERSION=4.4.1.26165
 export JETBRINS_FONT_VERSION=2.242
 export POWERSHELL_VERSION="7.2.1"
 ################################################################################
