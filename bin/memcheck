@@ -4,7 +4,13 @@ if ! command -v valgrind >/dev/null 2>&1; then
 	sudo apt install valgrind
 fi
 
-valgrind --tool=memcheck --leak-check=full --track-origins=yes \
+# valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./test
+
+valgrind --tool=memcheck \
+         --leak-check=full \
+         --show-leak-kinds=all\
+         --track-origins=yes \
+         --show-leak-kinds=all \
          --leak-resolution=high \
          --show-reachable=yes \
          --log-file=memcheck.log $1 $2 # > /dev/null 2>&1
