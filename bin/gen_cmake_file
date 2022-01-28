@@ -21,32 +21,34 @@ ome_gen_cmake_file() {
 
     echo "" >> $proj_root/CMakeLists.txt
     echo "if (UNIX)" >> $proj_root/CMakeLists.txt
-    echo "SET (CMAKE_C_COMPILER             \"clang\")" >> $proj_root/CMakeLists.txt
-    echo "SET (CMAKE_C_FLAGS                \"-Wall -std=gnu11\")" >> $proj_root/CMakeLists.txt
-    echo "SET (CMAKE_C_FLAGS_DEBUG          \"-g\")" >> $proj_root/CMakeLists.txt
-    echo "SET (CMAKE_C_FLAGS_MINSIZEREL     \"-Os -DNDEBUG\")" >> $proj_root/CMakeLists.txt
-    echo "SET (CMAKE_C_FLAGS_RELEASE        \"-O4 -DNDEBUG\")" >> $proj_root/CMakeLists.txt
-    echo "SET (CMAKE_C_FLAGS_RELWITHDEBINFO \"-O2 -g\")" >> $proj_root/CMakeLists.txt
+    echo 'SET (CMAKE_C_COMPILER             "clang")' >> $proj_root/CMakeLists.txt
+    echo '# SET (CMAKE_C_FLAGS                "-Wall -std=gnu11")' >> $proj_root/CMakeLists.txt
+    echo 'set(CMAKE_C_STANDARD "17")' >> $proj_root/CMakeLists.txt
+    echo 'SET (CMAKE_C_FLAGS_DEBUG          "-g")' >> $proj_root/CMakeLists.txt
+    echo 'SET (CMAKE_C_FLAGS_MINSIZEREL     "-Os -DNDEBUG")' >> $proj_root/CMakeLists.txt
+    echo 'SET (CMAKE_C_FLAGS_RELEASE        "-O4 -DNDEBUG"' >> $proj_root/CMakeLists.txt
+    echo 'SET (CMAKE_C_FLAGS_RELWITHDEBINFO "-O2 -g")' >> $proj_root/CMakeLists.txt
 
     echo "" >> $proj_root/CMakeLists.txt
-    echo "SET (CMAKE_CXX_COMPILER             \"clang++\")" >> $proj_root/CMakeLists.txt
-    echo "SET (CMAKE_CXX_FLAGS                \"-Wall -std=gnu++20\")" >> $proj_root/CMakeLists.txt
-    echo "SET (CMAKE_CXX_FLAGS_DEBUG          \"-g\")" >> $proj_root/CMakeLists.txt
-    echo "SET (CMAKE_CXX_FLAGS_MINSIZEREL     \"-Os -DNDEBUG\")" >> $proj_root/CMakeLists.txt
-    echo "SET (CMAKE_CXX_FLAGS_RELEASE        \"-O4 -DNDEBUG\")" >> $proj_root/CMakeLists.txt
-    echo "SET (CMAKE_CXX_FLAGS_RELWITHDEBINFO \"-O2 -g\")" >> $proj_root/CMakeLists.txt
+    echo 'SET (CMAKE_CXX_COMPILER             "clang++")' >> $proj_root/CMakeLists.txt
+    echo '# SET (CMAKE_CXX_FLAGS                "-Wall -std=gnu++20")' >> $proj_root/CMakeLists.txt
+    echo 'set(CMAKE_CXX_STANDARD "20")' >> $proj_root/CMakeLists.txt
+    echo 'SET (CMAKE_CXX_FLAGS_DEBUG          "-g")' >> $proj_root/CMakeLists.txt
+    echo 'SET (CMAKE_CXX_FLAGS_MINSIZEREL     "-Os -DNDEBUG")' >> $proj_root/CMakeLists.txt
+    echo 'SET (CMAKE_CXX_FLAGS_RELEASE        "-O4 -DNDEBUG\")' >> $proj_root/CMakeLists.txt
+    echo 'SET (CMAKE_CXX_FLAGS_RELWITHDEBINFO "-O2 -g")' >> $proj_root/CMakeLists.txt
 
     echo "" >> $proj_root/CMakeLists.txt
-    echo "SET (CMAKE_AR      \"llvm-ar\")" >> $proj_root/CMakeLists.txt
-    echo "SET (CMAKE_LINKER  \"lld\")" >> $proj_root/CMakeLists.txt
-    echo "SET (CMAKE_NM      \"llvm-nm\")" >> $proj_root/CMakeLists.txt
-    echo "SET (CMAKE_OBJDUMP \"llvm-objdump\")" >> $proj_root/CMakeLists.txt
-    echo "SET (CMAKE_RANLIB  \"llvm-ranlib\")" >> $proj_root/CMakeLists.txt
+    echo 'SET (CMAKE_AR      "llvm-ar")' >> $proj_root/CMakeLists.txt
+    echo 'SET (CMAKE_LINKER  "lld")' >> $proj_root/CMakeLists.txt
+    echo 'SET (CMAKE_NM      "llvm-nm")' >> $proj_root/CMakeLists.txt
+    echo 'SET (CMAKE_OBJDUMP "llvm-objdump")' >> $proj_root/CMakeLists.txt
+    echo 'SET (CMAKE_RANLIB  "llvm-ranlib")' >> $proj_root/CMakeLists.txt
 
     echo "" >> $proj_root/CMakeLists.txt
-    echo "# set(CMAKE_CXX_FLAGS \"\${CMAKE_CXX_FLAGS} -stdlib=libc++\")" >> $proj_root/CMakeLists.txt
+    echo '# set(CMAKE_CXX_FLAGS "\${CMAKE_CXX_FLAGS} -stdlib=libc++")' >> $proj_root/CMakeLists.txt
     # -I/usr/include/libcxxabi
-    echo "# set(CMAKE_LINKER_FLAGS \"\${CMAKE_LINKER_FLAGS} -stdlib=libc++ -lc++abi\")" >> $proj_root/CMakeLists.txt
+    echo '# set(CMAKE_LINKER_FLAGS "\${CMAKE_LINKER_FLAGS} -stdlib=libc++ -lc++abi")' >> $proj_root/CMakeLists.txt
     echo "endif(UNIX)" >> $proj_root/CMakeLists.txt
 
     echo "" >> $proj_root/CMakeLists.txt
@@ -101,17 +103,17 @@ if [ "$proj_type" = "c" ]; then
   echo "" >> $srcfile
   echo "int main(int argc, char* argv[])" >> $srcfile
   echo "{" >> $srcfile
-  echo "    printf(\"hello,world!\");" >> $srcfile
+  echo '    printf("hello,world!");' >> $srcfile
   echo "    return 0;" >> $srcfile
   echo "}" >> $srcfile
 elif [ "$proj_type" = "cpp" ]; then
   srcfile=$proj_root/src/main.cpp
   echo "#include <iostream>" >> $srcfile
-  echo "#include <assert.h>" >> $srcfile
+  echo "#include <cassert>" >> $srcfile
   echo "" >> $srcfile
   echo "int main(int argc, char* argv[])" >> $srcfile
   echo "{" >> $srcfile
-  echo "    std::cout << \"Hello world\" << std::endl;" >> $srcfile
+  echo '    std::cout << "Hello world" << std::endl;' >> $srcfile
   echo "    return 0;" >> $srcfile
   echo "}" >> $srcfile
 fi
