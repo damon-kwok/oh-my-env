@@ -19,4 +19,6 @@
 # TERM=xterm-256color emacsclient --no-wait --socket-name=/tmp/emacs1000/server --alternate-editor="emacs -Q" $@
 
 # msys2
-TERM=xterm-256color emacsclient --no-wait --server-file=/tmp/`whoami`/emacs1000/server --alternate-editor="emacs" $@
+files="$@"
+#files=${files:-/dev/zero}
+TERM=xterm-256color emacsclient --no-wait --server-file=/tmp/`whoami`/emacs1000/server --alternate-editor="emacs" "$files"
