@@ -15,3 +15,4 @@ rtags_indexes/
 /.vscode/
 /build/
 /prefix/
+*.~undo-tree~
