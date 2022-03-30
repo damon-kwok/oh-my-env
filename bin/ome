@@ -446,6 +446,7 @@ ome_parse() {
       xdg-open "https://www.ruby-lang.org/en/downloads/"
       xdg-open "https://php.net/downloads.php"
       xdg-open "https://github.com/commercialhaskell/stack/releases"
+      xdg-open "https://www.haskell.org/ghc/"
 
       xdg-open "https://github.com/cpp-pm/hunter/releases"
       xdg-open "https://emacs-lsp.github.io/lsp-mode/page/languages/"

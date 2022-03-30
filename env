@@ -270,53 +270,53 @@ export MAKE_PROG="make"
 # Language I
 export ROSWELL_VERSION=21.10.14.111
 if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
-  export SBCL_VERSION=2.1.11
+  export SBCL_VERSION=2.2.3
 else
-  export SBCL_VERSION=2.1.11
+  export SBCL_VERSION=2.2.3
 fi
 
 # Language II
-export ERLANG_VERSION=24.2
+export ERLANG_VERSION=24.3.2
 export OCAML_VERSION=4.13.1
-export STACK_VERSION=2.7.3
-export GHC_VERSION=8.8.3
+export STACK_VERSION=2.7.5
+export GHC_VERSION=9.2.2
 export PYTHON2_VERSION=2.7.18
-export PYTHON3_VERSION=3.10.1
-export RUBY_VERSION=3.1.0
+export PYTHON3_VERSION=3.10.4
+export RUBY_VERSION=3.1.1
 # export PHP_VERSION=5.6.39
-export PHP_VERSION=8.1.1
+export PHP_VERSION=8.1.4
 
 export JAVA_VERSION="18.ea.22-open"
 # export JAVA_VERSION="21.3.0.r17-grl"
-export JBANG_VERSION=0.86.0
-export ANT_VERSION=1.10.10
-export MAVEN_VERSION=3.8.4
+export JBANG_VERSION=0.92.2
+export ANT_VERSION=1.10.12
+export MAVEN_VERSION=3.8.5
 
 # Language III
-export GRADLE_VERSION=7.3.3
-export KOTLIN_VERSION=1.6.0
-export SCALA_VERSION=3.1.0
-export SBT_VERSION=1.6.1
-export GROOVY_VERSION=3.0.9
-export GRAILS_VERSION=5.1.1
-export CLOJURE_VERSION=1.10.3.1058
+export GRADLE_VERSION=7.4.1
+export KOTLIN_VERSION=1.6.10
+export SCALA_VERSION=3.1.1
+export SBT_VERSION=1.6.2
+export GROOVY_VERSION=4.0.1
+export GRAILS_VERSION=5.1.5
+export CLOJURE_VERSION=1.11.0.1100
 export LEIN_VERSION=2.9.8
-export GOLANG_VERSION=1.18beta1 #1.17.6
-export NODEJS_VERSION=16.13.2
+export GOLANG_VERSION=1.18
+export NODEJS_VERSION=16.14.2
 
 # Language IV
-export NIM_VERSION=1.6.2
+export NIM_VERSION=1.6.4
 export PONY_VERSION=git
-export ZIG_VERSION=0.9.0
+export ZIG_VERSION=0.9.1
 
 # Other
 export ANTLR3_VERSION=3.5.2
 export ANTLR4_VERSION=4.9.3
 export ST_VERSION=4.3.1 #StringTemplate
 
-export BC4_VERSION=4.4.1.26165
+export BC4_VERSION=4.4.2.26348
 export JETBRINS_FONT_VERSION=2.242
-export POWERSHELL_VERSION="7.2.1"
+export POWERSHELL_VERSION="7.2.2"
 ################################################################################
 # load plugins
 ome_load_pkgs() {
