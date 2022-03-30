@@ -8,12 +8,12 @@ fi
 
 valgrind --tool=memcheck \
          --leak-check=full \
-         --show-leak-kinds=all\
+         --show-leak-kinds=all \
          --track-origins=yes \
          --show-leak-kinds=all \
          --leak-resolution=high \
          --show-reachable=yes \
-         --log-file=memcheck.log $1 $2 # > /dev/null 2>&1
+         --log-file=memcheck.log "$1" "$2" # > /dev/null 2>&1
 echo ""
 echo ""
 echo "================================================================================"
