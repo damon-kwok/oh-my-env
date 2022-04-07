@@ -228,7 +228,9 @@ export EDITOR=em
 # FIX
 #
 # Fix for Ubuntu: emacs crash on Ubuntu
-export XLIB_SKIP_ARGB_VISUALS=1
+#if [ "$OME_OS" = "$OS_UBUNTU" ]; then
+#  export XLIB_SKIP_ARGB_VISUALS=1
+#fi
 
 # FIX for macOS
 if [ "$OME_OS" = "$OS_MACOS" ]; then
