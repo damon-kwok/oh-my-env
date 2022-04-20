@@ -205,6 +205,8 @@ __git_upgrade() {
       echo_kv "git submodule update" "[$project]" "$dir"
       # echo_success "git submodule update --init --depth=1"
       # echo_success "git submodule update --init"
+      # git submodule init
+      # git submodule update --depth 1
       git submodule sync && git submodule update --init --recursive --depth 1
     fi
     echo_kv "[$project]" "Upgrade to" `git log -1 --format="%cd" --date=short | sed 's|-||g'`
