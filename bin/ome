@@ -439,7 +439,7 @@ ome_parse() {
       xdg-open "https://ziglang.org/download/"
       xdg-open "https://nim-lang.org/install_windows.html"
       xdg-open "https://sdkman.io/sdks#leiningen"
-      xdg-open "https://clojure.org/guides/getting_started#_installation_on_linux"
+      xdg-open "https://clojure.org/guides/install_clojure#_linux_instructions"
       xdg-open "https://nodejs.org/en/download/"
       xdg-open "https://golang.google.cn/dl/"
       xdg-open "https://www.erlang.org/downloads/"
