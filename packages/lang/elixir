@@ -49,17 +49,11 @@ elixir_info() {
     ome_show "Erlang" "`elixir --version 2>&1 | head -n 1 | cut -d ' ' -f 1-3`"
     ome_show "Elixir" "`elixir --version 2>&1 | tail -n 1 | cut -d ' ' -f 1-3`"
   fi
-
 }
 
 elixir_setenv() {
-  if [ -d "$OME_REPO/elixir/bin" ]; then
-    export PATH=$OME_REPO/elixir/bin:$PATH
-    test -s "$HOME/.kiex/scripts/kiex" && source "$HOME/.kiex/scripts/kiex"
-  fi
-
-  if [ -d "$OME_PREFIX/elixier-ls-release" ]; then
-    export PATH=$OME_PREFIX/elixier-ls-release:$PATH
-  fi
+  test -s "$HOME/.kiex/scripts/kiex" && source "$HOME/.kiex/scripts/kiex"
+  test -s "${OME_REPO}/elixir/bin/mix" && export PATH=${OME_REPO}/elixir/bin:$PATH
+  test -s "${OME_PREFIX}/elixier-ls-release/elixir-ls" && export PATH=${OME_PREFIX}/elixier-ls-release:$PATH
 }
 elixir_setenv
