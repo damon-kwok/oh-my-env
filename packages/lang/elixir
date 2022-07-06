@@ -15,10 +15,11 @@ elixir_install_kiex() {
 
 elixir_install_git() {
   ome_check_install "erl" "erlang"
-  github_upgrade elixir-lang/elixir $OME_REPO/elixir
+  # github_upgrade elixir-lang/elixir $OME_REPO/elixir
+  gitee_upgrade mirrors/elixir $OME_REPO/elixir
   cd $OME_REPO/elixir
   make
-  make test
+  # make test
   elixir_setenv
   # Shall I install rebar3? (if running non-interactively, use "mix local.rebar --force") [Yn]
   HEX_MIRROR="https://hexpm.upyun.com" mix local.rebar --force

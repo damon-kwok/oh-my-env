@@ -118,7 +118,7 @@ rbenv_setenv() {
 }
 
 ruby_info() {
-  if [ ! -n "$(command -v ruby)" ]; then
+  if [ -n "$(command -v ruby)" ]; then
     # ome_show "Ruby" "`ome_fetch_version ruby`"
     ome_show "Ruby" "`ruby --version | cut -d" " -f1-5`"
   fi

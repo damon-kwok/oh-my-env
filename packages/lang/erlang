@@ -2,11 +2,13 @@
 
 erlang_install_git() {
   # git clone https://github.com/erlang/otp.git
-  github_upgrade erlang/otp $OME_REPO/erlang_otp
+  # github_upgrade erlang/otp $OME_REPO/erlang_otp
+  gitee_upgrade mirrors/otp $OME_REPO/erlang_otp
   cd $OME_REPO/erlang_otp
   ./otp_build autoconf
   # ./configure --prefix=$HOME/.erlang_otp
   ./configure --prefix=$OME_PREFIX
+  make -j8
   make install
 
   # get_os_type
@@ -40,7 +42,8 @@ erlang_install_zip() {
     if [ ! -f $HOME/Downloads/$zipkg ]; then
       # https://codeload.github.com/erlang/otp/zip/OTP-21.1.4
       # wget https://codeload.github.com/erlang/otp/zip/OTP-${ERLANG_VERSION}
-      wget http://erlang.org/download/otp_src_${ERLANG_VERSION}.tar.gz
+      # wget http://erlang.org/download/otp_src_${ERLANG_VERSION}.tar.gz
+      wget https://github.com/erlang/otp/releases/download/OTP-${ERLANG_VERSION}/otp_src_${ERLANG_VERSION}.tar.gz
     fi
     # if [ ! -d $HOME/Downloads/otp-OTP-$ERLANG_VERSION/ ]; then
     if [ ! -d $HOME/Downloads/otp_src_$ERLANG_VERSION/ ]; then
@@ -153,9 +156,9 @@ erlang_install() {
       echo "$REBAR_VERINFO is already installed!"
     fi
   else
-    # erlang_install_git
+    erlang_install_git
     # erlang_install_zip
-    erlang_install_kerl
+    # erlang_install_kerl
   fi
 
   # tip "install rebar3 for erlang(download)"
