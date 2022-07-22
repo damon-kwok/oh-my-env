@@ -278,7 +278,7 @@ else
 fi
 
 # Language II
-export ERLANG_VERSION=25.0.2
+export ERLANG_VERSION=25.0.3
 export OCAML_VERSION=4.14.0
 export STACK_VERSION=2.7.5
 export GHC_VERSION=9.2.3
@@ -286,11 +286,11 @@ export PYTHON2_VERSION=2.7.18
 export PYTHON3_VERSION=3.10.5
 export RUBY_VERSION=3.1.2
 # export PHP_VERSION=5.6.39
-export PHP_VERSION=8.1.7
+export PHP_VERSION=8.1.8
 
 export JAVA_VERSION="18.ea.22-open"
 # export JAVA_VERSION="21.3.0.r17-grl"
-export JBANG_VERSION=0.95.0
+export JBANG_VERSION=0.96.0
 export ANT_VERSION=1.10.12
 export MAVEN_VERSION=3.8.6
 
@@ -298,13 +298,13 @@ export MAVEN_VERSION=3.8.6
 export GRADLE_VERSION=7.4.2
 export KOTLIN_VERSION=1.7.0
 export SCALA_VERSION=3.1.3
-export SBT_VERSION=1.6.2
+export SBT_VERSION=1.7.1
 export GROOVY_VERSION=4.0.3
-export GRAILS_VERSION=5.2.0
+export GRAILS_VERSION=5.2.1
 export CLOJURE_VERSION=1.11.1.1149
 export LEIN_VERSION=2.9.8
-export GOLANG_VERSION=1.18.3
-export NODEJS_VERSION=16.15.1
+export GOLANG_VERSION=1.18.4
+export NODEJS_VERSION=16.16.0
 
 # Language IV
 export NIM_VERSION=1.6.6
@@ -316,7 +316,7 @@ export ANTLR3_VERSION=3.5.3
 export ANTLR4_VERSION=4.10.1
 export ST_VERSION=4.3.3 #StringTemplate
 
-export BC4_VERSION=4.4.2.26348
+export BC4_VERSION=4.4.3.26655
 export JETBRINS_FONT_VERSION=2.242
 export POWERSHELL_VERSION="7.2.3"
 ################################################################################
