@@ -1,3 +1,3 @@
 @echo off
-set PATH=D:\\msys64\\mingw64\\bin;D:\\msys64\\usr\\bin;%PATH%
-start D:\\msys64\\usr\\bin\\bash
+set PATH=C:\\msys64\\mingw64\\bin;C:\\msys64\\usr\\bin;%PATH%
+start C:\\msys64\\usr\\bin\\bash
