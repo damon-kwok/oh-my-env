@@ -65,7 +65,7 @@ host_upgrade() {
 			sudo sh -c "echo '$ip $name' >> /etc/hosts"
 		fi
     #else
-	  #    echo "'$ip $name' is exist in $hostfile"
+	  #  echo "'$ip $name' is exist in $hostfile"
   fi
 }
 
@@ -510,36 +510,36 @@ case $OME_OS in
 				ln -s $OME_PREFIX/apt-cyg/apt-cyg /usr/local/bin/
 			fi
 		fi
-		apt install git subversion wget curl make \
+		apt install python ctags git subversion wget curl make \
 			  tar zip unzip rlwrap coreutils findutils diffutils \
 			  xdg-utils chere emacs-w32
 		;;
 	$OS_MSYS2)
 		#readp "msys2: use china morrir?"
 		#if [ $? -eq 1 ]; then
-		#	cp -f $OME_ROOT/conf/msys2/* /etc/pacman.d/
+		#  cp -f $OME_ROOT/conf/msys2/* /etc/pacman.d/
 		#fi
 		#readp "update system?"
 		#if [ $? -eq 1 ]; then
-		#	pacman -Syyu
+		#  pacman -Syyu
 		#fi
 		# pacman -Sy pacman-mirrors
 
 		#find_str "tuna.tsinghua.edu.cn" /etc/pacman.d/mirrorlist.mingw32
 		#if [ $? -eq 0 ]; then
-		#	tip "mirrorlist fix"
-		#	echo "Server = https://mirrors.tuna.tsinghua.edu.cn/msys2/mingw/i686" >> /etc/pacman.d/mirrorlist.mingw32
-		#	echo "Server = https://mirrors.tuna.tsinghua.edu.cn/msys2/mingw/x86_64" >> /etc/pacman.d/mirrorlist.mingw64
-		#	echo 'Server = https://mirrors.tuna.tsinghua.edu.cn/msys2/msys/$arch' >> /etc/pacman.d/mirrorlist.msys
+		#  tip "mirrorlist fix"
+		#  echo "Server = https://mirrors.tuna.tsinghua.edu.cn/msys2/mingw/i686" >> /etc/pacman.d/mirrorlist.mingw32
+		#  echo "Server = https://mirrors.tuna.tsinghua.edu.cn/msys2/mingw/x86_64" >> /etc/pacman.d/mirrorlist.mingw64
+		#  echo 'Server = https://mirrors.tuna.tsinghua.edu.cn/msys2/msys/$arch' >> /etc/pacman.d/mirrorlist.msys
 
-        #echo "Server = https://mirrors.ustc.edu.cn/msys2/mingw/i686" >> /etc/pacman.d/mirrorlist.mingw32
-		#	echo "Server = https://mirrors.ustc.edu.cn/msys2/mingw/x86_64" >> /etc/pacman.d/mirrorlist.mingw64
-		#	echo 'Server = https://mirrors.ustc.edu.cn/msys2/msys/$arch' >> /etc/pacman.d/mirrorlist.msys
+    #echo "Server = https://mirrors.ustc.edu.cn/msys2/mingw/i686" >> /etc/pacman.d/mirrorlist.mingw32
+		#  echo "Server = https://mirrors.ustc.edu.cn/msys2/mingw/x86_64" >> /etc/pacman.d/mirrorlist.mingw64
+		#  echo 'Server = https://mirrors.ustc.edu.cn/msys2/msys/$arch' >> /etc/pacman.d/mirrorlist.msys
 		#else
-		#	tip "mirrorlist is already fix"
+		#  tip "mirrorlist is already fix"
 		#fi
 
-		pacman -Sy python git subversion wget curl make \
+		pacman -Sy python ctags git subversion wget curl make \
 			     tar zip unzip rlwrap coreutils findutils diffutils \
 			     mingw-w64-x86_64-emacs
 		;;
