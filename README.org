@@ -28,10 +28,10 @@ bash <(curl -fksSL http://topurl.cn/8V8)
 
 #+BEGIN_SRC sh
 # if you living China:
-bash <(curl -fksSL http://33h.co/91vf5)
+bash <(curl -fksSL https://gitee.com/damon-kwok/oh-my-env/raw/main/INSTALL)
 
 # else...
-bash <(curl -fksSL https://git.io/JK1di)
+bash <(curl -fksSL https://raw.githubusercontent.com/damon-kwok/oh-my-env/main/INSTALL)
 #+END_SRC
 
 *** Uninstall
