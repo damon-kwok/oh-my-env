@@ -217,8 +217,8 @@ case $OME_OS in
 		sudo curl -L https://github.com/AndyYoungDev/ubuntu-aliyun-sources/releases/download/shell/change.sh | bash
 
 		# if [ ! -f /etc/apt/sources.list.d/ubuntu-elisp-ubuntu-ppa-xenial.list ]; then
-		tip "add ppa:emacs"
-		sudo add-apt-repository -y ppa:ubuntu-elisp
+		# tip "add ppa:emacs"
+		# sudo add-apt-repository -y ppa:ubuntu-elisp
 		# fi
 
 		readp "update system?"
@@ -234,9 +234,9 @@ case $OME_OS in
 
 		readp "X mode?"
 		if [ $? -eq 1 ]; then
-			sudo apt install -y software-properties-gtk emacs-snapshot
+			sudo apt install -y software-properties-gtk emacs
 		else
-			sudo apt install -y emacs-snapshot-nox
+			sudo apt install -y emacs-nox
 		fi
 		;;
 	# $OS_REDHAT) ;;
