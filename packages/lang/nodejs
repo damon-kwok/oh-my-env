@@ -155,6 +155,11 @@ nodejs_install() {
     npm install -g yarn
   fi
 
+  if [ -n "$(command -v gulp)" ]; then
+    tip "install gulp"
+    npm install -g @openapitools/openapi-generator-cli
+  fi
+
   cd $oldir
 }
 
