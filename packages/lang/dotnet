@@ -35,7 +35,9 @@ mono_install() {
     $OS_REDHAT|$OS_FEDORA)
       sudo yumn install mono-devel
       ;;
-    $OS_ARCH) ;;
+    $OS_ARCH)
+      sudo pacman -S dotnet-sdk aspnet-runtime nuget
+      ;;
     $OS_GENTOO) ;;
     $OS_SUSE) ;;
     $OS_SLACKWARE) ;;
