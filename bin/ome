@@ -438,7 +438,7 @@ ome_parse() {
       xdg-open "https://ocaml.org/releases/"
       xdg-open "https://ziglang.org/download/"
       xdg-open "https://nim-lang.org/install_windows.html"
-      xdg-open "https://sdkman.io/sdks#leiningen"
+      xdg-open "https://codeberg.org/leiningen/leiningen/releases"
       xdg-open "https://clojure.org/releases/tools"
       xdg-open "https://nodejs.org/en/download/"
       xdg-open "https://golang.google.cn/dl/"

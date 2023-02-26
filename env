@@ -303,6 +303,7 @@ export GROOVY_VERSION=4.0.9
 export GRAILS_VERSION=5.3.2
 export CLOJURE_VERSION=1.11.1.1224
 export LEIN_VERSION=2.10.0
+export LEIN_JAR_URL="https://codeberg.org/attachments/43cebda5-a7c2-405b-b641-5143a00051b5"
 export GOLANG_VERSION=1.20.1
 export NODEJS_VERSION=18.14.2
 
