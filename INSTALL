@@ -564,12 +564,12 @@ git config --global credential.helper store
 
 git config --global color.ui true
 
-git config --global merge.tool emerge
-git config --global mergetool.diffmerge.cmd "emerge \$LOCAL \$BASE \$REMOTE \$MERGED"
+git config --global merge.tool emacs_merge
+git config --global mergetool.diffmerge.cmd "emacs_merge \$LOCAL \$BASE \$REMOTE \$MERGED"
 git config --global mergetool.keepBackup false
 
-git config --global diff.tool ediff
-git config --global difftool.ediff.cmd "ediff \"\$LOCAL\" \"\$REMOTE\""
+git config --global diff.tool emacs_diff
+git config --global difftool.emacs_diff.cmd "emacs_diff \"\$LOCAL\" \"\$REMOTE\""
 git config --global difftool.prompt false
 ###############################################################################
 title "OME INSTALL"
