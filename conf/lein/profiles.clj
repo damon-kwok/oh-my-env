@@ -36,6 +36,12 @@
 				:repo-manager true
 			}
 		}
+    :plugins      []
+    :repl-options {:init (use 'midje.repl)}
+    ;:injections  [(require 'cemerick.pomegranate.aether)
+    ;              (cemerick.pomegranate.aether/register-wagon-factory!
+    ;               "http" #(org.apache.maven.wagon.providers.http.HttpWagon.))]
+    :dependencies [[midje "1.10.9"]]
 	}
 }
 ;;
