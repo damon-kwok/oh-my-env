@@ -43,12 +43,16 @@ clj_install() {
   fi
 
   if [ ! -n "$(command -v lein)" ] || [ ! "`lein --version | cut -d ' ' -f 2`" = "$LEIN_VERSION" ]; then
-    tip "install leiningen"
+    tip "download leiningen"
     cd $OME_PREFIX/bin/
     rm -rf ./lein
-    wget https://raw.githubusercontent.com/technomancy/leiningen/stable/bin/lein
+    # wget https://raw.githubusercontent.com/technomancy/leiningen/stable/bin/lein
+    wget https://codeberg.org/leiningen/leiningen/raw/branch/stable/bin/lein
     if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
-      wget https://raw.githubusercontent.com/technomancy/leiningen/stable/bin/lein.bat
+      # wget https://raw.githubusercontent.com/technomancy/leiningen/stable/bin/lein.bat
+      wget https://codeberg.org/leiningen/leiningen/raw/branch/stable/bin/lein.bat
+      wget https://codeberg.org/leiningen/leiningen/raw/branch/stable/bin/lein.cmd
+      wget https://codeberg.org/leiningen/leiningen/raw/branch/stable/bin/lein.ps1
     fi
     chmod +x ./lein
     lein --version
