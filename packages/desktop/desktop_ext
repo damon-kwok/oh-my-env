@@ -1,6 +1,7 @@
 #!/usr/bin/env sh
 
 font_install() {
+  tip "upgrade jetbains fonts:"
   cd $HOME/Downloads/
   local pkgname=JetBrainsMono-${JETBRINS_FONT_VERSION}
   local zipkg=${pkgname}.zip
@@ -36,6 +37,11 @@ font_install() {
     cp -f ./JetBrainsMono-${JETBRINS_FONT_VERSION}/ttf/* $HOME/.local/share/fonts/
     fc-cache -f -v
   fi
+
+  tip "upgrade all-the-icons fonts"
+  github_upgrade domtronn/all-the-icons.el $OME_CACHE/all-the-icons
+  cp -f $OME_CACHE/all-the-icons/fonts/* $HOME/.local/share/fonts/
+  fc-cache -f -v
 }
 
 desktop_ext_install() {

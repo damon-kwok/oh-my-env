@@ -235,6 +235,8 @@ ome_pull() {
   # echo_kv "GIT PULL" "~/.oh_my_emacs/"
   github_upgrade damon-kwok/oh-my-emacs $HOME/.oh-my-emacs/
 
+  font_install
+
   # echo_kv "GIT PULL" "~/.emacs.d/"
   gitee_upgrade damon-kwok/emacs.d $HOME/.emacs.d/
   cp -f $HOME/.oh-my-emacs/conf/init.el $HOME/.emacs.d/
