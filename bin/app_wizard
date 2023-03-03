@@ -99,8 +99,23 @@ ome_app_wizard() {
       # mkdir -p src
       $EDITOR "src/main.cpp"
       ;;
+    "compojure-api")
+      ome_check_install "lein" "clj"
+      # lein new compojure-api $proj_name
+      lein new compojure-api $proj_name +midje
+      # lein new compojure-api $proj_name +clojure-test
+      cd $proj_root
+      $EDITOR "project.clj"
+      ;;
+    "swagger")
+      ome_check_install "lein" "clj"
+      lein new luminus $proj_name +swagger
+      cd $proj_root
+      $EDITOR "project.clj"
+      ;;
     "luminus")
       ome_check_install "lein" "clj"
+      lein new luminus $proj_name +reagent +swagger +h2
       lein new luminus $proj_name +reagent +swagger +h2
       cd $proj_root
       # local aa='[clj-commons/secretary "1.2.4"]'
@@ -108,7 +123,7 @@ ome_app_wizard() {
       # sed -i 's#$aa#$bb#g' project.clj
       $EDITOR "project.clj"
       ;;
-    "2"|"clojure"|"clj"|"pedestal")
+    "2"|"pedestal")
       ome_check_install "lein" "clj"
       lein new pedestal-service $proj_name +reagent +swagger +h2
       cd $proj_root
