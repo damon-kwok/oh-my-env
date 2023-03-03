@@ -270,11 +270,11 @@ export OME_MAKE="Ninja"
 export MAKE_PROG="make"
 
 # Language I
-export ROSWELL_VERSION=21.10.14.113
+export ROSWELL_VERSION=22.12.14.113
 if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
-  export SBCL_VERSION=2.3.1
+  export SBCL_VERSION=2.3.2
 else
-  export SBCL_VERSION=2.3.1
+  export SBCL_VERSION=2.3.2
 fi
 
 # Language II
@@ -290,7 +290,7 @@ export PHP_VERSION=8.2.3
 
 export JAVA_VERSION="18.ea.22-open"
 # export JAVA_VERSION="21.3.0.r17-grl"
-export JBANG_VERSION=0.103.2
+export JBANG_VERSION=0.104.0
 export ANT_VERSION=1.10.13
 export MAVEN_VERSION=3.9.0
 
@@ -301,7 +301,7 @@ export SCALA_VERSION=3.2.2
 export SBT_VERSION=1.8.2
 export GROOVY_VERSION=4.0.9
 export GRAILS_VERSION=5.3.2
-export CLOJURE_VERSION=1.11.1.1224
+export CLOJURE_VERSION=1.11.1.1237
 export LEIN_VERSION=2.10.0
 export LEIN_JAR_URL="https://codeberg.org/attachments/43cebda5-a7c2-405b-b641-5143a00051b5"
 export GOLANG_VERSION=1.20.1
@@ -310,7 +310,7 @@ export NODEJS_VERSION=18.14.2
 # Language IV
 export NIM_VERSION=1.6.10
 export PONY_VERSION=git
-export ZIG_VERSION=0.10.1
+export ZIG_VERSION=0.11.0
 
 # Other
 export ANTLR3_VERSION=3.5.3
@@ -319,7 +319,7 @@ export ST_VERSION=4.3.4 #StringTemplate
 
 export BC4_VERSION=4.4.5.27371
 export JETBRINS_FONT_VERSION=2.304
-export POWERSHELL_VERSION="7.3.2"
+export POWERSHELL_VERSION="7.3.3"
 ################################################################################
 # load plugins
 ome_load_pkgs() {
