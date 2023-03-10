@@ -278,7 +278,7 @@ else
 fi
 
 # Language II
-export ERLANG_VERSION=25.2.3
+export ERLANG_VERSION=25.3
 export OCAML_VERSION=5.0.0
 export STACK_VERSION=2.9.3
 export GHC_VERSION=9.4.4
@@ -295,17 +295,17 @@ export ANT_VERSION=1.10.13
 export MAVEN_VERSION=3.9.0
 
 # Language III
-export GRADLE_VERSION=8.0.1
+export GRADLE_VERSION=8.0.2
 export KOTLIN_VERSION=1.7.0
 export SCALA_VERSION=3.2.2
 export SBT_VERSION=1.8.2
 export GROOVY_VERSION=4.0.9
 export GRAILS_VERSION=5.3.2
-export CLOJURE_VERSION=1.11.1.1237
+export CLOJURE_VERSION=1.11.1.1252
 export LEIN_VERSION=2.10.0
 export LEIN_JAR_URL="https://codeberg.org/attachments/43cebda5-a7c2-405b-b641-5143a00051b5"
-export GOLANG_VERSION=1.20.1
-export NODEJS_VERSION=18.14.2
+export GOLANG_VERSION=1.20.2
+export NODEJS_VERSION=18.15.0
 
 # Language IV
 export NIM_VERSION=1.6.10
@@ -317,7 +317,7 @@ export ANTLR3_VERSION=3.5.3
 export ANTLR4_VERSION=4.12.0
 export ST_VERSION=4.3.4 #StringTemplate
 
-export BC4_VERSION=4.4.5.27371
+export BC4_VERSION=4.4.6.27483
 export JETBRINS_FONT_VERSION=2.304
 export POWERSHELL_VERSION="7.3.3"
 ################################################################################
