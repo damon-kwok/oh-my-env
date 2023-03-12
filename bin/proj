@@ -163,6 +163,7 @@ emacsd_push() {
 }
 
 ome_pull_proj() {
+  github_ssh_upgrade damon-kwok/awesome-clojure $OME_PROJ/me/awesome-clojure
   github_ssh_upgrade damon-kwok/v-mode $OME_PROJ/me/v-mode
   github_ssh_upgrade damon-kwok/zetz-mode $OME_PROJ/me/zetz-mode
   github_ssh_upgrade damon-kwok/verona-mode $OME_PROJ/me/verona-mode
