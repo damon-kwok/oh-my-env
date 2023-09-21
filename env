@@ -258,11 +258,27 @@ if [ "$OME_OS" = "$OS_MSYS2" ]; then
     echo 'cygstart $@' >> /usr/bin/xdg-open
     chmod +x /usr/bin/xdg-open
   fi
+   if [ "`command -v emacs`" = "" ]; then
+	export PATH=$PATH:/c/msys64/mingw64/bin:/c/msys64/ucrt64/bin
+  fi
+  if [ "`command -v emacs`" = "" ]; then
+	export PATH=$PATH:/d/msys64/mingw64/bin:/d/msys64/ucrt64/bin
+  fi
+  if [ "`command -v emacs`" = "" ]; then
+	export PATH=$PATH:/e/msys64/mingw64/bin:/e/msys64/ucrt64/bin
+  fi
+  if [ "`command -v emacs`" = "" ]; then
+	export PATH=$PATH:/f/msys64/mingw64/bin:/f/msys64/ucrt64/bin
+  fi
+  if [ "`command -v emacs`" = "" ]; then
+	export PATH=$PATH:/g/msys64/mingw64/bin:/g/msys64/ucrt64/bin
+  fi
 fi
 
 # FIX `LLVM` path for windows
 if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
-  export PATH="/c/Program Files (x86)/Microsoft Visual Studio/2019/Preview/VC/Tools/Llvm/x64/bin":"$PATH"
+  export PATH="/c/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Tools/Llvm/x64/bin":"$PATH"
+  export PATH="/c/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/Llvm/x64/bin":"$PATH"
 fi
 
 # lang
@@ -272,54 +288,54 @@ export MAKE_PROG="make"
 # Language I
 export ROSWELL_VERSION=22.12.14.113
 if [ "$OME_OS" = "$OS_CYGWIN" ] || [ "$OME_OS" = "$OS_MSYS2" ]; then
-  export SBCL_VERSION=2.3.2
+  export SBCL_VERSION=2.3.8
 else
-  export SBCL_VERSION=2.3.2
+  export SBCL_VERSION=2.3.8
 fi
 
 # Language II
-export ERLANG_VERSION=25.3
-export OCAML_VERSION=5.0.0
-export STACK_VERSION=2.9.3
-export GHC_VERSION=9.4.4
+export ERLANG_VERSION=26.1
+export OCAML_VERSION=5.1.0
+export STACK_VERSION=2.11.1
+export GHC_VERSION=9.4.7
 export PYTHON2_VERSION=2.7.18
-export PYTHON3_VERSION=3.11.2
-export RUBY_VERSION=3.2.1
+export PYTHON3_VERSION=3.11.5
+export RUBY_VERSION=3.2.2
 # export PHP_VERSION=5.6.39
-export PHP_VERSION=8.2.3
+export PHP_VERSION=8.2.10
 
 export JAVA_VERSION="18.ea.22-open"
 # export JAVA_VERSION="21.3.0.r17-grl"
-export JBANG_VERSION=0.104.0
-export ANT_VERSION=1.10.13
-export MAVEN_VERSION=3.9.0
+export JBANG_VERSION=0.110.1
+export ANT_VERSION=1.10.14
+export MAVEN_VERSION=3.9.4
 
 # Language III
-export GRADLE_VERSION=8.0.2
+export GRADLE_VERSION=8.3
 export KOTLIN_VERSION=1.7.0
-export SCALA_VERSION=3.2.2
-export SBT_VERSION=1.8.2
-export GROOVY_VERSION=4.0.9
-export GRAILS_VERSION=5.3.2
-export CLOJURE_VERSION=1.11.1.1252
+export SCALA_VERSION=3.3.1
+export SBT_VERSION=1.9.6
+export GROOVY_VERSION=4.0.15
+export GRAILS_VERSION=6.0.0
+export CLOJURE_VERSION=1.11.1.1413
 export LEIN_VERSION=2.10.0
 export LEIN_JAR_URL="https://codeberg.org/attachments/43cebda5-a7c2-405b-b641-5143a00051b5"
-export GOLANG_VERSION=1.20.2
-export NODEJS_VERSION=18.15.0
+export GOLANG_VERSION=1.21.1
+export NODEJS_VERSION=18.18.0
 
 # Language IV
-export NIM_VERSION=1.6.10
+export NIM_VERSION=2.0.0
 export PONY_VERSION=git
 export ZIG_VERSION=0.11.0
 
 # Other
 export ANTLR3_VERSION=3.5.3
-export ANTLR4_VERSION=4.12.0
+export ANTLR4_VERSION=4.13.1
 export ST_VERSION=4.3.4 #StringTemplate
 
 export BC4_VERSION=4.4.6.27483
 export JETBRINS_FONT_VERSION=2.304
-export POWERSHELL_VERSION="7.3.3"
+export POWERSHELL_VERSION="7.3.7"
 ################################################################################
 # load plugins
 ome_load_pkgs() {
