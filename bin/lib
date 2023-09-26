@@ -168,6 +168,45 @@ ome_git_config() {
   fi
 }
 
+# 
+github_latest_version() {
+    local filepath="${OME_CACHE}/github/`date +"%Y-%m-%d"`/$1.version.txt"
+    if [ ! -f $filepath ]; then
+        mkdir -p `dirname $filepath`
+        local str=`curl -s "https://api.github.com/repos/$1/releases/latest" | jq -r ".tarball_url" | rev | cut -d"/" -f1 | rev`
+		if [ "str" != "null" ]; then
+			echo "$str" > $filepath
+		fi
+    else
+        local str=`cat $filepath`
+    fi
+	
+	if [ ${str:0:1} = "v" ]; then
+		echo ${str:1}
+	else
+		echo $str
+	fi
+}
+
+github_latest_commit() {
+    local filepath="${OME_CACHE}/github/`date +"%Y-%m-%d"`/$1.commit.txt"
+    if [ ! -f $filepath ]; then
+        mkdir -p `dirname $filepath`
+        local str=`curl -s "https://api.github.com/repos/$1/commits?page=1&per_page=1" | jq -r '.[0].commit.committer.date'`
+		if [ "str" != "null" ]; then
+			echo "$str" > $filepath
+		fi
+    else
+        local str=`cat $filepath`
+    fi
+	
+	if [ ${str:0:1} = "v" ]; then
+		echo ${str:1}
+	else
+		echo $str
+	fi
+}
+
 __git_upgrade() {
   # echo "__git_upgrade:$@"
   local oldir=`pwd`

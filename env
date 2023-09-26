@@ -66,7 +66,7 @@ case "`uname -s`" in
       case "`lsb_release -is`" in
         "Debian")
           export OME_OS=$OS_DEBIAN;;
-        "Ubuntu"|"elementary"|"LinuxMint")
+        "Ubuntu"|"elementary"|"LinuxMint"|"Linuxmint")
           export OME_OS="$OS_UBUNTU";;
         "ManjaroLinux"|"Arch")
           export OME_OS=$OS_ARCH;;

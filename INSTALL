@@ -541,7 +541,7 @@ case $OME_OS in
 
 		pacman -Sy cygutils python ctags git subversion wget curl make \
 			     tar zip unzip rlwrap coreutils findutils diffutils \
-			     mingw-w64-x86_64-emacs
+			     mingw-w64-x86_64-jq mingw-w64-x86_64-emacs
 		;;
 	# Other
 	$OS_UNKNOW) ;;
