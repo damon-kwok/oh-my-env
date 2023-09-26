@@ -481,30 +481,30 @@ ome_parse() {
 	"check")
 		echo "Check:"
 		echo "-----------------------------------"
-		echo "mongo-c-driver:"       `github_latest_version "mongodb/mongo-c-driver"`
-		echo "mongo-cxx-driver:"     `github_latest_version "mongodb/mongo-cxx-driver"`
-		echo "Roswell:"              `github_latest_version "roswell/roswell"`
-		echo "Roswell2:"             `github_latest_version "roswell/roswell2"`
-		echo "sbcl:"                 `github_latest_version "roswell/sbcl_bin"`
-		echo "OCaml:"                `github_latest_version "ocaml/ocaml"`
-		echo "Zig:"                  `github_latest_version "ziglang/zig"`
-		echo "Nim:"                  `github_latest_version "nim-lang/Nimr"`
-		echo "Leiningen:"            `github_latest_version "technomancy/leiningen"`
-		echo "Golang:"               `github_latest_version "golang/go"`
-		echo "Erlang:"               `github_latest_version "erlang/otp"`
-		echo "Python3:"              `github_latest_version "python/cpython"`
-		echo "PHP:"                  `github_latest_version "php/php-src"`
-		echo "Ruby:"                 `github_latest_version "ruby/ruby"`
-		echo "GHC:"                  `github_latest_version "ghc/ghc"`
-		echo "Ant:"                  `github_latest_version "apache/ant"`
-		echo "Maven:"                `github_latest_version "apache/maven"`
-		echo "Jbang:"                `github_latest_version "jbangdev/jbang"`
-		echo "Scala2:"               `github_latest_version "scala/scala"`
-		echo "Scala3:"               `github_latest_version "lampepfl/dotty"`
-		echo "SBT:"                  `github_latest_version "sbt/sbt"`
-		echo "Groovy:"               `github_latest_version "apache/groovy"`
-		echo "Gradle:"               `github_latest_version "gradle/gradle"`
-		echo "Grails:"               `github_latest_version "grails/grails-core"`
+		echo "mongo-c-driver:        `github_latest_release 'mongodb/mongo-c-driver'`"
+		echo "mongo-cxx-driver:      `github_latest_release 'mongodb/mongo-cxx-driver'`"
+		echo "Roswell:               `github_latest_release 'roswell/roswell'`"
+		echo "Roswell2:              `github_latest_release 'roswell/roswell2'`"
+		echo "SBCL:                  `github_latest_release 'roswell/sbcl_bin'`"
+		echo "OCaml:                 `github_latest_release 'ocaml/ocaml'`"
+		echo "Zig:                   `github_latest_release 'ziglang/zig'`"
+		echo "Nim:                   `github_latest_tag 'nim-lang/Nim'`"
+		echo "Leiningen:             `github_latest_release 'technomancy/leiningen'`"
+		echo "Golang:                `github_latest_tag 'golang/go'`"
+		echo "Erlang:                `github_latest_release 'erlang/otp'`"
+		echo "Python3:               `github_latest_tag 'python/cpython'`"
+		echo "PHP:                   `github_latest_tag 'php/php-src'`"
+		echo "Ruby:                  `github_latest_release 'ruby/ruby'`"
+		echo "GHC:                   `github_latest_tag 'ghc/ghc'`"
+		echo "Ant:                   `github_latest_tag 'apache/ant'`"
+		echo "Maven:                 `github_latest_release 'apache/maven'`"
+		echo "Jbang:                 `github_latest_release 'jbangdev/jbang'`"
+		echo "Scala2:                `github_latest_release 'scala/scala'`"
+		echo "Scala3:                `github_latest_release 'lampepfl/dotty'`"
+		echo "SBT:                   `github_latest_release 'sbt/sbt'`"
+		echo "Groovy:                `github_latest_tag 'apache/groovy'`"
+		echo "Gradle:                `github_latest_release 'gradle/gradle'`"
+		echo "Grails:                `github_latest_release 'grails/grails-core'`"
 		;;
     "plugin")
       $EDITOR $HOME/.oh-my-env/packages/$ARG1

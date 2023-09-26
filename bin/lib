@@ -169,11 +169,30 @@ ome_git_config() {
 }
 
 # 
-github_latest_version() {
+github_latest_release() {
     local filepath="${OME_CACHE}/github/`date +"%Y-%m-%d"`/$1.version.txt"
     if [ ! -f $filepath ]; then
         mkdir -p `dirname $filepath`
         local str=`curl -s "https://api.github.com/repos/$1/releases/latest" | jq -r ".tarball_url" | rev | cut -d"/" -f1 | rev`
+		if [ "str" != "null" ]; then
+			echo "$str" > $filepath
+		fi
+    else
+        local str=`cat $filepath`
+    fi
+	
+	if [ ${str:0:1} = "v" ]; then
+		echo ${str:1}
+	else
+		echo $str
+	fi
+}
+
+github_latest_tag() {
+    local filepath="${OME_CACHE}/github/`date +"%Y-%m-%d"`/$1.version.txt"
+    if [ ! -f $filepath ]; then
+        mkdir -p `dirname $filepath`
+        local str=`curl -s "https://api.github.com/repos/$1/tags" | jq -r ".[0].tarball_url" | rev | cut -d"/" -f1 | rev`
 		if [ "str" != "null" ]; then
 			echo "$str" > $filepath
 		fi
